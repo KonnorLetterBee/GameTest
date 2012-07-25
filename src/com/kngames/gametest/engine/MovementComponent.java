@@ -1,13 +1,21 @@
 package com.kngames.gametest.engine;
 
+import android.util.FloatMath;
+
+//	MovementComponent - 
+//
+//	provides a structure for position and velocity of an object drawn on the screen
+
 public class MovementComponent {
 	private float xPos = 0;	//	x position
 	private float yPos = 0;	//	y position
 	private float xVel = 0;	//	x velocity
 	private float yVel = 0;	//	y velocity
 
+	//	construct a default MovementComponent with position (0,0) and velocity 0
 	public MovementComponent() { }
 
+	//	construct a MovementComponent
 	public MovementComponent(float xp, float yp, float xv, float yv) {
 		this.xPos = xp;
 		this.yPos = yp;
@@ -15,16 +23,38 @@ public class MovementComponent {
 		this.yVel = yv;
 	}
 
-	public float getXPos() { return xPos; }
-	public void setXPos(float xp) { this.xPos = xp; }
-	public float getYPos() { return yPos; }
-	public void setYPos(float yp) { this.yPos = yp; }
+	///
+	///	Getters and Setters
+	///
+	
+	public float getX() { return xPos; }
+	public void setX(float xp) { this.xPos = xp; }
+	public float getY() { return yPos; }
+	public void setY(float yp) { this.yPos = yp; }
 	
 	public float getXVel() { return xVel; }
 	public void setXVel(float xv) { this.xVel = xv; }
+	public void addXVel(float xv) { this.xVel += xv; }
 	public float getYVel() { return yVel; }
 	public void setYVel(float yv) { this.yVel = yv; }
-
-	public void toggleXDir() { xVel *= -1; }
-	public void toggleYDir() { yVel *= -1; }
+	public void addYVel(float yv) { this.yVel += yv; }
+	
+	public void invertXDir() { xVel *= -1; }
+	public void invertYDir() { yVel *= -1; }
+	
+	//	updates the movement/location of this component
+	public void update() {
+		xPos += xVel;
+		yPos += yVel;
+	}
+	
+	//	utility method to find the distance between two points in space
+    public static double distBetweenPoints(float x1, float y1, float x2, float y2) {
+    	return Math.sqrt((double)Math.pow(x1-x2, 2) + (double)Math.pow(y1-y2, 2));
+    }
+    
+    //	utility method to get the speed (not velocity) of this component
+    public float speed() {
+		return FloatMath.sqrt((xVel*xVel) + (yVel*yVel));
+	}
 }

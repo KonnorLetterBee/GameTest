@@ -2,13 +2,14 @@ package com.kngames.gametest;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.engine.MovementComponent;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -18,6 +19,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = GamePanel.class.getSimpleName();
 	
+	//	the main game loop thread
 	private GameLoopThread thread;
 
 	private ArrayList<DrawObject> drawables;
@@ -30,10 +32,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		//	initialize DrawObject arraylist and fill it with 4 test objects
 		drawables = new ArrayList<DrawObject>();
-		drawables.add(new DrawObject(0, 0, loadScaledBitmap(R.drawable.red_square, 350, 350)));
-		drawables.add(new DrawObject(120, 420, loadScaledBitmap(R.drawable.blue_square, 350, 350)));
-		drawables.add(new DrawObject(420, 120, loadScaledBitmap(R.drawable.green_square, 350, 350)));
-		drawables.add(new DrawObject(420, 420, loadScaledBitmap(R.drawable.yellow_square, 350, 350)));
+		drawables.add(new DrawObject(120, 120, loadScaledBitmap(R.drawable.red_square, 150, 150)));
+		drawables.add(new DrawObject(120, 420, loadScaledBitmap(R.drawable.blue_square, 150, 150)));
+		drawables.add(new DrawObject(420, 120, loadScaledBitmap(R.drawable.green_square, 150, 150)));
+		drawables.add(new DrawObject(420, 420, loadScaledBitmap(R.drawable.yellow_square, 150, 150)));
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
@@ -69,10 +71,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	@Override
+	//	handle user touch input
 	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			//	calls the subroutine to detect which object if any was touched
 			selected = detectTouchedObject((int)event.getX(), (int)event.getY());
+			
+			//	calls the handleDownTouch method of the selected object
+			if (selected != null) selected.handleDownTouch(event);
 			
 			// check if in the lower part of the screen we exit
 			if (event.getY() > getHeight() - 50) {
@@ -82,17 +88,27 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
 			}
 		} if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			if (selected != null) {
-				selected.x = (int)event.getX();
-				selected.y = (int)event.getY();
-			}
+			//	calls the handleMoveTouch method of the selected object
+			if (selected != null) selected.handleMoveTouch(event);
 		} if (event.getAction() == MotionEvent.ACTION_UP) {
-			selected = null;
+			//	calls the handleUpTouch method of the selected object, then sets selected to null again
+			if (selected != null) {
+				selected.handleUpTouch(event);
+				selected = null;
+			}
 		}
 		return true;
 	}
+	
+	//	updates all elements in this view
+	public void update() {
+		for (DrawObject d : drawables) {
+			d.update();
+		}
+	}
 
 	@Override
+	//	draws the view
 	protected void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			//	draw black background
@@ -112,7 +128,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	//	takes a set of coordinates and returns the DrawObject touched at that location
     //	if point is within two or more object's bounding boxes, returns the one whose center is closest to touch location
-    private DrawObject detectTouchedObject(int x, int y) {
+    private DrawObject detectTouchedObject(float x, float y) {
     	ArrayList<DrawObject> touched = new ArrayList<DrawObject>();
     	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
     	for (DrawObject d : drawables) {
@@ -122,16 +138,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     	if (touched.size() == 1) return touched.get(0);
     	else if (touched.size() == 0) return null;
     	else {
-			//	*** this code is known to be buggy ***
-    		Point touch = new Point(x, y);
     		DrawObject temp = touched.get(0);
-    		double smallestDist = distBetweenPoints(temp.getLocation(), touch);
+    		double smallestDist = MovementComponent.distBetweenPoints(temp.X(), temp.Y(), x, y);
     		int logTemp = 0;
     		
     		//	test every touched object to find the object that has the closest center to touch location
     		for (int i = 1; i < touched.size(); i++) {
     			DrawObject temp2 = touched.get(i);
-    			double tempDist = distBetweenPoints(temp2.getLocation(), touch);
+    			double tempDist = MovementComponent.distBetweenPoints(temp2.X(), temp2.Y(), x, y);
     			Log.d(TAG, String.format("%d: %f vs %d: %f", logTemp, smallestDist, i, tempDist));
     			if (tempDist < smallestDist) {
     				smallestDist = tempDist;
@@ -141,10 +155,5 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     		}
     		return temp;
     	}
-    }
-    
-    //	utility method to find the distance between two points in space
-    private static double distBetweenPoints(Point a, Point b) {
-    	return Math.sqrt((double)Math.exp(a.x - b.x) + (double)Math.exp(a.y - b.y));
     }
 }
