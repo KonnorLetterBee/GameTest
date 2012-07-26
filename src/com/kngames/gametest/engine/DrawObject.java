@@ -1,20 +1,19 @@
-package com.kngames.gametest;
+package com.kngames.gametest.engine;
 
 import java.util.Random;
 
-import com.kngames.gametest.engine.*;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
+//import android.util.Log;
 import android.view.MotionEvent;
 
 //	small class to hold a Bitmap, and location data of an object to be drawn
 public class DrawObject implements Touchable {
 	//	logging structures
 	private static int classIds = 0;
+	@SuppressWarnings("unused")
 	private int id;
-	private static final String TAG = DrawObject.class.getSimpleName();
+	//private static final String TAG = DrawObject.class.getSimpleName();
 	
 	//	main structures
 	private Bitmap image;

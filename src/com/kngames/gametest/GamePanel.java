@@ -2,12 +2,12 @@ package com.kngames.gametest;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.engine.ContentManager;
+import com.kngames.gametest.engine.DrawObject;
 import com.kngames.gametest.engine.MovementComponent;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
@@ -24,18 +24,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 	private ArrayList<DrawObject> drawables;
     private DrawObject selected;
+    private ContentManager content;
 	
 	public GamePanel(Context context) {
 		super(context);
 		//	adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
+		//	initialize ContentManager
+		content = ContentManager.getContentManager(getResources());
+		
 		//	initialize DrawObject arraylist and fill it with 4 test objects
 		drawables = new ArrayList<DrawObject>();
-		drawables.add(new DrawObject(120, 120, loadScaledBitmap(R.drawable.red_square, 150, 150)));
-		drawables.add(new DrawObject(120, 420, loadScaledBitmap(R.drawable.blue_square, 150, 150)));
-		drawables.add(new DrawObject(420, 120, loadScaledBitmap(R.drawable.green_square, 150, 150)));
-		drawables.add(new DrawObject(420, 420, loadScaledBitmap(R.drawable.yellow_square, 150, 150)));
+		drawables.add(new DrawObject(120, 120, content.getScaledBitmap(R.drawable.red_square, 150, 150)));
+		drawables.add(new DrawObject(120, 420, content.getScaledBitmap(R.drawable.blue_square, 150, 150)));
+		drawables.add(new DrawObject(420, 120, content.getScaledBitmap(R.drawable.green_square, 150, 150)));
+		drawables.add(new DrawObject(420, 420, content.getScaledBitmap(R.drawable.yellow_square, 150, 150)));
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
@@ -119,11 +123,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				d.draw(canvas);
 			}
 		}
-	}
-	
-	//	loads a bitmap from resources and scales it to the specified dimensions
-	private Bitmap loadScaledBitmap(int id, int width, int height) {
-		return Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), id), width, height, false);
 	}
 	
 	//	takes a set of coordinates and returns the DrawObject touched at that location
