@@ -10,19 +10,18 @@ import android.view.MotionEvent;
 //	small class to hold a Bitmap, and location data of an object to be drawn
 public class DrawObject implements Touchable {
 	//	logging structures
-	private static int classIds = 0;
-	@SuppressWarnings("unused")
-	private int id;
+	protected static int classIds = 0;
+	protected int id;
 	//private static final String TAG = DrawObject.class.getSimpleName();
 	
 	//	main structures
-	private Bitmap image;
-	private MovementComponent move;
-	private AnimationComponent anim;
+	protected Bitmap image;
+	protected MovementComponent move;
+	protected AnimationComponent anim;
 	
 	//	convenient half-calculations for length and width
-	private int halfWidth;
-	private int halfHeight;
+	protected int halfWidth;
+	protected int halfHeight;
 	
 	//	constructs a DrawObject with a specified Bitmap centered at a specified x-y coordinate
 	public DrawObject(int x, int y, Bitmap draw) {
@@ -31,8 +30,10 @@ public class DrawObject implements Touchable {
 		
 		this.image = draw;
 		
-		halfWidth = image.getHeight() / 2;
-		halfHeight = image.getHeight() / 2;
+		if (draw != null) {
+			halfWidth = image.getWidth() / 2;
+			halfHeight = image.getHeight() / 2;
+		}
 		
 		move = new MovementComponent(x, y, 0, 0);
 		anim = new AnimationComponent(move);
@@ -72,10 +73,10 @@ public class DrawObject implements Touchable {
 	//	calculates whether a point is within the bounds of this object
 	public boolean isTouched(float x, float y) {
 		return
-			x >= (move.getX() - image.getWidth() / 2) && 
-			x <= (move.getX() + image.getWidth() / 2) &&
-			y >= (move.getY() - image.getHeight() / 2) && 
-			y <= (move.getY() + image.getHeight() / 2);
+			x >= (X() - halfWidth) && 
+			x <= (X() + halfWidth) &&
+			y >= (Y() - halfHeight) && 
+			y <= (Y() + halfHeight);
 	}
 
 	///

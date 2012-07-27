@@ -2,9 +2,8 @@ package com.kngames.gametest;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.engine.ContentManager;
-import com.kngames.gametest.engine.DrawObject;
-import com.kngames.gametest.engine.MovementComponent;
+import com.kngames.gametest.cards.*;
+import com.kngames.gametest.engine.*;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +23,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 	private ArrayList<DrawObject> drawables;
     private DrawObject selected;
-    private ContentManager content;
+    //private ContentManager content;
 	
 	public GamePanel(Context context) {
 		super(context);
@@ -32,14 +31,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		getHolder().addCallback(this);
 
 		//	initialize ContentManager
-		content = ContentManager.getContentManager(getResources());
+		//content = ContentManager.initContentManager(getResources());
 		
 		//	initialize DrawObject arraylist and fill it with 4 test objects
 		drawables = new ArrayList<DrawObject>();
-		drawables.add(new DrawObject(120, 120, content.getScaledBitmap(R.drawable.red_square, 150, 150)));
-		drawables.add(new DrawObject(120, 420, content.getScaledBitmap(R.drawable.blue_square, 150, 150)));
-		drawables.add(new DrawObject(420, 120, content.getScaledBitmap(R.drawable.green_square, 150, 150)));
-		drawables.add(new DrawObject(420, 420, content.getScaledBitmap(R.drawable.yellow_square, 150, 150)));
+		drawables.add(new TestCard(120, 180, "Card 1", ""));
+		drawables.add(new TestCard(120, 520, "Card 2", "This card has\nsome text."));
+		drawables.add(new TestCard(420, 180, "Card 3", 
+				"This card has\nnumerous lines\nof text, which is\nall manually\nmanaged."));
+		drawables.add(new TestCard(420, 520, "Card 4", "This card does\nfuck-all.\nYAY!  :D"));
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
