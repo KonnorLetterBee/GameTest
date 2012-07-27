@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -21,12 +22,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	//	the main game loop thread
 	private GameLoopThread thread;
 
+	private int screenHeight;
+	private int screenWidth;
+	
+	private Context context;
+	
 	private ArrayList<DrawObject> drawables;
     private DrawObject selected;
+    private ArrayList<GameZone> zones;
+    private GameZone selectedZone;
     //private ContentManager content;
 	
 	public GamePanel(Context context) {
 		super(context);
+		this.context = context;
 		//	adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
@@ -35,11 +44,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		
 		//	initialize DrawObject arraylist and fill it with 4 test objects
 		drawables = new ArrayList<DrawObject>();
+		/*
 		drawables.add(new TestCard(120, 180, "Card 1", ""));
 		drawables.add(new TestCard(120, 520, "Card 2", "This card has\nsome text."));
 		drawables.add(new TestCard(420, 180, "Card 3", 
 				"This card has\nnumerous lines\nof text, which is\nall manually\nmanaged."));
 		drawables.add(new TestCard(420, 520, "Card 4", "This card does\nfuck-all.\nYAY!  :D"));
+		*/
+		
+		zones = new ArrayList<GameZone>();
+		TestZone a = new TestZone(new Rect(10, 10, 210, 310), "data 1");
+		TestZone b = new TestZone(new Rect(10, 320, 210, 620), "data 2");
+		a.setOtherZone(b);
+		b.setOtherZone(a);
+		zones.add(a);
+		zones.add(b);
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
@@ -48,6 +67,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		setFocusable(true);
 	}
 
+	public void pauseGameThread() {
+		
+	}
+	
+	public void resumeGameThread() {
+		
+	}
+	
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
 
@@ -80,9 +107,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			//	calls the subroutine to detect which object if any was touched
 			selected = detectTouchedObject((int)event.getX(), (int)event.getY());
+			selectedZone = detectTouchedZone((int)event.getX(), (int)event.getY());
 			
 			//	calls the handleDownTouch method of the selected object
 			if (selected != null) selected.handleDownTouch(event);
+			if (selectedZone != null) selectedZone.handleDownTouch(event);
 			
 			// check if in the lower part of the screen we exit
 			if (event.getY() > getHeight() - 50) {
@@ -122,6 +151,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			for (DrawObject d : drawables) {
 				d.draw(canvas);
 			}
+			
+			//	draw each zone in the zones array
+			for (GameZone z : zones) {
+				z.draw(canvas);
+			}
 		}
 	}
 	
@@ -145,6 +179,37 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     		for (int i = 1; i < touched.size(); i++) {
     			DrawObject temp2 = touched.get(i);
     			double tempDist = MovementComponent.distBetweenPoints(temp2.X(), temp2.Y(), x, y);
+    			Log.d(TAG, String.format("%d: %f vs %d: %f", logTemp, smallestDist, i, tempDist));
+    			if (tempDist < smallestDist) {
+    				smallestDist = tempDist;
+    				temp = temp2;
+    				logTemp = i;
+    			}
+    		}
+    		return temp;
+    	}
+    }
+    
+    //	takes a set of coordinates and returns the DrawObject touched at that location
+    //	if point is within two or more object's bounding boxes, returns the one whose center is closest to touch location
+    private GameZone detectTouchedZone(float x, float y) {
+    	ArrayList<GameZone> touched = new ArrayList<GameZone>();
+    	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
+    	for (GameZone z : zones) {
+    		if (z.isTouched(x, y))	touched.add(z);
+    	}
+    	
+    	if (touched.size() == 1) return touched.get(0);
+    	else if (touched.size() == 0) return null;
+    	else {
+    		GameZone temp = touched.get(0);
+    		double smallestDist = MovementComponent.distBetweenPoints(temp.centerX(), temp.centerY(), x, y);
+    		int logTemp = 0;
+    		
+    		//	test every touched object to find the object that has the closest center to touch location
+    		for (int i = 1; i < touched.size(); i++) {
+    			GameZone temp2 = touched.get(i);
+    			double tempDist = MovementComponent.distBetweenPoints(temp2.centerX(), temp2.centerY(), x, y);
     			Log.d(TAG, String.format("%d: %f vs %d: %f", logTemp, smallestDist, i, tempDist));
     			if (tempDist < smallestDist) {
     				smallestDist = tempDist;

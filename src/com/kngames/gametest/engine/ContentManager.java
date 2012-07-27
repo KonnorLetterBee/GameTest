@@ -35,6 +35,7 @@ public class ContentManager {
 		}
 	}
 	
+	//	returns the instance of the ContentManager that already exists (even if there is none)
 	public static ContentManager getContentManager() {
 		return contentMan;
 	}

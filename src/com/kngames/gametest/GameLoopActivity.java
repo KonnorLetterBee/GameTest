@@ -36,6 +36,19 @@ public class GameLoopActivity extends Activity {
     }
     
     @Override
+    protected void onPause() {
+    	Log.d(TAG, "Pausing...");
+		super.onPause();
+		
+    }
+    
+    @Override
+    protected void onResume() {
+    	Log.d(TAG, "Resuming...");
+		super.onResume();
+    }
+    
+    @Override
     //	triggers a log message
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying...");
