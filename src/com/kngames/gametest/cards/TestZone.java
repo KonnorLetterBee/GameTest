@@ -22,6 +22,12 @@ public class TestZone extends GameZone {
 		drawables = new ArrayList<DrawObject>();
 		this.data = data;
 	}
+	
+	public TestZone(int x, int y, int originCorner, float width, float height, int sizeMode, String data) {
+		super(x, y, originCorner, width, height, sizeMode);
+		drawables = new ArrayList<DrawObject>();
+		this.data = data;
+	}
 
 	public void setOtherZone(TestZone other) {
 		this.otherZone = other;
@@ -45,6 +51,7 @@ public class TestZone extends GameZone {
 	
 	//	draws this TestZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;
+	private final int SUB_TEXT_SIZE = 20;
 	private final int BORDER_THICKNESS = 4;
 	@Override
 	public void draw(Canvas canvas) {
@@ -62,7 +69,12 @@ public class TestZone extends GameZone {
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
-		canvas.drawText("TEST", area.left + 10, area.top + TITLE_TEXT_SIZE + 5, paint);
-		canvas.drawText(data, area.left + 10, area.top + (2 * (TITLE_TEXT_SIZE + 5)), paint);
+		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
+		canvas.drawText("TEST", area.left + 10, textLocation, paint);
+		textLocation += TITLE_TEXT_SIZE + 5;
+		paint.setTextSize(SUB_TEXT_SIZE);
+		canvas.drawText(String.format("%d x %d", area.right-area.left, area.bottom-area.top), area.left + 10, textLocation, paint);
+		textLocation += TITLE_TEXT_SIZE + 5;
+		canvas.drawText(data, area.left + 10, textLocation, paint);
 	}
 }

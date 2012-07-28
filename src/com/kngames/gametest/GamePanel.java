@@ -11,9 +11,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -21,11 +23,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	//	the main game loop thread
 	private GameLoopThread thread;
-
-	private int screenHeight;
-	private int screenWidth;
-	
-	private Context context;
 	
 	private ArrayList<DrawObject> drawables;
     private DrawObject selected;
@@ -35,7 +32,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public GamePanel(Context context) {
 		super(context);
-		this.context = context;
 		//	adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
@@ -51,10 +47,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				"This card has\nnumerous lines\nof text, which is\nall manually\nmanaged."));
 		drawables.add(new TestCard(420, 520, "Card 4", "This card does\nfuck-all.\nYAY!  :D"));
 		*/
-		
+
+		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		GameZone.initZones(display.getWidth(), display.getHeight());
 		zones = new ArrayList<GameZone>();
-		TestZone a = new TestZone(new Rect(10, 10, 210, 310), "data 1");
-		TestZone b = new TestZone(new Rect(10, 320, 210, 620), "data 2");
+		TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT, "data 1");
+		TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT, "data 2");
 		a.setOtherZone(b);
 		b.setOtherZone(a);
 		zones.add(a);
