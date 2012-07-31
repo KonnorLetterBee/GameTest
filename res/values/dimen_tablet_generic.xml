@@ -1,0 +1,13 @@
+
+<resources>
+
+    <!-- margin widths -->
+	<dimen name="tb_small_margin" type="dimen">16dp</dimen>
+	<dimen name="tb_large_margin" type="dimen">32dp</dimen>
+	<dimen name="tb_huge_margin" type="dimen">64dp</dimen>
+	
+	<!-- card image sizes -->
+	<dimen name="tb_card_back_height" type="dimen">210dp</dimen>
+	<dimen name="tb_card_back_width" type="dimen">150dp</dimen>
+	
+</resources>

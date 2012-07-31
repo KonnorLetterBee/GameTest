@@ -3,13 +3,14 @@ package com.kngames.gametest;
 import java.util.ArrayList;
 
 import com.kngames.gametest.cards.*;
+import com.kngames.gametest.cards.graphics.GameZone;
+import com.kngames.gametest.cards.graphics.test.TestZone;
 import com.kngames.gametest.engine.*;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -30,6 +31,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameZone selectedZone;
     //private ContentManager content;
 	
+	@SuppressWarnings("deprecation")
 	public GamePanel(Context context) {
 		super(context);
 		//	adding the callback (this) to the surface holder to intercept events

@@ -1,4 +1,4 @@
-package com.kngames.gametest.cards;
+package com.kngames.gametest.cards.graphics.test;
 
 import java.util.Random;
 

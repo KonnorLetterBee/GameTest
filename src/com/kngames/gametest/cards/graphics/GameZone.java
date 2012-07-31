@@ -1,9 +1,5 @@
-package com.kngames.gametest.cards;
+package com.kngames.gametest.cards.graphics;
 
-import java.util.ArrayList;
-
-import com.kngames.gametest.GameLoopActivity;
-import com.kngames.gametest.engine.DrawObject;
 import com.kngames.gametest.engine.iface.*;
 
 import android.graphics.Canvas;

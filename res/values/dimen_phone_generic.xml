@@ -1,0 +1,9 @@
+<resources>
+	
+	<!-- margin sizes -->
+	<dimen name="ph_tiny_margin" type="dimen">4dp</dimen>
+	<dimen name="ph_small_margin" type="dimen">8dp</dimen>
+	<dimen name="ph_large_margin" type="dimen">16dp</dimen>
+	<dimen name="ph_huge_margin" type="dimen">32dp</dimen>
+	
+</resources>

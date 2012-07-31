@@ -1,0 +1,10 @@
+
+<resources>
+
+    <dimen name="tb_mans_card_height" type="dimen">392dp</dimen>
+	<dimen name="tb_mans_card_width" type="dimen">280dp</dimen>
+	<dimen name="tb_mans_text_field_width" type="dimen">500dp</dimen>
+	<dimen name="tb_mans_button_height" type="dimen">64dp</dimen>
+	<dimen name="tb_mans_counter_text_size" type="dimen">26dp</dimen>
+	
+</resources>

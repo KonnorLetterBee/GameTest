@@ -11,15 +11,27 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".GameLoopActivity"
-            android:label="@string/title_activity_game_loop" android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".regame.MainMenu" android:label="@string/app_name_long" >
+			<intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+        <activity android:name=".GameLoopActivity" android:label="@string/title_activity_game_loop" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name=".redata.CardInfo.MainInfoListActivity"></activity>
+		<activity android:name=".redata.BaseInfoActivity"></activity>
+		<activity android:name=".redata.CardInfo.CharacterSelectorActivity"></activity>
+		<activity android:name=".redata.CardInfo.CharacterInfoActivity"></activity>
+		<activity android:name=".redata.CardInfo.WeaponSelectorActivity"></activity>
+		<activity android:name=".redata.CardInfo.WeaponInfoActivity"></activity>
+		<activity android:name=".redata.CardInfo.ActionSelectorActivity"></activity>
+		<activity android:name=".redata.CardInfo.ActionInfoActivity"></activity>
+		<activity android:name=".redata.CardInfo.ItemSelectorActivity"></activity>
+		<activity android:name=".redata.CardInfo.ItemInfoActivity"></activity>
+		<activity android:name=".redata.CardInfo.MansionSelectorActivity"></activity>
+		<activity android:name=".redata.CardInfo.MansionInfoActivity"></activity>
+		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
+		<activity android:name=".redata.ScenInfo.ScenInfoActivity"></activity>
+		
+		<activity android:name=".fragtest.BasicFragmentActivity"></activity>
     </application>
 
 </manifest>

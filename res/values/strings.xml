@@ -1,8 +1,95 @@
 <resources>
-
+    
+    <!-- application strings -->
     <string name="app_name">GameTest</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+	<string name="app_name_long">Game Testbed</string>
+	<string name="menu_settings">Settings</string>
     <string name="title_activity_game_loop">GameLoop</string>
-
+    
+	<string name="card_encyclopedia">Card Encyclopedia</string>
+	<string name="scen_encyclopedia">Scenario Encyclopedia</string>
+	<string name="counter">Counter</string>
+	<string name="tracker">Stat Tracker</string>
+	<string name="mansion">Mansion Shuffler</string>
+	<string name="inventory">Inventory Shuffler</string>
+	<string name="scenario">Scenario Creator</string>
+	<string name="stats">Game Stat Tracker</string>
+	
+	<!-- shuffler button label strings -->
+	<string name="increment_all">Increment All</string>
+	<string name="reset_value">Reset</string>
+	<string name="plus">+</string>
+	<string name="minus">-</string>
+	<string name="add_one">+1</string>
+	<string name="sub_one">-1</string>
+	<string name="add_five">+5</string>
+	<string name="sub_five">-5</string>
+	<string name="add_ten">+10</string>
+	<string name="sub_ten">-10</string>
+	
+	<!-- shuffler label strings -->
+	<string name="max_turns">Max Turns</string>
+	<string name="cycle_label">To Cycle:</string>
+	<string name="reset_all">Reset All</string>
+	<string name="change_turns">Change # Turns</string>
+	
+	<!-- mansion button label strings -->
+	<string name="mans_shuffle">Shuffle into Mansion</string>
+	<string name="mans_bottom">Put on Bottom of Mansion</string>
+	<string name="mans_remove">Remove from Mansion</string>
+	<string name="mans_retrieve">Retrieve Removed card</string>
+	<string name="mans_change_mans">Change Mansions</string>
+	
+	<!-- inventory button label strings -->
+	<string name="inv_hand">Hand</string>
+	<string name="inv_play_area">Play Area</string>
+	<string name="inv_discard_pile">Discard Pile</string>
+	
+	<string name="inv_draw">Draw Card</string>
+	<string name="inv_play_all">Play All</string>
+	<string name="inv_end_turn">End Turn</string>
+	<string name="inv_retrieve">Retrieve Card</string>
+	<string name="inv_change_scenario">Change Scenario</string>
+	<string name="inv_discard_top">Discard Top of Deck</string>
+	
+	<!-- stat button label strings -->
+	<string name="stat_actions">Actions</string>
+	<string name="stat_ammo">Ammo</string>
+	<string name="stat_buys">Buys</string>
+	<string name="stat_explores">Explores</string>
+	<string name="stat_gold">Gold</string>
+	<string name="stat_character">Character</string>
+	<string name="stat_select_character">Select Character</string>
+	<string name="stat_health">Health</string>
+	<string name="stat_max_health">Max. Health</string>
+	<string name="stat_decs">Decorations</string>
+	<string name="stat_respawn">Respawn</string>
+	<string name="stat_ability1">Ability 1:</string>
+	<string name="stat_ability2">Ability 2:</string>
+	
+	<!-- scenario editor strings -->
+	<string name="scen_available">Available Cards</string>
+	<string name="scen_using">In-Use Cards</string>
+	<string name="scen_name">Scenario Name:</string>
+	<string name="scen_name_hint">Name of this Scenario</string>
+	<string name="scen_type">Intended Game Type:</string>
+	<string name="scen_description">Description:</string>
+	<string name="scen_description_hint">Description of this Scenario</string>
+	<string name="scen_notes">Other Notes:</string>
+	<string name="scen_notes_hint">Anything else about this Scenario</string>
+	<string name="scen_save">Save</string>
+	<string name="scen_load">Load</string>
+	<string name="scen_preview">Preview</string>
+	<string name="scen_clear">Clear</string>
+	<string name="scen_info">Change Info</string>
+	<string name="scen_cancel">Cancel</string>
+	<string name="scen_accept">Accept</string>
+	<string name="scen_edit_name">New Scenario</string>
+	<string name="scen_edit_delete">Delete</string>
+	<string name="scen_edit_new">New</string>
+	<string name="scen_basics">Use Basic Resources</string>
+	
+	<string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In auctor varius ligula quis imperdiet. Cras at arcu eget ligula lacinia aliquam. Donec ultricies neque eu nisl elementum sed luctus leo porta. Nunc gravida molestie sodales. Nam sit amet lacus a odio dictum dignissim. Pellentesque nec tincidunt urna. Praesent mattis dignissim ante, eu placerat leo placerat vel. Curabitur nec consequat nisl. Donec dapibus ante id enim faucibus ut scelerisque risus sollicitudin. Vestibulum ipsum sapien, molestie vel dignissim eleifend, ultricies vitae libero. Nullam sapien libero, posuere non ornare sed, tristique non nisi. Proin eu nunc sapien, vitae euismod neque. Fusce scelerisque purus sit amet leo accumsan scelerisque varius ligula interdum. Maecenas non mauris vitae lacus vehicula pulvinar sed quis dui. Nullam ultricies mollis tortor vel dictum. Phasellus tincidunt dui id odio sodales tincidunt. Curabitur malesuada dapibus neque, non malesuada augue tempus at. Integer et nulla et arcu sollicitudin semper.</string>
+    
 </resources>

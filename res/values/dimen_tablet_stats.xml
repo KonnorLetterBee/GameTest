@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tb_stat_label_size" type="dimen">20dp</dimen>
+    
+    <dimen name="tb_stat_button_width_small" type="dimen">40dp</dimen>
+    <dimen name="tb_stat_button_width" type="dimen">50dp</dimen>
+    <dimen name="tb_stat_text_field_width" type="dimen">300dp</dimen>
+    <dimen name="tb_stat_text_field_height" type="dimen">100dp</dimen>
+</resources>

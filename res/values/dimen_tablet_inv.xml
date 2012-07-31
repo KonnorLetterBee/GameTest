@@ -1,0 +1,18 @@
+
+<resources>
+
+    <dimen name="tb_inv_list_width" type="dimen">240dp</dimen>
+    <dimen name="tb_inv_list_height" type="dimen">400dp</dimen>
+    
+    <dimen name="tb_inv_panel_width" type="dimen">720dp</dimen>
+    
+    <dimen name="tb_inv_label_size" type="dimen">30dp</dimen>
+    <dimen name="tb_inv_scen_label_size" type="dimen">30dp</dimen>
+    
+    <dimen name="tb_inv_card_height" type="dimen">392dp</dimen>
+	<dimen name="tb_inv_card_width" type="dimen">280dp</dimen>
+	<dimen name="tb_inv_text_field_width" type="dimen">500dp</dimen>
+	<dimen name="tb_inv_button_height" type="dimen">64dp</dimen>
+	<dimen name="tb_inv_counter_text_size" type="dimen">26dp</dimen>
+	
+</resources>

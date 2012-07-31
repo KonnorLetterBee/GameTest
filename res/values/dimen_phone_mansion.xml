@@ -1,0 +1,10 @@
+
+<resources>
+
+    <dimen name="ph_mans_card_height" type="dimen">140dp</dimen>
+	<dimen name="ph_mans_card_width" type="dimen">100dp</dimen>
+	<dimen name="ph_mans_button_height" type="dimen">52dp</dimen>
+	<dimen name="ph_mans_counter_text_size" type="dimen">26dp</dimen>
+	<dimen name="ph_mans_button_text_size" type="dimen">12dp</dimen>
+	
+</resources>
