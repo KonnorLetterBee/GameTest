@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -156,6 +157,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			for (GameZone z : zones) {
 				z.draw(canvas);
 			}
+			
+			displayFps(canvas, avgFps);
+		}
+	}
+	
+	private String avgFps;
+	public void setAvgFps(String avgFps) {
+		this.avgFps = avgFps;
+	}
+	
+	private void displayFps(Canvas canvas, String fps) {
+		if (canvas != null && fps != null) {
+			Paint paint = new Paint();
+			paint.setARGB(255, 255, 255, 255);
+			canvas.drawText(fps, this.getWidth() - 50, 20, paint);
 		}
 	}
 	

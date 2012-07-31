@@ -20,6 +20,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@+id/titleView"
+			android:layout_alignRight="@+id/titleView"
 			android:layout_below="@+id/titleView"
 			android:layout_marginTop="@dimen/ph_small_margin"
 			android:textSize="@dimen/ph_info_body_text_size" />
@@ -29,6 +30,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@+id/titleView"
+			android:layout_alignRight="@+id/titleView"
 			android:layout_below="@+id/infoView"
 			android:layout_marginTop="@dimen/ph_small_margin"
 			android:textSize="@dimen/ph_info_footer_text_size" />
