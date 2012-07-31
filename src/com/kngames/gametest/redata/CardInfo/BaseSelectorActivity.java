@@ -1,6 +1,7 @@
 package com.kngames.gametest.redata.CardInfo;
 
 import com.kngames.gametest.R;
+import com.kngames.gametest.redata.BaseInfoFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.*;
 import java.util.ArrayList;
 
@@ -18,11 +19,11 @@ public abstract class BaseSelectorActivity extends Activity {
 	private ListView listView;
 	protected ArrayList<String> strings;
 	private ArrayAdapter<String> listAdapter;
-	protected Class<?> className;
+	protected int fragType;
 	protected RECard[] cardArray;
 	
-	public BaseSelectorActivity(Class<?> cls, RECard[] array) {
-		this.className = cls;
+	public BaseSelectorActivity(int fragType, RECard[] array) {
+		this.fragType = fragType;
 		this.cardArray = array;
 	}
 	
@@ -53,8 +54,9 @@ public abstract class BaseSelectorActivity extends Activity {
 	}
 	
 	protected void openInfoWindow(int ID) {
-		Intent editorIntent = new Intent(this, className);
-		editorIntent.putExtra("cardID", ID);
-		this.startActivity(editorIntent);
+		Intent infoIntent = new Intent(this, BaseInfoFragmentActivity.class);
+		infoIntent.putExtra("cardID", ID);
+		infoIntent.putExtra("fragType", fragType);
+		this.startActivity(infoIntent);
 	}
 }

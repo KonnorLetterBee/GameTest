@@ -142,10 +142,10 @@ public class ScenData {
 		new Scenario ("Surging Forward", GameMode.Story, Expans.Nightmare, true, new String[] {
 			"AC34", "AC36", "AC05", "AC02", "AC03", "AC38", "WE35", "WE32 WE33", "WE38 WE39", "WE02", "WE13 WE14", "WE36 WE37"},
 			"Will you rush through the Mansion, or take your time gathering everything?", null),
-		new Scenario ("ACmbition", GameMode.Story, Expans.Nightmare, true, new String[] {
+		new Scenario ("Ambition", GameMode.Story, Expans.Nightmare, true, new String[] {
 			"AC40", "AC35", "AC38", "WE08", "AC10", "AC37", "AC02", "AC41", "WE38 WE39", "WE34", "WE13 WE14", "WE36 WE37"},
 			"You only have 1 goal: Complete. Global. Saturation. And you intend to meet it.", null),
-		new Scenario ("Loaded for bear", GameMode.Story, Expans.Nightmare, true, new String[] {
+		new Scenario ("Loaded for Bear", GameMode.Story, Expans.Nightmare, true, new String[] {
 			"AM04", "WE34", "AC19", "AC17", "AC15", "WE41", "AC21", "WE35", "WE24", "WE20 WE21", "WE36 WE37", "WE32 WE33"},
 			"Itching for a fight? Make sure to go in with an ample supply of Weaponry", null),
 		new Scenario ("Griefing", GameMode.Story, Expans.Nightmare, true, new String[] {

@@ -1,17 +1,20 @@
-package com.kngames.gametest.redata.CardInfo;
+package com.kngames.gametest.redata.CardInfo.InfoFrags;
 
-import com.kngames.gametest.redata.BaseInfoActivity;
+import com.kngames.gametest.redata.BaseInfoFragment;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.ItemCard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class ItemInfoActivity extends BaseInfoActivity {
+public class ItemInfoFragment extends BaseInfoFragment {
 
-	public void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
-		Intent intent = getIntent();
+		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
 		ItemCard card = CardData.Items[cardID];
 		
@@ -21,7 +24,7 @@ public class ItemInfoActivity extends BaseInfoActivity {
 		infoText = generateItemInfo(card);
 		
 		footerText = String.format("CARD ID:  %s", card.getIDString());
-		super.onCreate(savedInstanceState);
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
 	public static String generateItemInfo(ItemCard card) {

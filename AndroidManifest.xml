@@ -31,7 +31,7 @@
 		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
 		<activity android:name=".redata.ScenInfo.ScenInfoActivity"></activity>
 		
-		<activity android:name=".fragtest.BasicFragmentActivity"></activity>
+		<activity android:name=".redata.BaseInfoFragmentActivity"></activity>
     </application>
 
 </manifest>

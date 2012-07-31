@@ -1,7 +1,6 @@
 package com.kngames.gametest.regame;
 
 import com.kngames.gametest.GameLoopActivity;
-import com.kngames.gametest.fragtest.BasicFragmentActivity;
 import com.kngames.gametest.redata.CardInfo.MainInfoListActivity;
 import com.kngames.gametest.redata.ScenInfo.ScenSelectorActivity;
 
@@ -15,6 +14,7 @@ public class MainMenu extends Activity {
 	
 	MainMenuView view;
     public static boolean PHONE_VIEW = false;
+    public static boolean SMALL_PHONE_VIEW = false;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,13 +24,13 @@ public class MainMenu extends Activity {
         int screenHeight = display.getHeight();
         //	if either dimension is below 800, assume phone screen
         if (screenHeight < 800 || screenWidth < 800) PHONE_VIEW = true;
+        if (screenHeight < 600 || screenWidth < 600) SMALL_PHONE_VIEW = true;
 		
 		view = new MainMenuView(getApplicationContext(), this);
 		
 		view.addButton("Game Test", GameLoopActivity.class);
 		view.addButton("Card List", MainInfoListActivity.class);
 		view.addButton("Scenario List", ScenSelectorActivity.class);
-		view.addButton("FragmentTest", BasicFragmentActivity.class);
 		
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		

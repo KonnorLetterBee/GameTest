@@ -1,18 +1,21 @@
-package com.kngames.gametest.redata.CardInfo;
+package com.kngames.gametest.redata.CardInfo.InfoFrags;
 
-import com.kngames.gametest.redata.BaseInfoActivity;
+import com.kngames.gametest.redata.BaseInfoFragment;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class MansionInfoActivity extends BaseInfoActivity {
+public class MansionInfoFragment extends BaseInfoFragment {
 
-	public void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
-		Intent intent = getIntent();
+		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
 		MansionCard card = CardData.Mansions[cardID];
 		
@@ -23,7 +26,7 @@ public class MansionInfoActivity extends BaseInfoActivity {
 		
 		footerText = String.format("CARD ID:  %s", card.getIDString());
 		if (card.getExpansion() == 3) footerText += String.format("\nPRINTED CARD ID:  %s-%03d", card.getIDPrefix(), card.getID() - 4);
-		super.onCreate(savedInstanceState);
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
 	public static String generateMansionInfo(MansionCard card) {

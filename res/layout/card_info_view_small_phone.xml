@@ -11,8 +11,6 @@
 			android:layout_alignParentRight="true"
 			android:layout_alignParentTop="true"
 			android:layout_marginTop="@dimen/ph_small_margin"
-			android:layout_marginLeft="@dimen/tb_small_margin"
-			android:layout_marginRight="@dimen/tb_small_margin"
 			android:textSize="@dimen/ph_info_title_text_size" />
 		
 		<TextView

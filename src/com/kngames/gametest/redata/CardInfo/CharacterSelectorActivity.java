@@ -2,12 +2,13 @@ package com.kngames.gametest.redata.CardInfo;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.redata.BaseInfoFragmentActivity;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
 public class CharacterSelectorActivity extends BaseSelectorActivity {
 	public CharacterSelectorActivity() {
-		super(CharacterInfoActivity.class, null);
+		super(BaseInfoFragmentActivity.CHAR_FRAG, null);
 		RECard[] array = new RECard[CardData.Characters.length + CardData.PromoCharacters.length + CardData.InfectedCharacters.length];
 		
 		int counter = 0;

@@ -144,25 +144,22 @@ public final class R {
     }
     public static final class id {
         public static final int cardList=0x7f080004;
-        public static final int fragment_button=0x7f080005;
-        public static final int fragment_content=0x7f080006;
+        public static final int fragment_content=0x7f080005;
         public static final int infoView=0x7f080001;
         public static final int linearLayout=0x7f080003;
-        public static final int menu_settings=0x7f080007;
+        public static final int menu_settings=0x7f080006;
         public static final int smallInfoView=0x7f080002;
         public static final int titleView=0x7f080000;
     }
     public static final class layout {
         public static final int activity_game_loop=0x7f030000;
         public static final int card_info_view_phone=0x7f030001;
-        public static final int card_info_view_tablet=0x7f030002;
-        public static final int card_list=0x7f030003;
-        public static final int card_list_main_menu=0x7f030004;
-        public static final int fragtest=0x7f030005;
+        public static final int card_info_view_small_phone=0x7f030002;
+        public static final int card_info_view_tablet=0x7f030003;
+        public static final int card_list=0x7f030004;
+        public static final int card_list_main_menu=0x7f030005;
         public static final int fragtest_activity=0x7f030006;
-        public static final int fragtest_activity_tab=0x7f030007;
-        public static final int fragtest_tab=0x7f030008;
-        public static final int listentry=0x7f030009;
+        public static final int listentry=0x7f030007;
     }
     public static final class menu {
         public static final int activity_game_loop=0x7f070000;

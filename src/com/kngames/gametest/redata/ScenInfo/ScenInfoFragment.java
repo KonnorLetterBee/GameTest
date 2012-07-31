@@ -2,7 +2,7 @@ package com.kngames.gametest.redata.ScenInfo;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.redata.BaseInfoActivity;
+import com.kngames.gametest.redata.BaseInfoFragment;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
@@ -10,12 +10,15 @@ import com.kngames.gametest.redata.CardTypes.RECard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class ScenInfoActivity extends BaseInfoActivity {
+public class ScenInfoFragment extends BaseInfoFragment {
 
-	public void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
-		Intent intent = getIntent();
+		Intent intent = getActivity().getIntent();
 		int scenID = intent.getIntExtra("scenID", 0);
 		Scenario scen = ScenData.Scenarios[scenID];
 		
@@ -25,7 +28,7 @@ public class ScenInfoActivity extends BaseInfoActivity {
 		infoText = generateScenarioInfo(scen);
 		
 		footerText = "";
-		super.onCreate(savedInstanceState);
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
 	public static String generateScenarioInfo(Scenario scen) {
