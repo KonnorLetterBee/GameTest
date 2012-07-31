@@ -68,7 +68,7 @@ public class ScenData {
 				"WE01 WE17 WE18", "WE02", "AC10", "AC02", "WE20 WE21 WE13 WE14", "WE08", "AC18", "AC03", "AC09", "AC05", "WE22 WE23", "WE19 WE15 WE16"},
 				"Combining the best of the best from Sets 1 and 2, this set up will give you everything you need to rip through the Mansion.", null),
 		new Scenario ("Infested Supply Depot", GameMode.Mercenary, Expans.Alliaces, true, new String[] {
-				"AC18", "WE19", "AC21", "WE20 WE21", "AC22", "AC15", "AC17", "WE18", "AC16", "AC19", "WE17 WE18", "WE22 WE23"},
+				"AC18", "WE19", "AC21", "WE20 WE21", "AC22", "AC15", "AC17", "WE24", "AC16", "AC19", "WE17 WE18", "WE22 WE23"},
 				"Featuring all the Weapons you could ever need, this abandoned Supply Depot guarantees one thing: Mass Destruction.", null),
 		new Scenario ("Infested Shopping Mall", GameMode.Mercenary, Expans.Alliaces, true, new String[] {
 				"IT04", "WE19", "AC21", "WE20 WE21", "AC22", "AC15", "AC17", "AC13", "AM04", "AC19", "AC14", "WE22 WE23"},
