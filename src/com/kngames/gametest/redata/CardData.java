@@ -142,6 +142,7 @@ public class CardData {
 		new InfectedCard("Cerberus", 			15, 3, 0, 25, 10, 2, ""),
 		new InfectedCard("El Gigante", 			16, 1, 0, 40, 40, 4, ""),
 		new InfectedCard("Executioner", 		17, 1, 0, 30, 25, 3, ""),
+		
 		new InfectedCard("Lurker", 				22, 3, 1, 10, 10, 1, ""),
 		new InfectedCard("Infected Bat", 		23, 3, 1, 15, 20, 1, "While this Infected is being Attacked with another Infected, this Infected gets +20 Health during this turn."),
 		new InfectedCard("Licker Beta", 		24, 2, 1, 30, 20, 3, ""),

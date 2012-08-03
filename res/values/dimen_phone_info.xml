@@ -1,6 +1,0 @@
-
-	<resources>
-		<dimen name="ph_info_title_text_size" type="dimen">20dp</dimen>
-		<dimen name="ph_info_body_text_size" type="dimen">14dp</dimen>
-		<dimen name="ph_info_footer_text_size" type="dimen">10dp</dimen>
-	</resources>

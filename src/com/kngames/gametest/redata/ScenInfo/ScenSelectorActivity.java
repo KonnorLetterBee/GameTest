@@ -3,7 +3,7 @@ package com.kngames.gametest.redata.ScenInfo;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.BaseInfoFragmentActivity;
+import com.kngames.gametest.redata.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
 
@@ -52,9 +52,9 @@ public class ScenSelectorActivity extends Activity {
 	}
 	
 	protected void openInfoWindow(int ID) {
-		Intent infoIntent = new Intent(this, BaseInfoFragmentActivity.class);
+		Intent infoIntent = new Intent(this, BaseSingleFragmentActivity.class);
 		infoIntent.putExtra("scenID", ID);
-		infoIntent.putExtra("fragType", BaseInfoFragmentActivity.SCEN_FRAG);
+		infoIntent.putExtra("fragType", BaseSingleFragmentActivity.SCEN_FRAG);
 		this.startActivity(infoIntent);
 	}
 }

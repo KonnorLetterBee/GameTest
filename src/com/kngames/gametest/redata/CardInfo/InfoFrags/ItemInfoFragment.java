@@ -16,7 +16,7 @@ public class ItemInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
-		ItemCard card = CardData.Items[cardID];
+		ItemCard card = CardData.findItem(cardID);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", card.getName());

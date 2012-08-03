@@ -17,21 +17,14 @@
 		</activity>
         <activity android:name=".GameLoopActivity" android:label="@string/title_activity_game_loop" android:screenOrientation="sensorLandscape"></activity>
         <activity android:name=".redata.CardInfo.MainInfoListActivity"></activity>
-		<activity android:name=".redata.BaseInfoActivity"></activity>
-		<activity android:name=".redata.CardInfo.CharacterSelectorActivity"></activity>
-		<activity android:name=".redata.CardInfo.CharacterInfoActivity"></activity>
-		<activity android:name=".redata.CardInfo.WeaponSelectorActivity"></activity>
-		<activity android:name=".redata.CardInfo.WeaponInfoActivity"></activity>
-		<activity android:name=".redata.CardInfo.ActionSelectorActivity"></activity>
-		<activity android:name=".redata.CardInfo.ActionInfoActivity"></activity>
-		<activity android:name=".redata.CardInfo.ItemSelectorActivity"></activity>
-		<activity android:name=".redata.CardInfo.ItemInfoActivity"></activity>
-		<activity android:name=".redata.CardInfo.MansionSelectorActivity"></activity>
-		<activity android:name=".redata.CardInfo.MansionInfoActivity"></activity>
-		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
-		<activity android:name=".redata.ScenInfo.ScenInfoActivity"></activity>
 		
-		<activity android:name=".redata.BaseInfoFragmentActivity"></activity>
+		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
+		
+		<activity android:name=".redata.BaseSingleFragmentActivity"></activity>
+		<activity android:name=".redata.ScenEditor.ScenarioInfoEditorActivity"></activity>
+		<activity android:name=".redata.ScenEditor.ScenarioEditorActivity"></activity>
+		
+		<activity android:name=".redata.CardInfo.SelectorFrags.MansionExpandSelectorFragment"></activity>
     </application>
 
 </manifest>

@@ -7,7 +7,6 @@ public abstract class Card {
 	//	constructs a default card
 	public Card(int ID) {
 		this.cardID = ID;
-		this.tag = generateTag();
 	}
 	
 	//	accessor methods
@@ -15,7 +14,6 @@ public abstract class Card {
 	public String getTag() { return tag; }
 	
 	//	provides a way to get a card based on tag info provided by extended classes
-	//	(must be extended)
 	public static Card parseTag(String tag) {
 		return null;
 	}

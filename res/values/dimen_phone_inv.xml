@@ -1,8 +1,0 @@
-
-<resources>
-
-    <dimen name="ph_inv_label_size" type="dimen">16dp</dimen>
-	<dimen name="ph_inv_button_height" type="dimen">44dp</dimen>
-	<dimen name="ph_inv_button_label_size" type="dimen">10dp</dimen>
-	
-</resources>

@@ -1,6 +1,7 @@
 package com.kngames.gametest.redata.CardInfo;
 
 import com.kngames.gametest.R;
+import com.kngames.gametest.redata.BaseSingleFragmentActivity;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -20,23 +21,33 @@ public class MainInfoListActivity extends TabActivity {
 	
 	    //	Create an Intent to launch an Activity for the tab, then initialize a TabSpec for each tab and add it to the TabHost
 	    //	Repeat for all tabs
-	    Intent intent = new Intent().setClass(this, CharacterSelectorActivity.class);
+	    Intent intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
+	    intent.putExtra("groupType", BaseSingleFragmentActivity.EXPAND_SELECTOR_FRAG);
+	    intent.putExtra("fragType", BaseSingleFragmentActivity.CHAR_FRAG);
 	    spec = tabHost.newTabSpec("characters").setIndicator("Characters", res.getDrawable(R.drawable.ic_tab_weapons)).setContent(intent);
 	    tabHost.addTab(spec);
 	    
-	    intent = new Intent().setClass(this, WeaponSelectorActivity.class);
+	    intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
+	    intent.putExtra("groupType", BaseSingleFragmentActivity.EXPAND_SELECTOR_FRAG);
+	    intent.putExtra("fragType", BaseSingleFragmentActivity.WEAPON_FRAG);
 	    spec = tabHost.newTabSpec("weapons").setIndicator("Weapons", res.getDrawable(R.drawable.ic_tab_weapons)).setContent(intent);
 	    tabHost.addTab(spec);
 
-	    intent = new Intent().setClass(this, ActionSelectorActivity.class);
+	    intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
+	    intent.putExtra("groupType", BaseSingleFragmentActivity.EXPAND_SELECTOR_FRAG);
+	    intent.putExtra("fragType", BaseSingleFragmentActivity.ACTION_FRAG);
 	    spec = tabHost.newTabSpec("actions").setIndicator("Actions", res.getDrawable(R.drawable.ic_tab_weapons)).setContent(intent);
 	    tabHost.addTab(spec);
 	    
-	    intent = new Intent().setClass(this, ItemSelectorActivity.class);
+	    intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
+	    intent.putExtra("groupType", BaseSingleFragmentActivity.SELECTOR_FRAG);
+	    intent.putExtra("fragType", BaseSingleFragmentActivity.ITEM_FRAG);
 	    spec = tabHost.newTabSpec("items").setIndicator("Items", res.getDrawable(R.drawable.ic_tab_weapons)).setContent(intent);
 	    tabHost.addTab(spec);
 	    
-	    intent = new Intent().setClass(this, MansionSelectorActivity.class);
+	    intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
+	    intent.putExtra("groupType", BaseSingleFragmentActivity.EXPAND_SELECTOR_FRAG);
+	    intent.putExtra("fragType", BaseSingleFragmentActivity.MANS_FRAG);
 	    spec = tabHost.newTabSpec("mansion").setIndicator("Mansion", res.getDrawable(R.drawable.ic_tab_weapons)).setContent(intent);
 	    tabHost.addTab(spec);
 	

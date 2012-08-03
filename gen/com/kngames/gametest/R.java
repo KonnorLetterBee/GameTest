@@ -11,122 +11,21 @@ public final class R {
     public static final class attr {
     }
     public static final class dimen {
-        public static final int main_button_height=0x7f040002;
-        public static final int main_button_height_half=0x7f040003;
-        public static final int main_button_height_large=0x7f040005;
-        /**  element sizes 
-         */
-        public static final int main_button_width=0x7f040000;
-        public static final int main_button_width_large=0x7f040004;
-        public static final int main_button_width_small=0x7f040001;
-        public static final int main_large_margin=0x7f040007;
+        public static final int ph_huge_margin=0x7f040003;
+        public static final int ph_large_margin=0x7f040002;
+        public static final int ph_small_margin=0x7f040001;
         /**  margin sizes 
          */
-        public static final int main_small_margin=0x7f040006;
-        /**  margin sizes 
-         */
-        public static final int ph_count_b_f_margin=0x7f040011;
-        public static final int ph_count_button_height=0x7f04000a;
-        public static final int ph_count_button_height_half=0x7f04000b;
-        /**  element sizes 
-         */
-        public static final int ph_count_button_width=0x7f040008;
-        public static final int ph_count_button_width_small=0x7f040009;
-        public static final int ph_count_display_text_size=0x7f040015;
-        public static final int ph_count_field_height=0x7f04000f;
-        public static final int ph_count_field_width=0x7f04000e;
-        public static final int ph_count_label_text_size=0x7f040014;
-        public static final int ph_count_large_button_height=0x7f04000d;
-        public static final int ph_count_large_button_width=0x7f04000c;
-        /**  text sizes 
-         */
-        public static final int ph_count_plus_minus_text_size=0x7f040012;
-        public static final int ph_count_recyclefield_width=0x7f040010;
-        public static final int ph_count_small_label_text_size=0x7f040013;
-        public static final int ph_huge_margin=0x7f040019;
-        public static final int ph_info_body_text_size=0x7f04001b;
-        public static final int ph_info_footer_text_size=0x7f04001c;
-        public static final int ph_info_title_text_size=0x7f04001a;
-        public static final int ph_inv_button_height=0x7f04001e;
-        public static final int ph_inv_button_label_size=0x7f04001f;
-        public static final int ph_inv_label_size=0x7f04001d;
-        public static final int ph_large_margin=0x7f040018;
-        public static final int ph_mans_button_height=0x7f040022;
-        public static final int ph_mans_button_text_size=0x7f040024;
-        public static final int ph_mans_card_height=0x7f040020;
-        public static final int ph_mans_card_width=0x7f040021;
-        public static final int ph_mans_counter_text_size=0x7f040023;
-        public static final int ph_small_margin=0x7f040017;
-        public static final int ph_stat_button_height=0x7f040029;
-        public static final int ph_stat_button_height_half=0x7f04002a;
-        public static final int ph_stat_button_width=0x7f040027;
-        public static final int ph_stat_button_width_large=0x7f040028;
-        public static final int ph_stat_button_width_small=0x7f040026;
-        public static final int ph_stat_field_height=0x7f04002e;
-        public static final int ph_stat_field_width=0x7f04002d;
-        public static final int ph_stat_label_size=0x7f040025;
-        public static final int ph_stat_plus_minus_text_size=0x7f04002f;
-        public static final int ph_stat_text_field_height=0x7f04002c;
-        public static final int ph_stat_text_field_width=0x7f04002b;
-        /**  margin sizes 
-         */
-        public static final int ph_tiny_margin=0x7f040016;
-        public static final int tab_info_body_text_size=0x7f040046;
-        public static final int tab_info_footer_text_size=0x7f040047;
-        public static final int tab_info_title_text_size=0x7f040045;
+        public static final int ph_tiny_margin=0x7f040000;
         /**  card image sizes 
          */
-        public static final int tb_card_back_height=0x7f040043;
-        public static final int tb_card_back_width=0x7f040044;
-        /**  margin sizes 
-         */
-        public static final int tb_count_b_f_margin=0x7f040038;
-        public static final int tb_count_button_height=0x7f040032;
-        public static final int tb_count_button_height_cardview=0x7f04003d;
-        public static final int tb_count_button_height_half=0x7f040033;
-        /**  element sizes 
-         */
-        public static final int tb_count_button_width=0x7f040030;
-        /**  special sizes 
-         */
-        public static final int tb_count_button_width_cardview=0x7f04003c;
-        public static final int tb_count_button_width_small=0x7f040031;
-        public static final int tb_count_cardview_button_padding=0x7f04003f;
-        public static final int tb_count_cardview_plus_minus_text_size=0x7f04003e;
-        public static final int tb_count_counter_text_size=0x7f04003a;
-        public static final int tb_count_display_text_size=0x7f04003b;
-        public static final int tb_count_field_height=0x7f040037;
-        public static final int tb_count_field_width=0x7f040036;
-        public static final int tb_count_large_button_height=0x7f040035;
-        public static final int tb_count_large_button_width=0x7f040034;
-        /**  text sizes 
-         */
-        public static final int tb_count_plus_minus_text_size=0x7f040039;
-        public static final int tb_huge_margin=0x7f040042;
-        public static final int tb_inv_button_height=0x7f040050;
-        public static final int tb_inv_card_height=0x7f04004d;
-        public static final int tb_inv_card_width=0x7f04004e;
-        public static final int tb_inv_counter_text_size=0x7f040051;
-        public static final int tb_inv_label_size=0x7f04004b;
-        public static final int tb_inv_list_height=0x7f040049;
-        public static final int tb_inv_list_width=0x7f040048;
-        public static final int tb_inv_panel_width=0x7f04004a;
-        public static final int tb_inv_scen_label_size=0x7f04004c;
-        public static final int tb_inv_text_field_width=0x7f04004f;
-        public static final int tb_large_margin=0x7f040041;
-        public static final int tb_mans_button_height=0x7f040055;
-        public static final int tb_mans_card_height=0x7f040052;
-        public static final int tb_mans_card_width=0x7f040053;
-        public static final int tb_mans_counter_text_size=0x7f040056;
-        public static final int tb_mans_text_field_width=0x7f040054;
+        public static final int tb_card_back_height=0x7f040007;
+        public static final int tb_card_back_width=0x7f040008;
+        public static final int tb_huge_margin=0x7f040006;
+        public static final int tb_large_margin=0x7f040005;
         /**  margin widths 
          */
-        public static final int tb_small_margin=0x7f040040;
-        public static final int tb_stat_button_width=0x7f040059;
-        public static final int tb_stat_button_width_small=0x7f040058;
-        public static final int tb_stat_label_size=0x7f040057;
-        public static final int tb_stat_text_field_height=0x7f04005b;
-        public static final int tb_stat_text_field_width=0x7f04005a;
+        public static final int tb_small_margin=0x7f040004;
     }
     public static final class drawable {
         public static final int am001_sm=0x7f020000;
@@ -143,23 +42,49 @@ public final class R {
         public static final int yellow_square=0x7f02000b;
     }
     public static final class id {
-        public static final int cardList=0x7f080004;
-        public static final int fragment_content=0x7f080005;
-        public static final int infoView=0x7f080001;
-        public static final int linearLayout=0x7f080003;
-        public static final int menu_settings=0x7f080006;
-        public static final int smallInfoView=0x7f080002;
-        public static final int titleView=0x7f080000;
+        public static final int acceptButton=0x7f08001e;
+        public static final int available_label=0x7f080006;
+        public static final int basicsBox=0x7f08001c;
+        public static final int button_panel=0x7f08000c;
+        public static final int button_panel_scroller=0x7f080009;
+        public static final int cancelButton=0x7f08001d;
+        public static final int cardList=0x7f080001;
+        public static final int descField=0x7f080019;
+        public static final int descLabel=0x7f080018;
+        public static final int empty=0x7f080003;
+        public static final int fragment_content=0x7f08001f;
+        public static final int label_layout=0x7f080005;
+        public static final int linearLayout=0x7f080000;
+        public static final int list=0x7f080002;
+        public static final int menu_settings=0x7f080020;
+        public static final int nameField=0x7f080015;
+        public static final int nameLabel=0x7f080014;
+        public static final int name_view=0x7f080004;
+        public static final int notesField=0x7f08001b;
+        public static final int notesLabel=0x7f08001a;
+        public static final int scen_edit_delete_button=0x7f080010;
+        public static final int scen_edit_info_button=0x7f080012;
+        public static final int scen_edit_load_button=0x7f08000f;
+        public static final int scen_edit_new_button=0x7f08000d;
+        public static final int scen_edit_preview_button=0x7f080011;
+        public static final int scen_edit_save_button=0x7f08000e;
+        public static final int scenario_list_available=0x7f08000a;
+        public static final int scenario_list_using=0x7f08000b;
+        public static final int scrollView1=0x7f080013;
+        public static final int textview_layout=0x7f080008;
+        public static final int typeLabel=0x7f080016;
+        public static final int typeSpinner=0x7f080017;
+        public static final int using_label=0x7f080007;
     }
     public static final class layout {
         public static final int activity_game_loop=0x7f030000;
-        public static final int card_info_view_phone=0x7f030001;
-        public static final int card_info_view_small_phone=0x7f030002;
-        public static final int card_info_view_tablet=0x7f030003;
-        public static final int card_list=0x7f030004;
-        public static final int card_list_main_menu=0x7f030005;
-        public static final int fragtest_activity=0x7f030006;
-        public static final int listentry=0x7f030007;
+        public static final int card_list=0x7f030001;
+        public static final int card_list_expand=0x7f030002;
+        public static final int card_list_main_menu=0x7f030003;
+        public static final int listentry=0x7f030004;
+        public static final int scenario_editor=0x7f030005;
+        public static final int scenario_info_editor=0x7f030006;
+        public static final int standard_frag_activity=0x7f030007;
     }
     public static final class menu {
         public static final int activity_game_loop=0x7f070000;

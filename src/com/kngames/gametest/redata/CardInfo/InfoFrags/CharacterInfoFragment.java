@@ -17,17 +17,15 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
-		
-		int mainLength = CardData.Characters.length;
-		int promoLength = CardData.PromoCharacters.length;
+		int type = intent.getIntExtra("charType", 0);
 		
 		//	determine which list the card came from
-		if (cardID < mainLength + promoLength) {
+		if (type == 0 || type == 1) {
 			CharacterCard card;
-			if (cardID < mainLength) {
-				card = CardData.Characters[cardID];
+			if (type == 0) {
+				card = CardData.findCharacter(cardID);
 			} else {
-				card = CardData.PromoCharacters[cardID - mainLength];
+				card = CardData.findPromoCharacter(cardID);
 			}
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
@@ -43,7 +41,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			footerText = String.format("CARD ID:  %s", card.getIDString());
 			
 		} else {
-			InfectedCharacterCard card = CardData.InfectedCharacters[cardID - mainLength - promoLength];
+			InfectedCharacterCard card = CardData.findInfectedCharacter(cardID);
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 			titleText = String.format("%s", card.getName());
