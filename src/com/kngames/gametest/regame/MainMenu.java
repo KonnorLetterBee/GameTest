@@ -1,11 +1,12 @@
 package com.kngames.gametest.regame;
 
 import com.kngames.gametest.GameLoopActivity;
+import com.kngames.gametest.redata.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.ScenData;
-import com.kngames.gametest.redata.CardInfo.MainInfoListActivity;
+import com.kngames.gametest.redata.Info.MainInfoListActivity;
+import com.kngames.gametest.redata.Info.SelectorFrags.ScenExpandSelectorFragment;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;
-import com.kngames.gametest.redata.ScenInfo.ScenSelectorActivity;
 import com.kngames.gametest.regame.Dialog.ScenarioChooser;
 
 import android.app.Activity;
@@ -29,7 +30,11 @@ public class MainMenu extends Activity {
 		
 		view.addButton("Game Test", GameLoopActivity.class);
 		view.addButton("Card List", MainInfoListActivity.class);
-		view.addButton("Scenario List", ScenSelectorActivity.class);
+		view.addButton("Scenario List", new View.OnClickListener() {
+			public void onClick(View v) {
+				startScenList();
+			}
+		});
 		view.addButton("Scenario Editor", new View.OnClickListener() {
 			public void onClick(View v) {
 				if (ScenData.CustomScenarios.size() == 0) startScenEditor(-1);
@@ -74,6 +79,14 @@ public class MainMenu extends Activity {
 	}
 	
 	//	provides a shorthand for starting the scenario editor
+	private void startScenList() {
+		Intent intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
+		intent.putExtra("groupType", BaseSingleFragmentActivity.EXPAND_SELECTOR_FRAG);
+	    intent.putExtra("fragType", BaseSingleFragmentActivity.SCEN_FRAG);
+		this.startActivity(intent);
+	}
+	
+//	provides a shorthand for starting the scenario editor
 	private void startScenEditor(int customIndex) {
 		Intent intent = new Intent().setClass(this, ScenarioEditorActivity.class);
 		intent.putExtra("scen_index", customIndex);

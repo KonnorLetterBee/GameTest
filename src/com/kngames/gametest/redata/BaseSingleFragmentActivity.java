@@ -1,9 +1,8 @@
 package com.kngames.gametest.redata;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.CardInfo.InfoFrags.*;
-import com.kngames.gametest.redata.CardInfo.SelectorFrags.*;
-import com.kngames.gametest.redata.ScenInfo.ScenInfoFragment;
+import com.kngames.gametest.redata.Info.InfoFrags.*;
+import com.kngames.gametest.redata.Info.SelectorFrags.*;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,7 +47,7 @@ public class BaseSingleFragmentActivity extends FragmentActivity {
                 case CHAR_FRAG:		ft.add(R.id.fragment_content, new CharacterExpandSelectorFragment());  break;
                 case MANS_FRAG:		ft.add(R.id.fragment_content, new MansionExpandSelectorFragment());  break;
                 case WEAPON_FRAG:	ft.add(R.id.fragment_content, new WeaponExpandSelectorFragment());  break;
-                case SCEN_FRAG:		ft.add(R.id.fragment_content, new ScenInfoFragment());  break;
+                case SCEN_FRAG:		ft.add(R.id.fragment_content, new ScenExpandSelectorFragment());  break;
             	}	break;
             case INFO_FRAG:
             	switch (fragType) {

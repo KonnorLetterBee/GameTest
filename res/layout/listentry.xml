@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<com.cperrigo.rehelper.GameStructs.Activity.PhoneListEntry
+<com.kngames.gametest.redata.PhoneListEntry
     android:fadingEdge="vertical" 
     android:scrollbars="vertical" 
     android:padding="5dp" 

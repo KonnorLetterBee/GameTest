@@ -68,7 +68,7 @@ public class ScenarioEditorActivity extends Activity {
 		customIndex = intent.getIntExtra("scen_index", -1);
 
         if (MainMenu.TABLET_VIEW == false) {
-        	this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        	this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         	listResID = R.layout.listentry;
         }
         setContentView(R.layout.scenario_editor);
@@ -119,7 +119,7 @@ public class ScenarioEditorActivity extends Activity {
 			public void onClick(View v) {
 				generateInitialList();
 				customIndex = -1;
-		        ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario("", GameMode.Story, Expans.Custom, true, "", "", ""));
+		        ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
 		        updateViews();
 				popupToast("New scenario created.");
 			}
@@ -154,7 +154,7 @@ public class ScenarioEditorActivity extends Activity {
         //	determine what to do based on customIndex
         
         if (customIndex == -1) {
-        	ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario("", GameMode.Story, Expans.Custom, true, "", "", ""));
+        	ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
         } else if (customIndex >= 0) {
         	ScenData.customTempScenario = ScenData.CustomScenarios.get(customIndex);
         	loadScenarioData();
@@ -252,7 +252,7 @@ public class ScenarioEditorActivity extends Activity {
 			ScenData.CustomScenarios = ScenData.loadCustomScenarios();
 			generateInitialList();
 			customIndex = -1;
-	        ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario("", GameMode.Story, Expans.Custom, true, "", "", ""));
+	        ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
 	        updateViews();
 	        popupToast("Scenario erased.");
 		}

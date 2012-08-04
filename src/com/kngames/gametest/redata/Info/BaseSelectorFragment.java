@@ -1,4 +1,4 @@
-package com.kngames.gametest.redata.CardInfo;
+package com.kngames.gametest.redata.Info;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.redata.BaseSingleFragmentActivity;

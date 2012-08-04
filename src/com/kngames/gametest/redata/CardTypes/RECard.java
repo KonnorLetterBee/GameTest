@@ -22,6 +22,7 @@ public abstract class RECard extends Card {
 		this.expansion = expans;
 		this.text = text;
 		this.deckQuantity = quantity;
+		this.tag = generateTag();
 	}
 	
 	public String getName() { return name; }

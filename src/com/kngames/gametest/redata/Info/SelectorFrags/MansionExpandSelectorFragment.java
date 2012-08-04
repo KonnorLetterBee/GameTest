@@ -1,16 +1,16 @@
-package com.kngames.gametest.redata.CardInfo.SelectorFrags;
+package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
 import com.kngames.gametest.redata.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardData;
-import com.kngames.gametest.redata.CardInfo.BaseExpandableSelectorFragment;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.Info.BaseExpandableSelectorFragment;
 
-public class ActionExpandSelectorFragment extends BaseExpandableSelectorFragment {
-	public ActionExpandSelectorFragment() {
+public class MansionExpandSelectorFragment extends BaseExpandableSelectorFragment {
+	public MansionExpandSelectorFragment() {
 		super();
-		this.fragType = BaseSingleFragmentActivity.ACTION_FRAG;
+		this.fragType = BaseSingleFragmentActivity.MANS_FRAG;
 		this.catTitles = generateTitles();
 		this.cardCollection = generateCollection();
 	}
@@ -22,8 +22,8 @@ public class ActionExpandSelectorFragment extends BaseExpandableSelectorFragment
 	public static RECard[][] generateCollection() {
 		ArrayList<ArrayList<RECard>> dualList = new ArrayList<ArrayList<RECard>>();
 		for (int i = 0; i < 4; i++) dualList.add(new ArrayList<RECard>());
-		for(int i = 0; i < CardData.Actions.length; i++) {
-			RECard temp = CardData.Actions[i];
+		for(int i = 0; i < CardData.Mansions.length; i++) {
+			RECard temp = CardData.Mansions[i];
 			int slot = temp.getExpansion();
 			dualList.get(slot).add(temp);
 		}

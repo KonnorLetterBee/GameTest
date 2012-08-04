@@ -7,9 +7,11 @@ import com.kngames.gametest.redata.ScenData.GameMode;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
 public class Scenario {
+	private int id;
+	private static int nextID = 1;
 	private String name;
 	private GameMode mode;
-	private Expans expans;
+	private int expans;
 	private boolean[] expansRequired;
 	private ArrayList<RECard[]> cards;
 	private boolean basics;
@@ -17,7 +19,27 @@ public class Scenario {
 	private String notes;
 	
 	//	creates a new scenario object and loads it with cards from a list of tags (see CardData)
-	public Scenario (String name, GameMode gameMode, Expans expans, boolean basics, String[] tagList, String desc, String notes) {
+	public Scenario (int id, String name, GameMode gameMode, Expans expans, boolean basics, String[] tagList, String desc, String notes) {
+		this.id = nextID;
+		nextID++;
+		this.name = name;
+		this.mode = gameMode;
+		this.expans = expans.ordinal();
+		this.desc = desc;
+		this.notes = notes;
+		this.basics = basics;
+		this.setCards(tagList);
+	}
+	
+	//	creates a new scenario object and loads it with cards from a parsable tag string (see CardData)
+	public Scenario (int id, String name, GameMode gameMode, Expans expans, boolean basics, String tagList, String desc, String notes) {
+		this(id, name, gameMode, expans, basics, CardData.parseSingleTagString(tagList), desc, notes);
+	}
+	
+	//	creates a new scenario object and loads it with cards from a list of tags (see CardData)
+	public Scenario (int id, String name, GameMode gameMode, int expans, boolean basics, String[] tagList, String desc, String notes) {
+		this.id = nextID;
+		nextID++;
 		this.name = name;
 		this.mode = gameMode;
 		this.expans = expans;
@@ -28,13 +50,14 @@ public class Scenario {
 	}
 	
 	//	creates a new scenario object and loads it with cards from a parsable tag string (see CardData)
-	public Scenario (String name, GameMode gameMode, Expans expans, boolean basics, String tagList, String desc, String notes) {
-		this(name, gameMode, expans, basics, CardData.parseSingleTagString(tagList), desc, notes);
+	public Scenario (int id, String name, GameMode gameMode, int expans, boolean basics, String tagList, String desc, String notes) {
+		this(id, name, gameMode, expans, basics, CardData.parseSingleTagString(tagList), desc, notes);
 	}
 
+	public int getID() { return id; }
 	public String getName() { return name; }
 	public GameMode getMode() { return mode; }
-	public Expans getExpans() { return expans; }
+	public int getExpans() { return expans; }
 	public boolean[] getExpansRequired() { return expansRequired; }
 	public ArrayList<RECard[]> getCards() { return cards; }
 	public boolean useBasics() { return basics; }
@@ -43,7 +66,7 @@ public class Scenario {
 	
 	public void setName(String name) { this.name = name; }
 	public void setMode(GameMode mode) { this.mode = mode; }
-	public void setExpans(Expans expans) { this.expans = expans; }
+	public void setExpans(int expans) { this.expans = expans; }
 	public void setBasics(boolean basics) { this.basics = basics; }
 	public void setDesc(String desc) { this.desc = desc; }
 	public void setNotes(String notes) { this.notes = notes; }
