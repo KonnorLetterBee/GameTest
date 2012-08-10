@@ -78,17 +78,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		
 	}
 	
-	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
 
-	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		//	surface is created, so game loop can be safely started
 		thread.setRunning(true);
 		thread.start();
 	}
 
-	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.d(TAG, "Surface is being destroyed");
 		//	tell the thread to shut down and wait for it to finish (clean shutdown)

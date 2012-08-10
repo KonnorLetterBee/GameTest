@@ -96,20 +96,15 @@ public class GameZone implements Touchable, Drawable {
 		screenWidth = width;
 	}
 	
-	@Override
 	public boolean isTouched(float x, float y) {
 		return area.contains((int)x, (int)y);
 	}
 	
-	@Override
 	public void handleDownTouch(MotionEvent event) { }
 
-	@Override
 	public void handleMoveTouch(MotionEvent event) { }
 
-	@Override
 	public void handleUpTouch(MotionEvent event) { }
 	
-	@Override
 	public void draw(Canvas canvas) { }
 }
