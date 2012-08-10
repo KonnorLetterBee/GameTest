@@ -6,6 +6,8 @@ import com.kngames.gametest.cards.*;
 import com.kngames.gametest.cards.graphics.GameZone;
 import com.kngames.gametest.cards.graphics.test.TestZone;
 import com.kngames.gametest.engine.*;
+import com.kngames.gametest.engine.graphics.DrawObject;
+import com.kngames.gametest.engine.graphics.MovementComponent;
 
 import android.app.Activity;
 import android.content.Context;

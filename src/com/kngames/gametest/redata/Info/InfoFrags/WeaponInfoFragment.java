@@ -1,6 +1,6 @@
 package com.kngames.gametest.redata.Info.InfoFrags;
 
-import com.kngames.gametest.redata.BaseInfoFragment;
+import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
 

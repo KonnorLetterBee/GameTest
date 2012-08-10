@@ -1,4 +1,4 @@
-package com.kngames.gametest.redata;
+package com.kngames.gametest.cards.structures;
 
 import com.kngames.gametest.regame.MainMenu;
 

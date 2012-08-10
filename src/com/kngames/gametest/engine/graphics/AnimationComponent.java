@@ -1,4 +1,4 @@
-package com.kngames.gametest.engine;
+package com.kngames.gametest.engine.graphics;
 
 import android.util.FloatMath;
 

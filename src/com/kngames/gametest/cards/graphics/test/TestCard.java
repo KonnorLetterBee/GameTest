@@ -8,9 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.view.MotionEvent;
 
-import com.kngames.gametest.engine.AnimationComponent;
-import com.kngames.gametest.engine.DrawObject;
-import com.kngames.gametest.engine.MovementComponent;
+import com.kngames.gametest.engine.graphics.AnimationComponent;
+import com.kngames.gametest.engine.graphics.DrawObject;
+import com.kngames.gametest.engine.graphics.MovementComponent;
 
 public class TestCard extends DrawObject {
 	//	logging structures

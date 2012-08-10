@@ -3,7 +3,7 @@ package com.kngames.gametest.cards.graphics.test;
 import java.util.ArrayList;
 
 import com.kngames.gametest.cards.graphics.GameZone;
-import com.kngames.gametest.engine.DrawObject;
+import com.kngames.gametest.engine.graphics.DrawObject;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

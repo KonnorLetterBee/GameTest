@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.BaseSingleFragmentActivity;
+import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
 

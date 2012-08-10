@@ -1,7 +1,7 @@
 package com.kngames.gametest.redata.Info;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.BaseSingleFragmentActivity;
+import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 
 import android.app.TabActivity;
 import android.content.Intent;

@@ -1,13 +1,13 @@
 package com.kngames.gametest.regame;
 
 import com.kngames.gametest.GameLoopActivity;
-import com.kngames.gametest.redata.BaseSingleFragmentActivity;
+import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Info.MainInfoListActivity;
-import com.kngames.gametest.redata.Info.SelectorFrags.ScenExpandSelectorFragment;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;
 import com.kngames.gametest.regame.Dialog.ScenarioChooser;
+import com.kngames.gametest.testcode.*;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,6 +41,7 @@ public class MainMenu extends Activity {
 				else popupScenChooserDialog();
 			}
 		});
+		view.addButton("Data Test", DataTestActivity.class);
 		
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		

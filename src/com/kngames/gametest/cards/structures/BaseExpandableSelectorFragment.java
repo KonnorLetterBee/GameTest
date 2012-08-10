@@ -1,11 +1,10 @@
-package com.kngames.gametest.redata.Info;
+package com.kngames.gametest.cards.structures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
 import android.content.Intent;

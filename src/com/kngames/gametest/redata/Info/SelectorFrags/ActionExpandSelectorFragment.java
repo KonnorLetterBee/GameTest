@@ -2,10 +2,10 @@ package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.redata.BaseSingleFragmentActivity;
+import com.kngames.gametest.cards.structures.BaseExpandableSelectorFragment;
+import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.Info.BaseExpandableSelectorFragment;
 
 public class ActionExpandSelectorFragment extends BaseExpandableSelectorFragment {
 	public ActionExpandSelectorFragment() {
