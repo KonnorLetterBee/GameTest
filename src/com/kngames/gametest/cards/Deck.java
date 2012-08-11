@@ -10,9 +10,9 @@ public abstract class Deck {
 	 *  The "front" of the deck is always index 0, regardless of face-up/face-down
 	 */
 	
-	private ArrayList<Card> cards;		//	structure to track all of the Card objects in this Deck
-	private boolean faceUp;				//	variable that designates whether or not the deck is face up or face down
-	private Random gen;					//	Random object used in deck shuffling and random selection of cards
+	protected ArrayList<Card> cards;		//	structure to track all of the Card objects in this Deck
+	protected boolean faceUp;				//	variable that designates whether or not the deck is face up or face down
+	protected Random gen;					//	Random object used in deck shuffling and random selection of cards
 	
 	//	constructs a new empty Deck object
 	public Deck () {
@@ -39,34 +39,37 @@ public abstract class Deck {
 	}
 	
 	//	gets the number of Cards currently stored in this Deck
-	public int getSize() { return cards.size(); }
+	public int size() { return cards.size(); }
 	
 	//	gets the current face-up/face-down state of this deck
 	public boolean isFaceUp() { return faceUp; }
+	
+	//	explicitly sets whether the deck is face up or face down
+	public void setFaceUp(boolean faceUp) { this.faceUp = faceUp; }
 	
 	//	flips the deck face-up if it's face-down, or face-down if it's face-up
 	public void flipDeck() { faceUp = !faceUp; }
 	
 	//	adds a Card to the front of this Deck (index 0)
-	public void addToFront(Card toAdd) { cards.add(0, toAdd); }
+	public void addFront(Card toAdd) { cards.add(0, toAdd); }
 	
 	//	adds a Card to the back of this Deck (index size() - 1)
-	public void addToBack(Card toAdd) { cards.add(cards.size(), toAdd); }
+	public void addBack(Card toAdd) { cards.add(cards.size(), toAdd); }
 	
 	//	adds a Card to the top of this Deck, depends on face-up/face-down
-	public void addToTop(Card toAdd) {
+	public void addTop(Card toAdd) {
 		if (faceUp) { cards.add(0, toAdd); }
 		else { cards.add(cards.size(), toAdd); }
 	}
 	
 	//	adds a Card to the bottom of this Deck, depends on face-up/face-down
-	public void addToBottom(Card toAdd) {
+	public void addBottom(Card toAdd) {
 		if (faceUp) { cards.add(cards.size(), toAdd); }
 		else { cards.add(0, toAdd); }
 	}
 	
 	//	removes and returns the first card in this Deck object (from index 0)
-	public Card popFirstCard() {
+	public Card popFirst() {
 		if (cards.size() == 0) return null;
 		Card temp = cards.get(0);
 		cards.remove(0);
@@ -74,7 +77,7 @@ public abstract class Deck {
 	}
 	
 	//	removes and returns the last card in this Deck object (from index size() - 1)
-	public Card popLastCard() {
+	public Card popLast() {
 		if (cards.size() == 0) return null;
 		Card temp = cards.get(cards.size() - 1);
 		cards.remove(cards.size() - 1);
@@ -82,7 +85,7 @@ public abstract class Deck {
 	}
 	
 	//	removes and returns the top card in this Deck object, depends on face-up/face-down
-	public Card popTopCard() {
+	public Card popTop() {
 		if (cards.size() == 0) return null;
 		Card temp;
 		if (faceUp) {
@@ -96,7 +99,7 @@ public abstract class Deck {
 	}
 	
 	//	removes and returns the bottom card in this Deck object, depends on face-up/face-down
-	public Card popBottomCard() {
+	public Card popBottom() {
 		if (cards.size() == 0) return null;
 		Card temp;
 		if (faceUp) {
@@ -110,7 +113,7 @@ public abstract class Deck {
 	}
 	
 	//	removes and returns the card at the specified index in this Deck object (from index 0)
-	public Card popCard(int index) {
+	public Card pop(int index) {
 		if (cards.size() == 0 || index >= cards.size() || index < 0) return null;
 		Card temp = cards.get(index);
 		cards.remove(index);
@@ -118,33 +121,33 @@ public abstract class Deck {
 	}
 	
 	//	returns the first card in this Deck object (from index 0)
-	public Card peekFirstCard() {
+	public Card peekFirst() {
 		if (cards.size() == 0) return null;
 		return cards.get(0);
 	}
 	
 	//	returns the last card in this Deck object (from index size() - 1)
-	public Card peekLastCard() {
+	public Card peekLast() {
 		if (cards.size() == 0) return null;
 		return cards.get(cards.size() - 1);
 	}
 	
 	//	returns the top card in this Deck object, depends on face-up/face-down
-	public Card peekTopCard() {
+	public Card peekTop() {
 		if (cards.size() == 0) return null;
 		if (faceUp) return cards.get(0);
 		else return cards.get(cards.size() - 1);
 	}
 	
 	//	returns the bottom card in this Deck object, depends on face-up/face-down
-	public Card peekBottomCard() {
+	public Card peekBottom() {
 		if (cards.size() == 0) return null;
 		if (faceUp) return cards.get(cards.size() - 1);
 		else return cards.get(0);
 	}
 	
 	//	returns the card at the specified index in this Deck object
-	public Card peekCard(int index) {
+	public Card peek(int index) {
 		if (cards.size() == 0 || index >= cards.size() || index < 0) return null;
 		return cards.get(index);
 	}
@@ -155,7 +158,7 @@ public abstract class Deck {
 			ArrayList<Card> shuffled = new ArrayList<Card>();
 			while (cards.size() > 0) {
 				int pos = gen.nextInt(shuffled.size() + 1);
-				shuffled.add(pos, popFirstCard());
+				shuffled.add(pos, popFirst());
 			}
 			cards = shuffled;	//	sets cards to point to the shuffled deck
 		}

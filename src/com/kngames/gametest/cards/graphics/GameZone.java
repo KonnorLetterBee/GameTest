@@ -79,6 +79,10 @@ public class GameZone implements Touchable, Drawable {
 			area = new Rect(x, y, calcWidth + x, calcHeight + y);  break;
 		}
 	}
+	
+	public GameZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
+		this((int)(screenWidth * x), (int)(screenHeight * y), originCorner, width, height, sizeMode);
+	}
 
 	///
 	///	Getters and Setters
