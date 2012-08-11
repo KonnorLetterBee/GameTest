@@ -3,6 +3,7 @@ package com.kngames.gametest.cards.graphics.test;
 import java.util.ArrayList;
 
 import com.kngames.gametest.cards.graphics.GameZone;
+import com.kngames.gametest.cards.graphics.IDObject;
 import com.kngames.gametest.engine.graphics.DrawObject;
 
 import android.graphics.Canvas;
@@ -14,34 +15,44 @@ import android.view.MotionEvent;
 
 public class TestZone extends GameZone {
 
+	private static final String TAG = TestZone.class.getSimpleName();
+	public static final IDObject id = new IDObject(TAG);
+	public String getName() { return id.getName(); }
+	public int getId() { return id.getId(); }
+	
 	protected ArrayList<DrawObject> drawables;
 	protected TestZone otherZone;
-	protected String data;
+	protected ArrayList<String> data;
 	
-	public TestZone(Rect area, String data) {
+	public TestZone(Rect area) {
 		super(area);
 		drawables = new ArrayList<DrawObject>();
-		this.data = data;
+		this.data = new ArrayList<String>();
 	}
 	
-	public TestZone(int x, int y, int originCorner, float width, float height, int sizeMode, String data) {
+	public TestZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 		drawables = new ArrayList<DrawObject>();
-		this.data = data;
+		this.data = new ArrayList<String>();
 	}
 
 	public void setOtherZone(TestZone other) {
 		this.otherZone = other;
 	}
 	
-	public void setData(String data) {
-		this.data = data;
+	public void addData(String data) {
+		this.data.add(data);
+	}
+	
+	public String popData() {
+		if (data.size() > 0) return this.data.remove(0);
+		else return null;
 	}
 	
 	@Override
 	public void handleDownTouch(MotionEvent event) {
-		otherZone.setData(data);
-		this.data = "";
+		String d = popData();
+		if (d != null) otherZone.addData(d);
 	}
 
 	@Override
@@ -75,7 +86,9 @@ public class TestZone extends GameZone {
 		textLocation += TITLE_TEXT_SIZE + 5;
 		paint.setTextSize(SUB_TEXT_SIZE);
 		canvas.drawText(String.format("%d x %d", area.right-area.left, area.bottom-area.top), area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		canvas.drawText(data, area.left + 10, textLocation, paint);
+		for (int i = 0; i < data.size(); i++) {
+			textLocation += TITLE_TEXT_SIZE + 5;
+			canvas.drawText(data.get(i), area.left + 10, textLocation, paint);
+		}
 	}
 }

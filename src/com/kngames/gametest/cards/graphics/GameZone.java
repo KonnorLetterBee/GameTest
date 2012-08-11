@@ -17,11 +17,16 @@ import android.view.MotionEvent;
 public class GameZone implements Touchable, Drawable {
 	
 	protected Rect area;
+	protected ZoneManager manager;
 	
 	private static final String TAG = GameZone.class.getSimpleName();
 	
 	protected static int screenWidth;
 	protected static int screenHeight;
+	
+	public static final IDObject id = new IDObject(TAG);
+	public String getName() { return id.getName(); }
+	public int getId() { return id.getId(); }
 	
 	public static final int PRESERVE_HEIGHT = 0;
 	public static final int PRESERVE_WIDTH = 1;
@@ -91,6 +96,9 @@ public class GameZone implements Touchable, Drawable {
 	public void setTop(int val) { area.top = val; }
 	public void setBottom(int val) { area.bottom = val; }
 	
+	public ZoneManager getManager() { return manager; }
+	public void setManager(ZoneManager man) { manager = man; }
+	
 	public static void initZones(int width, int height) {
 		screenHeight = height;
 		screenWidth = width;
@@ -101,6 +109,8 @@ public class GameZone implements Touchable, Drawable {
 	}
 	
 	public void handleDownTouch(MotionEvent event) { }
+	
+	public void handleOffDownTouch(MotionEvent event) { }
 
 	public void handleMoveTouch(MotionEvent event) { }
 

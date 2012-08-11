@@ -2,12 +2,9 @@ package com.kngames.gametest;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.cards.*;
-import com.kngames.gametest.cards.graphics.GameZone;
-import com.kngames.gametest.cards.graphics.test.TestZone;
-import com.kngames.gametest.engine.*;
-import com.kngames.gametest.engine.graphics.DrawObject;
-import com.kngames.gametest.engine.graphics.MovementComponent;
+import com.kngames.gametest.cards.graphics.*;
+import com.kngames.gametest.cards.graphics.test.*;
+import com.kngames.gametest.engine.graphics.*;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,10 +27,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private ArrayList<DrawObject> drawables;
     private DrawObject selected;
-    private ArrayList<GameZone> zones;
     private GameZone selectedZone;
+    
     //private ContentManager content;
-	
+	private ZoneManager zones;
+    
 	@SuppressWarnings("deprecation")
 	public GamePanel(Context context) {
 		super(context);
@@ -55,13 +53,42 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
-		zones = new ArrayList<GameZone>();
-		TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT, "data 1");
-		TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT, "data 2");
+		zones = ZoneManager.initZoneManager();
+		
+		TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		TestZone c = new TestZone(display.getWidth(), 0, GameZone.TOP_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		TestZone d = new TestZone(display.getWidth(), display.getHeight(), GameZone.BOTTOM_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		GameZone dummy = new GameZone(0, 0, GameZone.BOTTOM_RIGHT, 0.01f, 0.01f, GameZone.PRESERVE_HEIGHT);
+		BasicTestZone basic = new BasicTestZone(2, 0, GameZone.BOTTOM_RIGHT, 0.01f, 0.01f, GameZone.PRESERVE_HEIGHT);
+		
+		a.addData("data 1");
+		b.addData("data 2");
+		b.addData("data 3");
+		c.addData("data 4");
+		c.addData("data 5");
+		c.addData("data 6");
+		c.addData("data 7");
+		c.addData("data 8");
+		
 		a.setOtherZone(b);
 		b.setOtherZone(a);
-		zones.add(a);
-		zones.add(b);
+		c.setOtherZone(d);
+		d.setOtherZone(c);
+		
+		zones.addZone("zone_a", a);
+		zones.addZone("zone_b", b);
+		zones.addZone("zone_c", c);
+		zones.addZone("zone_d", d);
+		zones.addZone("dummy", dummy);
+		zones.addZone("basic", basic);
+		
+		Log.d(TAG, String.format("zone_a (%s) id: %d", a.getName(), a.getId()));
+		Log.d(TAG, String.format("zone_b (%s) id: %d", b.getName(), b.getId()));
+		Log.d(TAG, String.format("zone_c (%s) id: %d", c.getName(), c.getId()));
+		Log.d(TAG, String.format("zone_d (%s) id: %d", d.getName(), d.getId()));
+		Log.d(TAG, String.format("dummy (%s) id: %d", dummy.getName(), dummy.getId()));
+		Log.d(TAG, String.format("basic (%s) id: %d", basic.getName(), basic.getId()));
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
@@ -153,7 +180,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			}
 			
 			//	draw each zone in the zones array
-			for (GameZone z : zones) {
+			GameZone[] allZones = zones.getAllZones();
+			for (GameZone z : allZones) {
 				z.draw(canvas);
 			}
 			
@@ -210,7 +238,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameZone detectTouchedZone(float x, float y) {
     	ArrayList<GameZone> touched = new ArrayList<GameZone>();
     	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
-    	for (GameZone z : zones) {
+    	GameZone[] allZones = zones.getAllZones();
+    	for (GameZone z : allZones) {
     		if (z.isTouched(x, y))	touched.add(z);
     	}
     	

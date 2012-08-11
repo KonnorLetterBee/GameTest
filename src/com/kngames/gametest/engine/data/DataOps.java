@@ -1,9 +1,12 @@
 package com.kngames.gametest.engine.data;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Hashtable;
 
 import android.os.Environment;
 import android.util.Log;
@@ -12,12 +15,23 @@ public class DataOps {
 	
 	private static final String TAG = DataOps.class.getSimpleName();
 	public static final File APP_DATA_ROOT = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/ResidentEvilDBG");
+	public static final char KEY_DATA_DELIM = ';';
 	
 	public static final int TYPE_FILE = 0;
 	public static final int TYPE_FOLDER = 1;
 	
-	public static String importFromFile(String relPath) {
-		return "";
+	//	loads data from a file and returns a hashtable with the data allocated into String/String pairs
+	public static Hashtable<String, String> importFromFile(String relPath) throws IOException {
+		Hashtable<String,String> table = new Hashtable<String, String>();
+		BufferedReader reader = new BufferedReader(new FileReader(getFile(TYPE_FILE, relPath, true)));
+		for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+			int delimIndex = line.indexOf(KEY_DATA_DELIM);
+			String key = line.substring(0, delimIndex);
+			String data = line.substring(delimIndex + 1, line.length());
+			table.put(key, data);
+		}
+		reader.close();
+		return table;
 	}
 	
 	public static void exportToFile(String dir, String filename, String data) throws IOException {

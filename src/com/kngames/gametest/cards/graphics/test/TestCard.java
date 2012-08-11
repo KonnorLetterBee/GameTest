@@ -32,8 +32,8 @@ public class TestCard extends DrawObject {
 		this.name = name;
 		this.text = text.split("\\r?\\n");
 		
-		width = 200;
-		height = 300;
+		width = 300;
+		height = 100;
 		halfWidth = width / 2;
 		halfHeight = height / 2;
 		

@@ -89,6 +89,7 @@ public class DrawObject implements Touchable, Drawable {
 		Random r = new Random();
 		anim.moveToPoint(r.nextInt(600), r.nextInt(400), 3);
 	}
+	public void handleOffDownTouch(MotionEvent event) {}
 	public void handleMoveTouch(MotionEvent event) {}
 	public void handleUpTouch(MotionEvent event) {}
 }

@@ -1,6 +1,7 @@
 package com.kngames.gametest.testcode;
 
 import java.io.File;
+import java.util.Hashtable;
 
 import com.kngames.gametest.engine.data.DataOps;
 
@@ -63,7 +64,8 @@ public class DataTestActivity extends Activity {
 		
 		doRelativeFolderTest("/scenario");
 	    doRelativeFileTest("/scenario/test_scen.scen");
-	    doRelativeFileWriteTest("/scenario/test_scen.scen", "this is some junk data here...\n\ncool.");
+	    doRelativeFileWriteTest("/scenario/test_scen.scen", "name;test data\ndate;whenever the hell i feel like it\nother random crap;random crap");
+	    doRelativeFileReadTest("/scenario/test_scen.scen");
 	}
 	
 	private void finishTests() {
@@ -95,6 +97,21 @@ public class DataTestActivity extends Activity {
 		try {
 			DataOps.exportToFile(path, data);
 			Log.d(TAG, "Write complete");
+		} catch (Exception e) {
+			Log.e(TAG, String.format("Error: exception: %s", path));
+		}
+	}
+	
+	private void doRelativeFileReadTest(String path) {
+		try {
+			Hashtable<String,String> data = DataOps.importFromFile(path);
+			Object[] keys = data.keySet().toArray();
+			for (int i = 0; i < keys.length; i++) {
+				String key = (String)keys[i];
+				String val = data.get(key);
+				Log.d(TAG, String.format("(%d: %s, %s)", i, key, val));
+			}
+			Log.d(TAG, "Read complete");
 		} catch (Exception e) {
 			Log.e(TAG, String.format("Error: exception: %s", path));
 		}

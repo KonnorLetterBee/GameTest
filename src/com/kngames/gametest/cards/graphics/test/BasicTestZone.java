@@ -1,0 +1,38 @@
+package com.kngames.gametest.cards.graphics.test;
+
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.view.MotionEvent;
+
+import com.kngames.gametest.cards.graphics.GameZone;
+import com.kngames.gametest.cards.graphics.IDObject;
+
+public class BasicTestZone extends GameZone {
+
+	private static final String TAG = BasicTestZone.class.getSimpleName();
+	public static final IDObject id = new IDObject(TAG);
+	public String getName() { return id.getName(); }
+	public int getId() { return id.getId(); }
+	
+	public BasicTestZone(Rect area) {
+		super(area);
+	}
+	
+	public BasicTestZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
+		super(x, y, originCorner, width, height, sizeMode);
+	}
+	
+	@Override
+	public void handleDownTouch(MotionEvent event) { }
+
+	@Override
+	public void handleMoveTouch(MotionEvent event) { }
+
+	@Override
+	public void handleUpTouch(MotionEvent event) { }
+
+	@Override
+	public void draw(Canvas canvas) {
+		
+	}
+}
