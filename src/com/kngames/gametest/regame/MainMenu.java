@@ -40,6 +40,7 @@ public class MainMenu extends Activity {
 			}
 		});
 		view.addButton("Data Test", DataTestActivity.class);
+		view.addButton("Game Setup Test", GameSetupActivity.class);
 		
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		

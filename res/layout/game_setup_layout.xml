@@ -38,6 +38,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+        <CheckBox
+            android:id="@+id/player_1_compbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_computer" />
+
     </LinearLayout>
     
     <LinearLayout
@@ -55,6 +61,12 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+        
+        <CheckBox
+            android:id="@+id/player_2_compbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_computer" />
 
     </LinearLayout>
     
@@ -73,6 +85,12 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+        
+        <CheckBox
+            android:id="@+id/player_3_compbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_computer" />
 
     </LinearLayout>
     
@@ -91,6 +109,12 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+        
+        <CheckBox
+            android:id="@+id/player_4_compbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_computer" />
 
     </LinearLayout>
 

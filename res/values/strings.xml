@@ -18,6 +18,7 @@
 	<string name="setup_player2">Player 2:</string>
 	<string name="setup_player3">Player 3:</string>
 	<string name="setup_player4">Player 4:</string>
+	<string name="setup_computer">Computer</string>
 	<string name="setup_begin">Begin Game</string>
 	
 	<!-- stat button label strings -->

@@ -27,6 +27,7 @@
 		<activity android:name=".redata.ScenEditor.ScenarioEditorActivity"></activity>
 		
 		<activity android:name=".redata.Info.SelectorFrags.MansionExpandSelectorFragment"></activity>
+		<activity android:name=".regame.GameSetupActivity"></activity>
 		<activity android:name=".testcode.DataTestActivity"></activity>
     </application>
 
