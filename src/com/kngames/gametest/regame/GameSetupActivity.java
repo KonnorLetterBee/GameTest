@@ -23,6 +23,7 @@ public class GameSetupActivity extends Activity {
 	private Activity ins = this;
 	private ArrayList<Pair<String,CharacterCard>> characterData = getCharacterCards();
 	private String[] nameList = getNameList(characterData);
+	private String[] characterChoiceList = new String[] { "Random", "Choose Between Two", "Player Choice" };
 	private String[] playerNumList = new String[] { "1", "2", "3", "4" };
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,14 +31,19 @@ public class GameSetupActivity extends Activity {
 		setContentView(R.layout.game_setup_layout);
 		
 		Spinner numPlayers = (Spinner)findViewById(R.id.player_spinner);
+		Spinner charChoice = (Spinner)findViewById(R.id.char_select_spinner);
 		Spinner player1 = (Spinner)findViewById(R.id.player_1_spinner);
 		Spinner player2 = (Spinner)findViewById(R.id.player_2_spinner);
 		Spinner player3 = (Spinner)findViewById(R.id.player_3_spinner);
 		Spinner player4 = (Spinner)findViewById(R.id.player_4_spinner);
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playerNumList);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		numPlayers.setAdapter(adapter);
+		ArrayAdapter<String> characterChoiceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, characterChoiceList);
+	    characterChoiceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    charChoice.setAdapter(characterChoiceAdapter);
+		
+		ArrayAdapter<String> numPlayerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playerNumList);
+	    numPlayerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		numPlayers.setAdapter(numPlayerAdapter);
 	    
 		ArrayAdapter<String> playerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
 	    playerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

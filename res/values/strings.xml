@@ -14,6 +14,7 @@
 	
 	<!-- game setup strings -->
 	<string name="setup_numplayers">Number of Players:</string>
+	<string name="setup_selectmethod">Select Charcters by:</string>
 	<string name="setup_player1">Player 1:</string>
 	<string name="setup_player2">Player 2:</string>
 	<string name="setup_player3">Player 3:</string>
