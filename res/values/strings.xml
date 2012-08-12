@@ -9,49 +9,16 @@
     
 	<string name="card_encyclopedia">Card Encyclopedia</string>
 	<string name="scen_encyclopedia">Scenario Encyclopedia</string>
-	<string name="counter">Counter</string>
-	<string name="tracker">Stat Tracker</string>
-	<string name="mansion">Mansion Shuffler</string>
-	<string name="inventory">Inventory Shuffler</string>
 	<string name="scenario">Scenario Creator</string>
 	<string name="stats">Game Stat Tracker</string>
 	
-	<!-- shuffler button label strings -->
-	<string name="increment_all">Increment All</string>
-	<string name="reset_value">Reset</string>
-	<string name="plus">+</string>
-	<string name="minus">-</string>
-	<string name="add_one">+1</string>
-	<string name="sub_one">-1</string>
-	<string name="add_five">+5</string>
-	<string name="sub_five">-5</string>
-	<string name="add_ten">+10</string>
-	<string name="sub_ten">-10</string>
-	
-	<!-- shuffler label strings -->
-	<string name="max_turns">Max Turns</string>
-	<string name="cycle_label">To Cycle:</string>
-	<string name="reset_all">Reset All</string>
-	<string name="change_turns">Change # Turns</string>
-	
-	<!-- mansion button label strings -->
-	<string name="mans_shuffle">Shuffle into Mansion</string>
-	<string name="mans_bottom">Put on Bottom of Mansion</string>
-	<string name="mans_remove">Remove from Mansion</string>
-	<string name="mans_retrieve">Retrieve Removed card</string>
-	<string name="mans_change_mans">Change Mansions</string>
-	
-	<!-- inventory button label strings -->
-	<string name="inv_hand">Hand</string>
-	<string name="inv_play_area">Play Area</string>
-	<string name="inv_discard_pile">Discard Pile</string>
-	
-	<string name="inv_draw">Draw Card</string>
-	<string name="inv_play_all">Play All</string>
-	<string name="inv_end_turn">End Turn</string>
-	<string name="inv_retrieve">Retrieve Card</string>
-	<string name="inv_change_scenario">Change Scenario</string>
-	<string name="inv_discard_top">Discard Top of Deck</string>
+	<!-- game setup strings -->
+	<string name="setup_numplayers">Number of Players:</string>
+	<string name="setup_player1">Player 1:</string>
+	<string name="setup_player2">Player 2:</string>
+	<string name="setup_player3">Player 3:</string>
+	<string name="setup_player4">Player 4:</string>
+	<string name="setup_begin">Begin Game</string>
 	
 	<!-- stat button label strings -->
 	<string name="stat_actions">Actions</string>
