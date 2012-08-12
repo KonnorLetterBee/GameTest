@@ -101,7 +101,7 @@ public class Player {
 	
 	//	draws a card from Deck and puts it into Hand, shuffling Discard and replacing it with Deck if the Deck is empty
 	//	if Discard is also empty, don't draw a card
-	private void drawToHand() {
+	public void drawToHand() {
 		if (deck.size() == 0) {
 			deck = discard;
 			deck.flipDeck();

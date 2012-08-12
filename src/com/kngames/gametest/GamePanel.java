@@ -75,8 +75,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		a.setOtherZone(b);
 		b.setOtherZone(a);
 		
-		d.setTestTag("zone_b");
-		
 		zones.addZone("zone_a", a);
 		zones.addZone("zone_b", b);
 		zones.addZone("zone_d", d);

@@ -12,42 +12,49 @@ import com.kngames.gametest.cards.graphics.IDObject;
 import com.kngames.gametest.cards.graphics.test.TestZone;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
 
-public class DeckZone extends GameZone {
+public class HandZone extends GameZone {
 	
-	public static final String TAG = DeckZone.class.getSimpleName();
+	public static final String TAG = HandZone.class.getSimpleName();
 	public static final IDObject id = new IDObject(TAG);
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
-	private Game game;
+	private REDeck hand;
+	private TestZone test;
+	private String testTag;
 	
-	public DeckZone(Rect area) {
+	public HandZone(Rect area) {
 		super(area);
 	}
-	public DeckZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
+	public HandZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
-	public DeckZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
+	public HandZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
 	
 	//	sets the tag the DeckZone will use to search the ZoneManager's hashmap
-	public void setGame(Game g) {
-		game = g;
+	public void setTestTag(String tag) {
+		testTag = tag;
 	}
-	public void postInit() { }
+	public void postInit() {
+		test = (TestZone) manager.getZone(testTag);
+	}
 	
-	private REDeck getVisibleDeck() { return getActivePlayer().deck(); }
-	private REDeck getVisibleHand() { return getActivePlayer().hand(); }
-	private Player getActivePlayer() { return game.players()[game.viewingPlayer()]; }
+	//	sets the deck of this zone to that of the current viewing player
+	//	(the player sitting in front of the screen)
+	public void setHand() {
+		hand = manager.getGame().players()[manager.getGame().viewingPlayer()].deck();
+	}
 	
-	public void update() { }
+	public void update() {
+		setHand();
+	}
+	
 	public void handleDownTouch(MotionEvent event) {
-		update();
-		game.players()[game.activePlayer()].drawToHand();
+		RECard temp = (RECard) hand.popTop();
+		if (temp != null) test.addData(temp.getName());
 	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
@@ -74,10 +81,9 @@ public class DeckZone extends GameZone {
 		paint.setTextSize(TITLE_TEXT_SIZE);
 		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
 		canvas.drawText(TAG, area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		paint.setTextSize(SUB_TEXT_SIZE);
-		canvas.drawText(String.format("%d x %d", area.right-area.left, area.bottom-area.top), area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		canvas.drawText("Cards left: " + getActivePlayer().deck().size(), area.left + 10, textLocation, paint);
+		for (int i = 0; i < hand.size(); i++) {
+			textLocation += TITLE_TEXT_SIZE + 5;
+			canvas.drawText(((RECard)hand.peek(i)).getName(), area.left + 10, textLocation, paint);
+		}
 	}
 }

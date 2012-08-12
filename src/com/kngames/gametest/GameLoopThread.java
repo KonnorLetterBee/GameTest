@@ -16,9 +16,9 @@ public class GameLoopThread extends Thread {
 	
 	/* Stuff for stats */
     private DecimalFormat df = new DecimalFormat("0.##");
-	private final static int 	STAT_INTERVAL = 1000;	//	frequency of reading stats in ms
+	private final static int 	STAT_INTERVAL = 500;	//	frequency of reading stats in ms
 	private final static int	FPS_HISTORY_NR = 10;	//	number of FPS measurements to take average of
-	private long statusIntervalTimer	= 0l;			//	the status time counted
+	private long statusIntervalTimer		= 0l;		//	the status time counted
 	private long totalFramesSkipped			= 0l;		//	number of frames skipped since the game started
 	private long framesSkippedPerStatCycle 	= 0l;		//	number of frames skipped in a store cycle (1 sec)
 
@@ -103,8 +103,8 @@ public class GameLoopThread extends Thread {
 	
 	/**
 	 * The statistics - it is called every cycle, it checks if time since last
-	 * store is greater than the statistics gathering period (1 sec) and if so
-	 * it calculates the FPS for the last period and stores it.
+	 * store is greater than the statistics gathering period and if so it
+	 * calculates the FPS for the last period and stores it.
 	 * 
 	 *  It tracks the number of frames per period. The number of frames since 
 	 *  the start of the period are summed up and the calculation takes part
@@ -151,11 +151,11 @@ public class GameLoopThread extends Thread {
 	}
 	
 	private void initTimingElements() {
-		// initialise timing elements
+		// initialize timing elements
 		fpsStore = new double[FPS_HISTORY_NR];
 		for (int i = 0; i < FPS_HISTORY_NR; i++) {
 			fpsStore[i] = 0.0;
 		}
-		Log.d(TAG + ".initTimingElements()", "Timing elements for stats initialised");
+		Log.d(TAG + ".initTimingElements()", "Timing elements for stats initialized");
 	}
 }
