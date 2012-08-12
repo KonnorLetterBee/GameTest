@@ -17,18 +17,18 @@
 			</intent-filter>
 		</activity>
         <activity android:name=".GameLoopActivity" android:label="@string/title_activity_game_loop" android:screenOrientation="sensorLandscape"></activity>
+        
+        <activity android:name=".cards.structures.BaseSingleFragmentActivity"></activity>
+		<activity android:name=".redata.REInfoFragmentActivity"></activity>
         <activity android:name=".redata.Info.MainInfoListActivity"></activity>
-		
 		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
 		
-		<activity android:name=".cards.structures.BaseSingleFragmentActivity"></activity>
-		<activity android:name=".redata.REInfoFragmentActivity"></activity>
 		<activity android:name=".redata.ScenEditor.ScenarioInfoEditorActivity"></activity>
 		<activity android:name=".redata.ScenEditor.ScenarioEditorActivity"></activity>
 		
-		<activity android:name=".redata.Info.SelectorFrags.MansionExpandSelectorFragment"></activity>
-		<activity android:name=".regame.GameSetupActivity"></activity>
 		<activity android:name=".testcode.DataTestActivity"></activity>
+		
+		<activity android:name=".regame.GameSetupActivity"></activity>
     </application>
 
 </manifest>
