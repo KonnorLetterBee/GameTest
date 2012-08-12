@@ -7,8 +7,8 @@ import com.kngames.gametest.regame.Game;
 import android.util.Log;
 
 public class ZoneManager {
-	private static ZoneManager zoneMan = null;
-	private Game game = null;
+	protected static ZoneManager zoneMan = null;
+	protected Game game = null;
 	public Game getGame() { return game; }
 	
 	private HashMap<String,GameZone> zoneList;
@@ -17,7 +17,7 @@ public class ZoneManager {
 	
 	//	constructs a new ZoneManager
 	//	since ZoneManager is a singleton, instantiate the ZoneManager using initZoneManager
-	private ZoneManager() {
+	protected ZoneManager() {
 		zoneList = new HashMap<String, GameZone>();
 		Log.d(TAG, "ZoneManager instantiated");
 	}

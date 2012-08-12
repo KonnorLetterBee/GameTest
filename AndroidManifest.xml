@@ -22,6 +22,7 @@
 		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
 		
 		<activity android:name=".cards.structures.BaseSingleFragmentActivity"></activity>
+		<activity android:name=".redata.REInfoFragmentActivity"></activity>
 		<activity android:name=".redata.ScenEditor.ScenarioInfoEditorActivity"></activity>
 		<activity android:name=".redata.ScenEditor.ScenarioEditorActivity"></activity>
 		

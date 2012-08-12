@@ -1,9 +1,7 @@
 package com.kngames.gametest.regame;
 
 import com.kngames.gametest.GameLoopActivity;
-import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
-import com.kngames.gametest.redata.ScenDBHelper;
-import com.kngames.gametest.redata.ScenData;
+import com.kngames.gametest.redata.*;
 import com.kngames.gametest.redata.Info.MainInfoListActivity;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;
 import com.kngames.gametest.regame.Dialog.ScenarioChooser;
@@ -81,9 +79,9 @@ public class MainMenu extends Activity {
 	
 	//	provides a shorthand for starting the scenario editor
 	private void startScenList() {
-		Intent intent = new Intent().setClass(this, BaseSingleFragmentActivity.class);
-		intent.putExtra("groupType", BaseSingleFragmentActivity.EXPAND_SELECTOR_FRAG);
-	    intent.putExtra("fragType", BaseSingleFragmentActivity.SCEN_FRAG);
+		Intent intent = new Intent().setClass(this, REInfoFragmentActivity.class);
+		intent.putExtra("groupType", REInfoFragmentActivity.EXPAND_SELECTOR_FRAG);
+	    intent.putExtra("fragType", REInfoFragmentActivity.SCEN_FRAG);
 		this.startActivity(intent);
 	}
 	

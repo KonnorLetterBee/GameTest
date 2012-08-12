@@ -3,12 +3,12 @@ package com.kngames.gametest;
 import java.util.ArrayList;
 
 import com.kngames.gametest.cards.graphics.*;
-import com.kngames.gametest.cards.graphics.test.*;
+//import com.kngames.gametest.cards.graphics.test.*;
 import com.kngames.gametest.engine.graphics.*;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.graphics.DeckZone;
+import com.kngames.gametest.regame.graphics.*;
 
 import android.app.Activity;
 import android.content.Context;
@@ -34,7 +34,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameZone selectedZone;
     
     //private ContentManager content;
-	private ZoneManager zones;
+	private REZoneManager zoneManager;
 	private Game game;
     
 	@SuppressWarnings("deprecation")
@@ -60,30 +60,44 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		GameZone.initZones(display.getWidth(), display.getHeight());
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
-		zones = ZoneManager.initZoneManager();
+		zoneManager = REZoneManager.initREZoneManager();
 		game = Game.startGame(new CharacterCard[] {CardData.Characters[0]}, null);
-		zones.setGame(game);
+		zoneManager.setGame(game);
 		
-		TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		DeckZone d = new DeckZone(display.getWidth(), display.getHeight(), GameZone.BOTTOM_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		//TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		//TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		DeckZone deck = new DeckZone(display.getWidth(), display.getHeight(), GameZone.BOTTOM_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		HandZone hand = new HandZone(display.getWidth(), 0, GameZone.TOP_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		InPlayZone inPlay = new InPlayZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.STRETCH);
+		DiscardZone discard = new DiscardZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		InfoZone info = new InfoZone (display.getWidth() / 3, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
 		
+		/*
 		a.addData("data 1");
 		b.addData("data 2");
 		b.addData("data 3");
 		
 		a.setOtherZone(b);
 		b.setOtherZone(a);
+		*/
 		
-		zones.addZone("zone_a", a);
-		zones.addZone("zone_b", b);
-		zones.addZone("zone_d", d);
+		//zones.addZone("zone_a", a);
+		//zones.addZone("zone_b", b);
+		zoneManager.addZone("deck_zone", deck);
+		zoneManager.addZone("hand_zone", hand);
+		zoneManager.addZone("in_play_zone", inPlay);
+		zoneManager.addZone("discard_zone", discard);
+		zoneManager.addZone("info_zone", info);
 		
-		Log.d(TAG, String.format("zone_a (%s) id: %d", a.getName(), a.getId()));
-		Log.d(TAG, String.format("zone_b (%s) id: %d", b.getName(), b.getId()));
-		Log.d(TAG, String.format("zone_d (%s) id: %d", d.getName(), d.getId()));
+		//Log.d(TAG, String.format("zone_a (%s) id: %d", a.getName(), a.getId()));
+		//Log.d(TAG, String.format("zone_b (%s) id: %d", b.getName(), b.getId()));
+		Log.d(TAG, String.format("deck (%s) id: %d", deck.getName(), deck.getId()));
+		Log.d(TAG, String.format("hand (%s) id: %d", hand.getName(), hand.getId()));
+		Log.d(TAG, String.format("inPlay (%s) id: %d", inPlay.getName(), inPlay.getId()));
+		Log.d(TAG, String.format("discard (%s) id: %d", discard.getName(), discard.getId()));
+		Log.d(TAG, String.format("info (%s) id: %d", info.getName(), info.getId()));
 		
-		zones.postInit();
+		zoneManager.postInit();
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
@@ -160,7 +174,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		for (DrawObject d : drawables) {
 			d.update();
 		}
-		zones.updateZones();
+		zoneManager.updateZones();
 	}
 
 	@Override
@@ -176,7 +190,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			}
 			
 			//	draw each zone in the zones array
-			GameZone[] allZones = zones.getAllZones();
+			GameZone[] allZones = zoneManager.getAllZones();
 			for (GameZone z : allZones) {
 				z.draw(canvas);
 			}
@@ -234,7 +248,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameZone detectTouchedZone(float x, float y) {
     	ArrayList<GameZone> touched = new ArrayList<GameZone>();
     	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
-    	GameZone[] allZones = zones.getAllZones();
+    	GameZone[] allZones = zoneManager.getAllZones();
     	for (GameZone z : allZones) {
     		if (z.isTouched(x, y))	touched.add(z);
     	}

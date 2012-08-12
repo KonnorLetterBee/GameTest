@@ -2,12 +2,11 @@ package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.cards.structures.BaseExpandableSelectorFragment;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
-public class WeaponExpandSelectorFragment extends BaseExpandableSelectorFragment {
+public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public WeaponExpandSelectorFragment() {
 		super();
 		this.fragType = BaseSingleFragmentActivity.WEAPON_FRAG;

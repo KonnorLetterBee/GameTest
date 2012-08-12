@@ -5,15 +5,26 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 
 public class Player {
+	private CharacterCard character;
+	public CharacterCard character() { return character; }
+	
 	private int health;
 	private int maxHealth;
-	
 	private int actions;
 	private int ammo;
 	private int buys;
 	private int explores;
 	private boolean mustExplore;
 	private int gold;
+	
+	public int health() { return health; }
+	public int maxHealth() { return maxHealth; }
+	public int actions() { return actions; }
+	public int ammo() { return ammo; }
+	public int buys() { return buys; }
+	public int explores() { return explores; }
+	public boolean mustExplore() { return mustExplore; }
+	public int gold() { return gold; }
 	
 	private REDeck deck;
 	private REDeck hand;
@@ -31,6 +42,7 @@ public class Player {
 	
 	//	constructs a Player with a specified Character card
 	public Player(CharacterCard ch, String customInventory) {
+		character = ch;
 		health = ch.getMaxHealth();
 		maxHealth = ch.getMaxHealth();
 		this.customInventory = customInventory;
@@ -109,5 +121,10 @@ public class Player {
 			discard = new REDeck();
 		}
 		if (deck.size() > 0) hand.addTop(deck.popTop());
+	}
+	
+	//	plays a card from this player's hand at the specified index to the field
+	public void playCard(int handPos) {
+		inPlay.addTop(hand.pop(handPos));
 	}
 }

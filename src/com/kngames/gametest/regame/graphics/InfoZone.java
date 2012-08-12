@@ -8,28 +8,27 @@ import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
 
-public class DeckZone extends REGameZone {
+public class InfoZone extends REGameZone {
 	
-	public static final String TAG = DeckZone.class.getSimpleName();
+	public static final String TAG = InfoZone.class.getSimpleName();
 	public static final IDObject id = new IDObject(TAG);
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
-	public DeckZone(Rect area) {
+	public InfoZone(Rect area) {
 		super(area);
 	}
-	public DeckZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
+	public InfoZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
-	public DeckZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
+	public InfoZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
-	
 	public void postInit() { }
 	
 	public void update() { }
 	public void handleDownTouch(MotionEvent event) {
-		getVisiblePlayer().drawToHand();
+		getVisiblePlayer().resetTurn();
 	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
@@ -37,19 +36,29 @@ public class DeckZone extends REGameZone {
 
 	//	draws this DeckZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;
-	private final int SUB_TEXT_SIZE = 20;
 	public void draw(Canvas canvas) {
-		Paint paint = new Paint(); 
+		Paint paint = new Paint();
 		drawTestBorder(canvas);
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
 		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
 		canvas.drawText(TAG, area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		paint.setTextSize(SUB_TEXT_SIZE);
-		canvas.drawText(String.format("%d x %d", area.right-area.left, area.bottom-area.top), area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		canvas.drawText("Cards left: " + getVisibleDeck().size(), area.left + 10, textLocation, paint);
+		
+		drawTestData(canvas, generateInfoStrings(), textLocation + TITLE_TEXT_SIZE + 15);
+	}
+	
+	private String[] generateInfoStrings() {
+		String[] data = new String[] {
+				getVisiblePlayer().character().getName(),
+				String.format("health:   %d / %d", getVisiblePlayer().health(), getVisiblePlayer().maxHealth()),
+				String.format("actions:  %d", getVisiblePlayer().actions()),
+				String.format("buys:     %d", getVisiblePlayer().buys()),
+				String.format("explores: %d", getVisiblePlayer().explores()),
+				String.format("ammo:     %d", getVisiblePlayer().ammo()),
+				String.format("gold:     %d", getVisiblePlayer().gold()),
+		};
+		if (getVisiblePlayer().mustExplore()) data[3] += "  (must explore)";
+		return data;
 	}
 }

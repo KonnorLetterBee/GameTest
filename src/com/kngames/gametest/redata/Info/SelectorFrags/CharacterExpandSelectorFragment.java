@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
-import com.kngames.gametest.cards.structures.BaseExpandableSelectorFragment;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardData;
+import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
-public class CharacterExpandSelectorFragment extends BaseExpandableSelectorFragment {
+public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public CharacterExpandSelectorFragment() {
 		super();
 		this.fragType = BaseSingleFragmentActivity.CHAR_FRAG;
@@ -83,9 +83,9 @@ public class CharacterExpandSelectorFragment extends BaseExpandableSelectorFragm
 	}
 	
 	protected void openInfoWindow(int ID, int charType) {
-		Intent infoIntent = new Intent(getActivity(), BaseSingleFragmentActivity.class);
+		Intent infoIntent = new Intent(getActivity(), REInfoFragmentActivity.class);
 		infoIntent.putExtra("cardID", ID);
-		infoIntent.putExtra("groupType", BaseSingleFragmentActivity.INFO_FRAG);
+		infoIntent.putExtra("groupType", REInfoFragmentActivity.INFO_FRAG);
 		infoIntent.putExtra("fragType", fragType);
 		infoIntent.putExtra("charType", charType);
 		this.startActivity(infoIntent);

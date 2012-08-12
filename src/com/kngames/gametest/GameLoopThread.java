@@ -16,7 +16,7 @@ public class GameLoopThread extends Thread {
 	
 	/* Stuff for stats */
     private DecimalFormat df = new DecimalFormat("0.##");
-	private final static int 	STAT_INTERVAL = 500;	//	frequency of reading stats in ms
+	private final static double	STAT_INTERVAL = 500;	//	frequency of reading stats in ms
 	private final static int	FPS_HISTORY_NR = 10;	//	number of FPS measurements to take average of
 	private long statusIntervalTimer		= 0l;		//	the status time counted
 	private long totalFramesSkipped			= 0l;		//	number of frames skipped since the game started

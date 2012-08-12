@@ -5,6 +5,7 @@ import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.Info.InfoFrags.*;
 import com.kngames.gametest.redata.Info.SelectorFrags.*;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 public class REInfoFragmentActivity extends BaseSingleFragmentActivity {
@@ -23,9 +24,10 @@ public class REInfoFragmentActivity extends BaseSingleFragmentActivity {
 	private int groupType;
 	private int fragType;
 	
-	public REInfoFragmentActivity() {
+	protected void onCreate(Bundle savedInstanceState) {
 		groupType = getIntent().getIntExtra("groupType", 0);
         fragType = getIntent().getIntExtra("fragType", 0);
+        super.onCreate(savedInstanceState);
 	}
 
 	@Override
