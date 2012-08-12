@@ -1,13 +1,8 @@
 package com.kngames.gametest.regame;
 
-import java.util.ArrayList;
-
-import com.kngames.gametest.cards.Card;
-import com.kngames.gametest.cards.Deck;
 import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
-import com.kngames.gametest.redata.CardTypes.RECard;
 
 public class Player {
 	private int health;
@@ -24,7 +19,13 @@ public class Player {
 	private REDeck hand;
 	private REDeck inPlay;
 	private REDeck discard;
-	private ArrayList attachedCards;
+	private REDeck attachedCards;
+	
+	public REDeck deck() { return deck; }
+	public REDeck hand() { return hand; }
+	public REDeck inPlay() { return inPlay; }
+	public REDeck discard() { return discard; }
+	public REDeck attachedCards() { return attachedCards; }
 	
 	private String customInventory;
 	
@@ -33,8 +34,9 @@ public class Player {
 		health = ch.getMaxHealth();
 		maxHealth = ch.getMaxHealth();
 		this.customInventory = customInventory;
-		if (customInventory == null || customInventory.equals("")) initializeDeck();
-		else initializeCustomDeck(customInventory);
+		
+		resetGame();
+		resetTurn();
 	}
 	
 	//	initializes the preset deck for this Player
@@ -89,8 +91,8 @@ public class Player {
 	
 	//	resets the game, clearing all fields and starting the deck with the standard starting inventory
 	private void resetGame() {
-		if (customInventory == null || customInventory.equals("")) initializeDeck();
-		else initializeCustomDeck(customInventory);
+		if (customInventory == null || customInventory.equals("")) deck = initializeDeck();
+		else deck = initializeCustomDeck(customInventory);
 		
 		hand = new REDeck();
 		inPlay = new REDeck();

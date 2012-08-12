@@ -15,7 +15,7 @@ import android.view.MotionEvent;
 
 public class TestZone extends GameZone {
 
-	private static final String TAG = TestZone.class.getSimpleName();
+	public static final String TAG = TestZone.class.getSimpleName();
 	public static final IDObject id = new IDObject(TAG);
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
@@ -35,6 +35,10 @@ public class TestZone extends GameZone {
 		drawables = new ArrayList<DrawObject>();
 		this.data = new ArrayList<String>();
 	}
+	
+	public void postInit() {
+		
+	}
 
 	public void setOtherZone(TestZone other) {
 		this.otherZone = other;
@@ -49,17 +53,14 @@ public class TestZone extends GameZone {
 		else return null;
 	}
 	
-	@Override
 	public void handleDownTouch(MotionEvent event) {
 		String d = popData();
-		if (d != null) otherZone.addData(d);
+		if (otherZone != null && d != null) otherZone.addData(d);
 	}
-
-	@Override
+	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
-
-	@Override
 	public void handleUpTouch(MotionEvent event) { }
+	public void update() { }
 	
 	//	draws this TestZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;

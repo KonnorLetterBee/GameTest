@@ -2,14 +2,28 @@ package com.kngames.gametest.regame;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 
 public class Game {
+	private static final String TAG = Game.class.getSimpleName();
+	
+	private static Game game;
+	
 	private Scenario scen;
+	public Scenario scen() { return scen; }
+	
 	private Player[] players;
+	public Player[] players() { return players; }
+	
 	private int activePlayer = 0;
+	private int viewingPlayer = 0;
+	public int activePlayer() { return activePlayer; }
+	public int viewingPlayer() { return viewingPlayer; }
+	
 	private ArrayList<REDeck> resourcePiles;
 	
 	private Game(CharacterCard[] chars, Scenario scen) {
@@ -20,7 +34,17 @@ public class Game {
 		}
 		
 		//	set the scenario and resource piles
-		setupResourcePiles(scen);
+		if (scen != null) setupResourcePiles(scen);
+	}
+	
+	//	instantiates a new Game if one doesn't exist
+	//	otherwise, returns the instance that already exists
+	public static Game startGame(CharacterCard[] chars, Scenario scen) {
+		if (game == null) return new Game(chars, scen);
+		else {
+			Log.e(TAG, "Game already instantiated!");
+			return game;
+		}
 	}
 	
 	//	set the scenario and resource piles

@@ -14,7 +14,7 @@ import android.view.MotionEvent;
 //	touch input, and are designed to be scaled to different screen sizes (based on the size of the zone)
 //
 //	this class is designed to be subclassed to provide differentiating touch behaviors and drawing algorithms
-public class GameZone implements Touchable, Drawable {
+public abstract class GameZone implements Touchable, Drawable {
 	
 	protected Rect area;
 	protected ZoneManager manager;
@@ -24,9 +24,11 @@ public class GameZone implements Touchable, Drawable {
 	protected static int screenWidth;
 	protected static int screenHeight;
 	
+	/*
 	public static final IDObject id = new IDObject(TAG);
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
+	*/
 	
 	public static final int PRESERVE_HEIGHT = 0;
 	public static final int PRESERVE_WIDTH = 1;
@@ -83,6 +85,8 @@ public class GameZone implements Touchable, Drawable {
 	public GameZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		this((int)(screenWidth * x), (int)(screenHeight * y), originCorner, width, height, sizeMode);
 	}
+	
+	public abstract void postInit();
 
 	///
 	///	Getters and Setters
@@ -112,13 +116,15 @@ public class GameZone implements Touchable, Drawable {
 		return area.contains((int)x, (int)y);
 	}
 	
-	public void handleDownTouch(MotionEvent event) { }
+	public abstract void handleDownTouch(MotionEvent event);
 	
-	public void handleOffDownTouch(MotionEvent event) { }
+	public abstract void handleOffDownTouch(MotionEvent event);
 
-	public void handleMoveTouch(MotionEvent event) { }
+	public abstract void handleMoveTouch(MotionEvent event);
 
-	public void handleUpTouch(MotionEvent event) { }
+	public abstract void handleUpTouch(MotionEvent event);
 	
-	public void draw(Canvas canvas) { }
+	public abstract void update();
+	
+	public abstract void draw(Canvas canvas);
 }

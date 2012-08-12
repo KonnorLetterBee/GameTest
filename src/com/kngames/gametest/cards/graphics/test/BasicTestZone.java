@@ -21,18 +21,12 @@ public class BasicTestZone extends GameZone {
 	public BasicTestZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
+	public void postInit() { }
 	
-	@Override
 	public void handleDownTouch(MotionEvent event) { }
-
-	@Override
+	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
-
-	@Override
 	public void handleUpTouch(MotionEvent event) { }
-
-	@Override
-	public void draw(Canvas canvas) {
-		
-	}
+	public void update() { }
+	public void draw(Canvas canvas) { }
 }

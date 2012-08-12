@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import com.kngames.gametest.cards.graphics.*;
 import com.kngames.gametest.cards.graphics.test.*;
 import com.kngames.gametest.engine.graphics.*;
+import com.kngames.gametest.redata.CardData;
+import com.kngames.gametest.redata.CardTypes.CharacterCard;
+import com.kngames.gametest.regame.Game;
+import com.kngames.gametest.regame.graphics.DeckZone;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     
     //private ContentManager content;
 	private ZoneManager zones;
+	private Game game;
     
 	@SuppressWarnings("deprecation")
 	public GamePanel(Context context) {
@@ -53,42 +58,34 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
+		
+		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zones = ZoneManager.initZoneManager();
+		game = Game.startGame(new CharacterCard[] {CardData.Characters[0]}, null);
+		zones.setGame(game);
 		
 		TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
 		TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		TestZone c = new TestZone(display.getWidth(), 0, GameZone.TOP_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		TestZone d = new TestZone(display.getWidth(), display.getHeight(), GameZone.BOTTOM_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		GameZone dummy = new GameZone(0, 0, GameZone.BOTTOM_RIGHT, 0.01f, 0.01f, GameZone.PRESERVE_HEIGHT);
-		BasicTestZone basic = new BasicTestZone(2, 0, GameZone.BOTTOM_RIGHT, 0.01f, 0.01f, GameZone.PRESERVE_HEIGHT);
+		DeckZone d = new DeckZone(display.getWidth(), display.getHeight(), GameZone.BOTTOM_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
 		
 		a.addData("data 1");
 		b.addData("data 2");
 		b.addData("data 3");
-		c.addData("data 4");
-		c.addData("data 5");
-		c.addData("data 6");
-		c.addData("data 7");
-		c.addData("data 8");
 		
 		a.setOtherZone(b);
 		b.setOtherZone(a);
-		c.setOtherZone(d);
-		d.setOtherZone(c);
+		
+		d.setTestTag("zone_b");
 		
 		zones.addZone("zone_a", a);
 		zones.addZone("zone_b", b);
-		zones.addZone("zone_c", c);
 		zones.addZone("zone_d", d);
-		zones.addZone("dummy", dummy);
-		zones.addZone("basic", basic);
 		
 		Log.d(TAG, String.format("zone_a (%s) id: %d", a.getName(), a.getId()));
 		Log.d(TAG, String.format("zone_b (%s) id: %d", b.getName(), b.getId()));
-		Log.d(TAG, String.format("zone_c (%s) id: %d", c.getName(), c.getId()));
 		Log.d(TAG, String.format("zone_d (%s) id: %d", d.getName(), d.getId()));
-		Log.d(TAG, String.format("dummy (%s) id: %d", dummy.getName(), dummy.getId()));
-		Log.d(TAG, String.format("basic (%s) id: %d", basic.getName(), basic.getId()));
+		
+		zones.postInit();
 		
 		//	create the game loop thread
 		thread = new GameLoopThread(getHolder(), this);
@@ -165,6 +162,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		for (DrawObject d : drawables) {
 			d.update();
 		}
+		zones.updateZones();
 	}
 
 	@Override

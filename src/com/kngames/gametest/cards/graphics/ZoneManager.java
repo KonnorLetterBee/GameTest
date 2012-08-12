@@ -2,10 +2,14 @@ package com.kngames.gametest.cards.graphics;
 
 import java.util.HashMap;
 
+import com.kngames.gametest.regame.Game;
+
 import android.util.Log;
 
 public class ZoneManager {
 	private static ZoneManager zoneMan = null;
+	private Game game = null;
+	public Game getGame() { return game; }
 	
 	private HashMap<String,GameZone> zoneList;
 	
@@ -29,8 +33,25 @@ public class ZoneManager {
 	}
 	
 	//	returns the instance of the ZoneManager that already exists (even if there is none)
-	public static ZoneManager getContentManager() {
+	public static ZoneManager getZoneManager() {
 		return zoneMan;
+	}
+	
+	//	sets the game object this ZoneManager is watching
+	public void setGame(Game g) {
+		game = g;
+	}
+	
+	//	calls the postInit methods of all GameZones contained in the ZoneManager
+	//	necessary for forming connections between zones
+	public void postInit() {
+		GameZone[] zones = getAllZones();
+		for (GameZone z : zones) z.postInit();
+	}
+	
+	public void updateZones() {
+		GameZone[] zones = getAllZones();
+		for (GameZone z : zones) z.update();
 	}
 	
 	//	adds a new GameZone to this ZoneManager
