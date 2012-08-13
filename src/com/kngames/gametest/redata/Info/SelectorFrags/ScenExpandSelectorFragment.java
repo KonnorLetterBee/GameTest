@@ -39,6 +39,11 @@ public class ScenExpandSelectorFragment extends Fragment {
 		this.scenCollection = generateCollection();
 	}
 	
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.getActivity().setTitle("Scenario Encyclopedia");
+	}
+	
 	public static String[] generateTitles() {
 		return new String[] { "Base Set", "Alliances", "Outbreak", "Nightmare", "Custom Scenarios" };
 	}

@@ -10,8 +10,7 @@
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:label="@string/app_name" >
         <activity android:name=".regame.MainMenu" android:label="@string/app_name_long" >
 			<intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
@@ -23,12 +22,12 @@
         <activity android:name=".redata.Info.MainInfoListActivity"></activity>
 		<activity android:name=".redata.ScenInfo.ScenSelectorActivity"></activity>
 		
-		<activity android:name=".redata.ScenEditor.ScenarioInfoEditorActivity"></activity>
-		<activity android:name=".redata.ScenEditor.ScenarioEditorActivity"></activity>
+		<activity android:name=".redata.ScenEditor.ScenarioInfoEditorActivity"  android:label="@string/scen_info_edit"></activity>
+		<activity android:name=".redata.ScenEditor.ScenarioEditorActivity"  android:label="@string/scen_edit"></activity>
 		
 		<activity android:name=".testcode.DataTestActivity"></activity>
 		
-		<activity android:name=".regame.GameSetupActivity"></activity>
+		<activity android:name=".regame.GameSetupActivity" android:label="@string/game_setup"></activity>
     </application>
 
 </manifest>

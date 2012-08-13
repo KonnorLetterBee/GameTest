@@ -16,6 +16,8 @@ public class MainInfoListActivity extends TabActivity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.card_list_main_menu);
 	
+	    setTitle("Card Encyclopedia");
+	    
 	    Resources res = getResources(); // Resource object to get Drawables
 	    TabHost tabHost = getTabHost();  // The activity TabHost
 	    TabHost.TabSpec spec;  // Resusable TabSpec for each tab

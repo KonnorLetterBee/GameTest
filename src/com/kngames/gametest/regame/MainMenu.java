@@ -27,6 +27,7 @@ public class MainMenu extends Activity {
 		view = new MainMenuView(getApplicationContext(), this);
 		
 		view.addButton("Game Test", GameLoopActivity.class);
+		view.addButton("Game Setup Test", GameSetupActivity.class);
 		view.addButton("Card List", MainInfoListActivity.class);
 		view.addButton("Scenario List", new View.OnClickListener() {
 			public void onClick(View v) {
@@ -40,7 +41,6 @@ public class MainMenu extends Activity {
 			}
 		});
 		view.addButton("Data Test", DataTestActivity.class);
-		view.addButton("Game Setup Test", GameSetupActivity.class);
 		
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		
