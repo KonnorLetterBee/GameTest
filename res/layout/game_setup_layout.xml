@@ -4,6 +4,7 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical" >
 	<LinearLayout
+	    android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical" >
@@ -42,127 +43,12 @@
 				android:layout_weight="1" />
 	
 		</LinearLayout>
-		
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" >
-	
-			<CheckBox
-			    android:id="@+id/player_1_compbox"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_alignParentRight="true"
-			    android:layout_alignParentTop="true"
-			    android:text="@string/setup_computer" />
-	
-			<TextView
-				android:id="@+id/player_1_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignBaseline="@+id/player_1_compbox"
-				android:layout_alignBottom="@+id/player_1_compbox"
-				android:layout_alignParentLeft="true"
-				android:text="@string/setup_player1" />
-	
-		</RelativeLayout>
 		
-		<Spinner
-			android:id="@+id/player_1_spinner"
+		<com.kngames.gametest.regame.GameSetupView
+		    android:id="@+id/game_setup"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
 		
-		
-		
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" >
-	
-			<CheckBox
-				android:id="@+id/player_2_compbox"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentTop="true"
-				android:text="@string/setup_computer" />
-	
-			<TextView
-				android:id="@+id/player_2_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignBaseline="@+id/player_2_compbox"
-				android:layout_alignBottom="@+id/player_2_compbox"
-				android:layout_alignParentLeft="true"
-				android:text="@string/setup_player2" />
-	
-		</RelativeLayout>
-	
-		<Spinner
-			android:id="@+id/player_2_spinner"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-		
-		
-		
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" >
-	
-			<CheckBox
-				android:id="@+id/player_3_compbox"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentTop="true"
-				android:text="@string/setup_computer" />
-	
-			<TextView
-				android:id="@+id/player_3_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignBaseline="@+id/player_3_compbox"
-				android:layout_alignBottom="@+id/player_3_compbox"
-				android:layout_alignParentLeft="true"
-				android:text="@string/setup_player3" />
-	
-		</RelativeLayout>
-				
-		<Spinner
-			android:id="@+id/player_3_spinner"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-		
-			
-			
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" >
-	
-			<CheckBox
-				android:id="@+id/player_4_compbox"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentTop="true"
-				android:text="@string/setup_computer" />
-	
-			<TextView
-				android:id="@+id/player_4_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignBaseline="@+id/player_4_compbox"
-				android:layout_alignBottom="@+id/player_4_compbox"
-				android:layout_alignParentLeft="true"
-				android:text="@string/setup_player4" />
-	
-		</RelativeLayout>
-				
-		<Spinner
-			android:id="@+id/player_4_spinner"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-	
-		
-	
 		<View 
 		    android:layout_width="0dip"
 			android:layout_height="20dip" />
