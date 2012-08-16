@@ -520,21 +520,24 @@ public class ScenarioEditorActivity extends Activity {
 	
 	//	pops up a dialog box to preview the scenario in a CardChooserDialog
 	private void popupPreviewDialog() {
-		cardChooser = new CardChooserDialog(this, new CardChooserDialog.DialogEventListener() {
-			public void buttonPressed(int value) {} });
+		ArrayList<RECard> list = new ArrayList<RECard>();
 		if (ScenData.customTempScenario.second.useBasics()) {
-			cardChooser.addButton("Ammo x10");
-			cardChooser.addButton("Ammo x20");
-			cardChooser.addButton("Ammo x30");
-			cardChooser.addButton("Combat Knife");
-			cardChooser.addButton("Survival Knife");
-			cardChooser.addButton("Handgun");
-			cardChooser.addButton("Blowback Pistol");
-			cardChooser.addButton("Green Herb");
+			list.add(CardData.findAmmunition("Ammo x10"));
+			list.add(CardData.findAmmunition("Ammo x20"));
+			list.add(CardData.findAmmunition("Ammo x30"));
+			list.add(CardData.findWeapon("Combat Knife"));
+			list.add(CardData.findWeapon("Survival Knife"));
+			list.add(CardData.findWeapon("Handgun"));
+			list.add(CardData.findWeapon("Blowback Pistol"));
+			list.add(CardData.findItem("Green Herb"));
 		}
 		for (int i = 0; i < usedDataList.size(); i++) {
-			cardChooser.addButton(usedDataList.get(i).get(0).first.getName());
+			list.add(usedDataList.get(i).get(0).first);
 		}
+		RECard[] arr = new RECard[list.size()];
+		list.toArray(arr);
+		cardChooser = new CardChooserDialog(this, arr, new CardChooserDialog.CardChosenListener() {
+			public void buttonPressed(int value) {} });
 		cardChooser.show();
 	}
 	

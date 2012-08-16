@@ -25,12 +25,10 @@ public class CardEffects {
 	
 	//	working
 	public static class ReloadEffect implements OnPlayListener {
-		private Game game;
 		private Player actingPlayer;
 		private ArrayList<Pair<Integer,RECard>> disWeapons;
 		private String[] names;
 		public void playAction(Game game, Player actingPlayer) {
-			this.game = game;
 			this.actingPlayer = actingPlayer;
 			
 			//	generate list of discarded weapons
