@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import com.kngames.gametest.cards.graphics.*;
 //import com.kngames.gametest.cards.graphics.test.*;
 import com.kngames.gametest.engine.graphics.*;
+import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.Game;
 import com.kngames.gametest.regame.graphics.*;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -32,6 +32,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	private ArrayList<DrawObject> drawables;
     private DrawObject selected;
     private GameZone selectedZone;
+    
+    private int screenWidth;
+    private int screenHeight;
     
     //private ContentManager content;
 	private REZoneManager zoneManager;
@@ -58,20 +61,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
+		screenWidth = display.getWidth();
+		screenHeight = display.getHeight();
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
-		game = Game.startGame(context, new CharacterCard[] {CardData.Characters[0]}, null);
+		game = Game.startGame(context, new CharacterCard[] {CardData.Characters[0]}, ScenData.testScenario);
 		zoneManager.setGame(game);
 		
-		//TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		//TestZone b = new TestZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		DeckZone deck = new DeckZone(display.getWidth(), display.getHeight(), GameZone.BOTTOM_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		HandZone hand = new HandZone(display.getWidth(), 0, GameZone.TOP_RIGHT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		InPlayZone inPlay = new InPlayZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.STRETCH);
-		DiscardZone discard = new DiscardZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		InfoZone info = new InfoZone (display.getWidth() / 3, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
-		ShopZone shop = new ShopZone(display.getWidth() * 2 / 4, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		DeckZone deck = new DeckZone(screenWidth, screenHeight, GameZone.BOTTOM_RIGHT, 0.75f, 0.49f, GameZone.PRESERVE_HEIGHT);
+		DiscardZone discard = new DiscardZone(display.getWidth(), 0, GameZone.TOP_RIGHT, 0.75f, 0.49f, GameZone.PRESERVE_HEIGHT);
+		InPlayZone inPlay = new InPlayZone(0, 0, GameZone.TOP_LEFT, 1f - 0.01f - discard.percWidth(), discard.percHeight(), GameZone.STRETCH);
+		ShopZone shop = new ShopZone(deck.percLeft() - 0.01f, deck.percBottom(), GameZone.BOTTOM_RIGHT, 0.16f, 0.1f, GameZone.STRETCH);
+		InfoZone info = new InfoZone (deck.percLeft() - 0.01f, deck.percTop(), GameZone.TOP_RIGHT, 0.16f, 0.39f, GameZone.STRETCH);
+		HandZone hand = new HandZone(0, screenHeight, GameZone.BOTTOM_LEFT, shop.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH);
 		
 		/*
 		a.addData("data 1");
@@ -151,13 +154,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			if (selected != null) selected.handleDownTouch(event);
 			if (selectedZone != null) selectedZone.handleDownTouch(event);
 			
-			// check if in the lower part of the screen we exit
-			if (event.getY() > getHeight() - 50) {
-				thread.setRunning(false);
-				((Activity)getContext()).finish();
-			} else {
-				Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
-			}
+			Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
 		} if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			//	calls the handleMoveTouch method of the selected object
 			if (selected != null) selected.handleMoveTouch(event);

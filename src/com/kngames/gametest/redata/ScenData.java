@@ -178,8 +178,10 @@ public class ScenData {
 		new Scenario (54, "Infested Gun Shop", GameMode.Mercenary, 3, true, new String[] {
 			"WE38 WE39", "WE35", "WE41", "WE32 WE33", "WE34", "AC19", "AC21", "AC15", "WE36 WE37", "WE22 WE23", "AC39", "WE20 WE21"},
 			"Walls and cabinets stand in front of you, filled to the brim with every Weapon imaginable, eagerly awaiting use against those who had wronged their owner...", null)
-
 	};
+	
+	public static Scenario testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
+			"AC01", "AC02", "AC03", "AC04", "AC05"}, null, null);
 	
 	//	searches the Scenarios array for a Scenario with the specified id
 	//	returns null if nothing was found

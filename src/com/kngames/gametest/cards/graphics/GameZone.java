@@ -24,12 +24,6 @@ public abstract class GameZone implements Touchable, Drawable {
 	protected static int screenWidth;
 	protected static int screenHeight;
 	
-	/*
-	public static final IDObject id = new IDObject(TAG);
-	public String getName() { return id.getName(); }
-	public int getId() { return id.getId(); }
-	*/
-	
 	public static final int PRESERVE_HEIGHT = 0;
 	public static final int PRESERVE_WIDTH = 1;
 	public static final int STRETCH = 2;
@@ -96,6 +90,18 @@ public abstract class GameZone implements Touchable, Drawable {
 	public int right() { return area.right; }
 	public int top() { return area.top; }
 	public int bottom() { return area.bottom; }
+	
+	public float percLeft() { return (float)area.left / screenWidth; }
+	public float percRight() { return (float)area.right / screenWidth; }
+	public float percTop() { return (float)area.top / screenHeight; }
+	public float percBottom() { return (float)area.bottom / screenHeight; }
+	
+	public int width() { return area.right - area.left; }
+	public int height() { return area.bottom - area.top; }
+	
+	public float percWidth() { return (float)(area.right - area.left) / screenWidth; }
+	public float percHeight() { return (float)(area.bottom - area.top) / screenHeight; }
+	
 	public float centerX() { return area.exactCenterX(); }
 	public float centerY() { return area.exactCenterY(); }
 	

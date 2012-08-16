@@ -127,6 +127,10 @@ public class Game {
 		setupBuyCardDialog();
 	}
 	
+	public void popupBuyDialog() {
+		buyDialog.show();
+	}
+	
 	//	sets up a dialog that allows the user to buy a card from the Resource Area and put that card
 	//	on the top of their Discard Pile (does NOT show the dialog)
 	AlertDialog buyDialog;
@@ -146,10 +150,6 @@ public class Game {
 			}
 		});
 		buyDialog = builder.create();
-	}
-	
-	public void popupBuyDialog() {
-		buyDialog.show();
 	}
 	
 	//	pops up a dialog that prompts the user to choose between sending the bought card to Discard or Hand
