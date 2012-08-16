@@ -1,5 +1,8 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.regame.Game;
+import com.kngames.gametest.regame.Player;
+
 public class AmmunitionCard extends RECard {
 	private int price;
 	private int provAmmo;
@@ -15,4 +18,11 @@ public class AmmunitionCard extends RECard {
 	public int getPrice() { return price; }
 	public int getProvAmmo() { return provAmmo; }
 	public int getProvGold() { return provGold; }
+
+	//	standard onPlay method for ammunition, simply adds the proper amount of gold and ammo to the playing character
+	@Override
+	public void onPlay(Game g, Player originPlayer) {
+		originPlayer.ammo += provAmmo;
+		originPlayer.gold += provGold;
+	}
 }

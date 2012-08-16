@@ -2,8 +2,8 @@ package com.kngames.gametest.regame;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
+import com.kngames.gametest.redata.carddata.CardData;
 
 import android.content.Context;
 import android.util.AttributeSet;

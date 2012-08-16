@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import android.database.Cursor;
 import android.util.Pair;
 
-import com.kngames.gametest.redata.CardData.Expans;
+import com.kngames.gametest.redata.carddata.CardData.Expans;
 
 public class ScenData {
 	public static enum GameMode {Story, Mercenary, Versus, Outbreak, PartnerStory}

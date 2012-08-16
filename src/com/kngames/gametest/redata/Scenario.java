@@ -2,8 +2,9 @@ package com.kngames.gametest.redata;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.redata.CardData.Expans;
 import com.kngames.gametest.redata.ScenData.GameMode;
+import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.carddata.CardData.Expans;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
 public class Scenario {

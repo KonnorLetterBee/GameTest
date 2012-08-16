@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
-import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.carddata.CardData;
 
 public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public CharacterExpandSelectorFragment() {

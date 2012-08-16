@@ -2,7 +2,7 @@ package com.kngames.gametest.engine.graphics;
 
 import java.util.Random;
 
-import com.kngames.gametest.engine.iface.*;
+import com.kngames.gametest.engine.interfaces.*;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

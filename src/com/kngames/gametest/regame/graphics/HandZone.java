@@ -29,7 +29,8 @@ public class HandZone extends REGameZone {
 	
 	public void update() { }
 	public void handleDownTouch(MotionEvent event) {
-		getVisiblePlayer().playCard(0);
+		if (getVisiblePlayer().hand().size() > 0)
+			getVisiblePlayer().playCard(0);
 	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }

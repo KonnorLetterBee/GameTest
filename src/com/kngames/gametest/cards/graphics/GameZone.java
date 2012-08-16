@@ -1,6 +1,6 @@
 package com.kngames.gametest.cards.graphics;
 
-import com.kngames.gametest.engine.iface.*;
+import com.kngames.gametest.engine.interfaces.*;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

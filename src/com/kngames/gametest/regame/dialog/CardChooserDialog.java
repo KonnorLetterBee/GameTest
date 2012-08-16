@@ -32,7 +32,6 @@ public class CardChooserDialog extends Dialog {
         public void buttonPressed(int value);
     }
     DialogEventListener onButtonPressedListener;
-	
     
 	public CardChooserDialog(Context context, DialogEventListener onCustomDialogEventListener) {
 		super(context);

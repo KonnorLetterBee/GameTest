@@ -1,7 +1,9 @@
 package com.kngames.gametest.redata.CardTypes;
 
 import com.kngames.gametest.cards.Card;
-import com.kngames.gametest.redata.CardData;
+import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.regame.Game;
+import com.kngames.gametest.regame.Player;
 
 public abstract class RECard extends Card {
 	protected String name;
@@ -40,5 +42,12 @@ public abstract class RECard extends Card {
 	}
 	public String generateTag() {
 		return CardData.generateTagString(this);
+	}
+	
+	//	method to be called when a RECard is played
+	public void onPlay(Game game, Player actingPlayer) { }
+	
+	public interface OnPlayListener {
+		public void playAction(Game game, Player actingPlayer);
 	}
 }

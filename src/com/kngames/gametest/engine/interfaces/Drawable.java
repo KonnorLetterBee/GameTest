@@ -1,4 +1,4 @@
-package com.kngames.gametest.engine.iface;
+package com.kngames.gametest.engine.interfaces;
 
 import android.graphics.Canvas;
 

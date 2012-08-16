@@ -3,9 +3,9 @@ package com.kngames.gametest.redata.ScenEditor;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.CardData;
-import com.kngames.gametest.redata.CardData.Expans;
 import com.kngames.gametest.redata.ScenData.GameMode;
+import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.carddata.CardData.Expans;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.RECard;

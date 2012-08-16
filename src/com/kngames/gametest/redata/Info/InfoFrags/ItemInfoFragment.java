@@ -1,8 +1,8 @@
 package com.kngames.gametest.redata.Info.InfoFrags;
 
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
-import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.ItemCard;
+import com.kngames.gametest.redata.carddata.CardData;
 
 import android.content.Intent;
 import android.os.Bundle;

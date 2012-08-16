@@ -34,7 +34,7 @@ public class InPlayZone extends REGameZone {
 	public void handleUpTouch(MotionEvent event) { }
 
 	//	draws this DeckZone to the screen
-	private final int TITLE_TEXT_SIZE = 20;
+	private final int TITLE_TEXT_SIZE = 25;
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint(); 
 		drawTestBorder(canvas);

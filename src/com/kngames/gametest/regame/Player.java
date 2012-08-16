@@ -1,30 +1,24 @@
 package com.kngames.gametest.regame;
 
-import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
+import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.carddata.CardData;
 
 public class Player {
+	private Game game;
+	
 	private CharacterCard character;
 	public CharacterCard character() { return character; }
 	
-	private int health;
-	private int maxHealth;
-	private int actions;
-	private int ammo;
-	private int buys;
-	private int explores;
-	private boolean mustExplore;
-	private int gold;
-	
-	public int health() { return health; }
-	public int maxHealth() { return maxHealth; }
-	public int actions() { return actions; }
-	public int ammo() { return ammo; }
-	public int buys() { return buys; }
-	public int explores() { return explores; }
-	public boolean mustExplore() { return mustExplore; }
-	public int gold() { return gold; }
+	public int health;
+	public int maxHealth;
+	public int actions;
+	public int ammo;
+	public int buys;
+	public int explores;
+	public boolean mustExplore;
+	public int gold;
 	
 	private REDeck deck;
 	private REDeck hand;
@@ -41,7 +35,8 @@ public class Player {
 	private String customInventory;
 	
 	//	constructs a Player with a specified Character card
-	public Player(CharacterCard ch, String customInventory) {
+	public Player(Game g, CharacterCard ch, String customInventory) {
+		this.game = g;
 		character = ch;
 		health = ch.getMaxHealth();
 		maxHealth = ch.getMaxHealth();
@@ -125,6 +120,10 @@ public class Player {
 	
 	//	plays a card from this player's hand at the specified index to the field
 	public void playCard(int handPos) {
-		inPlay.addTop(hand.pop(handPos));
+		RECard temp = (RECard)hand.pop(handPos);
+		if (temp != null) {
+			inPlay.addTop(temp);
+			temp.onPlay(game, this);
+		}
 	}
 }

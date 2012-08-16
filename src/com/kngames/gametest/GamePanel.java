@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.kngames.gametest.cards.graphics.*;
 //import com.kngames.gametest.cards.graphics.test.*;
 import com.kngames.gametest.engine.graphics.*;
-import com.kngames.gametest.redata.CardData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
+import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.Game;
 import com.kngames.gametest.regame.graphics.*;
 
@@ -61,7 +61,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
-		game = Game.startGame(new CharacterCard[] {CardData.Characters[0]}, null);
+		game = Game.startGame(context, new CharacterCard[] {CardData.Characters[0]}, null);
 		zoneManager.setGame(game);
 		
 		//TestZone a = new TestZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
@@ -71,6 +71,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		InPlayZone inPlay = new InPlayZone(0, 0, GameZone.TOP_LEFT, 0.75f, 0.48f, GameZone.STRETCH);
 		DiscardZone discard = new DiscardZone(0, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
 		InfoZone info = new InfoZone (display.getWidth() / 3, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
+		ShopZone shop = new ShopZone(display.getWidth() * 2 / 4, display.getHeight(), GameZone.BOTTOM_LEFT, 0.75f, 0.48f, GameZone.PRESERVE_HEIGHT);
 		
 		/*
 		a.addData("data 1");
@@ -88,6 +89,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("in_play_zone", inPlay);
 		zoneManager.addZone("discard_zone", discard);
 		zoneManager.addZone("info_zone", info);
+		zoneManager.addZone("shop_zone", shop);
 		
 		//Log.d(TAG, String.format("zone_a (%s) id: %d", a.getName(), a.getId()));
 		//Log.d(TAG, String.format("zone_b (%s) id: %d", b.getName(), b.getId()));
