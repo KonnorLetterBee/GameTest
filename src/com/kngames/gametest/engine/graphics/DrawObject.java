@@ -30,13 +30,7 @@ public class DrawObject implements Touchable, Drawable {
 		id = classIds;
 		classIds++;
 		
-		this.image = draw;
-		
-		if (draw != null) {
-			halfWidth = image.getWidth() / 2;
-			halfHeight = image.getHeight() / 2;
-		}
-		
+		setImage(draw);
 		move = new MovementComponent(x, y, 0, 0);
 		anim = new AnimationComponent(move);
 	}
@@ -53,8 +47,10 @@ public class DrawObject implements Touchable, Drawable {
 	public Bitmap getImage() { return image; }
 	public void setImage(Bitmap newImage) {
 		this.image = newImage;
-		halfWidth = image.getHeight() / 2;
-		halfHeight = image.getHeight() / 2;
+		if (newImage != null) {
+			halfWidth = image.getWidth() / 2;
+			halfHeight = image.getHeight() / 2;
+		}
 	}
 	
 	public int halfWidth() { return halfWidth; }

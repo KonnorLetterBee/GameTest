@@ -34,7 +34,7 @@ public class CardEffects {
 		}
 		private void displayList() {
 			//	generate list of discarded cards
-			discard = actingPlayer.discard().getAllCards();
+			discard = actingPlayer.discard().getAllCardPairs();
 					
 			//	handle empty lists, and lists with size 1
 			if (discard.size() == 0) return;
@@ -118,7 +118,7 @@ public class CardEffects {
 			this.actingPlayer = actingPlayer;
 			
 			//	generate list of discarded weapons
-			hand = actingPlayer.hand().getAllCards();
+			hand = actingPlayer.hand().getAllCardPairs();
 			
 			names = new String[hand.size()];
 			for (int i = 0; i < hand.size(); i++)

@@ -13,6 +13,15 @@ public abstract class Card {
 	public int getID() { return cardID; }
 	public String getTag() { return tag; }
 	
+	//	checks to see if two cards have the same tag
+	public boolean equals(Object other) {
+		Card otherCard;
+		try { otherCard = (Card)other; }
+		catch (Exception e) { return false; }
+		
+		return this.tag.equals(otherCard.tag);
+	}
+	
 	//	provides a way to get a card based on tag info provided by extended classes
 	public static Card parseTag(String tag) {
 		return null;

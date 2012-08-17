@@ -40,6 +40,24 @@ public abstract class Deck {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Deck(Deck other) {
+		cards = (ArrayList<Card>) other.cards.clone();
+		faceUp = other.faceUp;
+		gen = new Random();
+		index = (ArrayList<String>) other.index.clone();
+	}
+	
+	//	checks to see if the contents of two Deck objects are equal
+	public boolean equals(Object other) {
+		Deck otherDeck;
+		try { otherDeck = (Deck)other; }
+		catch (Exception e) { return false; }
+		
+		if (this.size() != otherDeck.size()) return false;
+		return this.cards.equals(otherDeck.cards);
+	}
+	
 	//	gets the number of Cards currently stored in this Deck
 	public int size() { return cards.size(); }
 	

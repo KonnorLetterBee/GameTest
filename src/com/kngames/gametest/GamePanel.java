@@ -3,7 +3,7 @@ package com.kngames.gametest;
 import java.util.ArrayList;
 
 import com.kngames.gametest.cards.graphics.*;
-//import com.kngames.gametest.cards.graphics.test.*;
+import com.kngames.gametest.engine.ContentManager;
 import com.kngames.gametest.engine.graphics.*;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
@@ -12,6 +12,7 @@ import com.kngames.gametest.regame.Game;
 import com.kngames.gametest.regame.graphics.*;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -36,7 +37,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private int screenWidth;
     private int screenHeight;
     
-    //private ContentManager content;
+    private ContentManager content;
 	private REZoneManager zoneManager;
 	private Game game;
     
@@ -47,17 +48,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		getHolder().addCallback(this);
 
 		//	initialize ContentManager
-		//content = ContentManager.initContentManager(getResources());
+		content = ContentManager.initContentManager(getResources());
 		
-		//	initialize DrawObject arraylist and fill it with 4 test objects
+		//	initialize DrawObject arraylist and fill it with a test object
 		drawables = new ArrayList<DrawObject>();
-		/*
-		drawables.add(new TestCard(120, 180, "Card 1", ""));
-		drawables.add(new TestCard(120, 520, "Card 2", "This card has\nsome text."));
-		drawables.add(new TestCard(420, 180, "Card 3", 
-				"This card has\nnumerous lines\nof text, which is\nall manually\nmanaged."));
-		drawables.add(new TestCard(420, 520, "Card 4", "This card does\nfuck-all.\nYAY!  :D"));
-		*/
+		Bitmap card_back = content.getBitmap(R.drawable.card_back_small);
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
@@ -74,7 +69,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		InPlayZone inPlay = new InPlayZone(0, 0, GameZone.TOP_LEFT, 1f - 0.01f - discard.percWidth(), discard.percHeight(), GameZone.STRETCH);
 		ShopZone shop = new ShopZone(deck.percLeft() - 0.01f, deck.percBottom(), GameZone.BOTTOM_RIGHT, 0.16f, 0.1f, GameZone.STRETCH);
 		InfoZone info = new InfoZone (deck.percLeft() - 0.01f, deck.percTop(), GameZone.TOP_RIGHT, 0.16f, 0.39f, GameZone.STRETCH);
-		HandZone hand = new HandZone(0, screenHeight, GameZone.BOTTOM_LEFT, shop.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH);
+		HandZone hand = new HandZone(0, screenHeight, GameZone.BOTTOM_LEFT, shop.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back);
 		
 		/*
 		a.addData("data 1");
@@ -183,15 +178,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			//	draw black background
 			canvas.drawColor(Color.BLACK);
 			
-			//	draw each object in the drawables array
-			for (DrawObject d : drawables) {
-				d.draw(canvas);
-			}
-			
 			//	draw each zone in the zones array
 			GameZone[] allZones = zoneManager.getAllZones();
 			for (GameZone z : allZones) {
 				z.draw(canvas);
+			}
+			
+			//	draw each object in the drawables array
+			for (DrawObject d : drawables) {
+				d.draw(canvas);
 			}
 			
 			displayFps(canvas, avgFps);

@@ -26,6 +26,10 @@ public class REDeck extends Deck {
 		super(tags);
 	}
 	
+	public REDeck (REDeck other) {
+		super(other);
+	}
+	
 	@Override
 	public Card parseTag(String tag) {
 		return RECard.parseTag(tag);
@@ -38,7 +42,7 @@ public class REDeck extends Deck {
 	
 	//	creates an array list of pairs, the first element being the index in the deck the card is found,
 	//	the second being a reference to the card itself, of this deck object
-	public ArrayList<Pair<Integer,RECard>> getAllCards() {
+	public ArrayList<Pair<Integer,RECard>> getAllCardPairs() {
 		ArrayList<Pair<Integer,RECard>> result = new ArrayList<Pair<Integer,RECard>>();
 		for (int i = 0; i < size(); i++) {
 			result.add(new Pair<Integer, RECard>(i, (RECard)peek(i)));

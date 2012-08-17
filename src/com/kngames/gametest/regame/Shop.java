@@ -170,7 +170,8 @@ public class Shop {
 		//	build the alert box
 		AlertDialog.Builder builder = new AlertDialog.Builder(game.getContext());
 		builder.setTitle("Pick card to buy:");
-		builder.setItems(available, new buyToDiscard());
+		if (!Game.DEBUG_MODE) builder.setItems(available, new buyToDiscard());
+		else builder.setItems(available, new popupChoice());
 		buyDialog = builder.create();
 	}
 	
