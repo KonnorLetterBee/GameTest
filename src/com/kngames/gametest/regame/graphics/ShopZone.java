@@ -46,6 +46,6 @@ public class ShopZone extends REGameZone {
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
 		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
-		canvas.drawText(TAG, area.left + 10, textLocation, paint);
+		canvas.drawText("BUY CARD", area.left + 10, textLocation, paint);
 	}
 }

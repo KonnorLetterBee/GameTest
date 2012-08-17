@@ -26,7 +26,8 @@ public class MainMenu extends Activity {
 		initializeGlobals();
 		view = new MainMenuView(getApplicationContext(), this);
 		
-		view.addButton("Game Test", GameLoopActivity.class);
+		if (Game.DEBUG_MODE) view.addButton("Game Test (DEBUG)", GameLoopActivity.class);
+		else view.addButton("Game Test", GameLoopActivity.class);
 		view.addButton("Game Setup Test", GameSetupActivity.class);
 		view.addButton("Card List", MainInfoListActivity.class);
 		view.addButton("Scenario List", new View.OnClickListener() {

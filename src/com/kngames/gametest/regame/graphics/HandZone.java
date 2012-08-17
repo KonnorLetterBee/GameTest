@@ -41,7 +41,8 @@ public class HandZone extends REGameZone {
 	private void init(Bitmap image) {
 		cards = new REDeck();
 		cardPics = new ArrayList<TestRECard>();
-		cardBack = image;
+		int cardHeight = this.height() - 55;
+		cardBack = Bitmap.createScaledBitmap(image, cardHeight * 2/3, cardHeight, false);
 	}
 	public void postInit() { }
 	
@@ -62,7 +63,7 @@ public class HandZone extends REGameZone {
 			resetYPos();
 			cardPics = new ArrayList<TestRECard>();
 			for (int i = 0; i < cards.size(); i++) {
-				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 + 50, (RECard)cards.peek(i), cardBack));
+				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 + 35, (RECard)cards.peek(i), cardBack));
 			}
 		}
 	}

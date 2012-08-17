@@ -41,6 +41,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	private REZoneManager zoneManager;
 	private Game game;
     
+	private float margin = 0.02f;
+	
 	@SuppressWarnings("deprecation")
 	public GamePanel(Context context) {
 		super(context);
@@ -64,39 +66,30 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		game = Game.startGame(context, new CharacterCard[] {CardData.Characters[0]}, ScenData.testScenario);
 		zoneManager.setGame(game);
 		
-		DeckZone deck = new DeckZone(screenWidth, screenHeight, GameZone.BOTTOM_RIGHT, 0.75f, 0.49f, GameZone.PRESERVE_HEIGHT);
-		DiscardZone discard = new DiscardZone(display.getWidth(), 0, GameZone.TOP_RIGHT, 0.75f, 0.49f, GameZone.PRESERVE_HEIGHT);
-		InPlayZone inPlay = new InPlayZone(0, 0, GameZone.TOP_LEFT, 1f - 0.01f - discard.percWidth(), discard.percHeight(), GameZone.STRETCH);
-		ShopZone shop = new ShopZone(deck.percLeft() - 0.01f, deck.percBottom(), GameZone.BOTTOM_RIGHT, 0.16f, 0.1f, GameZone.STRETCH);
-		InfoZone info = new InfoZone (deck.percLeft() - 0.01f, deck.percTop(), GameZone.TOP_RIGHT, 0.16f, 0.39f, GameZone.STRETCH);
-		HandZone hand = new HandZone(0, screenHeight, GameZone.BOTTOM_LEFT, shop.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back);
+		DeckZone deck = new DeckZone(screenWidth, screenHeight, GameZone.BOTTOM_RIGHT, 
+				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
+		DiscardZone discard = new DiscardZone(1.0f, deck.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
+				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
+		ShopZone shop = new ShopZone(1.0f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), 0.15f, GameZone.STRETCH);
+		EndTurnZone end = new EndTurnZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), shop.percHeight(), GameZone.STRETCH);
 		
-		/*
-		a.addData("data 1");
-		b.addData("data 2");
-		b.addData("data 3");
+		HandZone hand = new HandZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
+				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back);
+		InPlayZone inPlay = new InPlayZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT, 
+				hand.percWidth(), discard.percHeight(), GameZone.STRETCH);
 		
-		a.setOtherZone(b);
-		b.setOtherZone(a);
-		*/
+		InfoZone info = new InfoZone (0f, 0f, GameZone.TOP_LEFT, 
+				0.3f, inPlay.percTop() - 0.02f, GameZone.STRETCH);
 		
-		//zones.addZone("zone_a", a);
-		//zones.addZone("zone_b", b);
 		zoneManager.addZone("deck_zone", deck);
 		zoneManager.addZone("hand_zone", hand);
 		zoneManager.addZone("in_play_zone", inPlay);
 		zoneManager.addZone("discard_zone", discard);
 		zoneManager.addZone("info_zone", info);
 		zoneManager.addZone("shop_zone", shop);
-		
-		//Log.d(TAG, String.format("zone_a (%s) id: %d", a.getName(), a.getId()));
-		//Log.d(TAG, String.format("zone_b (%s) id: %d", b.getName(), b.getId()));
-		Log.d(TAG, String.format("deck (%s) id: %d", deck.getName(), deck.getId()));
-		Log.d(TAG, String.format("hand (%s) id: %d", hand.getName(), hand.getId()));
-		Log.d(TAG, String.format("inPlay (%s) id: %d", inPlay.getName(), inPlay.getId()));
-		Log.d(TAG, String.format("discard (%s) id: %d", discard.getName(), discard.getId()));
-		Log.d(TAG, String.format("info (%s) id: %d", info.getName(), info.getId()));
-		
+		zoneManager.addZone("end_turn_zone", end);
 		zoneManager.postInit();
 		
 		//	create the game loop thread
@@ -190,6 +183,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			}
 			
 			displayFps(canvas, avgFps);
+			if (Game.DEBUG_MODE) displayDebugMode(canvas);
 		}
 	}
 	
@@ -203,6 +197,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			Paint paint = new Paint();
 			paint.setARGB(255, 255, 255, 255);
 			canvas.drawText(fps, this.getWidth() - 50, 20, paint);
+		}
+	}
+	
+	private void displayDebugMode(Canvas canvas) {
+		if (canvas != null) {
+			Paint paint = new Paint();
+			paint.setARGB(255, 255, 255, 255);
+			paint.setTextSize(20);
+			canvas.drawText("DEBUG MODE", this.getWidth() - 140, 45, paint);
 		}
 	}
 	
