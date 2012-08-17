@@ -45,7 +45,10 @@ public abstract class RECard extends Card {
 	}
 	
 	//	method to be called when a RECard is played
-	public void onPlay(Game game, Player actingPlayer) { }
+	//	defaults to placing the card into play and doing nothing else
+	public void onPlay(Game game, Player actingPlayer) {
+		actingPlayer.inPlay().addBack(this);
+	}
 	
 	public interface OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer);
