@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
@@ -29,7 +28,8 @@ public class ShopZone extends REGameZone {
 	
 	public void update() { }
 	public void handleDownTouch(MotionEvent event) {
-		game.popupBuyDialog();
+		if (game.getActivePlayer().buys > 0)
+			game.shop().popupBuyDialog();
 	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }

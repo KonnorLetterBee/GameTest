@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+@SuppressWarnings("unused")
 public class GameLoopThread extends Thread {
 	
 	private static final String TAG = GameLoopThread.class.getSimpleName();

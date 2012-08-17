@@ -52,17 +52,18 @@ public class Player {
 		
 		//	add 7 "Ammo x10" cards to the Inventory
 		for (int i = 0; i < 7; i++) {
-			inventory.addBottom(CardData.Ammunition[0]);
+			inventory.addTop(game.shop().gainCardSearch(this, CardData.Ammunition[0].getTag()));
 		}
 		
 		//	add the two "Combat Knives" and "Handgun" to the Inventory
-		inventory.addBottom(CardData.Weapons[3]);
-		inventory.addBottom(CardData.Weapons[3]);
-		inventory.addBottom(CardData.Weapons[5]);
+		inventory.addTop(game.shop().gainCardSearch(this, CardData.Weapons[3].getTag()));
+		inventory.addTop(game.shop().gainCardSearch(this, CardData.Weapons[3].getTag()));
+		inventory.addTop(game.shop().gainCardSearch(this, CardData.Weapons[5].getTag()));
 		
 		//	shuffle the mansion, flip it, and return the new Deck object
 		inventory.shuffle(2);
 		inventory.flipDeck();
+		assert (inventory.size() == 10);
 		return inventory;
 	}
 	

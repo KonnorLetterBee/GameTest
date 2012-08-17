@@ -54,8 +54,27 @@ public class CardChooserDialog extends Dialog {
 		init(context, cards);
 	}
 	
-	//	initialize the structure
-	void init(Context context, RECard[] cards) {
+	public CardChooserDialog(Context context, String[] cards, CardChosenListener customListener) {
+		super(context);
+		this.onCardChosenListener = customListener;
+		init(context, cards);
+	}
+
+	public CardChooserDialog(Context context, String[] cards, int theme, CardChosenListener customListener) {
+		super(context, theme);
+		this.onCardChosenListener = customListener;
+		init(context, cards);
+	}
+
+	public CardChooserDialog(Context context, String[] cards, boolean cancelable,
+			OnCancelListener cancelListener, CardChosenListener customListener) {
+		super(context, cancelable, cancelListener);
+		this.onCardChosenListener = customListener;
+		init(context, cards);
+	}
+	
+	//	initialize the structure using a list of Strings
+	void init(Context context, String[] cards) {
 		this.context = context;
     	setTitle("Choose a Card");
     	setCancelable(true);
@@ -65,6 +84,25 @@ public class CardChooserDialog extends Dialog {
     	//	add each card in the array to the layout
     	for (int i = 0; i < cards.length; i++) {
     		addCard(cards[i]);
+    	}
+    	
+    	LinearLayout.LayoutParams mainParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+    	setContentView(scrollLayout, mainParams);
+	}
+	
+	//	initialize the structure using a list of card objects
+	void init(Context context, RECard[] cards) {
+		this.context = context;
+    	setTitle("Choose a Card");
+    	setCancelable(true);
+		
+    	setupLayout(2);
+    	
+    	//	add each card in the array to the layout
+    	for (int i = 0; i < cards.length; i++) {
+    		addCard(cards[i].getName());
     	}
     	
     	LinearLayout.LayoutParams mainParams = new LinearLayout.LayoutParams(
@@ -114,12 +152,12 @@ public class CardChooserDialog extends Dialog {
     	scrollLayout.addView(rowContainer, subParams);
 	}
 	
-	public void addCard(RECard card) {
+	public void addCard(String entry) {
 		//	create the new button
 		Button cardButton = new Button(context);
 		cardButton.setId(numButtons);
     	cardButton.setLayoutParams(new ViewGroup.LayoutParams(CARD_PIC_WIDTH, ViewGroup.LayoutParams.MATCH_PARENT));
-    	cardButton.setText(card.getName());
+    	cardButton.setText(entry);
     	cardButton.setTextColor(Color.WHITE);
     	cardButton.setBackgroundResource(R.drawable.card_back_small);
     	cardButton.setOnClickListener(new View.OnClickListener() {

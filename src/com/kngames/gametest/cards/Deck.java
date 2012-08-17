@@ -13,6 +13,7 @@ public abstract class Deck {
 	protected ArrayList<Card> cards;		//	structure to track all of the Card objects in this Deck
 	protected boolean faceUp;				//	variable that designates whether or not the deck is face up or face down
 	protected Random gen;					//	Random object used in deck shuffling and random selection of cards
+	protected ArrayList<String> index;		//	structure to act as a list of what kinds of cards are in this Deck (not in any particular order)
 	
 	//	constructs a new empty Deck object
 	public Deck () {
@@ -29,6 +30,7 @@ public abstract class Deck {
 		cards = new ArrayList<Card>();
 		faceUp = true;
 		gen = new Random();
+		index = new ArrayList<String>();
 		
 		if (tags.length > 0 && !tags[0].equals("")) {
 			for (int i = 0; i < tags.length; i++) {
@@ -50,22 +52,48 @@ public abstract class Deck {
 	//	flips the deck face-up if it's face-down, or face-down if it's face-up
 	public void flipDeck() { faceUp = !faceUp; }
 	
+	//	searches the index for a specified tag, and returns whether or not the key exists
+	public boolean indexContains(String tag) {
+		for (String s : index)
+			if (s.equals(tag)) return true;
+		return false;
+	}
+	
+	//	searches this deck for a card with the specified tag, and returns the first index
+	//	that a card with that tag occurs, or -1 if no such card exists
+	public int contains(String tag) {
+		if (indexContains(tag)) {
+			for (int i = 0; i < cards.size(); i++) {
+				if (cards.get(i).tag.equals(tag)) return i;
+			}
+		}
+		return -1;
+	}
+	
 	//	adds a Card to the front of this Deck (index 0)
-	public void addFront(Card toAdd) { cards.add(0, toAdd); }
+	public void addFront(Card toAdd) {
+		cards.add(0, toAdd);
+		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
+	}
 	
 	//	adds a Card to the back of this Deck (index size() - 1)
-	public void addBack(Card toAdd) { cards.add(cards.size(), toAdd); }
+	public void addBack(Card toAdd) {
+		cards.add(cards.size(), toAdd);
+		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
+	}
 	
 	//	adds a Card to the top of this Deck, depends on face-up/face-down
 	public void addTop(Card toAdd) {
 		if (faceUp) { cards.add(0, toAdd); }
 		else { cards.add(cards.size(), toAdd); }
+		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
 	}
 	
 	//	adds a Card to the bottom of this Deck, depends on face-up/face-down
 	public void addBottom(Card toAdd) {
 		if (faceUp) { cards.add(cards.size(), toAdd); }
 		else { cards.add(0, toAdd); }
+		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
 	}
 	
 	//	removes and returns the first card in this Deck object (from index 0)

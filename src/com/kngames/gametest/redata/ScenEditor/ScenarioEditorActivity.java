@@ -528,7 +528,7 @@ public class ScenarioEditorActivity extends Activity {
 			list.add(CardData.findWeapon("Combat Knife"));
 			list.add(CardData.findWeapon("Survival Knife"));
 			list.add(CardData.findWeapon("Handgun"));
-			list.add(CardData.findWeapon("Blowback Pistol"));
+			list.add(CardData.findWeapon("Burst-Fire Handgun"));
 			list.add(CardData.findItem("Green Herb"));
 		}
 		for (int i = 0; i < usedDataList.size(); i++) {
