@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.util.Pair;
 
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
 import com.kngames.gametest.regame.Game;
 import com.kngames.gametest.regame.Player;
@@ -16,7 +17,6 @@ public class CardEffects {
 	//	not implemented
 	public static class DeadlyAimEffect implements OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer) { }
-		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
 	}
 
 	public static class ShatteredMemoriesEffect implements OnPlayListener {
@@ -30,14 +30,15 @@ public class CardEffects {
 			this.game = game;
 			
 			displayList();
-			finish(card, game, actingPlayer);
 		}
 		private void displayList() {
 			//	generate list of discarded cards
 			discard = actingPlayer.discard().getAllCardPairs();
 					
-			//	handle empty lists, and lists with size 1
-			if (discard.size() == 0) return;
+			//	handle empty lists
+			if (discard.size() == 0) {
+				return;
+			}
 					
 			names = new String[discard.size()];
 			for (int i = 0; i < discard.size(); i++)
@@ -64,9 +65,6 @@ public class CardEffects {
 		private void onItemSelected(int item) {
 			RECard temp = (RECard)actingPlayer.discard().pop(discard.get(item).first);
 			game.shop().returnCard(temp);
-		}
-		public void finish(RECard card, Game game, Player actingPlayer) {
-			game.shop().returnCard(card);
 		}
 	}
 
@@ -140,6 +138,12 @@ public class CardEffects {
 		private void onItemSelected(int item) {
 			RECard temp = (RECard)actingPlayer.hand().pop(hand.get(item).first);
 			actingPlayer.deck().addTop(temp);
+		}
+	}
+
+	public static class TrashOnFinish implements OnPlayFinishListener {
+		public void finish(RECard card, Game game, Player actingPlayer) {
+			game.shop().returnCard(card);
 		}
 	}
 }

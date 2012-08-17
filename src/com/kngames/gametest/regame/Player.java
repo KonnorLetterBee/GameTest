@@ -121,11 +121,11 @@ public class Player {
 	
 	//	plays a card from this player's hand at the specified index to the field
 	public void playCard(int handPos) {
-		RECard temp = (RECard)hand.pop(handPos);
+		RECard temp = (RECard)hand.peek(handPos);
 		if (temp != null) {
 			//	don't play an action when you're out of actions, otherwise, play the card
 			if (temp.getCardType() == RECard.CardType.Action && actions <= 0 && !Game.DEBUG_MODE) return;
-			//inPlay.addTop(temp);
+			temp = (RECard)hand.pop(handPos);
 			temp.onPlay(game, this);
 		}
 	}

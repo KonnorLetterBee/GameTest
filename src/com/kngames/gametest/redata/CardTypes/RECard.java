@@ -49,6 +49,9 @@ public abstract class RECard extends Card {
 	
 	public interface OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer);
+	}
+	
+	public interface OnPlayFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer);
 	}
 }

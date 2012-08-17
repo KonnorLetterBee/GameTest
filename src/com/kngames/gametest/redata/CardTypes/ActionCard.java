@@ -13,7 +13,8 @@ public class ActionCard extends RECard {
 	private int extraBuys;
 	private int extraCards;
 	
-	private OnPlayListener listener = null;
+	private OnPlayListener playListener = null;
+	private OnPlayFinishListener playFinishListener = null;
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text) {
 		super(name, CardType.Action, "AC", ID, expans, quantity, text);
@@ -27,9 +28,10 @@ public class ActionCard extends RECard {
 	}
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
-			OnPlayListener onPlay) {
+			OnPlayListener onPlay, OnPlayFinishListener onPlayFinish) {
 		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text);
-		listener = onPlay;
+		playListener = onPlay;
+		playFinishListener = onPlayFinish;
 	}
 	
 	public int getExtraAmmo() { return extraAmmo; }
@@ -52,6 +54,12 @@ public class ActionCard extends RECard {
 		for (int i = 0; i < extraCards; i++) actingPlayer.drawToHand();
 		actingPlayer.gold += extraGold;
 		
-		if (listener != null) listener.playAction(this, game, actingPlayer);
+		//	if an extra OnPlayListener is attached, use that effect
+		if (playListener != null) playListener.playAction(this, game, actingPlayer);
+		
+		//	if an extra OnPlayFinishListener is attached, use that effect
+		//	otherwise, simply move the card to the field
+		if (playFinishListener != null) playFinishListener.finish(this, game, actingPlayer);
+		else actingPlayer.inPlay().addBack(this);
 	}
 }

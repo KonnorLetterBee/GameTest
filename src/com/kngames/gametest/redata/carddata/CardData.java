@@ -2,6 +2,7 @@ package com.kngames.gametest.redata.carddata;
 
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
+import com.kngames.gametest.redata.carddata.CardEffects;
 
 public class CardData {
 	public static enum Expans {Base, Alliaces, Outbreak, Nightmare, Basic, Promo, Custom}
@@ -67,12 +68,12 @@ public class CardData {
 	public static final ActionCard[] Actions = {
 		//	name, ID, expansion, quantity, price, actions, gold, ammo, cards, buys, explores, text
 		new ActionCard("Mansion Foyer",						1,  0, 10, 30, 0, 0,  0,  2, 0, 0, ""),
-		new ActionCard("Deadly Aim",						2,  0, 5,  50, 0, 0,  20, 0, 0, 0, "All your Weapons get +10 Damage this turn.", new CardEffects.DeadlyAimEffect()),
-		new ActionCard("Shattered Memories",				3,  0, 5,  20, 0, 0,  0,  0, 0, 0, "Trash up to 2 cards from your Discard Pile.  Then Trash this card.", new CardEffects.ShatteredMemoriesEffect()),
+		new ActionCard("Deadly Aim",						2,  0, 5,  50, 0, 0,  20, 0, 0, 0, "All your Weapons get +10 Damage this turn.", new CardEffects.DeadlyAimEffect(), null),
+		new ActionCard("Shattered Memories",				3,  0, 5,  20, 0, 0,  0,  0, 0, 0, "Trash up to 2 cards from your Discard Pile.  Then Trash this card.", new CardEffects.ShatteredMemoriesEffect(), new CardEffects.TrashOnFinish()),
 		new ActionCard("Escape from the Dead City",			4,  0, 10, 70, 2, 0,  0,  1, 0, 0, ""),
-		new ActionCard("Reload",							5,  0, 5,  50, 2, 0,  20, 0, 0, 0, "Move 1 Weapon from your Discard Pile to your Hand.", new CardEffects.ReloadEffect()),
+		new ActionCard("Reload",							5,  0, 5,  50, 2, 0,  20, 0, 0, 0, "Move 1 Weapon from your Discard Pile to your Hand.", new CardEffects.ReloadEffect(), null),
 		new ActionCard("The Merchant",						6,  0, 6,  50, 0, 20, 0,  1, 1, 0, ""),
-		new ActionCard("Umbrella Corporation",				7,  0, 5,  50, 1, 0,  0,  2, 0, 0, "Move 1 card from your Hand to the top of your Inventory.", new CardEffects.UmbrellaCorporationEffect()),
+		new ActionCard("Umbrella Corporation",				7,  0, 5,  50, 1, 0,  0,  2, 0, 0, "Move 1 card from your Hand to the top of your Inventory.", new CardEffects.UmbrellaCorporationEffect(), null),
 		new ActionCard("Back to Back",						8,  0, 5,  30, 1, 10, 0,  0, 0, 0, "When your Character is Attacked, you can Discard this card from your Hand to give 1 Weapon -20 Damage this turn."),
 		new ActionCard("Item Management",					9,  0, 5,  30, 0, 0,  0,  0, 0, 0, "Trash 1 Ammunition from your Hand to Gain another Ammunition costing up to 30 Gold more than the Trashed card."),
 		new ActionCard("Ominous Battle",					10, 0, 5,  60, 0, 10, 0,  3, 0, 0, "Trash 1 Card from your Hand."),
