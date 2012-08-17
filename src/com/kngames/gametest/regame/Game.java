@@ -8,6 +8,7 @@ import com.kngames.gametest.redata.CardTypes.*;
 
 public class Game {
 	private static final String TAG = Game.class.getSimpleName();
+	public static final boolean DEBUG_MODE = false;
 	
 	private Context context;
 	public Context getContext() { return context; }

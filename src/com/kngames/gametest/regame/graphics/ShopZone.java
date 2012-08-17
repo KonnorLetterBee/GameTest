@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
+import com.kngames.gametest.regame.Game;
 
 public class ShopZone extends REGameZone {
 	
@@ -28,7 +29,8 @@ public class ShopZone extends REGameZone {
 	
 	public void update() { }
 	public void handleDownTouch(MotionEvent event) {
-		if (game.getActivePlayer().buys > 0)
+		
+		if (game.getActivePlayer().buys > 0 || Game.DEBUG_MODE)
 			game.shop().popupBuyDialog();
 	}
 	public void handleOffDownTouch(MotionEvent event) { }

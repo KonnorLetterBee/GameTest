@@ -24,5 +24,6 @@ public class AmmunitionCard extends RECard {
 	public void onPlay(Game g, Player originPlayer) {
 		originPlayer.ammo += provAmmo;
 		originPlayer.gold += provGold;
+		originPlayer.inPlay().addBack(this);
 	}
 }

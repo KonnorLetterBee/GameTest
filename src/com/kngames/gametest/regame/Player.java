@@ -124,8 +124,8 @@ public class Player {
 		RECard temp = (RECard)hand.pop(handPos);
 		if (temp != null) {
 			//	don't play an action when you're out of actions, otherwise, play the card
-			if (temp.getCardType() == RECard.CardType.Action && actions <= 0) return;
-			inPlay.addTop(temp);
+			if (temp.getCardType() == RECard.CardType.Action && actions <= 0 && !Game.DEBUG_MODE) return;
+			//inPlay.addTop(temp);
 			temp.onPlay(game, this);
 		}
 	}

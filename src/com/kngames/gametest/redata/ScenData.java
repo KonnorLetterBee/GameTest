@@ -181,7 +181,7 @@ public class ScenData {
 	};
 	
 	public static Scenario testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
-			"AC01", "AC02", "AC03", "AC04", "AC05"}, null, null);
+			"AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07"}, null, null);
 	
 	//	searches the Scenarios array for a Scenario with the specified id
 	//	returns null if nothing was found

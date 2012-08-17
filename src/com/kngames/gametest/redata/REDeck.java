@@ -36,6 +36,16 @@ public class REDeck extends Deck {
 		return c.getTag();
 	}
 	
+	//	creates an array list of pairs, the first element being the index in the deck the card is found,
+	//	the second being a reference to the card itself, of this deck object
+	public ArrayList<Pair<Integer,RECard>> getAllCards() {
+		ArrayList<Pair<Integer,RECard>> result = new ArrayList<Pair<Integer,RECard>>();
+		for (int i = 0; i < size(); i++) {
+			result.add(new Pair<Integer, RECard>(i, (RECard)peek(i)));
+		}
+		return result;
+	}
+		
 	//	queries this deck for all cards that match the specified card type
 	//	returns an array list of pairs, the first element being the index in the deck the card is found,
 	//	the second being a reference to the card itself

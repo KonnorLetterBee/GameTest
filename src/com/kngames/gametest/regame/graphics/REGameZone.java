@@ -59,8 +59,10 @@ public abstract class REGameZone extends GameZone {
 		paint.setColor(Color.WHITE);
 		int height = startHeight;
 		for (int i = 0; i < data.length; i++) {
-			canvas.drawText(data[i], area.left + 10, height, paint);
-			height += DATA_TEXT_SIZE + 5;
+			if (data[i] != null) {
+				canvas.drawText(data[i], area.left + 10, height, paint);
+				height += DATA_TEXT_SIZE + 5;
+			}
 		}
 	}
 }

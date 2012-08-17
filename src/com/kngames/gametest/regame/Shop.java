@@ -25,6 +25,12 @@ public class Shop {
 		if (scen != null) setupResourcePiles(scen, players);
 	}
 	
+	
+	
+	///
+	///		Shop Operations
+	///
+	
 	//	set the scenario and resource piles
 	private void setupResourcePiles(Scenario scen, int players) {
 		ArrayList<RECard[]> cards = scen.getCards();
@@ -44,24 +50,6 @@ public class Shop {
 		//	set up all scenario piles
 		for (int i = 0; i < cards.size(); i++) {
 			resourcePiles.add(createDeck(cards.get(i), false));
-		}
-	}
-	
-	//	searches all piles for a specific card, and removes it from the first pile it's found in
-	//	then shuffles the deck
-	public RECard gainCardSearch(Player player, String tag) {
-		for (int i = 0; i < resourcePiles.size(); i++) {
-			int index = resourcePiles.get(i).contains(tag);
-			if (index != -1) {
-				return (RECard) resourcePiles.get(i).pop(index);
-			}
-		}
-		return null;
-	}
-	
-	public void shuffleAllPiles() {
-		for (REDeck d : resourcePiles) {
-			d.shuffle(1);
 		}
 	}
 	
@@ -86,6 +74,65 @@ public class Shop {
 		return out;
 	}
 	
+	//	shuffles all piles in this Shop
+	public void shuffleAllPiles() {
+		for (REDeck d : resourcePiles) {
+			d.shuffle(1);
+		}
+	}
+	
+	
+	
+	///
+	///		Player Actions
+	///
+	
+	//	searches all piles for a specific card, and removes it from the first pile it's found in
+	//	then shuffles the deck
+	public RECard gainCardSearch(Player player, String tag) {
+		for (int i = 0; i < resourcePiles.size(); i++) {
+			int index = resourcePiles.get(i).contains(tag);
+			if (index != -1) {
+				return (RECard) resourcePiles.get(i).pop(index);
+			}
+		}
+		return null;
+	}
+	
+	//	takes the top card of the specified pile and adds it to the top of the specified player's discard pile
+	public void buyCard(Player player, int stackIndex) {
+		RECard temp = (RECard)resourcePiles.get(stackIndex).peekTop();
+		int price = getPriceOfCard(temp);
+		if (Game.DEBUG_MODE) player.discard().addTop(resourcePiles.get(stackIndex).popTop());
+		else if (player.buys >= 1 && player.gold >= price) {
+			player.buys--;
+			player.gold -= price;
+			player.discard().addTop(resourcePiles.get(stackIndex).popTop());
+		}
+	}
+	
+	//	returns a card to the resource area
+	public void returnCard(RECard card) {
+		for (int i = 0; i < resourcePiles.size(); i++) {
+			if (resourcePiles.get(i).indexContains(card.getTag())) {
+				resourcePiles.get(i).addBottom(card);
+			}
+		}
+	}
+	
+	
+	///
+	///		Dialog Methods
+	///
+	
+	//	pops up the dialog used to buy cards
+	public void popupBuyDialog() {
+		if (resourcePiles != null) {
+			loadAvailable();
+			buyDialog.show();
+		}
+	}
+	
 	//	loads available cards to buy from the resource piles
 	private void loadAvailable() {
 		available = new String[resourcePiles.size()];
@@ -101,14 +148,6 @@ public class Shop {
 		setupBuyCardDialog();
 	}
 	
-	//	pops up the dialog used to buy cards
-	public void popupBuyDialog() {
-		if (resourcePiles != null) {
-			loadAvailable();
-			buyDialog.show();
-		}
-	}
-	
 	public static int getPriceOfCard(RECard card) {
 		int price = 99999;
 		
@@ -121,17 +160,6 @@ public class Shop {
 		}
 		
 		return price;
-	}
-	
-	//	takes the top card of the specified pile and adds it to the top of the specified player's discard pile
-	public void buyCard(Player player, int stackIndex) {
-		RECard temp = (RECard)resourcePiles.get(stackIndex).peekTop();
-		int price = getPriceOfCard(temp);
-		if (player.buys >= 1 && player.gold >= price) {
-			player.buys--;
-			player.gold -= price;
-			player.discard().addTop(resourcePiles.get(stackIndex).popTop());
-		}
 	}
 	
 	//	sets up a dialog that allows the user to buy a card from the Resource Area and put that card

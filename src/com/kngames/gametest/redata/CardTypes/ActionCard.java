@@ -41,6 +41,7 @@ public class ActionCard extends RECard {
 	public int getPrice() { return price; }
 	
 	//	adds the action's attributes to the acting player, then performs the action's secondary abilities, if any
+	@Override
 	public void onPlay(Game game, Player actingPlayer) {
 		actingPlayer.actions--;
 		
@@ -51,6 +52,6 @@ public class ActionCard extends RECard {
 		for (int i = 0; i < extraCards; i++) actingPlayer.drawToHand();
 		actingPlayer.gold += extraGold;
 		
-		if (listener != null) listener.playAction(game, actingPlayer);
+		if (listener != null) listener.playAction(this, game, actingPlayer);
 	}
 }
