@@ -1,9 +1,11 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.CardTypes.RECard.Playable;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
 
-public class ActionCard extends RECard {
+public class ActionCard extends RECard implements Playable {
 
 	private int price;
 	private int extraActions;
@@ -15,7 +17,7 @@ public class ActionCard extends RECard {
 	
 	private OnPlayListener playListener = null;
 	private OnPlayFinishListener playFinishListener = null;
-	private OnRespondListener respondListener = null;
+	private OnTriggerListener trigger = null;
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text) {
 		super(name, CardType.Action, "AC", ID, expans, quantity, text);
@@ -34,11 +36,11 @@ public class ActionCard extends RECard {
 	}
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
-			OnPlayListener onPlay, OnPlayFinishListener onPlayFinish, OnRespondListener onRespond) {
+			OnPlayListener onPlay, OnPlayFinishListener onPlayFinish, OnTriggerListener onRespond) {
 		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text);
 		playListener = onPlay;
 		playFinishListener = onPlayFinish;
-		respondListener = onRespond;
+		trigger = onRespond;
 	}
 	
 	public int getExtraAmmo() { return extraAmmo; }
@@ -68,5 +70,18 @@ public class ActionCard extends RECard {
 		//	otherwise, simply move the card to the field
 		if (playFinishListener != null) playFinishListener.finish(this, game, actingPlayer);
 		else actingPlayer.inPlay().addBack(this);
+	}
+
+	public boolean isTriggered(Game game, Player actingPlayer) {
+		if (trigger == null) return false;
+		return trigger.isTriggered(this, game, actingPlayer);
+	}
+	
+	//	actions can be played if:
+	//	it's your main phase, and you have at least one action remaining
+	//	the action's trigger is valid, regardless of game state (trigger checks that anyway)
+	public boolean canPlay(Game game, Player actingPlayer) {
+		if (trigger != null && trigger.isTriggered(this, game, actingPlayer)) return true;
+		else return game.isActivePlayer(actingPlayer) && actingPlayer.actions > 0 && game.state().currentState() == State.MainPhase;
 	}
 }

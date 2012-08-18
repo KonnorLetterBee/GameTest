@@ -1,11 +1,17 @@
 package com.kngames.gametest.regame.gamestruct;
 
+import android.util.Log;
+
 import com.kngames.gametest.redata.REDeck;
-import com.kngames.gametest.redata.CardTypes.CharacterCard;
-import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.carddata.CardData;
 
 public class Player {
+	private static final String TAG = Player.class.getSimpleName();
+	
+	private int playerId;
+	public int playerId() { return playerId; }
+	
 	private Game game;
 	
 	private CharacterCard character;
@@ -35,7 +41,8 @@ public class Player {
 	private String customInventory;
 	
 	//	constructs a Player with a specified Character card
-	public Player(Game g, CharacterCard ch, String customInventory) {
+	public Player(int id, Game g, CharacterCard ch, String customInventory) {
+		playerId = id;
 		this.game = g;
 		character = ch;
 		health = ch.getMaxHealth();
@@ -119,14 +126,35 @@ public class Player {
 		if (deck.size() > 0) hand.addTop(deck.popTop());
 	}
 	
-	//	plays a card from this player's hand at the specified index to the field
+	//	plays a card from this player's hand, using the correct action determined by the game state
 	public void playCard(int handPos) {
 		RECard temp = (RECard)hand.peek(handPos);
 		if (temp != null) {
-			//	don't play an action when you're out of actions, otherwise, play the card
-			if (temp.getCardType() == RECard.CardType.Action && actions <= 0 && !Game.DEBUG_MODE) return;
-			temp = (RECard)hand.pop(handPos);
-			temp.onPlay(game, this);
+			switch (temp.getCardType()) {
+			case Ammunition:
+				AmmunitionCard ammo = (AmmunitionCard)temp;
+				if (ammo.canPlay(game, this))  playCardEffect(handPos);
+				break;
+			case Action:
+				ActionCard action = (ActionCard)temp;
+				if (action.canPlay(game, this))  playCardEffect(handPos);
+				break;
+			case Item:
+				ItemCard item = (ItemCard)temp;
+				if (item.canPlay(game, this))  playCardEffect(handPos);
+				break;
+			case Weapon:
+				WeaponCard weapon = (WeaponCard)temp;
+				if (weapon.canPlay(game, this))  playCardEffect(handPos);
+				break;
+			default:
+				Log.d(TAG, "Card selected isn't playable");
+			}
 		}
+	}
+	
+	private void playCardEffect(int index) {
+		RECard temp = (RECard)hand.pop(index);
+		temp.onPlay(game, this);
 	}
 }

@@ -1,9 +1,11 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.CardTypes.RECard.Playable;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 
-public class AmmunitionCard extends RECard {
+public class AmmunitionCard extends RECard implements Playable {
 	private int price;
 	private int provAmmo;
 	private int provGold;
@@ -25,5 +27,10 @@ public class AmmunitionCard extends RECard {
 		originPlayer.ammo += provAmmo;
 		originPlayer.gold += provGold;
 		originPlayer.inPlay().addBack(this);
+	}
+	
+	//	ammunition can be played only if it's your main phase
+	public boolean canPlay(Game game, Player actingPlayer) {
+		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.MainPhase;
 	}
 }

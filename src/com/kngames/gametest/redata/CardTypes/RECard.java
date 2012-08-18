@@ -50,7 +50,7 @@ public abstract class RECard extends Card {
 		actingPlayer.inPlay().addBack(this);
 	}
 	
-	//	
+	//	interfaces meant to be used by subclasses
 	public interface OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer);
 	}
@@ -59,8 +59,11 @@ public abstract class RECard extends Card {
 		public void finish(RECard card, Game game, Player actingPlayer);
 	}
 	
-	public interface OnRespondListener {
+	public interface OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer);
-		public void respond(RECard card, Game game, Player actingPlayer);
+	}
+
+	public interface Playable {
+		public boolean canPlay(Game game, Player actingPlayer);
 	}
 }

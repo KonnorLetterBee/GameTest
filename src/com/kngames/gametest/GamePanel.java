@@ -9,6 +9,7 @@ import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.graphics.*;
 
 import android.content.Context;
@@ -80,7 +81,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		ButtonZone end = new ButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, "END TURN", new ButtonZone.OnPressListener() {
 					public void buttonPressed() {
-						game.getActivePlayer().resetTurn();
+						game.state().setState(State.EndTurn);
 					}
 				});
 		

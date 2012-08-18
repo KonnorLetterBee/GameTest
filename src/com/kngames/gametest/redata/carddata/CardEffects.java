@@ -10,7 +10,7 @@ import android.util.Pair;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
-import com.kngames.gametest.redata.CardTypes.RECard.OnRespondListener;
+import com.kngames.gametest.redata.CardTypes.RECard.OnTriggerListener;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
 
@@ -149,25 +149,52 @@ public class CardEffects {
 	}
 
 	//	not implemented
-	public static class BackToBackRespondEffect implements OnRespondListener {
+	public static class BackToBackEffect implements OnPlayListener {
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			
+		}
+	}
+	
+	//	not implemented
+	public static class BackToBackTrigger implements OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
 			//	your character is attacked
 			return false;
 		}
-		public void respond(RECard card, Game game, Player actingPlayer) {
-			
-		}
 	}
 
+	//	not implemented
 	public static class ItemManagementEffect implements OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer) {
 			
 		}
 	}
 	
+	//	not implemented
 	public static class OminousBattleEffect implements OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer) {
 			
+		}
+	}
+	
+	//	not implemented
+	public static class MasterOfUnlockingEffect implements OnPlayListener {
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			
+		}
+	}
+	
+	//	not implemented
+	public static class StruggleForSurvivalEffect implements OnPlayListener {
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			
+		}
+	}
+	
+	//	not implemented
+	public static class StruggleForSurvivalTrigger implements OnTriggerListener {
+		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
+			return false;
 		}
 	}
 }

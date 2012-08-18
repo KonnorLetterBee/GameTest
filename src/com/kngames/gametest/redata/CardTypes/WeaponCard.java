@@ -1,9 +1,11 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.CardTypes.RECard.Playable;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 
-public class WeaponCard extends RECard {
+public class WeaponCard extends RECard implements Playable {
 	public static enum Type { none, Knife, Pistol, Explosive, Bow, Melee, Magnum, Minigun, MachineGun, Shotgun, Rifle }
 	
 	private int price;
@@ -28,5 +30,10 @@ public class WeaponCard extends RECard {
 	@Override
 	public void onPlay(Game g, Player originPlayer) {
 		originPlayer.inPlay().addBack(this);
+	}
+	
+	//	weapons can be played only during your ExploreWeapons phase
+	public boolean canPlay(Game game, Player actingPlayer) {
+		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.ExploreWeapons;
 	}
 }
