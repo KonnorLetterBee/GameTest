@@ -1,7 +1,7 @@
 package com.kngames.gametest.redata.CardTypes;
 
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
+import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.Player;
 
 public class AmmunitionCard extends RECard {
 	private int price;

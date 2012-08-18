@@ -27,6 +27,7 @@ public class BasicTestZone extends GameZone {
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
 	public void handleUpTouch(MotionEvent event) { }
+	public void handlePressTouch(MotionEvent event) { }
 	public void update() { }
 	public void draw(Canvas canvas) { }
 }

@@ -9,10 +9,10 @@ import com.kngames.gametest.redata.carddata.CardData.Expans;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.regame.MainMenu;
 //import com.kngames.gametest.regame.Dialog.CombineSplitChooserDialog;
 import com.kngames.gametest.regame.dialog.CardChooserDialog;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
+import com.kngames.gametest.regame.screens.MainMenu;
 
 import android.app.Activity;
 import android.app.AlertDialog;

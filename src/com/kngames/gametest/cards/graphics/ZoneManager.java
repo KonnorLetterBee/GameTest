@@ -2,7 +2,7 @@ package com.kngames.gametest.cards.graphics;
 
 import java.util.HashMap;
 
-import com.kngames.gametest.regame.Game;
+import com.kngames.gametest.regame.gamestruct.Game;
 
 import android.util.Log;
 

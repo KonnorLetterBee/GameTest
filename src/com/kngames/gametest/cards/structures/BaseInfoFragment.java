@@ -1,6 +1,6 @@
 package com.kngames.gametest.cards.structures;
 
-import com.kngames.gametest.regame.MainMenu;
+import com.kngames.gametest.regame.screens.MainMenu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

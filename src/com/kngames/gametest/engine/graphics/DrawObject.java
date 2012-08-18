@@ -88,4 +88,5 @@ public class DrawObject implements Touchable, Drawable {
 	public void handleOffDownTouch(MotionEvent event) {}
 	public void handleMoveTouch(MotionEvent event) {}
 	public void handleUpTouch(MotionEvent event) {}
+	public void handlePressTouch(MotionEvent event) {}
 }

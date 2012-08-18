@@ -10,8 +10,9 @@ import android.util.Pair;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
+import com.kngames.gametest.redata.CardTypes.RECard.OnRespondListener;
+import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.Player;
 
 public class CardEffects {
 	//	not implemented
@@ -144,6 +145,29 @@ public class CardEffects {
 	public static class TrashOnFinish implements OnPlayFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer) {
 			game.shop().returnCard(card);
+		}
+	}
+
+	//	not implemented
+	public static class BackToBackRespondEffect implements OnRespondListener {
+		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
+			//	your character is attacked
+			return false;
+		}
+		public void respond(RECard card, Game game, Player actingPlayer) {
+			
+		}
+	}
+
+	public static class ItemManagementEffect implements OnPlayListener {
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			
+		}
+	}
+	
+	public static class OminousBattleEffect implements OnPlayListener {
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			
 		}
 	}
 }

@@ -7,7 +7,7 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
-import com.kngames.gametest.regame.Game;
+import com.kngames.gametest.regame.gamestruct.Game;
 
 public class DeckZone extends REGameZone {
 	
@@ -35,7 +35,8 @@ public class DeckZone extends REGameZone {
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
 	public void handleUpTouch(MotionEvent event) { }
-
+	public void handlePressTouch(MotionEvent event) { }
+	
 	//	draws this DeckZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;
 	private final int SUB_TEXT_SIZE = 20;

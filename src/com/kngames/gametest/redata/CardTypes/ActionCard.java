@@ -1,7 +1,7 @@
 package com.kngames.gametest.redata.CardTypes;
 
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
+import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.Player;
 
 public class ActionCard extends RECard {
 
@@ -15,6 +15,7 @@ public class ActionCard extends RECard {
 	
 	private OnPlayListener playListener = null;
 	private OnPlayFinishListener playFinishListener = null;
+	private OnRespondListener respondListener = null;
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text) {
 		super(name, CardType.Action, "AC", ID, expans, quantity, text);
@@ -28,10 +29,16 @@ public class ActionCard extends RECard {
 	}
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
-			OnPlayListener onPlay, OnPlayFinishListener onPlayFinish) {
+			OnPlayListener onPlay) {
+		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text, onPlay, null, null);
+	}
+	
+	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
+			OnPlayListener onPlay, OnPlayFinishListener onPlayFinish, OnRespondListener onRespond) {
 		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text);
 		playListener = onPlay;
 		playFinishListener = onPlayFinish;
+		respondListener = onRespond;
 	}
 	
 	public int getExtraAmmo() { return extraAmmo; }

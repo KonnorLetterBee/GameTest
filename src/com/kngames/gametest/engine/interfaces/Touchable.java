@@ -18,4 +18,7 @@ public interface Touchable {
 	
 	//	handles a touch event where the object is no longer being touched
 	public void handleUpTouch(MotionEvent event);
+	
+	//	handles a touch event where the object has had both a down touch and an up touch
+	public void handlePressTouch(MotionEvent event);
 }

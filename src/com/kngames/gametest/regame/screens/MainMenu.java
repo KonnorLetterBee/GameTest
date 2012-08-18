@@ -1,10 +1,11 @@
-package com.kngames.gametest.regame;
+package com.kngames.gametest.regame.screens;
 
 import com.kngames.gametest.GameLoopActivity;
 import com.kngames.gametest.redata.*;
 import com.kngames.gametest.redata.Info.MainInfoListActivity;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
+import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.testcode.*;
 
 import android.app.Activity;

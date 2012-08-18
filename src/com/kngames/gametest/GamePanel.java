@@ -8,7 +8,7 @@ import com.kngames.gametest.engine.graphics.*;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.carddata.CardData;
-import com.kngames.gametest.regame.Game;
+import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.graphics.*;
 
 import android.content.Context;
@@ -70,10 +70,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
 		DiscardZone discard = new DiscardZone(1.0f, deck.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
-		ShopZone shop = new ShopZone(1.0f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), 0.15f, GameZone.STRETCH);
-		EndTurnZone end = new EndTurnZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), shop.percHeight(), GameZone.STRETCH);
+		ButtonZone shop = new ButtonZone(1.0f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), 0.15f, GameZone.STRETCH, "BUY CARD", new ButtonZone.OnPressListener() {
+					public void buttonPressed() {
+						if (game.getActivePlayer().buys > 0 || Game.DEBUG_MODE)
+							game.shop().popupBuyDialog();
+					}
+				});
+		ButtonZone end = new ButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, "END TURN", new ButtonZone.OnPressListener() {
+					public void buttonPressed() {
+						game.getActivePlayer().resetTurn();
+					}
+				});
+		
+		
 		
 		HandZone hand = new HandZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
 				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back);
@@ -146,11 +157,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		} if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			//	calls the handleMoveTouch method of the selected object
 			if (selected != null) selected.handleMoveTouch(event);
+			if (selectedZone != null) selectedZone.handleMoveTouch(event);
 		} if (event.getAction() == MotionEvent.ACTION_UP) {
 			//	calls the handleUpTouch method of the selected object, then sets selected to null again
 			if (selected != null) {
 				selected.handleUpTouch(event);
 				selected = null;
+			}
+			if (selectedZone != null) {
+				selectedZone.handleUpTouch(event);
+				selectedZone = null;
 			}
 		}
 		return true;

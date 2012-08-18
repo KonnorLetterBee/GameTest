@@ -1,7 +1,7 @@
 package com.kngames.gametest.redata.CardTypes;
 
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
+import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.Player;
 
 public class WeaponCard extends RECard {
 	public static enum Type { none, Knife, Pistol, Explosive, Bow, Melee, Magnum, Minigun, MachineGun, Shotgun, Rifle }

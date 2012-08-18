@@ -1,4 +1,5 @@
-package com.kngames.gametest.regame;
+package com.kngames.gametest.regame.screens;
+
 
 import android.content.Context;
 import android.view.View;

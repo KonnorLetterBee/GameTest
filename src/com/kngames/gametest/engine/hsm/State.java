@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class State {
 	public boolean current;
 	public ArrayList<Transition> transitions;
+	public int id;
 	
 	public State() {
 		this.current = false;

@@ -2,8 +2,8 @@ package com.kngames.gametest.redata.CardTypes;
 
 import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.redata.carddata.CardData;
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
+import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.Player;
 
 public abstract class RECard extends Card {
 	protected String name;
@@ -50,11 +50,17 @@ public abstract class RECard extends Card {
 		actingPlayer.inPlay().addBack(this);
 	}
 	
+	//	
 	public interface OnPlayListener {
 		public void playAction(RECard card, Game game, Player actingPlayer);
 	}
 	
 	public interface OnPlayFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer);
+	}
+	
+	public interface OnRespondListener {
+		public boolean isTriggered(RECard card, Game game, Player actingPlayer);
+		public void respond(RECard card, Game game, Player actingPlayer);
 	}
 }

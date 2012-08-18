@@ -1,4 +1,4 @@
-package com.kngames.gametest.regame;
+package com.kngames.gametest.regame.screens;
 
 import java.util.ArrayList;
 

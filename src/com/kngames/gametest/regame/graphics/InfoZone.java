@@ -31,6 +31,7 @@ public class InfoZone extends REGameZone {
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
 	public void handleUpTouch(MotionEvent event) { }
+	public void handlePressTouch(MotionEvent event) { }
 
 	//	draws this InfoZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;

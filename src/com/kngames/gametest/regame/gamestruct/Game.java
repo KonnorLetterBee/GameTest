@@ -1,4 +1,4 @@
-package com.kngames.gametest.regame;
+package com.kngames.gametest.regame.gamestruct;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,7 +8,7 @@ import com.kngames.gametest.redata.CardTypes.*;
 
 public class Game {
 	private static final String TAG = Game.class.getSimpleName();
-	public static final boolean DEBUG_MODE = false;
+	public static final boolean DEBUG_MODE = true;
 	
 	private Context context;
 	public Context getContext() { return context; }
@@ -20,12 +20,13 @@ public class Game {
 	
 	private Player[] players;
 	public Player[] players() { return players; }
-	public Player getActivePlayer() { return players[activePlayer]; }
 	
 	private int activePlayer = 0;
-	private int viewingPlayer = 0;
+	private int visiblePlayer = 0;
 	public int activePlayer() { return activePlayer; }
-	public int viewingPlayer() { return viewingPlayer; }
+	public int visiblePlayer() { return visiblePlayer; }
+	public Player getActivePlayer() { return players[activePlayer]; }
+	public Player getVisiblePlayer() { return players[visiblePlayer]; }
 	
 	private Shop shop;
 	public Shop shop() { return shop; }

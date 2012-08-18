@@ -8,8 +8,8 @@ import android.graphics.Paint.Style;
 
 import com.kngames.gametest.cards.graphics.GameZone;
 import com.kngames.gametest.redata.REDeck;
-import com.kngames.gametest.regame.Game;
-import com.kngames.gametest.regame.Player;
+import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.Player;
 
 public abstract class REGameZone extends GameZone {
 
@@ -35,7 +35,7 @@ public abstract class REGameZone extends GameZone {
 	protected REDeck getVisibleInPlay() { return getVisiblePlayer().inPlay(); }
 	protected REDeck getVisibleDiscard() { return getVisiblePlayer().discard(); }
 	protected REDeck getVisibleAttached() { return getVisiblePlayer().attachedCards(); }
-	protected Player getVisiblePlayer() { return game.players()[game.viewingPlayer()]; }
+	protected Player getVisiblePlayer() { return game.players()[game.visiblePlayer()]; }
 	
 	private final int BORDER_THICKNESS = 4;
 	public void drawTestBorder(Canvas canvas) {

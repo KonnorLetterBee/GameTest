@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 //
 //	this class is designed to be subclassed to provide differentiating touch behaviors and drawing algorithms
 public abstract class GameZone implements Touchable, Drawable {
+	protected static GameZone selectedZone = null;
 	
 	protected Rect area;
 	protected ZoneManager manager;
@@ -122,13 +123,21 @@ public abstract class GameZone implements Touchable, Drawable {
 		return area.contains((int)x, (int)y);
 	}
 	
-	public abstract void handleDownTouch(MotionEvent event);
+	public void handleDownTouch(MotionEvent event) {
+		selectedZone = this;
+	}
 	
 	public abstract void handleOffDownTouch(MotionEvent event);
 
 	public abstract void handleMoveTouch(MotionEvent event);
 
-	public abstract void handleUpTouch(MotionEvent event);
+	public void handleUpTouch(MotionEvent event) {
+		if (selectedZone == this) 
+			this.handlePressTouch(event);
+		selectedZone = null;
+	}
+	
+	public abstract void handlePressTouch(MotionEvent event);
 	
 	public abstract void update();
 	

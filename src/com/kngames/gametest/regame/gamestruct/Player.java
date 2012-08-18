@@ -1,4 +1,4 @@
-package com.kngames.gametest.regame;
+package com.kngames.gametest.regame.gamestruct;
 
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
