@@ -82,6 +82,7 @@ public class HandZone extends REGameZone {
 	
 	//	draws this HandZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;
+	private final int BORDER_WIDTH = 3;
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint(); 
 		drawTestBorder(canvas);
@@ -92,7 +93,21 @@ public class HandZone extends REGameZone {
 		canvas.drawText(TAG, area.left + 10, textLocation, paint);
 		
 		for (int i = 0; i < cardPics.size(); i++) {
+			if (((RECard)cards.peek(i)).canPlay(game, game.getActivePlayer())) {
+				TestRECard temp = cardPics.get(i);
+				int left = (int)(temp.X() - temp.halfWidth() - BORDER_WIDTH);
+				int top = (int)(temp.Y() - temp.halfHeight() - BORDER_WIDTH);
+				int right = left + temp.width() + (BORDER_WIDTH*2);
+				int bottom = top + temp.height() + (BORDER_WIDTH*2);
+				drawColorBorder(canvas, new Rect(left, top, right, bottom));
+			}
 			cardPics.get(i).draw(canvas);
 		}
+	}
+	
+	private void drawColorBorder(Canvas canvas, Rect area) {
+		Paint paint = new Paint();
+		paint.setColor(Color.YELLOW);
+		canvas.drawRect(area, paint);
 	}
 }

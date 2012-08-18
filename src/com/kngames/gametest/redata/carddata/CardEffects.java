@@ -12,6 +12,7 @@ import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnTriggerListener;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
 
 public class CardEffects {
@@ -191,10 +192,10 @@ public class CardEffects {
 		}
 	}
 	
-	//	not implemented
 	public static class StruggleForSurvivalTrigger implements OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
-			return false;
+			//	triggers during a combat phase that isn't yours
+			return game.state().currentState() == State.ExploreRespond && !game.isActivePlayer(actingPlayer);
 		}
 	}
 }

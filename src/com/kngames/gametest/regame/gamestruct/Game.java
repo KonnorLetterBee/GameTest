@@ -9,7 +9,7 @@ import com.kngames.gametest.regame.gamestruct.GameState.State;
 
 public class Game {
 	private static final String TAG = Game.class.getSimpleName();
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 	
 	private Context context;
 	public Context getContext() { return context; }

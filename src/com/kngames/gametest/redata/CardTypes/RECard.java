@@ -1,5 +1,7 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import android.util.Log;
+
 import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.gamestruct.Game;
@@ -42,6 +44,21 @@ public abstract class RECard extends Card {
 	}
 	public String generateTag() {
 		return CardData.generateTagString(this);
+	}
+	
+	public boolean canPlay(Game game, Player actingPlayer) {
+		switch (cardType) {
+		case Ammunition:
+			return ((AmmunitionCard)this).canPlay(game, actingPlayer);
+		case Action:
+			return ((ActionCard)this).canPlay(game, actingPlayer);
+		case Item:
+			return ((ItemCard)this).canPlay(game, actingPlayer);
+		case Weapon:
+			return ((WeaponCard)this).canPlay(game, actingPlayer);
+		default:
+			return false;
+		}
 	}
 	
 	//	method to be called when a RECard is played

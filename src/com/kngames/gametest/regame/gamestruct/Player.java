@@ -1,13 +1,13 @@
 package com.kngames.gametest.regame.gamestruct;
 
-import android.util.Log;
+//import android.util.Log;
 
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.carddata.CardData;
 
 public class Player {
-	private static final String TAG = Player.class.getSimpleName();
+	//private static final String TAG = Player.class.getSimpleName();
 	
 	private int playerId;
 	public int playerId() { return playerId; }
@@ -130,26 +130,7 @@ public class Player {
 	public void playCard(int handPos) {
 		RECard temp = (RECard)hand.peek(handPos);
 		if (temp != null) {
-			switch (temp.getCardType()) {
-			case Ammunition:
-				AmmunitionCard ammo = (AmmunitionCard)temp;
-				if (ammo.canPlay(game, this))  playCardEffect(handPos);
-				break;
-			case Action:
-				ActionCard action = (ActionCard)temp;
-				if (action.canPlay(game, this))  playCardEffect(handPos);
-				break;
-			case Item:
-				ItemCard item = (ItemCard)temp;
-				if (item.canPlay(game, this))  playCardEffect(handPos);
-				break;
-			case Weapon:
-				WeaponCard weapon = (WeaponCard)temp;
-				if (weapon.canPlay(game, this))  playCardEffect(handPos);
-				break;
-			default:
-				Log.d(TAG, "Card selected isn't playable");
-			}
+			if (temp.canPlay(game, this))  playCardEffect(handPos);
 		}
 	}
 	

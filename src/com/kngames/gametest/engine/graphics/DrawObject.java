@@ -53,6 +53,8 @@ public class DrawObject implements Touchable, Drawable {
 		}
 	}
 	
+	public int width() { return image.getWidth(); }
+	public int height() { return image.getHeight(); }
 	public int halfWidth() { return halfWidth; }
 	public int halfHeight() { return halfHeight; }
 	
