@@ -44,7 +44,7 @@
 	
 		</LinearLayout>
 		
-		<com.kngames.gametest.regame.GameSetupView
+		<com.kngames.gametest.regame.screens.GameSetupView
 		    android:id="@+id/game_setup"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
