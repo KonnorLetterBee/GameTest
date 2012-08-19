@@ -1,5 +1,8 @@
 package com.kngames.gametest.regame.gamestruct;
 
+import com.kngames.gametest.redata.REDeck;
+import com.kngames.gametest.redata.CardTypes.WeaponCard;
+
 public class ExploreEffect {
 	
 	private Game game;
@@ -26,13 +29,16 @@ public class ExploreEffect {
 	}
 	
 	//	an effect that buffs (or nerfs for negative values) all weapons used in this explore
-	public class BuffAllWeaponsEffect implements OnApplyEffectListener {
+	public static class BuffAllWeaponsEffect implements OnApplyEffectListener {
 		int amountChange;
 		public BuffAllWeaponsEffect (int amountChange) {
 			this.amountChange = amountChange;
 		}
 		public void applyEffect(Game game, Player actingPlayer) {
-			
+			REDeck weapons = actingPlayer.weapons();
+			for(int i = 0; i < weapons.size(); i++) {
+				((WeaponCard)weapons.peek(i)).damageThisRound += amountChange;
+			}
 		}
 	}
 }

@@ -12,6 +12,7 @@ public class WeaponCard extends RECard implements Playable {
 	private int ammoRec;
 	private int damage;
 	private boolean trashFlag;
+	public int damageThisRound;
 	
 	public WeaponCard(String name, int ID, int expans, int price, int ammo, int damage, boolean trashFlag, int quantity, String text) {
 		super(name, CardType.Weapon, "WE", ID, expans, quantity, text);
@@ -27,9 +28,10 @@ public class WeaponCard extends RECard implements Playable {
 	public int getPrice() { return price; }
 	
 	//	standard onPlay method for weapons
-	@Override
+	//	adds the cards to the weapons deck of the current player
 	public void onPlay(Game g, Player originPlayer) {
-		originPlayer.inPlay().addBack(this);
+		damageThisRound = damage;
+		originPlayer.weapons().addBack(this);
 	}
 	
 	//	weapons can be played only during your ExploreWeapons phase

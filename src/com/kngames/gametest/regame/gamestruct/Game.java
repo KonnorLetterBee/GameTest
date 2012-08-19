@@ -1,7 +1,10 @@
 package com.kngames.gametest.regame.gamestruct;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
@@ -39,6 +42,9 @@ public class Game {
 	private GameState state;
 	public GameState state() { return state; }
 	
+	private ArrayList<ExploreEffect> exploreEffects;
+	public ArrayList<ExploreEffect> exploreEffects() { return exploreEffects; }
+	
 	private Game(Context context, CharacterCard[] chars, Scenario scen) {
 		this.context = context;
 		
@@ -53,6 +59,7 @@ public class Game {
 		}
 		
 		state = new GameState(this, State.StartTurn);
+		exploreEffects = new ArrayList<ExploreEffect>();
 		
 		shop.shuffleAllPiles();
 	}
@@ -90,5 +97,24 @@ public class Game {
 		tempPlayer++;
 		if (tempPlayer == numPlayers) tempPlayer = 0;
 		return tempPlayer == activePlayer;
+	}
+	
+	//	searches all player's play areas for responses, and allows them to play any of them
+	public void searchForResponses () {
+		for (Player p : players)
+			p.searchForResponses();
+	}
+	
+	//	applies all explore effects to the currently exploring characters, then removes them from the effects list
+	public void applyExploreEffects() {
+		while (exploreEffects.size() > 0) {
+			exploreEffects.get(0).applyEffect();
+			exploreEffects.remove(0);
+		}
+	}
+	
+	public void popupToast(String text) {
+		Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+		toast.show();
 	}
 }

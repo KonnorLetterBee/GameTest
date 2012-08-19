@@ -1,7 +1,5 @@
 package com.kngames.gametest.redata.CardTypes;
 
-import android.util.Log;
-
 import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.gamestruct.Game;

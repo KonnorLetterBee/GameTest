@@ -436,55 +436,6 @@ public class ScenarioEditorActivity extends Activity {
 	}
 	
 	//	displays a dialog that allows the user to combine piles of cards, or split them
-	private void popupNewStackOptionsDialog(ArrayList<ArrayList<Pair<RECard,Integer>>> stackList, int stack) {
-		selectedStackList = stackList;
-		selectedStack = stack;
-		/*combineSplitChooser = new CombineSplitChooserDialog(this, new CombineSplitChooserDialog.DialogEventListener() {
-			public void buttonPressed(int value) {
-				
-			}
-		});*/
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getStackString(selectedStackList.get(stack)));
-		
-		int listSize = selectedStackList.size();
-		int stackSize = selectedStackList.get(stack).size();
-		
-		if (listSize <= 1 && stackSize <= 1) {
-			popupToast("No actions available");
-			return;
-		}
-		
-		if (listSize > 1)
-			builder.setPositiveButton("Combine Stacks...", new DialogInterface.OnClickListener() {
-				   public void onClick(DialogInterface dialog, int id) {
-					   popupStackCombineDialog(selectedStack);
-					   dialog.cancel();
-				   }
-			   });
-		if (stackSize > 1)
-			builder.setNeutralButton("Split Stack", new DialogInterface.OnClickListener() {
-				   public void onClick(DialogInterface dialog, int id) {
-					   ArrayList<Pair<RECard,Integer>> stack = selectedStackList.get(selectedStack);
-					   while (stack.size() > 1) {
-						   ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
-						   temp.add(stack.get(1));
-						   stack.remove(1);
-						   addToStackList(selectedStackList, temp);
-					   }
-					   dialog.dismiss();
-				   }
-			   });
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				   public void onClick(DialogInterface dialog, int id) {
-					   dialog.cancel();
-				   }
-			   });
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-	
-	//	displays a dialog that allows the user to combine piles of cards, or split them
 	private void popupStackCombineDialog(int stack) {
 		CharSequence[] otherUsed = new CharSequence[selectedStackList.size() - 1];
 		for (int i = 0, temp = 0; i < selectedStackList.size(); i++) {

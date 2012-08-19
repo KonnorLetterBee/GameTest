@@ -11,14 +11,17 @@ import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnTriggerListener;
+import com.kngames.gametest.regame.gamestruct.ExploreEffect;
+import com.kngames.gametest.regame.gamestruct.ExploreEffect.BuffAllWeaponsEffect;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
 
 public class CardEffects {
-	//	not implemented
 	public static class DeadlyAimEffect implements OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer) { }
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BuffAllWeaponsEffect(10)));
+		}
 	}
 
 	public static class ShatteredMemoriesEffect implements OnPlayListener {
@@ -30,6 +33,7 @@ public class CardEffects {
 		public void playAction(RECard card, Game game, Player actingPlayer) {
 			this.actingPlayer = actingPlayer;
 			this.game = game;
+			winNum = 0;
 			
 			displayList();
 		}
@@ -171,10 +175,38 @@ public class CardEffects {
 		}
 	}
 	
-	//	not implemented
 	public static class OminousBattleEffect implements OnPlayListener {
+		private Game game;
+		private Player actingPlayer;
+		private ArrayList<Pair<Integer,RECard>> hand;
+		private String[] names;
 		public void playAction(RECard card, Game game, Player actingPlayer) {
+			this.actingPlayer = actingPlayer;
+			this.game = game;
 			
+			//	generate list of discarded weapons
+			hand = actingPlayer.hand().getAllCardPairs();
+			
+			names = new String[hand.size()];
+			for (int i = 0; i < hand.size(); i++)
+				names[i] = hand.get(i).second.getName();
+			
+			//	build and popup list of discarded weapons
+			AlertDialog.Builder builder = new AlertDialog.Builder(game.getContext());
+			builder.setTitle("Trash a card from your hand");
+			builder.setCancelable(false);
+			builder.setItems(names, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					onItemSelected(item);
+				}
+			});
+			AlertDialog effectDialog = builder.create();
+			effectDialog.show();
+		}
+		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
+		private void onItemSelected(int item) {
+			RECard temp = (RECard)actingPlayer.hand().pop(hand.get(item).first);
+			game.shop().returnCard(temp);
 		}
 	}
 	

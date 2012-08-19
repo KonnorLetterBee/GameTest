@@ -10,8 +10,9 @@ import android.view.MotionEvent;
 
 public class ButtonZone extends REGameZone {
 
-	private OnPressListener press;
-	private String buttonText;
+	protected OnPressListener press;
+	protected String buttonText;
+	public boolean active = true;
 	
 	public ButtonZone(Rect area, String text, OnPressListener listener) {
 		super(area);
@@ -41,19 +42,21 @@ public class ButtonZone extends REGameZone {
 		super.handleUpTouch(event);
 	}
 	public void handlePressTouch(MotionEvent event) {
-		if (press != null) press.buttonPressed();
+		if (active && press != null) press.buttonPressed();
 	}
 
 	public void update() { }
 
 	public void draw(Canvas canvas) {
-		Paint paint = new Paint();
-		drawTestBorder(canvas);
-		
-		paint.setColor(Color.WHITE);
-		paint.setTextSize(20);
-		int textLocation = area.top + 20 + 5;
-		canvas.drawText(buttonText, area.left + 10, textLocation, paint);
+		if (active) {
+			Paint paint = new Paint();
+			drawTestBorder(canvas);
+			
+			paint.setColor(Color.WHITE);
+			paint.setTextSize(20);
+			int textLocation = area.top + 20 + 5;
+			canvas.drawText(buttonText, area.left + 10, textLocation, paint);
+		}
 	}
 
 	public static interface OnPressListener {

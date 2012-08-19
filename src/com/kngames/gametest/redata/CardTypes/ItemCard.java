@@ -19,6 +19,21 @@ public class ItemCard extends RECard implements RECard.Playable {
 		this.origin = origin;
 	}
 	
+	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
+			OnPlayListener onPlay) {
+		this(name, ID, expans, price, quantity, origin, text, onPlay, null, null);
+	}
+	
+	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
+			OnPlayListener onPlay, OnPlayFinishListener onFinish, OnTriggerListener onTrigger) {
+		super(name, CardType.Item, getItemIDPrefix(origin), ID, expans, quantity, text);
+		this.price = price;
+		this.origin = origin;
+		this.playListener = onPlay;
+		this.playFinishListener = onFinish;
+		this.trigger = onTrigger;
+	}
+	
 	private static String getItemIDPrefix(int origin) {
 		if (origin == 2) return "MA";
 		else return "IT";

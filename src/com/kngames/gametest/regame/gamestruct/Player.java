@@ -31,12 +31,14 @@ public class Player {
 	private REDeck inPlay;
 	private REDeck discard;
 	private REDeck attachedCards;
+	private REDeck weapons;
 	
 	public REDeck deck() { return deck; }
 	public REDeck hand() { return hand; }
 	public REDeck inPlay() { return inPlay; }
 	public REDeck discard() { return discard; }
 	public REDeck attachedCards() { return attachedCards; }
+	public REDeck weapons() { return weapons; }
 	
 	private String customInventory;
 	
@@ -112,6 +114,8 @@ public class Player {
 		hand = new REDeck();
 		inPlay = new REDeck();
 		discard = new REDeck();
+		attachedCards = new REDeck();
+		weapons = new REDeck();
 	}
 	
 	//	draws a card from Deck and puts it into Hand, shuffling Discard and replacing it with Deck if the Deck is empty
@@ -130,12 +134,21 @@ public class Player {
 	public void playCard(int handPos) {
 		RECard temp = (RECard)hand.peek(handPos);
 		if (temp != null) {
-			if (temp.canPlay(game, this))  playCardEffect(handPos);
+			if (temp.canPlay(game, this)) {
+				((RECard)hand.pop(handPos)).onPlay(game, this);
+			}
 		}
 	}
 	
-	private void playCardEffect(int index) {
-		RECard temp = (RECard)hand.pop(index);
-		temp.onPlay(game, this);
+	//	searches this player's play areas for responses, and allows them to play any of them
+	public void searchForResponses () {
+		//	TODO:  implement the search
+	}
+	
+	//	returns all weapons from the weapons deck to the inPlay area, meant to be called after combat has finished
+	public void flushWeaponsDeck() {
+		while (weapons.size() > 0) {
+			inPlay.addBack(weapons.popFirst());
+		}
 	}
 }
