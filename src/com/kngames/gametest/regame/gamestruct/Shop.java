@@ -9,6 +9,7 @@ import android.util.Log;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
+import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.carddata.CardData;
 
 public class Shop {
@@ -57,7 +58,8 @@ public class Shop {
 	private REDeck createDeck(RECard card) {
 		REDeck out = new REDeck();
 		for (int k = 0; k < card.getDeckQuantity(); k++) {
-			out.addTop(card);
+			if (card.getCardType() == CardType.Weapon) out.addTop(new WeaponCard((WeaponCard)card));
+			else out.addTop(card);
 		}
 		return out;
 	}
@@ -67,7 +69,8 @@ public class Shop {
 		REDeck out = new REDeck();
 		for (int j = 0; j < cards.length; j++) {
 			for (int k = 0; k < cards[j].getDeckQuantity(); k++) {
-				out.addTop(cards[j]);
+				if (cards[j].getCardType() == CardType.Weapon) out.addTop(new WeaponCard((WeaponCard)cards[j]));
+				else out.addTop(cards[j]);
 			}
 		}
 		if (shuffle && cards.length > 1) out.shuffle(1);

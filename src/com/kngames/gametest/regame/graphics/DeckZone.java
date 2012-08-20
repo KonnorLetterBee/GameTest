@@ -1,12 +1,16 @@
 package com.kngames.gametest.regame.graphics;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.kngames.gametest.R;
 import com.kngames.gametest.cards.graphics.IDObject;
+import com.kngames.gametest.engine.ContentManager;
+import com.kngames.gametest.engine.graphics.DrawObject;
 import com.kngames.gametest.regame.gamestruct.Game;
 
 public class DeckZone extends REGameZone {
@@ -16,14 +20,40 @@ public class DeckZone extends REGameZone {
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
+	private DrawObject deckBackground;
+	
 	public DeckZone(Rect area) {
 		super(area);
+		setBackground();
 	}
 	public DeckZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
+		setBackground();
 	}
 	public DeckZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
+		setBackground();
+	}
+	
+	private void setBackground() {
+		float ratio = (float)area.height() / area.width();
+		int cardWidth = 0;
+		int cardHeight = 0;
+		int cardX = area.left;
+		int cardY = area.top;
+		if (ratio > 1.4f) {	//	taller than necessary
+			cardWidth = area.width();
+			cardHeight = (int) (cardWidth * 1.4);
+			cardY += (area.height() - cardHeight) / 2;
+		} else {	//	wider than necessary
+			cardHeight = area.height();
+			cardWidth = (int) (cardHeight * 0.714f);
+			cardX += (area.width() - cardWidth) / 2;
+		}
+		ContentManager content = ContentManager.getContentManager();
+		assert (content != null);
+		Bitmap b = content.getScaledBitmap(R.drawable.card_back, cardWidth, cardHeight);
+		deckBackground = new DrawObject(cardX, cardY, b, false);
 	}
 	
 	public void postInit() { }
@@ -38,20 +68,15 @@ public class DeckZone extends REGameZone {
 	public void handlePressTouch(MotionEvent event) { }
 	
 	//	draws this DeckZone to the screen
-	private final int TITLE_TEXT_SIZE = 25;
-	private final int SUB_TEXT_SIZE = 20;
+	private final int TEXT_SIZE = 25;
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint(); 
-		drawTestBorder(canvas);
+		deckBackground.draw(canvas);
 		
 		paint.setColor(Color.WHITE);
-		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
-		canvas.drawText(TAG, area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		paint.setTextSize(SUB_TEXT_SIZE);
-		canvas.drawText(String.format("%d x %d", area.right-area.left, area.bottom-area.top), area.left + 10, textLocation, paint);
-		textLocation += TITLE_TEXT_SIZE + 5;
-		canvas.drawText("Cards left: " + getVisibleDeck().size(), area.left + 10, textLocation, paint);
+		paint.setTextSize(TEXT_SIZE);
+		int x = area.left + (area.width() / 2);
+		int y = area.top + (area.height() / 2) - (TEXT_SIZE / 2);
+		canvas.drawText(""+getVisibleDeck().size(), x, y, paint);
 	}
 }

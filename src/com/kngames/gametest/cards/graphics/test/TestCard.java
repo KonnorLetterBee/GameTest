@@ -25,7 +25,7 @@ public class TestCard extends DrawObject {
 	
 	//	constructs a DrawObject with a specified Bitmap centered at a specified x-y coordinate
 	public TestCard(int x, int y, String name, String text) {
-		super(x, y, null);
+		super(x, y, null, true);
 		id = classIds;
 		classIds++;
 		

@@ -73,7 +73,7 @@ public class HandZone extends REGameZone {
 		}
 	}
 	public void handleDownTouch(MotionEvent event) {
-		for (int i = 0; i < cardPics.size(); i++) {
+		for (int i = cardPics.size() - 1; i >= 0; i--) {
 			if (cardPics.get(i).isTouched(event.getX(), event.getY())) {
 				if (state.currentState() == State.PlayerInput) {
 					state.playerState().onCardSelected(game.getVisiblePlayer().hand(), i);

@@ -28,11 +28,9 @@ public class ContentManager {
 	//	instantiates a new ContentManager if one doesn't exist
 	//	otherwise, returns the instance that already exists
 	public static ContentManager initContentManager(Resources resource) {
-		if (contentMan == null) return new ContentManager(resource);
-		else {
-			Log.e(TAG, "ContentManager already instantiated!");
-			return contentMan;
-		}
+		if (contentMan == null)  contentMan = new ContentManager(resource);
+		else  Log.e(TAG, "ContentManager already instantiated!");
+		return contentMan;
 	}
 	
 	//	returns the instance of the ContentManager that already exists (even if there is none)

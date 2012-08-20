@@ -127,7 +127,7 @@ public class Player {
 			deck.shuffle(1);
 			discard = new REDeck();
 		}
-		if (deck.size() > 0) hand.addTop(deck.popTop());
+		if (deck.size() > 0) hand.addBack(deck.popTop());
 	}
 	
 	//	plays a card from this player's hand, using the correct action determined by the game state

@@ -25,10 +25,15 @@ public class DrawObject implements Touchable, Drawable {
 	protected int halfWidth;
 	protected int halfHeight;
 	
-	//	constructs a DrawObject with a specified Bitmap centered at a specified x-y coordinate
-	public DrawObject(int x, int y, Bitmap draw) {
+	protected boolean centered;
+	
+	//	constructs a DrawObject with a specified Bitmap at a specified x-y coordinate
+	//	if centered is true, will treat the x-y coordinate as the center of the object
+	//	otherwise, the origin will be in the top-left corner
+	public DrawObject(int x, int y, Bitmap draw, boolean centered) {
 		id = classIds;
 		classIds++;
+		this.centered = centered;
 		
 		setImage(draw);
 		move = new MovementComponent(x, y, 0, 0);
@@ -67,16 +72,28 @@ public class DrawObject implements Touchable, Drawable {
 	
 	//	draws this DrawObject to the screen
 	public void draw(Canvas canvas) {
-		canvas.drawBitmap(image, move.getX() - halfWidth, move.getY() - halfHeight, null);
+		if (centered) canvas.drawBitmap(image, move.getX() - halfWidth, move.getY() - halfHeight, null);
+		else canvas.drawBitmap(image, move.getX(), move.getY(), null);
 	}
 
 	//	calculates whether a point is within the bounds of this object
 	public boolean isTouched(float x, float y) {
-		return
+		if (centered) return
 			x >= (X() - halfWidth) && 
 			x <= (X() + halfWidth) &&
 			y >= (Y() - halfHeight) && 
 			y <= (Y() + halfHeight);
+		else return
+			x >= (X()) && 
+			x <= (X() + image.getWidth()) &&
+			y >= (Y()) && 
+			y <= (Y() + image.getHeight());
+	}
+	
+	//	calculates how far a given touch is away from the object's center
+	public float distFromCenter(float x, float y) {
+		if (centered) return MovementComponent.distBetweenPoints(this.X(), this.Y(), x, y);
+		else return MovementComponent.distBetweenPoints(this.X() + halfWidth, this.Y() + halfHeight, x, y);
 	}
 
 	///

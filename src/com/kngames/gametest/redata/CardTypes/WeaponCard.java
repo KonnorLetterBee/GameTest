@@ -22,6 +22,10 @@ public class WeaponCard extends RECard implements Playable {
 		this.trashFlag = trashFlag;
 	}
 	
+	public WeaponCard(WeaponCard other) {
+		this(other.name, other.cardID, other.expansion, other.price, other.ammoRec, other.damage, other.trashFlag, other.deckQuantity, other.text);
+	}
+	
 	public int getAmmoRec() { return ammoRec; }
 	public int getDamage() { return damage; }
 	public boolean trashFlagOn() { return trashFlag; }

@@ -49,8 +49,8 @@ public class MovementComponent {
 	}
 	
 	//	utility method to find the distance between two points in space
-    public static double distBetweenPoints(float x1, float y1, float x2, float y2) {
-    	return Math.sqrt((double)Math.pow(x1-x2, 2) + (double)Math.pow(y1-y2, 2));
+    public static float distBetweenPoints(float x1, float y1, float x2, float y2) {
+    	return FloatMath.sqrt((float)Math.pow(x1-x2, 2) + (float)Math.pow(y1-y2, 2));
     }
     
     //	utility method to get the speed (not velocity) of this component

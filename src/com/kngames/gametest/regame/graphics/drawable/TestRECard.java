@@ -27,7 +27,7 @@ public class TestRECard extends DrawObject {
 	
 	//	constructs a TestRECard
 	public TestRECard(int x, int y, RECard card, Bitmap back) {
-		super(x, y, back);
+		super(x, y, back, true);
 		id = classIds;
 		classIds++;
 		
