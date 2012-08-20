@@ -10,7 +10,7 @@ public class EndTurnButtonZone extends ButtonZone{
 	
 	private final OnPressListener endTurn = this.press = new ButtonZone.OnPressListener() {
 		public void buttonPressed() {
-			game.state().setState(State.EndTurn);
+			game.state().setState(State.EndTurn, true);
 		}
 	};
 	

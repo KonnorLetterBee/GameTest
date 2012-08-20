@@ -9,6 +9,7 @@ import android.graphics.Paint.Style;
 import com.kngames.gametest.cards.graphics.GameZone;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState;
 import com.kngames.gametest.regame.gamestruct.Player;
 
 public abstract class REGameZone extends GameZone {
@@ -26,9 +27,11 @@ public abstract class REGameZone extends GameZone {
 	//	sets the game this GameZone will use to look for data
 	public void setGame(Game g) {
 		game = g;
+		state = game.state();
 	}
 	
 	protected Game game;
+	protected GameState state;
 	
 	protected REDeck getVisibleDeck() { return getVisiblePlayer().deck(); }
 	protected REDeck getVisibleHand() { return getVisiblePlayer().hand(); }

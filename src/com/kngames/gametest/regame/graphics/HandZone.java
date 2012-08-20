@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import com.kngames.gametest.cards.graphics.IDObject;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.graphics.drawable.TestRECard;
 
 public class HandZone extends REGameZone {
@@ -25,6 +26,7 @@ public class HandZone extends REGameZone {
 	
 	private REDeck cards;
 	private ArrayList<TestRECard> cardPics;
+	private boolean[] canPlay;
 	
 	public HandZone(Rect area, Bitmap image) {
 		super(area);
@@ -58,10 +60,13 @@ public class HandZone extends REGameZone {
 	//	if there is a difference, recreate the pics list
 	public void update() {
 		REDeck newCards = game.getActivePlayer().hand();
+		//	if the list of cards to display has changed, recreate the list of cards to draw
 		if (!cards.equals(newCards)) {
 			cards = new REDeck(newCards);
 			resetYPos();
 			cardPics = new ArrayList<TestRECard>();
+			
+			//	add the card pics for each card, and test to see whether or not they're playable
 			for (int i = 0; i < cards.size(); i++) {
 				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 + 35, (RECard)cards.peek(i), cardBack));
 			}
@@ -70,8 +75,12 @@ public class HandZone extends REGameZone {
 	public void handleDownTouch(MotionEvent event) {
 		for (int i = 0; i < cardPics.size(); i++) {
 			if (cardPics.get(i).isTouched(event.getX(), event.getY())) {
-				getVisiblePlayer().playCard(i);
-				return;
+				if (state.currentState() == State.PlayerInput) {
+					state.playerState().onCardSelected(game.getVisiblePlayer().hand(), i);
+				} else {
+					getVisiblePlayer().playCard(i);
+					return;
+				}
 			}
 		}
 	}
@@ -92,8 +101,10 @@ public class HandZone extends REGameZone {
 		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
 		canvas.drawText(TAG, area.left + 10, textLocation, paint);
 		
+		setCanPlayList();
+		
 		for (int i = 0; i < cardPics.size(); i++) {
-			if (((RECard)cards.peek(i)).canPlay(game, game.getActivePlayer())) {
+			if (canPlay[i]) {
 				TestRECard temp = cardPics.get(i);
 				int left = (int)(temp.X() - temp.halfWidth() - BORDER_WIDTH);
 				int top = (int)(temp.Y() - temp.halfHeight() - BORDER_WIDTH);
@@ -102,6 +113,18 @@ public class HandZone extends REGameZone {
 				drawColorBorder(canvas, new Rect(left, top, right, bottom));
 			}
 			cardPics.get(i).draw(canvas);
+		}
+	}
+	
+	//	iterates through the cards list and marks the ones that can be played
+	private void setCanPlayList() {
+		canPlay = new boolean[cards.size()];
+		for (int i = 0; i < cards.size(); i++) {
+			RECard card = (RECard) cards.peek(i);
+			
+			if (state.currentState() == State.PlayerInput)
+				canPlay[i] = state.playerState().isSelectable(card);
+			else canPlay[i] = card.canPlay(game, game.getActivePlayer());
 		}
 	}
 	

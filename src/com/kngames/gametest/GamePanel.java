@@ -9,6 +9,7 @@ import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState;
 import com.kngames.gametest.regame.graphics.*;
 
 import android.content.Context;
@@ -72,11 +73,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
 		BuyCardButtonZone shop = new BuyCardButtonZone(1.0f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), 0.15f, GameZone.STRETCH);
-		ExploreButtonZone explore = new ExploreButtonZone(shop.percLeft() - margin, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
+		ExploreButtonZone explore = new ExploreButtonZone(shop.percLeft() - 0.02f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), 0.15f, GameZone.STRETCH);
 		EndTurnButtonZone end = new EndTurnButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), shop.percHeight(), GameZone.STRETCH);
-		
+		ButtonZone actiontest = new ButtonZone(end.percLeft() - margin, explore.percTop() - margin, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), 0.15f, GameZone.STRETCH, "NEW STATE", new ButtonZone.OnPressListener() {
+					public void buttonPressed() {
+						game.state().startPlayerInput(new GameState.TestPlayerInput(game, game.getActivePlayer()));
+					}
+				});
 		
 		
 		HandZone hand = new HandZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
@@ -95,6 +101,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("shop_button", shop);
 		zoneManager.addZone("explore_button", explore);
 		zoneManager.addZone("end_turn_zone", end);
+		zoneManager.addZone("action_test", actiontest);
 		zoneManager.postInit();
 		
 		//	create the game loop thread

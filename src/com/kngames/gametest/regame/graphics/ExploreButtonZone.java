@@ -12,14 +12,14 @@ public class ExploreButtonZone extends ButtonZone{
 		public void buttonPressed() {
 			if (game.getActivePlayer().explores > 0 || Game.DEBUG_MODE) {
 				game.getActivePlayer().explores--;
-				game.state().setState(State.ExploreInitial);
+				game.state().setState(State.ExploreInitial, true);
 			}
 		}
 	};
 	
 	private final OnPressListener weaponPhaseListener = new OnPressListener() {
 		public void buttonPressed() {
-			game.state().setState(State.ExploreRespond);
+			game.state().setState(State.ExploreRespond, true);
 		}
 	};
 	
