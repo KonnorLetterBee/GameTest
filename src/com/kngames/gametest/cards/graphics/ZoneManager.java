@@ -25,11 +25,9 @@ public class ZoneManager {
 	//	instantiates a new ZoneManager if one doesn't exist
 	//	otherwise, returns the instance that already exists
 	public static ZoneManager initZoneManager() {
-		if (zoneMan == null) return new ZoneManager();
-		else {
-			Log.e(TAG, "ZoneManager already instantiated!");
-			return zoneMan;
-		}
+		if (zoneMan == null)  zoneMan = new ZoneManager();
+		else  Log.e(TAG, "ZoneManager already instantiated!");
+		return zoneMan;
 	}
 	
 	//	returns the instance of the ZoneManager that already exists (even if there is none)

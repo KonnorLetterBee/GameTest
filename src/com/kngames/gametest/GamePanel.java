@@ -101,7 +101,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("shop_button", shop);
 		zoneManager.addZone("explore_button", explore);
 		zoneManager.addZone("end_turn_zone", end);
-		zoneManager.addZone("action_test", actiontest);
+		//zoneManager.addZone("action_test", actiontest);
 		zoneManager.postInit();
 		
 		//	create the game loop thread

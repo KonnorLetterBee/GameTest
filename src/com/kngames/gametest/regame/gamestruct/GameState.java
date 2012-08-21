@@ -146,15 +146,12 @@ public class GameState {
 	
 	public static class TestPlayerInput extends PlayerInputState {
 		
-		public TestPlayerInput (Game game, Player actingPlayer) {
-			super(game, actingPlayer);
-		}
+		public TestPlayerInput (Game game, Player actingPlayer) { super(game, actingPlayer); }
 		public void onPlayerInputStart() {
 			Log.d(TAG, "Entering test...");
+			if (actingPlayer.hand().size() <= 0) game.state().endPlayerInput();
 		}
-		public boolean isSelectable(RECard card) {
-			return (card.getCardType() == CardType.Ammunition);
-		}
+		public boolean isSelectable(RECard card) { return (card.getCardType() == CardType.Ammunition); }
 		public void onCardSelected(REDeck source, int index) {
 			RECard card = (RECard) source.peek(index);
 			if (isSelectable(card)) {
@@ -164,8 +161,6 @@ public class GameState {
 				Log.d(TAG, String.format("Wrong card selected: %s", card.getName()));
 			}
 		}
-		public void onPlayerInputFinish() {
-			Log.d(TAG, "Exiting test...");
-		}
+		public void onPlayerInputFinish() { Log.d(TAG, "Exiting test..."); }
 	}
 }

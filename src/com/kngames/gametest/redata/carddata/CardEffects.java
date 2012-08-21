@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.Pair;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
@@ -14,6 +15,7 @@ import com.kngames.gametest.redata.CardTypes.RECard.OnTriggerListener;
 import com.kngames.gametest.regame.gamestruct.ExploreEffect;
 import com.kngames.gametest.regame.gamestruct.ExploreEffect.BuffAllWeaponsEffect;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
 
@@ -115,36 +117,27 @@ public class CardEffects {
 	}
 
 	public static class UmbrellaCorporationEffect implements OnPlayListener {
-		private Player actingPlayer;
-		private ArrayList<Pair<Integer,RECard>> hand;
-		private String[] names;
-		public void playAction(RECard card, Game game, Player actingPlayer) {
-			this.actingPlayer = actingPlayer;
-			
-			//	generate list of discarded weapons
-			hand = actingPlayer.hand().getAllCardPairs();
-			
-			names = new String[hand.size()];
-			for (int i = 0; i < hand.size(); i++)
-				names[i] = hand.get(i).second.getName();
-			
-			//	build and popup list of discarded weapons
-			AlertDialog.Builder builder = new AlertDialog.Builder(game.getContext());
-			builder.setTitle("Return a card to your deck");
-			builder.setCancelable(false);
-			builder.setItems(names, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					onItemSelected(item);
+		public static class GetCardFromHandState extends PlayerInputState {
+			public GetCardFromHandState (Game game, Player actingPlayer) { super(game, actingPlayer); }
+			public void onPlayerInputStart() {
+				if (actingPlayer.hand().size() <= 0) game.state().endPlayerInput();
+			}
+			public boolean isSelectable(RECard card) { return true; }
+			public boolean isSelectable (REDeck source, int index) { return source == actingPlayer.hand(); }
+			public void onCardSelected(REDeck source, int index) {
+				if (isSelectable(source, index)) {
+					actingPlayer.deck().addTop(source.pop(index));
+					game.state().endPlayerInput();
 				}
-			});
-			AlertDialog effectDialog = builder.create();
-			effectDialog.show();
+				else { }
+			}
+			public void onPlayerInputFinish() { }
+		}
+		
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			game.state().startPlayerInput(new GetCardFromHandState(game, actingPlayer));
 		}
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
-		private void onItemSelected(int item) {
-			RECard temp = (RECard)actingPlayer.hand().pop(hand.get(item).first);
-			actingPlayer.deck().addTop(temp);
-		}
 	}
 
 	public static class TrashOnFinish implements OnPlayFinishListener {

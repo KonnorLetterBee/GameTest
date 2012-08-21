@@ -43,7 +43,7 @@ public class HandZone extends REGameZone {
 	private void init(Bitmap image) {
 		cards = new REDeck();
 		cardPics = new ArrayList<TestRECard>();
-		int cardHeight = this.height() - 55;
+		int cardHeight = this.height();
 		cardBack = Bitmap.createScaledBitmap(image, cardHeight * 2/3, cardHeight, false);
 	}
 	public void postInit() { }
@@ -68,7 +68,8 @@ public class HandZone extends REGameZone {
 			
 			//	add the card pics for each card, and test to see whether or not they're playable
 			for (int i = 0; i < cards.size(); i++) {
-				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 + 35, (RECard)cards.peek(i), cardBack));
+				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 - BORDER_WIDTH, 
+						(RECard)cards.peek(i), cardBack));
 			}
 		}
 	}
@@ -90,17 +91,9 @@ public class HandZone extends REGameZone {
 	public void handlePressTouch(MotionEvent event) { }
 	
 	//	draws this HandZone to the screen
-	private final int TITLE_TEXT_SIZE = 25;
 	private final int BORDER_WIDTH = 3;
 	public void draw(Canvas canvas) {
-		Paint paint = new Paint(); 
-		drawTestBorder(canvas);
-		
-		paint.setColor(Color.WHITE);
-		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
-		canvas.drawText(TAG, area.left + 10, textLocation, paint);
-		
+		//drawTestBorder(canvas);
 		setCanPlayList();
 		
 		for (int i = 0; i < cardPics.size(); i++) {
@@ -110,7 +103,7 @@ public class HandZone extends REGameZone {
 				int top = (int)(temp.Y() - temp.halfHeight() - BORDER_WIDTH);
 				int right = left + temp.width() + (BORDER_WIDTH*2);
 				int bottom = top + temp.height() + (BORDER_WIDTH*2);
-				drawColorBorder(canvas, new Rect(left, top, right, bottom));
+				drawCardColorBorder(canvas, new Rect(left, top, right, bottom));
 			}
 			cardPics.get(i).draw(canvas);
 		}
@@ -128,7 +121,7 @@ public class HandZone extends REGameZone {
 		}
 	}
 	
-	private void drawColorBorder(Canvas canvas, Rect area) {
+	private void drawCardColorBorder(Canvas canvas, Rect area) {
 		Paint paint = new Paint();
 		paint.setColor(Color.YELLOW);
 		canvas.drawRect(area, paint);

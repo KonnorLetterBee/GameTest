@@ -32,7 +32,8 @@ public class TestRECard extends DrawObject {
 		classIds++;
 		
 		this.card = card;
-		this.name = card.getName();
+		if (card != null) this.name = card.getName();
+		else this.name = "";
 		this.text = new String[] { "" };
 		
 		move = new MovementComponent(x, y, 0, 0);
