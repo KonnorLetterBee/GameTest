@@ -134,7 +134,7 @@ public class Player {
 	public void playCard(int handPos) {
 		RECard temp = (RECard)hand.peek(handPos);
 		if (temp != null) {
-			if (temp.canPlay(game, this)) {
+			if (temp.canPlay(game, this, hand)) {
 				((RECard)hand.pop(handPos)).onPlay(game, this);
 			}
 		}

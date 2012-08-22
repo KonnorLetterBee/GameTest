@@ -1,5 +1,6 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard.Playable;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
@@ -39,7 +40,7 @@ public class WeaponCard extends RECard implements Playable {
 	}
 	
 	//	weapons can be played only during your ExploreWeapons phase
-	public boolean canPlay(Game game, Player actingPlayer) {
-		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.ExploreWeapons;
+	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
+		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.ExploreWeapons && source == actingPlayer.hand();
 	}
 }

@@ -15,39 +15,51 @@ import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.graphics.drawable.TestRECard;
 
-public class HandZone extends REGameZone {
+public class REDeckViewZone extends REGameZone {
 	
-	public static final String TAG = HandZone.class.getSimpleName();
+	public static final String TAG = REDeckViewZone.class.getSimpleName();
 	public static final IDObject id = new IDObject(TAG);
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
 	private Bitmap cardBack;
 	
+	private REDeck watchStack;	//	reference to an REDeck that is to always reference the REDeck this zone is responsible for displaying and handling
+	
 	private REDeck cards;
 	private ArrayList<TestRECard> cardPics;
 	private boolean[] canPlay;
 	
-	public HandZone(Rect area, Bitmap image) {
+	public static interface REViewZoneCallback {
+		REDeck getCompareStack();
+		void onNonPINDownTouch(int index);
+	}
+	
+	private REViewZoneCallback callback;
+	
+	public REDeckViewZone(Rect area, Bitmap image, REDeck stack, REViewZoneCallback callback) {
 		super(area);
-		init(image);
+		init(image, stack, callback);
 	}
-	public HandZone(int x, int y, int originCorner, float width, float height, int sizeMode, Bitmap image) {
+	public REDeckViewZone(int x, int y, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
 		super(x, y, originCorner, width, height, sizeMode);
-		init(image);
+		init(image, stack, callback);
 	}
-	public HandZone(float x, float y, int originCorner, float width, float height, int sizeMode, Bitmap image) {
+	public REDeckViewZone(float x, float y, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
 		super(x, y, originCorner, width, height, sizeMode);
-		init(image);
+		init(image, stack, callback);
 	}
-	private void init(Bitmap image) {
+	private void init(Bitmap image, REDeck stack, REViewZoneCallback callback) {
 		cards = new REDeck();
+		this.watchStack = stack;
+		this.callback = callback;
 		cardPics = new ArrayList<TestRECard>();
 		int cardHeight = this.height();
 		cardBack = Bitmap.createScaledBitmap(image, cardHeight * 2/3, cardHeight, false);
 	}
 	public void postInit() { }
 	
+	//	XPosition variables
 	private int currentXPos = 0;
 	private int getNextXPos() {
 		int temp = currentXPos;
@@ -59,17 +71,19 @@ public class HandZone extends REGameZone {
 	//	checks to see if the card list is the same as before
 	//	if there is a difference, recreate the pics list
 	public void update() {
-		REDeck newCards = game.getActivePlayer().hand();
-		//	if the list of cards to display has changed, recreate the list of cards to draw
-		if (!cards.equals(newCards)) {
-			cards = new REDeck(newCards);
-			resetYPos();
-			cardPics = new ArrayList<TestRECard>();
-			
-			//	add the card pics for each card, and test to see whether or not they're playable
-			for (int i = 0; i < cards.size(); i++) {
-				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 - BORDER_WIDTH, 
-						(RECard)cards.peek(i), cardBack));
+		if (callback != null) {
+			REDeck newCards = callback.getCompareStack();
+			//	if the list of cards to display has changed, recreate the list of cards to draw
+			if (!cards.equals(newCards)) {
+				cards = new REDeck(newCards);
+				resetYPos();
+				cardPics = new ArrayList<TestRECard>();
+				
+				//	add the card pics for each card, and test to see whether or not they're playable
+				for (int i = 0; i < cards.size(); i++) {
+					cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 - BORDER_WIDTH, 
+							(RECard)cards.peek(i), cardBack));
+				}
 			}
 		}
 	}
@@ -77,20 +91,23 @@ public class HandZone extends REGameZone {
 		for (int i = cardPics.size() - 1; i >= 0; i--) {
 			if (cardPics.get(i).isTouched(event.getX(), event.getY())) {
 				if (state.currentState() == State.PlayerInput) {
-					state.playerState().onCardSelected(game.getVisiblePlayer().hand(), i);
+					state.playerState().onCardSelected(watchStack, i);
 				} else {
-					getVisiblePlayer().playCard(i);
+					callback.onNonPINDownTouch(i);
 					return;
 				}
 			}
 		}
 	}
+	//	to be implemented by extending class, specifies what to do (if anything) when
+	//	a card is pressed on when it's not part of a PlayerInputState
+	
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
 	public void handleUpTouch(MotionEvent event) { }
 	public void handlePressTouch(MotionEvent event) { }
 	
-	//	draws this HandZone to the screen
+	//	draws this REDeckViewZone to the screen
 	private final int BORDER_WIDTH = 3;
 	public void draw(Canvas canvas) {
 		//drawTestBorder(canvas);
@@ -117,7 +134,7 @@ public class HandZone extends REGameZone {
 			
 			if (state.currentState() == State.PlayerInput)
 				canPlay[i] = state.playerState().isSelectable(card);
-			else canPlay[i] = card.canPlay(game, game.getActivePlayer());
+			else canPlay[i] = card.canPlay(game, game.getActivePlayer(), callback.getCompareStack());
 		}
 	}
 	

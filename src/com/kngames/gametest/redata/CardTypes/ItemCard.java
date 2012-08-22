@@ -1,5 +1,6 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
@@ -42,8 +43,8 @@ public class ItemCard extends RECard implements RECard.Playable {
 	public int getOrigin() { return origin; }
 
 	//	items can be played during your main phase, or when the trigger is true
-	public boolean canPlay(Game game, Player actingPlayer) {
+	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
 		if (trigger != null && trigger.isTriggered(this, game, actingPlayer)) return true;
-		else return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.MainPhase;
+		else return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.MainPhase && source == actingPlayer.hand();
 	}
 }

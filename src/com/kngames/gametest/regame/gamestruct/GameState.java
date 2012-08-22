@@ -1,6 +1,5 @@
 package com.kngames.gametest.regame.gamestruct;
 
-import com.kngames.gametest.cards.graphics.ZoneManager;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
@@ -33,12 +32,12 @@ public class GameState {
 	public State currentState() { return currentState; }
 	
 	private Game game;
-	private ZoneManager zones;
+	//private ZoneManager zones;
 	
 	public GameState(Game parent, State initialState) {
 		this.game = parent;
 		setState(initialState, true);
-		zones = ZoneManager.getZoneManager();
+		//zones = ZoneManager.getZoneManager();
 	}
 	
 	public void setState(State newState, boolean useChangeEffects) {
@@ -144,8 +143,9 @@ public class GameState {
 		public abstract void onPlayerInputFinish();
 	}
 	
+	//	a PlayerInputState designed to test the functions of the PlayerInputState structure
+	@Deprecated
 	public static class TestPlayerInput extends PlayerInputState {
-		
 		public TestPlayerInput (Game game, Player actingPlayer) { super(game, actingPlayer); }
 		public void onPlayerInputStart() {
 			Log.d(TAG, "Entering test...");

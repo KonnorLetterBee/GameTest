@@ -1,5 +1,6 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard.Playable;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
@@ -30,7 +31,7 @@ public class AmmunitionCard extends RECard implements Playable {
 	}
 	
 	//	ammunition can be played only if it's your main phase
-	public boolean canPlay(Game game, Player actingPlayer) {
-		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.MainPhase;
+	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
+		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.MainPhase && source == actingPlayer.hand();
 	}
 }

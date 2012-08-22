@@ -7,23 +7,21 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
-import com.kngames.gametest.redata.CardTypes.RECard;
 
-@Deprecated
-public class InPlayZone extends REGameZone {
+public class GameStateZone extends REGameZone {
 	
-	public static final String TAG = InPlayZone.class.getSimpleName();
+	public static final String TAG = GameStateZone.class.getSimpleName();
 	public static final IDObject id = new IDObject(TAG);
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
-	public InPlayZone(Rect area) {
+	public GameStateZone(Rect area) {
 		super(area);
 	}
-	public InPlayZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
+	public GameStateZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
-	public InPlayZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
+	public GameStateZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
 	public void postInit() { }
@@ -35,21 +33,17 @@ public class InPlayZone extends REGameZone {
 	public void handleUpTouch(MotionEvent event) { }
 	public void handlePressTouch(MotionEvent event) { }
 
-	//	draws this DeckZone to the screen
-	private final int TITLE_TEXT_SIZE = 25;
+	//	draws this InfoZone to the screen
+	private final int TITLE_TEXT_SIZE = area.height();
+	private int textX = area.left;
+	private int textY = area.top + TITLE_TEXT_SIZE;
 	public void draw(Canvas canvas) {
-		Paint paint = new Paint(); 
-		drawTestBorder(canvas);
+		Paint paint = new Paint();
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
-		canvas.drawText(TAG, area.left + 10, textLocation, paint);
-
-		String[] data = new String[getVisibleInPlay().size()];
-		for (int i = 0; i < getVisibleInPlay().size(); i++) {
-			data[i] = ((RECard)getVisibleInPlay().peek(i)).getName();
-		}
-		drawTestData(canvas, data, textLocation + TITLE_TEXT_SIZE + 15);
+		
+		String message = String.format("Turn %d: %s", game.gameTurn(), game.gameStateMessage);
+		canvas.drawText(message, textX, textY, paint);
 	}
 }

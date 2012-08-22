@@ -1,5 +1,6 @@
 package com.kngames.gametest.redata.CardTypes;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard.Playable;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
@@ -80,8 +81,8 @@ public class ActionCard extends RECard implements Playable {
 	//	actions can be played if:
 	//	it's your main phase, and you have at least one action remaining
 	//	the action's trigger is valid, regardless of game state (trigger checks that anyway)
-	public boolean canPlay(Game game, Player actingPlayer) {
+	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
 		if (trigger != null && trigger.isTriggered(this, game, actingPlayer)) return true;
-		else return game.isActivePlayer(actingPlayer) && actingPlayer.actions > 0 && game.state().currentState() == State.MainPhase;
+		else return game.isActivePlayer(actingPlayer) && actingPlayer.actions > 0 && game.state().currentState() == State.MainPhase && source == actingPlayer.hand();
 	}
 }

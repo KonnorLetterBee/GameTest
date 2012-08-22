@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kngames.gametest.cards.graphics.*;
 import com.kngames.gametest.engine.ContentManager;
 import com.kngames.gametest.engine.graphics.*;
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.carddata.CardData;
@@ -67,8 +68,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		game = Game.startGame(context, new CharacterCard[] {CardData.Characters[0]}, ScenData.testScenario);
 		zoneManager.setGame(game);
 		
-		DeckZone deck = new DeckZone(screenWidth, screenHeight, GameZone.BOTTOM_RIGHT, 
+		DeckZone deck = new DeckZone(1.0f, 0.95f, GameZone.BOTTOM_RIGHT, 
 				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
+		GameStateZone message = new GameStateZone(0.01f, 0.9875f, GameZone.BOTTOM_LEFT,
+				deck.percLeft(), 0.025f, GameZone.STRETCH);
+		
 		DiscardZone discard = new DiscardZone(1.0f, deck.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
 		BuyCardButtonZone shop = new BuyCardButtonZone(1.0f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
@@ -84,16 +88,26 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 					}
 				});
 		
-		
-		HandZone hand = new HandZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
-				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back);
-		InPlayZone inPlay = new InPlayZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT, 
-				hand.percWidth(), discard.percHeight(), GameZone.STRETCH);
+		REDeckViewZone hand = new REDeckViewZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
+				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back, 
+				game.getActivePlayer().hand(), new REDeckViewZone.REViewZoneCallback() {
+					public void onNonPINDownTouch(int index) { game.getVisiblePlayer().playCard(index); }
+					public REDeck getCompareStack() { return game.getActivePlayer().hand(); }
+				});
+		REDeckViewZone inPlay = new REDeckViewZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT,
+				hand.percWidth(), discard.percHeight(), GameZone.STRETCH, card_back, 
+				game.getActivePlayer().inPlay(), new REDeckViewZone.REViewZoneCallback() {
+					public void onNonPINDownTouch(int index) { }
+					public REDeck getCompareStack() { return game.getActivePlayer().inPlay(); }
+				});
+		//InPlayZone inPlay = new InPlayZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT, 
+		//		hand.percWidth(), discard.percHeight(), GameZone.STRETCH);
 		
 		InfoZone info = new InfoZone (0f, 0f, GameZone.TOP_LEFT, 
 				0.3f, inPlay.percTop() - 0.02f, GameZone.STRETCH);
 		
 		zoneManager.addZone("deck_zone", deck);
+		zoneManager.addZone("state_message", message);
 		zoneManager.addZone("hand_zone", hand);
 		zoneManager.addZone("in_play_zone", inPlay);
 		zoneManager.addZone("discard_zone", discard);

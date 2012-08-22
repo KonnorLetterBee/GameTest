@@ -80,7 +80,7 @@ public class DiscardZone extends REGameZone {
 		canvas.drawText(""+getVisibleDiscard().size(), x, y, paint);
 		
 		String[] data = new String[getVisibleDiscard().size()];
-		for (int i = 0; i < getVisibleDiscard().size(); i++) {
+		for (int i = 0; i < data.length; i++) {
 			data[i] = ((RECard)getVisibleDiscard().peek(i)).getName();
 		}
 		drawTestData(canvas, data, cardTop + 20);

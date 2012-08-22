@@ -45,11 +45,16 @@ public class Game {
 	private ArrayList<ExploreEffect> exploreEffects;
 	public ArrayList<ExploreEffect> exploreEffects() { return exploreEffects; }
 	
+	private int gameTurn;
+	public int gameTurn() { return gameTurn; }
+	public String gameStateMessage;
+	
 	private Game(Context context, CharacterCard[] chars, Scenario scen) {
 		this.context = context;
 		
 		//	set the scenario and resource piles
 		shop = new Shop(this, scen, chars.length);
+		shop.shuffleAllPiles();
 		
 		//	initialize all players with their proper characters
 		numPlayers = chars.length;
@@ -58,20 +63,23 @@ public class Game {
 			players[i] = new Player(i, this, chars[i], null);
 		}
 		
+		//	set the game state to StartTurn
 		state = new GameState(this, State.StartTurn);
+		
+		//	instantiate the list of explore effects for later use
 		exploreEffects = new ArrayList<ExploreEffect>();
 		
-		shop.shuffleAllPiles();
+		//	set game turn to 1
+		gameTurn = 1;
+		gameStateMessage = "sudo make_me_a_new_status_message";
 	}
 	
 	//	instantiates a new Game if one doesn't exist
 	//	otherwise, returns the instance that already exists
 	public static Game startGame(Context context, CharacterCard[] chars, Scenario scen) {
-		if (game == null) return new Game(context, chars, scen);
-		else {
-			Log.e(TAG, "Game already instantiated!");
-			return game;
-		}
+		if (game == null)  game = new Game(context, chars, scen);
+		else  Log.e(TAG, "Game already instantiated!");
+		return game;
 	}
 	
 	//	checks whether it's the current player's turn
@@ -87,7 +95,10 @@ public class Game {
 	//	advances the active player to the next player
 	public void advanceActivePlayer() {
 		activePlayer++;
-		if (activePlayer == numPlayers) activePlayer = 0;
+		if (activePlayer == numPlayers) {
+			activePlayer = 0;
+			gameTurn++;
+		}
 		tempPlayer = activePlayer;
 	}
 	

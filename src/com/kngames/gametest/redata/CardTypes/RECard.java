@@ -1,6 +1,7 @@
 package com.kngames.gametest.redata.CardTypes;
 
 import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
@@ -44,16 +45,16 @@ public abstract class RECard extends Card {
 		return CardData.generateTagString(this);
 	}
 	
-	public boolean canPlay(Game game, Player actingPlayer) {
+	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
 		switch (cardType) {
 		case Ammunition:
-			return ((AmmunitionCard)this).canPlay(game, actingPlayer);
+			return ((AmmunitionCard)this).canPlay(game, actingPlayer, source);
 		case Action:
-			return ((ActionCard)this).canPlay(game, actingPlayer);
+			return ((ActionCard)this).canPlay(game, actingPlayer, source);
 		case Item:
-			return ((ItemCard)this).canPlay(game, actingPlayer);
+			return ((ItemCard)this).canPlay(game, actingPlayer, source);
 		case Weapon:
-			return ((WeaponCard)this).canPlay(game, actingPlayer);
+			return ((WeaponCard)this).canPlay(game, actingPlayer, source);
 		default:
 			return false;
 		}
@@ -79,6 +80,6 @@ public abstract class RECard extends Card {
 	}
 
 	public interface Playable {
-		public boolean canPlay(Game game, Player actingPlayer);
+		public boolean canPlay(Game game, Player actingPlayer, REDeck source);
 	}
 }
