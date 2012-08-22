@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.util.Log;
 import android.util.Pair;
 
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
 import com.kngames.gametest.redata.CardTypes.RECard.OnTriggerListener;
@@ -120,11 +122,11 @@ public class CardEffects {
 		public static class GetCardFromHandState extends PlayerInputState {
 			public GetCardFromHandState (Game game, Player actingPlayer) { super(game, actingPlayer); }
 			public void onPlayerInputStart() {
+				//	if hand size == 0, immediately end state for lack of possible actions
 				if (actingPlayer.hand().size() <= 0) game.state().endPlayerInput();
 			}
-			public boolean isSelectable(RECard card) { return true; }
 			public boolean isSelectable (REDeck source, int index) { return source == actingPlayer.hand(); }
-			public void onCardSelected(REDeck source, int index) {
+			public void onCardSelected(REDeck source, int index) throws IndexOutOfBoundsException {
 				if (isSelectable(source, index)) {
 					actingPlayer.deck().addTop(source.pop(index));
 					game.state().endPlayerInput();
@@ -161,10 +163,30 @@ public class CardEffects {
 		}
 	}
 
-	//	not implemented
+	//	not fully implemented
+	//	TODO: add dialog for gaining an ammunition card from the shop
 	public static class ItemManagementEffect implements OnPlayListener {
+		public static class ItemManagementState extends PlayerInputState {
+			public ItemManagementState (Game game, Player actingPlayer) { super(game, actingPlayer); }
+			public void onPlayerInputStart() {
+				//	if hand contains no ammunition, immediately end state for lack of possible actions
+				if (actingPlayer.hand().queryType(CardType.Ammunition).size() <= 0) game.state().endPlayerInput();
+			}
+			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
+				return source == actingPlayer.hand() && ((RECard) source.peek(index)).getCardType() == CardType.Ammunition;
+			}
+			public void onCardSelected(REDeck source, int index) {
+				if (isSelectable(source, index)) {
+					game.shop().returnCard((RECard) source.pop(index));
+					game.state().endPlayerInput();
+				}
+				else { }
+			}
+			public void onPlayerInputFinish() { }
+		}
+		
 		public void playAction(RECard card, Game game, Player actingPlayer) {
-			
+			game.state().startPlayerInput(new ItemManagementState(game, actingPlayer));
 		}
 	}
 	

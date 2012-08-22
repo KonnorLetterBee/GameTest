@@ -110,6 +110,7 @@ public class GameState {
 			this.previousState = currentState;
 			this.setState(State.PlayerInput, false);
 			this.playerState = inputState;
+			this.playerState.onPlayerInputStart();
 		} else Log.e(TAG, "Error: PlayerInput state is null, no state to enter");
 	}
 	
@@ -135,10 +136,8 @@ public class GameState {
 			this.actingPlayer = actingPlayer;
 		}
 		public abstract void onPlayerInputStart();
-		public abstract boolean isSelectable(RECard card);
-		public boolean isSelectable(REDeck source, int index) {
-			return isSelectable(((RECard)source.peek(index)));
-		}
+		//public abstract boolean isSelectable(RECard card);
+		public abstract boolean isSelectable(REDeck source, int index);
 		public abstract void onCardSelected(REDeck source, int index);
 		public abstract void onPlayerInputFinish();
 	}
@@ -151,10 +150,10 @@ public class GameState {
 			Log.d(TAG, "Entering test...");
 			if (actingPlayer.hand().size() <= 0) game.state().endPlayerInput();
 		}
-		public boolean isSelectable(RECard card) { return (card.getCardType() == CardType.Ammunition); }
+		public boolean isSelectable(REDeck source, int index) { return ((RECard) source.peek(index)).getCardType() == CardType.Ammunition; }
 		public void onCardSelected(REDeck source, int index) {
 			RECard card = (RECard) source.peek(index);
-			if (isSelectable(card)) {
+			if (isSelectable(source, index)) {
 				Log.d(TAG, String.format("Ammunition selected: %s, index %d", card.getName(), index));
 				game.state().endPlayerInput();
 			} else {

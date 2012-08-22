@@ -129,11 +129,15 @@ public class REDeckViewZone extends REGameZone {
 	//	iterates through the cards list and marks the ones that can be played
 	private void setCanPlayList() {
 		canPlay = new boolean[cards.size()];
-		for (int i = 0; i < cards.size(); i++) {
+		for (int i = 0; i < canPlay.length; i++) {
 			RECard card = (RECard) cards.peek(i);
 			
 			if (state.currentState() == State.PlayerInput)
-				canPlay[i] = state.playerState().isSelectable(card);
+				try { 
+					canPlay[i] = state.playerState().isSelectable(callback.getCompareStack(), i);
+				} catch (IndexOutOfBoundsException e) {
+					canPlay[i] = false;
+				}
 			else canPlay[i] = card.canPlay(game, game.getActivePlayer(), callback.getCompareStack());
 		}
 	}

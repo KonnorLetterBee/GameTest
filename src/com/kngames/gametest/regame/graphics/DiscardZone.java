@@ -81,7 +81,11 @@ public class DiscardZone extends REGameZone {
 		
 		String[] data = new String[getVisibleDiscard().size()];
 		for (int i = 0; i < data.length; i++) {
-			data[i] = ((RECard)getVisibleDiscard().peek(i)).getName();
+			try {
+				data[i] = ((RECard)getVisibleDiscard().peek(i)).getName();
+			} catch (IndexOutOfBoundsException e) {
+				data[i] = "";
+			}
 		}
 		drawTestData(canvas, data, cardTop + 20);
 	}

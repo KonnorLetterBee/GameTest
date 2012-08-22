@@ -102,7 +102,9 @@ public class Player {
 			discard.addTop(inPlay.popFirst());
 		}
 		while (hand.size() < 5) {
-			drawToHand();
+			boolean drawn = drawToHand();
+			if (!drawn)
+				break;
 		}
 	}
 	
@@ -120,14 +122,20 @@ public class Player {
 	
 	//	draws a card from Deck and puts it into Hand, shuffling Discard and replacing it with Deck if the Deck is empty
 	//	if Discard is also empty, don't draw a card
-	public void drawToHand() {
+	//	returns true if a card was actually drawn, false otherwise (deck and discard are both empty)
+	public boolean drawToHand() {
 		if (deck.size() == 0) {
 			deck = discard;
 			deck.flipDeck();
 			deck.shuffle(1);
 			discard = new REDeck();
 		}
-		if (deck.size() > 0) hand.addBack(deck.popTop());
+		if (deck.size() > 0) {
+			hand.addBack(deck.popTop());
+			return true;
+		} else {
+			return false;	// if no card was drawn
+		}
 	}
 	
 	//	plays a card from this player's hand, using the correct action determined by the game state

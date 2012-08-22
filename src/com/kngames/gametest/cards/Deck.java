@@ -159,8 +159,7 @@ public abstract class Deck {
 	}
 	
 	//	removes and returns the card at the specified index in this Deck object (from index 0)
-	public Card pop(int index) {
-		if (cards.size() == 0 || index >= cards.size() || index < 0) return null;
+	public Card pop(int index) throws IndexOutOfBoundsException {
 		Card temp = cards.get(index);
 		cards.remove(index);
 		return temp;
@@ -193,8 +192,7 @@ public abstract class Deck {
 	}
 	
 	//	returns the card at the specified index in this Deck object
-	public Card peek(int index) {
-		if (cards.size() == 0 || index >= cards.size() || index < 0) return null;
+	public Card peek(int index) throws IndexOutOfBoundsException {
 		return cards.get(index);
 	}
 	
