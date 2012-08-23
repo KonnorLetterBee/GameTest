@@ -89,7 +89,7 @@ public class ScenData {
 				"WE19", "WE20 WE21", "AC19", "AC24", "AC23", "AC25", "AC17", "AC21", "AC22", "WE29 WE30", "AC26", "WE22 WE23"},
 				"", null),
 		new Scenario (25, "Infection Balance", GameMode.Outbreak, 2, true, new String[] {
-				"WE02", "WE15 WE16", "AC10", "AC27", "AC02", "AC04", "AC09", "AC23", "AC26", "AC03", "WE28", "WE29", "WE13 WE14"},
+				"WE02", "WE15 WE16", "AC10", "AC27", "AC02", "AC04", "AC09", "AC23", "AC26", "AC03", "WE29", "WE13 WE14"},
 				"Learn to master the Virus within you in order to get the most out of this Scenario.", null),
 		new Scenario (26, "Duplicity", GameMode.Outbreak, 2, true, new String[] {
 				"WE26 WE27", "AC05", "WE28", "AC02", "WE15", "AC30", "AC04", "AC26", "AC03", "WE03", "WE29 WE30", "WE13 WE14"},
@@ -98,7 +98,7 @@ public class ScenData {
 				"WE01", "AC27", "AC10", "AC02", "AC23", "WE08", "AC03", "AC31", "AC28", "WE03", "WE15 WE16", "WE13 WE14"},
 				"Being an Infected isn't all that bad..... is it?", null),
 		new Scenario (28, "Quick Game", GameMode.Outbreak, 2, true, new String[] {
-				"WE22 WE23", "AC29", "WE20 WE21", "WE29 WE30", "AC15", "AM04", "AC19", "AC17", "AC30", "AC31", "WE24", "WE25"},
+				"WE22 WE23", "AC29", "WE20 WE21", "WE29 WE30", "AC15", "AM04", "AC19", "AC17", "AC30", "AC21", "WE24", "WE25"},
 				"Don't have the full hour to play? Use this Scenario!", null),
 		new Scenario (29, "Trouble Around Every Corner", GameMode.Outbreak, 2, true, new String[] {
 				"WE22 WE23", "WE25", "AC24", "WE26 WE27", "WE20 WE21", "AC18", "WE29 WE30", "AC19", "WE28", "AC31", "AC25", "AC21"},
@@ -134,7 +134,7 @@ public class ScenData {
 			"WE36 WE37", "AC32", "AC37", "AC33", "WE35", "AC39", "WE41", "AC35", "AC36", "AC10", "AC04", "WE38 WE39"},
 			"", null),
 		new Scenario (40, "Biohazard", GameMode.Story, 3, true, new String[] {
-			"AC17", "AC36", "AC22", "AC35", "WE35", "AC37", "AC41", "AC34", "WE20 WE21", "WE36 WE37", "WE38 WE39"},
+			"AC17", "AC36", "AC22", "AC35", "WE35", "AC37", "AC41", "AC34", "WE20 WE21", "WE36 WE37", "WE38 WE39", "AC33"},
 			"", null),
 		new Scenario (41, "Bigger is Better", GameMode.Story, 3, true, new String[] {
 			"AC04", "WE02", "AC36", "AC33", "AC10", "AC32", "AC06", "WE35", "AC02", "AC03", "WE15 WE16", "WE13 WE14"},
