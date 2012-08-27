@@ -72,25 +72,25 @@ public class TestZone extends GameZone {
 		Paint paint = new Paint(); 
 		paint.setColor(Color.WHITE); 
 		paint.setStyle(Style.FILL); 
-		canvas.drawRect(area, paint);
+		canvas.drawRect(generateRect(), paint);
 
 		paint.setColor(Color.BLACK);
 		canvas.drawRect(new Rect (
-				area.left + BORDER_THICKNESS,
-				area.top + BORDER_THICKNESS,
-				area.right - BORDER_THICKNESS,
-				area.bottom - BORDER_THICKNESS), paint);
+				left() + BORDER_THICKNESS,
+				top() + BORDER_THICKNESS,
+				right() - BORDER_THICKNESS,
+				bottom() - BORDER_THICKNESS), paint);
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
-		canvas.drawText("TEST", area.left + 10, textLocation, paint);
+		int textLocation = top() + TITLE_TEXT_SIZE + 5;
+		canvas.drawText("TEST", left() + 10, textLocation, paint);
 		textLocation += TITLE_TEXT_SIZE + 5;
 		paint.setTextSize(SUB_TEXT_SIZE);
-		canvas.drawText(String.format("%d x %d", area.right-area.left, area.bottom-area.top), area.left + 10, textLocation, paint);
+		canvas.drawText(String.format("%d x %d", width, height), left() + 10, textLocation, paint);
 		for (int i = 0; i < data.size(); i++) {
 			textLocation += TITLE_TEXT_SIZE + 5;
-			canvas.drawText(data.get(i), area.left + 10, textLocation, paint);
+			canvas.drawText(data.get(i), left() + 10, textLocation, paint);
 		}
 	}
 }

@@ -44,8 +44,8 @@ public class DrawObject implements Touchable, Drawable {
 	///	Getters and Setters
 	///
 	
-	public float X() { return move.getX(); }
-	public float Y() { return move.getY(); }
+	public float X() { return move.x(); }
+	public float Y() { return move.y(); }
 	public void setX(float x) { move.setX(x); }
 	public void setY(float y) { move.setY(y); }
 	
@@ -72,22 +72,35 @@ public class DrawObject implements Touchable, Drawable {
 	
 	//	draws this DrawObject to the screen
 	public void draw(Canvas canvas) {
-		if (centered) canvas.drawBitmap(image, move.getX() - halfWidth, move.getY() - halfHeight, null);
-		else canvas.drawBitmap(image, move.getX(), move.getY(), null);
+		if (centered) canvas.drawBitmap(image, move.x() - halfWidth, move.y() - halfHeight, null);
+		else canvas.drawBitmap(image, move.x(), move.y(), null);
 	}
 
 	//	calculates whether a point is within the bounds of this object
-	public boolean isTouched(float x, float y) {
-		if (centered) return
-			x >= (X() - halfWidth) && 
-			x <= (X() + halfWidth) &&
-			y >= (Y() - halfHeight) && 
-			y <= (Y() + halfHeight);
-		else return
-			x >= (X()) && 
-			x <= (X() + image.getWidth()) &&
-			y >= (Y()) && 
-			y <= (Y() + image.getHeight());
+	public boolean isTouched(float x, float y, boolean allowBorder) {
+		if (allowBorder) {
+			if (centered) return
+					x >= (X() - halfWidth) && 
+					x <= (X() + halfWidth) &&
+					y >= (Y() - halfHeight) && 
+					y <= (Y() + halfHeight);
+				else return
+					x >= (X()) && 
+					x <= (X() + image.getWidth()) &&
+					y >= (Y()) && 
+					y <= (Y() + image.getHeight());
+		} else {
+			if (centered) return
+					x > (X() - halfWidth) && 
+					x < (X() + halfWidth) &&
+					y > (Y() - halfHeight) && 
+					y < (Y() + halfHeight);
+				else return
+					x > (X()) && 
+					x < (X() + image.getWidth()) &&
+					y > (Y()) && 
+					y < (Y() + image.getHeight());
+		}
 	}
 	
 	//	calculates how far a given touch is away from the object's center

@@ -41,7 +41,7 @@ public class InfoZone extends REGameZone {
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
+		int textLocation = top() + TITLE_TEXT_SIZE + 5;
 		
 		drawTestData(canvas, generateInfoStrings(), textLocation);
 	}

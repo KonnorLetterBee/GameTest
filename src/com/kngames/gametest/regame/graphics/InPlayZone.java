@@ -43,8 +43,8 @@ public class InPlayZone extends REGameZone {
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = area.top + TITLE_TEXT_SIZE + 5;
-		canvas.drawText(TAG, area.left + 10, textLocation, paint);
+		int textLocation = top() + TITLE_TEXT_SIZE + 5;
+		canvas.drawText(TAG, left() + 10, textLocation, paint);
 
 		String[] data = new String[getVisibleInPlay().size()];
 		for (int i = 0; i < getVisibleInPlay().size(); i++) {

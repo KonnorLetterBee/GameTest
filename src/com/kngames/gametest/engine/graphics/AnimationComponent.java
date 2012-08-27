@@ -21,12 +21,12 @@ public class AnimationComponent {
 	
 	//	sets the associated MovementComponent to move at a set speed towards a specified point
 	public void moveToPoint(float xTar, float yTar, float speed) {
-		float theta = (float) Math.atan((yTar - moverRef.getY())/(xTar - moverRef.getX()));
+		float theta = (float) Math.atan((yTar - moverRef.y())/(xTar - moverRef.x()));
 		float xComp = (float) (speed * FloatMath.cos(theta));
 		float yComp = (float) (speed * FloatMath.sin(theta));
 		
 		changeTarget(xTar, yTar);
-		if (xTar - moverRef.getX() < 0) {
+		if (xTar - moverRef.x() < 0) {
 			moverRef.setXVel(-xComp);
 			moverRef.setYVel(-yComp);
 		} else {
@@ -59,6 +59,6 @@ public class AnimationComponent {
 	//	checks the proximity of the object to the target point
 	//	returns true if the object's current speed is less than the distance to the target
 	private boolean checkTargetProx() {
-		return MovementComponent.distBetweenPoints(xTar, yTar, moverRef.getX(), moverRef.getY()) < moverRef.speed();
+		return MovementComponent.distBetweenPoints(xTar, yTar, moverRef.x(), moverRef.y()) < moverRef.speed();
 	}
 }

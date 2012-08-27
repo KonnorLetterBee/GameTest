@@ -66,7 +66,7 @@ public class REDeckViewZone extends REGameZone {
 		currentXPos += cardBack.getWidth() + 10;
 		return temp;
 	}
-	private void resetYPos() { currentXPos = area.left + 10; }
+	private void resetYPos() { currentXPos = left() + 10; }
 	
 	//	checks to see if the card list is the same as before
 	//	if there is a difference, recreate the pics list
@@ -81,7 +81,7 @@ public class REDeckViewZone extends REGameZone {
 				
 				//	add the card pics for each card, and test to see whether or not they're playable
 				for (int i = 0; i < cards.size(); i++) {
-					cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, area.top + cardBack.getHeight()/2 - BORDER_WIDTH, 
+					cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, top() + cardBack.getHeight()/2 - BORDER_WIDTH, 
 							(RECard)cards.peek(i), cardBack));
 				}
 			}
@@ -89,7 +89,7 @@ public class REDeckViewZone extends REGameZone {
 	}
 	public void handleDownTouch(MotionEvent event) {
 		for (int i = cardPics.size() - 1; i >= 0; i--) {
-			if (cardPics.get(i).isTouched(event.getX(), event.getY())) {
+			if (cardPics.get(i).isTouched(event.getX(), event.getY(), true)) {
 				if (state.currentState() == State.PlayerInput) {
 					state.playerState().onCardSelected(watchStack, i);
 				} else {

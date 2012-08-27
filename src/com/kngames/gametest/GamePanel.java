@@ -10,7 +10,6 @@ import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.regame.gamestruct.Game;
-import com.kngames.gametest.regame.gamestruct.GameState;
 import com.kngames.gametest.regame.graphics.*;
 
 import android.content.Context;
@@ -36,8 +35,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private DrawObject selected;
     private GameZone selectedZone;
     
-    private int screenWidth;
-    private int screenHeight;
+    //private int screenWidth;
+    //private int screenHeight;
     
     private ContentManager content;
 	private REZoneManager zoneManager;
@@ -60,8 +59,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
-		screenWidth = display.getWidth();
-		screenHeight = display.getHeight();
+		//screenWidth = display.getWidth();
+		//screenHeight = display.getHeight();
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
@@ -81,12 +80,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				deck.percWidth(), 0.15f, GameZone.STRETCH);
 		EndTurnButtonZone end = new EndTurnButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), shop.percHeight(), GameZone.STRETCH);
-		ButtonZone actiontest = new ButtonZone(end.percLeft() - margin, explore.percTop() - margin, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), 0.15f, GameZone.STRETCH, "NEW STATE", new ButtonZone.OnPressListener() {
-					public void buttonPressed() {
-						game.state().startPlayerInput(new GameState.TestPlayerInput(game, game.getActivePlayer()));
-					}
-				});
 		
 		REDeckViewZone hand = new REDeckViewZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
 				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back, 
@@ -115,7 +108,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("shop_button", shop);
 		zoneManager.addZone("explore_button", explore);
 		zoneManager.addZone("end_turn_zone", end);
-		//zoneManager.addZone("action_test", actiontest);
 		zoneManager.postInit();
 		
 		//	create the game loop thread
@@ -246,7 +238,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     	ArrayList<DrawObject> touched = new ArrayList<DrawObject>();
     	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
     	for (DrawObject d : drawables) {
-    		if (d.isTouched(x, y))	touched.add(d);
+    		if (d.isTouched(x, y, true))	touched.add(d);
     	}
     	
     	if (touched.size() == 1) return touched.get(0);
@@ -278,7 +270,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
     	GameZone[] allZones = zoneManager.getAllZones();
     	for (GameZone z : allZones) {
-    		if (z.isTouched(x, y))	touched.add(z);
+    		if (z.isTouched(x, y, true))	touched.add(z);
     	}
     	
     	if (touched.size() == 1) return touched.get(0);

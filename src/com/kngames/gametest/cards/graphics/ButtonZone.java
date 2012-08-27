@@ -54,8 +54,8 @@ public class ButtonZone extends REGameZone {
 			
 			paint.setColor(Color.WHITE);
 			paint.setTextSize(20);
-			int textLocation = area.top + 20 + 5;
-			canvas.drawText(buttonText, area.left + 10, textLocation, paint);
+			int textLocation = (int)move.y() + 20 + 5;
+			canvas.drawText(buttonText, (int)move.x() + 10, textLocation, paint);
 		}
 	}
 

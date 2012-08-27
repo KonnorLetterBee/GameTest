@@ -48,10 +48,10 @@ public class TestCard extends DrawObject {
 		Paint paint = new Paint(); 
 		paint.setColor(Color.WHITE); 
 		paint.setStyle(Style.FILL); 
-		canvas.drawRect(move.getX() - halfWidth, 
-				move.getY() - halfHeight, 
-				move.getX() + halfWidth, 
-				move.getY() + halfHeight, paint);
+		canvas.drawRect(move.x() - halfWidth, 
+				move.y() - halfHeight, 
+				move.x() + halfWidth, 
+				move.y() + halfHeight, paint);
 
 		paint.setColor(Color.BLACK); 
 		paint.setTextSize(TITLE_TEXT_SIZE);

@@ -27,15 +27,15 @@ public class MovementComponent {
 	///	Getters and Setters
 	///
 	
-	public float getX() { return xPos; }
+	public float x() { return xPos; }
 	public void setX(float xp) { this.xPos = xp; }
-	public float getY() { return yPos; }
+	public float y() { return yPos; }
 	public void setY(float yp) { this.yPos = yp; }
 	
-	public float getXVel() { return xVel; }
+	public float xVel() { return xVel; }
 	public void setXVel(float xv) { this.xVel = xv; }
 	public void addXVel(float xv) { this.xVel += xv; }
-	public float getYVel() { return yVel; }
+	public float yVel() { return yVel; }
 	public void setYVel(float yv) { this.yVel = yv; }
 	public void addYVel(float yv) { this.yVel += yv; }
 	

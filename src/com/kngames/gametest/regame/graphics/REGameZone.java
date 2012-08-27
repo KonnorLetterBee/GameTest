@@ -45,14 +45,14 @@ public abstract class REGameZone extends GameZone {
 		Paint paint = new Paint(); 
 		paint.setColor(Color.WHITE); 
 		paint.setStyle(Style.FILL); 
-		canvas.drawRect(area, paint);
+		canvas.drawRect(generateRect(), paint);
 
 		paint.setColor(Color.BLACK);
 		canvas.drawRect(new Rect (
-				area.left + BORDER_THICKNESS,
-				area.top + BORDER_THICKNESS,
-				area.right - BORDER_THICKNESS,
-				area.bottom - BORDER_THICKNESS), paint);
+				left() + BORDER_THICKNESS,
+				top() + BORDER_THICKNESS,
+				right() - BORDER_THICKNESS,
+				bottom() - BORDER_THICKNESS), paint);
 	}
 	
 	private final int DATA_TEXT_SIZE = 20;
@@ -63,7 +63,7 @@ public abstract class REGameZone extends GameZone {
 		int height = startHeight;
 		for (int i = 0; i < data.length; i++) {
 			if (data[i] != null) {
-				canvas.drawText(data[i], area.left + 10, height, paint);
+				canvas.drawText(data[i], left() + 10, height, paint);
 				height += DATA_TEXT_SIZE + 5;
 			}
 		}

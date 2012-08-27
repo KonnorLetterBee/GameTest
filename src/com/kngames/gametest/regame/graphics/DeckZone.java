@@ -36,19 +36,19 @@ public class DeckZone extends REGameZone {
 	}
 	
 	private void setBackground() {
-		float ratio = (float)area.height() / area.width();
+		float ratio = (float)height / width;
 		int cardWidth = 0;
 		int cardHeight = 0;
-		int cardX = area.left;
-		int cardY = area.top;
+		int cardX = left();
+		int cardY = top();
 		if (ratio > 1.4f) {	//	taller than necessary
-			cardWidth = area.width();
+			cardWidth = width;
 			cardHeight = (int) (cardWidth * 1.4);
-			cardY += (area.height() - cardHeight) / 2;
+			cardY += (height - cardHeight) / 2;
 		} else {	//	wider than necessary
-			cardHeight = area.height();
+			cardHeight = height;
 			cardWidth = (int) (cardHeight * 0.714f);
-			cardX += (area.width() - cardWidth) / 2;
+			cardX += (width - cardWidth) / 2;
 		}
 		ContentManager content = ContentManager.getContentManager();
 		assert (content != null);
@@ -75,8 +75,8 @@ public class DeckZone extends REGameZone {
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TEXT_SIZE);
-		int x = area.left + (area.width() / 2);
-		int y = area.top + (area.height() / 2) - (TEXT_SIZE / 2);
+		int x = left() + (width / 2);
+		int y = top() + (height / 2) - (TEXT_SIZE / 2);
 		canvas.drawText(""+getVisibleDeck().size(), x, y, paint);
 	}
 }

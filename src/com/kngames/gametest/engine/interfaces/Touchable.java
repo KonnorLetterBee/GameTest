@@ -4,8 +4,9 @@ import android.view.MotionEvent;
 
 public interface Touchable {
 	//	checks if, given an (x,y) coordinate, the touch was inside the given object
+	//	if allowBorder is true, touches directly on an objects border count as a valid touch
 	//	returns true if object was touched, false otherwise
-	public boolean isTouched(float x, float y);
+	public boolean isTouched(float x, float y, boolean allowBorder);
 	
 	//	handles a touch event where the object is initially being touched
 	public void handleDownTouch(MotionEvent event);

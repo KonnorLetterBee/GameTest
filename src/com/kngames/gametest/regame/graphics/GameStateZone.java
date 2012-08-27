@@ -34,9 +34,9 @@ public class GameStateZone extends REGameZone {
 	public void handlePressTouch(MotionEvent event) { }
 
 	//	draws this InfoZone to the screen
-	private final int TITLE_TEXT_SIZE = area.height();
-	private int textX = area.left;
-	private int textY = area.top + TITLE_TEXT_SIZE;
+	private final int TITLE_TEXT_SIZE = height;
+	private int textX = left();
+	private int textY = top() + TITLE_TEXT_SIZE;
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint();
 		
