@@ -1,7 +1,5 @@
 package com.kngames.gametest.regame.graphics;
 
-import android.graphics.Rect;
-
 import com.kngames.gametest.cards.graphics.ButtonZone;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
@@ -14,20 +12,14 @@ public class EndTurnButtonZone extends ButtonZone{
 		}
 	};
 	
-	public EndTurnButtonZone(Rect area) {
-		super(area, "", null);
+	public EndTurnButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder, "", null);
 		this.buttonText = "END TURN";
 		this.press = endTurn;
 	}
 	
-	public EndTurnButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode, "", null);
-		this.buttonText = "END TURN";
-		this.press = endTurn;
-	}
-	
-	public EndTurnButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode, "", null);
+	public EndTurnButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder, "", null);
 		this.buttonText = "END TURN";
 		this.press = endTurn;
 	}

@@ -3,7 +3,6 @@ package com.kngames.gametest.regame.graphics;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
@@ -15,14 +14,11 @@ public class GameStateZone extends REGameZone {
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
-	public GameStateZone(Rect area) {
-		super(area);
+	public GameStateZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 	}
-	public GameStateZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
-	}
-	public GameStateZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public GameStateZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 	}
 	public void postInit() { }
 	

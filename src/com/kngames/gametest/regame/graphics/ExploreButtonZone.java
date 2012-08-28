@@ -1,7 +1,5 @@
 package com.kngames.gametest.regame.graphics;
 
-import android.graphics.Rect;
-
 import com.kngames.gametest.cards.graphics.ButtonZone;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
@@ -23,16 +21,12 @@ public class ExploreButtonZone extends ButtonZone{
 		}
 	};
 	
-	public ExploreButtonZone(Rect area) {
-		super(area, "", null);
+	public ExploreButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder, "", null);
 	}
 	
-	public ExploreButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode, "", null);
-	}
-	
-	public ExploreButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode, "", null);
+	public ExploreButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder, "", null);
 	}
 	
 	public void update() {

@@ -14,20 +14,17 @@ import com.kngames.gametest.regame.gamestruct.Player;
 
 public abstract class REGameZone extends GameZone {
 
-	public REGameZone(Rect area) {
-		super(area);
+	public REGameZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 	}
-	public REGameZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public REGameZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 	}
-	public REGameZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public REGameZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode, drawOrder);
 	}
-	public REGameZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode) {
-		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
-	}
-	public REGameZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode) {
-		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
+	public REGameZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode, drawOrder);
 	}
 	
 	//	sets the game this GameZone will use to look for data

@@ -1,7 +1,5 @@
 package com.kngames.gametest.regame.graphics;
 
-import android.graphics.Rect;
-
 import com.kngames.gametest.cards.graphics.ButtonZone;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
@@ -16,20 +14,14 @@ public class BuyCardButtonZone extends ButtonZone{
 		}
 	};
 	
-	public BuyCardButtonZone(Rect area) {
-		super(area, "", null);
+	public BuyCardButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder, "", null);
 		this.buttonText = "BUY CARD";
 		this.press = buyCard;
 	}
 	
-	public BuyCardButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode, "", null);
-		this.buttonText = "BUY CARD";
-		this.press = buyCard;
-	}
-	
-	public BuyCardButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode, "", null);
+	public BuyCardButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder, "", null);
 		this.buttonText = "BUY CARD";
 		this.press = buyCard;
 	}

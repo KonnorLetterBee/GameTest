@@ -1,9 +1,11 @@
 package com.kngames.gametest.cards.graphics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kngames.gametest.regame.gamestruct.Game;
 
+import android.graphics.Canvas;
 import android.util.Log;
 
 public class ZoneManager {
@@ -12,6 +14,7 @@ public class ZoneManager {
 	public Game getGame() { return game; }
 	
 	private HashMap<String,GameZone> zoneList;
+	private ArrayList<GameZone> drawOrder;
 	
 	private static final String TAG = ZoneManager.class.getSimpleName();
 	
@@ -45,11 +48,19 @@ public class ZoneManager {
 	public void postInit() {
 		GameZone[] zones = getAllZones();
 		for (GameZone z : zones) z.postInit();
+		this.generateDrawList();
 	}
 	
-	public void updateZones() {
+	public void update() {
 		GameZone[] zones = getAllZones();
 		for (GameZone z : zones) z.update();
+	}
+	
+	//	draws all GameZones in the ZoneManager to the Canvas
+	public void draw(Canvas canvas) {
+		for (GameZone z : drawOrder) {
+			z.draw(canvas);
+		}
 	}
 	
 	//	adds a new GameZone to this ZoneManager
@@ -61,6 +72,24 @@ public class ZoneManager {
 	//	searches for a Zone stored in ZoneManager, returns null if no zone is found
 	public GameZone getZone(String key) {
 		return zoneList.get(key);
+	}
+	
+	//	generates the draw list for all zones in this ZoneManager, based on each zone's 
+	public void generateDrawList() {
+		drawOrder = new ArrayList<GameZone>();
+		GameZone[] zones = getAllZones();
+		for (int i = 0; i < zones.length; i++) {
+			boolean added = false;
+			for (int j = 0; j < drawOrder.size(); j++) {
+				if (zones[i].drawPriority <= drawOrder.get(j).drawPriority) {
+					drawOrder.add(j, zones[i]);
+					added = true;
+					break;
+				}
+			}
+			if (!added) drawOrder.add(drawOrder.size(), zones[i]);
+		}
+		assert 0 == 1;
 	}
 	
 	//	retrieves all zones in this ZoneManager and returns them in an array

@@ -68,41 +68,40 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.setGame(game);
 		
 		DeckZone deck = new DeckZone(1.0f, 0.95f, GameZone.BOTTOM_RIGHT, 
-				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
+				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT, 0);
 		GameStateZone message = new GameStateZone(0.01f, 0.9875f, GameZone.BOTTOM_LEFT,
-				deck.percLeft(), 0.025f, GameZone.STRETCH);
+				deck.percLeft(), 0.025f, GameZone.STRETCH, 0);
 		
 		DiscardZone discard = new DiscardZone(1.0f, deck.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
-				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT);
+				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT, 0);
 		BuyCardButtonZone shop = new BuyCardButtonZone(1.0f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), 0.15f, GameZone.STRETCH);
+				deck.percWidth(), 0.15f, GameZone.STRETCH, 0);
 		ExploreButtonZone explore = new ExploreButtonZone(shop.percLeft() - 0.02f, discard.percTop() - margin, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), 0.15f, GameZone.STRETCH);
+				deck.percWidth(), 0.15f, GameZone.STRETCH, 0);
 		EndTurnButtonZone end = new EndTurnButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), shop.percHeight(), GameZone.STRETCH);
+				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, 0);
 		
 		REDeckViewZone hand = new REDeckViewZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
-				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, card_back, 
+				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, 0, card_back, 
 				game.getActivePlayer().hand(), new REDeckViewZone.REViewZoneCallback() {
 					public void onNonPINDownTouch(int index) { game.getVisiblePlayer().playCard(index); }
 					public REDeck getCompareStack() { return game.getActivePlayer().hand(); }
 				});
 		REDeckViewZone inPlay = new REDeckViewZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT,
-				hand.percWidth(), discard.percHeight(), GameZone.STRETCH, card_back, 
+				hand.percWidth(), discard.percHeight(), GameZone.STRETCH, 0, card_back, 
 				game.getActivePlayer().inPlay(), new REDeckViewZone.REViewZoneCallback() {
 					public void onNonPINDownTouch(int index) { }
 					public REDeck getCompareStack() { return game.getActivePlayer().inPlay(); }
 				});
-		REDeckViewZone discardView = new REDeckViewZone(0f, discard.percBottom(), 1.01f, discard.percBottom(), GameZone.BOTTOM_LEFT,
-				hand.percWidth(), discard.percHeight(), GameZone.STRETCH, card_back, 
-				game.getActivePlayer().inPlay(), new REDeckViewZone.REViewZoneCallback() {
+		REDeckViewZone discardView = new REDeckViewZone(0.15f, discard.percBottom() - 0.04f, 1.01f, discard.percBottom() - 0.04f, GameZone.BOTTOM_LEFT,
+				hand.percWidth() - 0.15f, discard.percHeight() - 0.08f, GameZone.STRETCH, 10, card_back, 
+				game.getActivePlayer().discard(), new REDeckViewZone.REViewZoneCallback() {
 					public void onNonPINDownTouch(int index) { }
 					public REDeck getCompareStack() { return game.getActivePlayer().discard(); }
 				});
 		discardView.setActive(false);
 		
-		InfoZone info = new InfoZone (0f, 0f, GameZone.TOP_LEFT, 
-				0.3f, inPlay.percTop() - 0.02f, GameZone.STRETCH);
+		InfoZone info = new InfoZone (0f, 0f, GameZone.TOP_LEFT, 0.3f, inPlay.percTop() - 0.02f, GameZone.STRETCH, 0);
 		
 		zoneManager.addZone("deck_zone", deck);
 		zoneManager.addZone("state_message", message);
@@ -190,7 +189,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		for (DrawObject d : drawables) {
 			d.update();
 		}
-		zoneManager.updateZones();
+		zoneManager.update();
 	}
 
 	@Override
@@ -200,11 +199,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			//	draw black background
 			canvas.drawColor(Color.BLACK);
 			
-			//	draw each zone in the zones array
-			GameZone[] allZones = zoneManager.getAllZones();
-			for (GameZone z : allZones) {
-				z.draw(canvas);
-			}
+			zoneManager.draw(canvas);
 			
 			//	draw each object in the drawables array
 			for (DrawObject d : drawables) {

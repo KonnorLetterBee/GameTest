@@ -5,7 +5,6 @@ import com.kngames.gametest.regame.graphics.REGameZone;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 
 public class ButtonZone extends REGameZone {
@@ -14,20 +13,14 @@ public class ButtonZone extends REGameZone {
 	protected String buttonText;
 	public boolean active = true;
 	
-	public ButtonZone(Rect area, String text, OnPressListener listener) {
-		super(area);
+	public ButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder, String text, ButtonZone.OnPressListener listener) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		press = listener;
 		this.buttonText = text;
 	}
 	
-	public ButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, String text, ButtonZone.OnPressListener listener) {
-		super(x, y, originCorner, width, height, sizeMode);
-		press = listener;
-		this.buttonText = text;
-	}
-	
-	public ButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode, String text, ButtonZone.OnPressListener listener) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public ButtonZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder, String text, ButtonZone.OnPressListener listener) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		press = listener;
 		this.buttonText = text;
 	}

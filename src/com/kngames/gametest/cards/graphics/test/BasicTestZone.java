@@ -14,12 +14,8 @@ public class BasicTestZone extends GameZone {
 	public String getName() { return id.getName(); }
 	public int getId() { return id.getId(); }
 	
-	public BasicTestZone(Rect area) {
-		super(area);
-	}
-	
-	public BasicTestZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public BasicTestZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 	}
 	public void postInit() { }
 	

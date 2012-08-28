@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.R;
@@ -22,16 +21,12 @@ public class DeckZone extends REGameZone {
 	
 	private DrawObject deckBackground;
 	
-	public DeckZone(Rect area) {
-		super(area);
+	public DeckZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		setBackground();
 	}
-	public DeckZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
-		setBackground();
-	}
-	public DeckZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public DeckZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		setBackground();
 	}
 	

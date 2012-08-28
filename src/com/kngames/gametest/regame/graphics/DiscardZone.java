@@ -4,10 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.R;
+import com.kngames.gametest.cards.graphics.GameZone;
 import com.kngames.gametest.cards.graphics.IDObject;
 import com.kngames.gametest.engine.ContentManager;
 import com.kngames.gametest.redata.CardTypes.RECard;
@@ -23,16 +23,12 @@ public class DiscardZone extends REGameZone {
 	private TestRECard deckBackground;
 	private int cardTop;
 	
-	public DiscardZone(Rect area) {
-		super(area);
+	public DiscardZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		setBackground();
 	}
-	public DiscardZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
-		setBackground();
-	}
-	public DiscardZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public DiscardZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		setBackground();
 	}
 	private void setBackground() {
@@ -62,8 +58,9 @@ public class DiscardZone extends REGameZone {
 	
 	public void update() { super.update(); }
 	public void handleDownTouch(MotionEvent event) {
-		this.manager.getZone("discard_view_zone").activate();
-		//this.manager.getZone("discard_view_zone").setActive(true);
+		GameZone zone = this.manager.getZone("discard_view_zone");
+		if (zone.isActive()) this.manager.getZone("discard_view_zone").deactivate();
+		else this.manager.getZone("discard_view_zone").activate();
 	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }

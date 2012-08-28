@@ -24,14 +24,8 @@ public class TestZone extends GameZone {
 	protected TestZone otherZone;
 	protected ArrayList<String> data;
 	
-	public TestZone(Rect area) {
-		super(area);
-		drawables = new ArrayList<DrawObject>();
-		this.data = new ArrayList<String>();
-	}
-	
-	public TestZone(int x, int y, int originCorner, float width, float height, int sizeMode) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public TestZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		drawables = new ArrayList<DrawObject>();
 		this.data = new ArrayList<String>();
 	}

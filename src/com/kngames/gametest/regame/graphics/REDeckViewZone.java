@@ -37,24 +37,20 @@ public class REDeckViewZone extends REGameZone {
 	
 	private REViewZoneCallback callback;
 	
-	public REDeckViewZone(Rect area, Bitmap image, REDeck stack, REViewZoneCallback callback) {
-		super(area);
+	public REDeckViewZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		init(image, stack, callback);
 	}
-	public REDeckViewZone(int x, int y, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public REDeckViewZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+		super(x, y, originCorner, width, height, sizeMode, drawOrder);
 		init(image, stack, callback);
 	}
-	public REDeckViewZone(float x, float y, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
-		super(x, y, originCorner, width, height, sizeMode);
+	public REDeckViewZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode, drawOrder);
 		init(image, stack, callback);
 	}
-	public REDeckViewZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
-		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
-		init(image, stack, callback);
-	}
-	public REDeckViewZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
-		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
+	public REDeckViewZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode, drawOrder);
 		init(image, stack, callback);
 	}
 	
@@ -83,17 +79,17 @@ public class REDeckViewZone extends REGameZone {
 		super.update();
 		if (callback != null) {
 			REDeck newCards = callback.getCompareStack();
+			//	(check no longer applied)
 			//	if the list of cards to display has changed, recreate the list of cards to draw
-			if (!cards.equals(newCards)) {
-				cards = new REDeck(newCards);
-				resetYPos();
-				cardPics = new ArrayList<TestRECard>();
+			//if (!cards.equals(newCards)) {
+			cards = new REDeck(newCards);
+			resetYPos();
+			cardPics = new ArrayList<TestRECard>();
 				
-				//	add the card pics for each card, and test to see whether or not they're playable
-				for (int i = 0; i < cards.size(); i++) {
-					cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, top() + cardBack.getHeight()/2 - BORDER_WIDTH, 
-							(RECard)cards.peek(i), cardBack));
-				}
+			//	add the card pics for each card, and test to see whether or not they're playable
+			for (int i = 0; i < cards.size(); i++) {
+				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, top() + cardBack.getHeight()/2 - BORDER_WIDTH, 
+						(RECard)cards.peek(i), cardBack));
 			}
 		}
 	}
