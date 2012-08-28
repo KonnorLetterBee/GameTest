@@ -33,6 +33,7 @@ public class EndTurnButtonZone extends ButtonZone{
 	}
 	
 	public void update() {
+		super.update();
 		if (game.state().currentState() == State.MainPhase) {
 			this.active = true;
 		}

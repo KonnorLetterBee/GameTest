@@ -93,8 +93,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 					public void onNonPINDownTouch(int index) { }
 					public REDeck getCompareStack() { return game.getActivePlayer().inPlay(); }
 				});
-		//InPlayZone inPlay = new InPlayZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT, 
-		//		hand.percWidth(), discard.percHeight(), GameZone.STRETCH);
+		REDeckViewZone discardView = new REDeckViewZone(0f, discard.percBottom(), 1.01f, discard.percBottom(), GameZone.BOTTOM_LEFT,
+				hand.percWidth(), discard.percHeight(), GameZone.STRETCH, card_back, 
+				game.getActivePlayer().inPlay(), new REDeckViewZone.REViewZoneCallback() {
+					public void onNonPINDownTouch(int index) { }
+					public REDeck getCompareStack() { return game.getActivePlayer().discard(); }
+				});
+		discardView.setActive(false);
 		
 		InfoZone info = new InfoZone (0f, 0f, GameZone.TOP_LEFT, 
 				0.3f, inPlay.percTop() - 0.02f, GameZone.STRETCH);
@@ -104,6 +109,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("hand_zone", hand);
 		zoneManager.addZone("in_play_zone", inPlay);
 		zoneManager.addZone("discard_zone", discard);
+		zoneManager.addZone("discard_view_zone", discardView);
 		zoneManager.addZone("info_button", info);
 		zoneManager.addZone("shop_button", shop);
 		zoneManager.addZone("explore_button", explore);

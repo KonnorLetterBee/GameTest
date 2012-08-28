@@ -60,8 +60,11 @@ public class DiscardZone extends REGameZone {
 	
 	public void postInit() { }
 	
-	public void update() { }
-	public void handleDownTouch(MotionEvent event) { }
+	public void update() { super.update(); }
+	public void handleDownTouch(MotionEvent event) {
+		this.manager.getZone("discard_view_zone").activate();
+		//this.manager.getZone("discard_view_zone").setActive(true);
+	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
 	public void handleUpTouch(MotionEvent event) { }

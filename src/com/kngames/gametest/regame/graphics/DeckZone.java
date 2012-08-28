@@ -58,7 +58,7 @@ public class DeckZone extends REGameZone {
 	
 	public void postInit() { }
 	
-	public void update() { }
+	public void update() { super.update(); }
 	public void handleDownTouch(MotionEvent event) {
 		if (Game.DEBUG_MODE) getVisiblePlayer().drawToHand();
 	}

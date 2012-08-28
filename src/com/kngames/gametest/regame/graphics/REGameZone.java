@@ -23,6 +23,12 @@ public abstract class REGameZone extends GameZone {
 	public REGameZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		super(x, y, originCorner, width, height, sizeMode);
 	}
+	public REGameZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
+	}
+	public REGameZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
+	}
 	
 	//	sets the game this GameZone will use to look for data
 	public void setGame(Game g) {

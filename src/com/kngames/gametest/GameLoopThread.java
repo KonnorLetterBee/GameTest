@@ -11,7 +11,7 @@ public class GameLoopThread extends Thread {
 	
 	private static final String TAG = GameLoopThread.class.getSimpleName();
 
-	private final static int 	MAX_FPS = 50;					// desired fps
+	private final static int 	MAX_FPS = 60;					// desired fps
 	private final static int	MAX_FRAME_SKIPS = 5;			// maximum number of frames to be skipped
 	private final static int	FRAME_PERIOD = 1000 / MAX_FPS;	// the frame period
 	

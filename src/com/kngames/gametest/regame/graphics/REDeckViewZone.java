@@ -49,6 +49,15 @@ public class REDeckViewZone extends REGameZone {
 		super(x, y, originCorner, width, height, sizeMode);
 		init(image, stack, callback);
 	}
+	public REDeckViewZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
+		init(image, stack, callback);
+	}
+	public REDeckViewZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode);
+		init(image, stack, callback);
+	}
+	
 	private void init(Bitmap image, REDeck stack, REViewZoneCallback callback) {
 		cards = new REDeck();
 		this.watchStack = stack;
@@ -71,6 +80,7 @@ public class REDeckViewZone extends REGameZone {
 	//	checks to see if the card list is the same as before
 	//	if there is a difference, recreate the pics list
 	public void update() {
+		super.update();
 		if (callback != null) {
 			REDeck newCards = callback.getCompareStack();
 			//	if the list of cards to display has changed, recreate the list of cards to draw
@@ -110,7 +120,7 @@ public class REDeckViewZone extends REGameZone {
 	//	draws this REDeckViewZone to the screen
 	private final int BORDER_WIDTH = 3;
 	public void draw(Canvas canvas) {
-		//drawTestBorder(canvas);
+		drawTestBorder(canvas);
 		setCanPlayList();
 		
 		for (int i = 0; i < cardPics.size(); i++) {

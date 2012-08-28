@@ -5,6 +5,7 @@ import com.kngames.gametest.engine.graphics.MovementComponent;
 import com.kngames.gametest.engine.interfaces.*;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,27 +27,38 @@ public abstract class GameZone implements Touchable, Drawable {
 	protected AnimationComponent ani;
 	
 	protected ZoneManager manager;
+	protected int drawPriority = 0;		//	higher values get drawn first
 	
 	private static final String TAG = GameZone.class.getSimpleName();
 	
 	protected static int screenWidth;
 	protected static int screenHeight;
 	
+	//	values for determining scaling behavior
 	public static final int PRESERVE_HEIGHT = 0;
 	public static final int PRESERVE_WIDTH = 1;
 	public static final int STRETCH = 2;
 	
+	//	values for determining positioning of the origin
 	public static final int TOP_LEFT = 0;
 	public static final int TOP_RIGHT = 1;
 	public static final int BOTTOM_LEFT = 2;
 	public static final int BOTTOM_RIGHT = 3;
 	
+	protected boolean active = true;
+	protected Point activePoint;
+	protected Point inactivePoint;
+	protected boolean hasInactiveState = false;
+	
+	private static final float ZONE_MOVE_SPEED = 20f;
+	
 	public GameZone(Rect area) {
-		//this.area = area;
-		
 		this.move = new MovementComponent(area.left, area.top, 0, 0);
 		this.width = area.right - area.left;
 		this.height = area.bottom - area.top;
+		
+		this.activePoint = new Point(area.left, area.top);
+		this.ani = new AnimationComponent(move);
 	}
 	
 	//	PRESERVE_HEIGHT: height = percentage of total screen height, width = percentage of calculated height
@@ -82,37 +94,58 @@ public abstract class GameZone implements Touchable, Drawable {
 		
 		switch (originCorner) {
 		case TOP_LEFT:		
-			//area =	new Rect(x, y, x + calcWidth, calcHeight + y);
 			move = new MovementComponent(x, y, 0, 0);
 			break;
 		case TOP_RIGHT:		
-			//area =	new Rect(x - calcWidth, y, x, calcHeight + y);
 			move = new MovementComponent(x - calcWidth, y, 0, 0);
 			break;
 		case BOTTOM_LEFT:	
-			//area =	new Rect(x, y - calcHeight, x + calcWidth, y);
 			move = new MovementComponent(x, y - calcHeight, 0, 0);
 			break;
 		case BOTTOM_RIGHT:	
-			//area =	new Rect(x - calcWidth, y - calcHeight, x, y);
 			move = new MovementComponent(x - calcWidth, y - calcHeight, 0, 0);
 			break;
 		default:
 			Log.e(TAG, "invalid origin corner indicator, defaulting to upper-left");
 			move = new MovementComponent(x, y, 0, 0);  break;
 		}
-	}
-	
-	public void testLocation (Rect r, MovementComponent m) {
-		if (r.left != (int)m.x() || r.top != (int)m.y()) {
-			Log.d(TAG, String.format("Error, difference in x or y component"));
-			Log.d(TAG, String.format("x(rect) = %d, x(move) = %d", r.left, m.x()));
-			Log.d(TAG, String.format("y(rect) = %d, y(move) = %d", r.top, m.y()));
-		}
+		
+		this.activePoint = new Point((int)move.x(), (int)move.y());
+		this.ani = new AnimationComponent(move);
 	}
 	
 	public GameZone(float x, float y, int originCorner, float width, float height, int sizeMode) {
 		this((int)(screenWidth * x), (int)(screenHeight * y), originCorner, width, height, sizeMode);
+	}
+	
+	public GameZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode) {
+		this(actX, actY, originCorner, width, height, sizeMode);
+		
+		switch (originCorner) {
+		case TOP_LEFT:		
+			this.inactivePoint = new Point(inactX, inactY);
+			break;
+		case TOP_RIGHT:		
+			this.inactivePoint = new Point(inactX - this.width, inactY);
+			break;
+		case BOTTOM_LEFT:	
+			this.inactivePoint = new Point(inactX, inactY - this.height);
+			break;
+		case BOTTOM_RIGHT:	
+			this.inactivePoint = new Point(inactX - this.width, inactY - this.height);
+			break;
+		default:
+			Log.e(TAG, "invalid origin corner indicator, defaulting to upper-left");
+			this.inactivePoint = new Point(inactX, inactY);
+		}
+		
+		hasInactiveState = true;
+	}
+	
+	public GameZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode) {
+		this((int)(screenWidth * actX), (int)(screenHeight * actY),
+			(int)(screenWidth * inactX), (int)(screenHeight * inactY),
+			originCorner, width, height, sizeMode);
 	}
 	
 	public abstract void postInit();
@@ -151,6 +184,42 @@ public abstract class GameZone implements Touchable, Drawable {
 	public void setWidth(int val) { this.width = val; }
 	public void setHeight(int val) { this.height = val; }
 	
+	//	forcefully sets the active state to the specified state, and immediately updates
+	//	the position of the zone to match
+	public void setActive(boolean active) {
+		this.active = active;
+		if (active) this.move.setPosition(activePoint.x, activePoint.y);
+		else this.move.setPosition(inactivePoint.x, inactivePoint.y);
+	}
+	
+	//	deactivates this zone, moving it to the deactivated area with an animation
+	public void deactivate() {
+		if (!this.hasInactiveState) {	//	return an error if this zone has no inactive state
+			Log.e(TAG, String.format("Error: game zone %s has no inactive state", TAG));
+			return;
+		} else if (!this.active) {	//	return an error if this state is already inactive
+			Log.e(TAG, String.format("Error: game zone %s is already inactive", TAG));
+			return;
+		} else {
+			this.active = false;
+			this.ani.moveToPoint(inactivePoint.x, inactivePoint.y, ZONE_MOVE_SPEED);
+		}
+	}
+	
+	//	activates this zone, moving it to the activated area with an animation
+	public void activate() {
+		if (!this.hasInactiveState) {	//	return an error if this zone has no inactive state
+			Log.e(TAG, String.format("Error: game zone %s has no inactive state", TAG));
+			return;
+		} else if (this.active) {	//	return an error if this state is already active
+			Log.e(TAG, String.format("Error: game zone %s is already active", TAG));
+			return;
+		} else {
+			this.active = true;
+			this.ani.moveToPoint(activePoint.x, activePoint.y, ZONE_MOVE_SPEED);
+		}
+	}
+	
 	public ZoneManager getManager() { return manager; }
 	public void setManager(ZoneManager man) { manager = man; }
 	
@@ -186,7 +255,10 @@ public abstract class GameZone implements Touchable, Drawable {
 	
 	public abstract void handlePressTouch(MotionEvent event);
 	
-	public abstract void update();
+	public void update() {
+		this.move.update();
+		this.ani.update();
+	}
 	
 	public abstract void draw(Canvas canvas);
 }

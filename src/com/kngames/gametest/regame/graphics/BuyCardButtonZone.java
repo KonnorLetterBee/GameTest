@@ -35,6 +35,8 @@ public class BuyCardButtonZone extends ButtonZone{
 	}
 	
 	public void update() {
+		super.update(); 
+		
 		//	keeps the button active if it's the main phase and if the player has a buy (unless debug mode is on)
 		if (game.state().currentState() == State.MainPhase && (game.getActivePlayer().buys > 0 || Game.DEBUG_MODE)) {
 			this.active = true;

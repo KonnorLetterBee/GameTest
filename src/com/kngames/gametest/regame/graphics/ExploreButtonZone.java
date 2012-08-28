@@ -36,6 +36,7 @@ public class ExploreButtonZone extends ButtonZone{
 	}
 	
 	public void update() {
+		super.update();
 		if (game.state().currentState() == State.MainPhase && game.getActivePlayer().explores > 0) {
 			this.press = mainPhaseListener;
 			this.buttonText = "EXPLORE";

@@ -26,7 +26,7 @@ public class InfoZone extends REGameZone {
 	}
 	public void postInit() { }
 	
-	public void update() { }
+	public void update() { super.update(); }
 	public void handleDownTouch(MotionEvent event) { }
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
