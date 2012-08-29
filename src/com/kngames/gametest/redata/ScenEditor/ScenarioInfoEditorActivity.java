@@ -2,7 +2,8 @@ package com.kngames.gametest.redata.ScenEditor;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.redata.ScenData;
-import com.kngames.gametest.redata.ScenData.GameMode;
+import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.carddata.CardData.GameMode;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class ScenarioInfoEditorActivity extends Activity {
 	    basicsBox.setChecked(ScenData.customTempScenario.second.useBasics());
 	    
 	    typeChooser = (Spinner)findViewById(R.id.typeSpinner);
-	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ScenData.GameModeString);
+	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CardData.GameModeString);
 	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    typeChooser.setAdapter(adapter);
 	    

@@ -48,7 +48,7 @@ public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFra
 		array[1] = new RECard[10];
 		array[2] = new RECard[10];
 		array[3] = new RECard[10];
-		array[4] = new RECard[CardData.PromoCharacters.length];
+		array[4] = new RECard[8];
 		array[5] = new RECard[CardData.InfectedCharacters.length];
 		
 		for (int i = 0; i < 10; i++) {
@@ -63,8 +63,8 @@ public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFra
 		for (int i = 0; i < 10; i++) {
 			array[3][i] = CardData.Characters[i+30];
 		}
-		for (int i = 0; i < CardData.PromoCharacters.length; i++) {
-			array[4][i] = CardData.PromoCharacters[i];
+		for (int i = 0; i < 8; i++) {
+			array[4][i] = CardData.Characters[i+40];
 		}
 		for (int i = 0; i < CardData.InfectedCharacters.length; i++) {
 			array[5][i] = CardData.InfectedCharacters[i];

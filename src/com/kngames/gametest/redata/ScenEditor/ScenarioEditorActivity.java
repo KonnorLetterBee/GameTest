@@ -3,12 +3,13 @@ package com.kngames.gametest.redata.ScenEditor;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.ScenData.GameMode;
 import com.kngames.gametest.redata.carddata.CardData;
 import com.kngames.gametest.redata.carddata.CardData.Expans;
+import com.kngames.gametest.redata.carddata.CardData.GameMode;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 //import com.kngames.gametest.regame.Dialog.CombineSplitChooserDialog;
 import com.kngames.gametest.regame.dialog.CardChooserDialog;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
@@ -473,14 +474,14 @@ public class ScenarioEditorActivity extends Activity {
 	private void popupPreviewDialog() {
 		ArrayList<RECard> list = new ArrayList<RECard>();
 		if (ScenData.customTempScenario.second.useBasics()) {
-			list.add(CardData.findAmmunition("Ammo x10"));
-			list.add(CardData.findAmmunition("Ammo x20"));
-			list.add(CardData.findAmmunition("Ammo x30"));
-			list.add(CardData.findWeapon("Combat Knife"));
-			list.add(CardData.findWeapon("Survival Knife"));
-			list.add(CardData.findWeapon("Handgun"));
-			list.add(CardData.findWeapon("Burst-Fire Handgun"));
-			list.add(CardData.findItem("Green Herb"));
+			list.add(CardData.findCard("Ammo x10", CardType.Ammunition, -1));
+			list.add(CardData.findCard("Ammo x20", CardType.Ammunition, -1));
+			list.add(CardData.findCard("Ammo x30", CardType.Ammunition, -1));
+			list.add(CardData.findCard("Combat Knife", CardType.Weapon, -1));
+			list.add(CardData.findCard("Survival Knife", CardType.Weapon, -1));
+			list.add(CardData.findCard("Handgun", CardType.Weapon, -1));
+			list.add(CardData.findCard("Burst-Fire Handgun", CardType.Weapon, -1));
+			list.add(CardData.findCard("Green Herb", CardType.Item, -1));
 		}
 		for (int i = 0; i < usedDataList.size(); i++) {
 			list.add(usedDataList.get(i).get(0).first);

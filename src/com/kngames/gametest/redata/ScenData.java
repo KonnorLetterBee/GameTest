@@ -6,14 +6,9 @@ import android.database.Cursor;
 import android.util.Pair;
 
 import com.kngames.gametest.redata.carddata.CardData.Expans;
+import com.kngames.gametest.redata.carddata.CardData.GameMode;
 
 public class ScenData {
-	public static enum GameMode {Story, Mercenary, Versus, Outbreak, PartnerStory}
-	public static final String[] GameModeString = {"Story", "Mercenary", "Versus", "Outbreak", "Story (Partners)"};
-	public static String getGameModeString(int value) {
-		if (value < 0 || value >= GameModeString.length) return "";
-		return GameModeString[value];
-	}
 	
 	public static final Scenario[] Scenarios = {
 		new Scenario (1, "First Timer", GameMode.Story, 0, true, new String[] {
@@ -224,11 +219,4 @@ public class ScenData {
 		scens.close();
 		return out;
 	}
-	/*
-	public static void addTestScenario() {
-		int id = dbHelper.addScenario("Test", "WE01/WE02/AC03", "description, yo", "notes", GameMode.Story.ordinal(), 0);
-		CustomScenarios.add(new Pair<Integer,Scenario>(id, new Scenario("Test", GameMode.values()[GameMode.Story.ordinal()], Expans.Custom, false, 
-				"AM01/AM02/AM03", "description, yo", "notes")));
-	}
-	*/
 }

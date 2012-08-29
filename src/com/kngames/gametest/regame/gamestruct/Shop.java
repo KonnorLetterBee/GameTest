@@ -37,16 +37,16 @@ public class Shop {
 		ArrayList<RECard[]> cards = scen.getCards();
 		resourcePiles = new ArrayList<REDeck>();
 		//	set up basics piles, if scenario allows basics
-		resourcePiles.add(createDeck(CardData.findAmmunition("Ammo x10")));
-		resourcePiles.add(createDeck(CardData.findAmmunition("Ammo x20")));
-		resourcePiles.add(createDeck(CardData.findAmmunition("Ammo x30")));
+		resourcePiles.add(createDeck(CardData.findCard("Ammo x10", CardType.Ammunition, -1)));
+		resourcePiles.add(createDeck(CardData.findCard("Ammo x20", CardType.Ammunition, -1)));
+		resourcePiles.add(createDeck(CardData.findCard("Ammo x30", CardType.Ammunition, -1)));
 		resourcePiles.add(createDeck(new RECard[]{
-				CardData.findWeapon("Combat Knife"),
-				CardData.findWeapon("Survival Knife") }, false));
+				CardData.findCard("Combat Knife", CardType.Weapon, -1),
+				CardData.findCard("Survival Knife", CardType.Weapon, -1) }, false));
 		resourcePiles.add(createDeck(new RECard[]{
-				CardData.findWeapon("Handgun"),
-				CardData.findWeapon("Burst-Fire Handgun") }, false));
-		resourcePiles.add(createDeck(CardData.findItem("Green Herb")));
+				CardData.findCard("Handgun", CardType.Weapon, -1),
+				CardData.findCard("Burst-Fire Handgun", CardType.Weapon, -1) }, false));
+		resourcePiles.add(createDeck(CardData.findCard("Green Herb", CardType.Item, -1)));
 		
 		//	set up all scenario piles
 		for (int i = 0; i < cards.size(); i++) {

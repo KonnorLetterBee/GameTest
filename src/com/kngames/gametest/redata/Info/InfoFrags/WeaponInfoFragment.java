@@ -2,6 +2,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
+import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.carddata.CardData;
 
 import android.content.Intent;
@@ -16,7 +17,7 @@ public class WeaponInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
-		WeaponCard card = CardData.findWeapon(cardID);
+		WeaponCard card = (WeaponCard)CardData.findCard(cardID, CardType.Weapon, -1);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", card.getName());

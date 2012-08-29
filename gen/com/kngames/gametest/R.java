@@ -55,14 +55,15 @@ public final class R {
         public static final int descField=0x7f080024;
         public static final int descLabel=0x7f080023;
         public static final int empty=0x7f080003;
-        public static final int fragment_content=0x7f08002a;
+        public static final int fragment_content=0x7f08002c;
         public static final int game_setup=0x7f080009;
         public static final int gametype_label=0x7f08000c;
         public static final int gametype_spinner=0x7f08000d;
         public static final int label_layout=0x7f080010;
+        public static final int large_fragment_content=0x7f08002b;
         public static final int linearLayout=0x7f080000;
         public static final int list=0x7f080002;
-        public static final int menu_settings=0x7f08002b;
+        public static final int menu_settings=0x7f08002d;
         public static final int nameField=0x7f080020;
         public static final int nameLabel=0x7f08001f;
         public static final int name_view=0x7f08000f;
@@ -81,6 +82,7 @@ public final class R {
         public static final int scenario_list_using=0x7f080016;
         public static final int scenario_spinner=0x7f08000b;
         public static final int scrollView1=0x7f08001e;
+        public static final int small_fragment_content=0x7f08002a;
         public static final int startButton=0x7f08000e;
         public static final int textview_layout=0x7f080013;
         public static final int typeLabel=0x7f080021;
@@ -97,7 +99,8 @@ public final class R {
         public static final int listentry=0x7f030006;
         public static final int scenario_editor=0x7f030007;
         public static final int scenario_info_editor=0x7f030008;
-        public static final int standard_frag_activity=0x7f030009;
+        public static final int split_frag_activity=0x7f030009;
+        public static final int standard_frag_activity=0x7f03000a;
     }
     public static final class menu {
         public static final int activity_game_loop=0x7f070000;

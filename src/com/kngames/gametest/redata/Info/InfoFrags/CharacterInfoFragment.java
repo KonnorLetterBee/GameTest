@@ -3,6 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.CardTypes.InfectedCharacterCard;
+import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.carddata.CardData;
 
 import android.content.Intent;
@@ -22,10 +23,10 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 		//	determine which list the card came from
 		if (type == 0 || type == 1) {
 			CharacterCard card;
-			if (type == 0) {
-				card = CardData.findCharacter(cardID);
+			if (type == 1) {
+				card = (CharacterCard) CardData.findCard(cardID, CardType.Character, 5);
 			} else {
-				card = CardData.findPromoCharacter(cardID);
+				card = (CharacterCard) CardData.findCard(cardID, CardType.Character, -1);
 			}
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
@@ -41,7 +42,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			footerText = String.format("CARD ID:  %s", card.getIDString());
 			
 		} else {
-			InfectedCharacterCard card = CardData.findInfectedCharacter(cardID);
+			InfectedCharacterCard card = (InfectedCharacterCard)CardData.findCard(cardID, CardType.InfecChar, -1);
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 			titleText = String.format("%s", card.getName());

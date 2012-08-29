@@ -14,7 +14,7 @@ public abstract class RECard extends Card {
 	protected int deckQuantity;
 	protected String text;
 	
-	public static enum CardType {Ammunition, Character, InfecChar, Weapon, Action, Item, Infected, Event, Token, Infection}
+	public static enum CardType {Ammunition, Character, InfecChar, Weapon, Action, Item, Infected, Event, Token, Infection, Mansion}
 	public static final String[] CardTypes = {"Ammunition", "Character", "Infected Character", "Weapon", "Action", "Item", "Infected", "Event", "Token", "Infection"};
 	
 	public RECard(String name, CardType type, String idPrefix, int ID, int expans, int quantity, String text) {

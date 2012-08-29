@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kngames.gametest.R;
 import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.carddata.CardData;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class GameSetupActivity extends Activity {
 	private String[] playerNumList = new String[] { "1", "2", "3", "4" };
 	private ArrayList<Pair<String,Scenario>> scenData = getScenarios();
 	private String[] scenNameList = getScenarioNameList(scenData);
-	private String[] gameTypeList = ScenData.GameModeString;
+	private String[] gameTypeList = CardData.GameModeString;
 	
 	private GameSetupView playerPanel;
 	
