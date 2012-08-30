@@ -24,8 +24,6 @@ public class REDeckViewZone extends REGameZone {
 	
 	private Bitmap cardBack;
 	
-	private REDeck watchStack;	//	reference to an REDeck that is to always reference the REDeck this zone is responsible for displaying and handling
-	
 	private REDeck cards;
 	private ArrayList<TestRECard> cardPics;
 	private boolean[] canPlay;
@@ -37,26 +35,25 @@ public class REDeckViewZone extends REGameZone {
 	
 	private REViewZoneCallback callback;
 	
-	public REDeckViewZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+	public REDeckViewZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REViewZoneCallback callback) {
 		super(x, y, originCorner, width, height, sizeMode, drawOrder);
-		init(image, stack, callback);
+		init(image, callback);
 	}
-	public REDeckViewZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+	public REDeckViewZone(float x, float y, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REViewZoneCallback callback) {
 		super(x, y, originCorner, width, height, sizeMode, drawOrder);
-		init(image, stack, callback);
+		init(image, callback);
 	}
-	public REDeckViewZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+	public REDeckViewZone(int actX, int actY, int inactX, int inactY, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REViewZoneCallback callback) {
 		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode, drawOrder);
-		init(image, stack, callback);
+		init(image, callback);
 	}
-	public REDeckViewZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REDeck stack, REViewZoneCallback callback) {
+	public REDeckViewZone(float actX, float actY, float inactX, float inactY, int originCorner, float width, float height, int sizeMode, int drawOrder, Bitmap image, REViewZoneCallback callback) {
 		super (actX, actY, inactX, inactY, originCorner, width, height, sizeMode, drawOrder);
-		init(image, stack, callback);
+		init(image, callback);
 	}
 	
-	private void init(Bitmap image, REDeck stack, REViewZoneCallback callback) {
+	private void init(Bitmap image, REViewZoneCallback callback) {
 		cards = new REDeck();
-		this.watchStack = stack;
 		this.callback = callback;
 		cardPics = new ArrayList<TestRECard>();
 		int cardHeight = this.height();

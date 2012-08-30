@@ -11,7 +11,6 @@ public class ButtonZone extends REGameZone {
 
 	protected OnPressListener press;
 	protected String buttonText;
-	public boolean active = true;
 	
 	public ButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder, String text, ButtonZone.OnPressListener listener) {
 		super(x, y, originCorner, width, height, sizeMode, drawOrder);
@@ -36,6 +35,13 @@ public class ButtonZone extends REGameZone {
 	}
 	public void handlePressTouch(MotionEvent event) {
 		if (active && press != null) press.buttonPressed();
+	}
+	
+	public void activate() {
+		this.active = true;
+	}
+	public void deactivate() {
+		this.active = false;
 	}
 
 	public void update() { }

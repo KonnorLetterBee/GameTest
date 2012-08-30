@@ -4,6 +4,8 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
+import com.kngames.gametest.regame.graphics.ActionButtonZone;
+import com.kngames.gametest.regame.graphics.REZoneManager;
 
 import android.util.Log;
 
@@ -131,15 +133,18 @@ public class GameState {
 		protected String gameStateMessage;
 		protected Game game;
 		protected Player actingPlayer;
+		protected ActionButtonZone actionButton;
 		
 		public PlayerInputState (Game game, Player actingPlayer) {
 			this.game = game;
 			this.actingPlayer = actingPlayer;
+			this.actionButton = (ActionButtonZone) REZoneManager.getREZoneManager().getZone("action_button");
 		}
 		public abstract void onPlayerInputStart();
 		//public abstract boolean isSelectable(RECard card);
 		public abstract boolean isSelectable(REDeck source, int index);
 		public abstract void onCardSelected(REDeck source, int index);
+		public abstract void onExtraButtonPressed();
 		public abstract void onPlayerInputFinish();
 		public String getStateMessage() { return gameStateMessage; }
 	}
@@ -162,6 +167,7 @@ public class GameState {
 				Log.d(TAG, String.format("Wrong card selected: %s", card.getName()));
 			}
 		}
+		public void onExtraButtonPressed() { }
 		public void onPlayerInputFinish() { Log.d(TAG, "Exiting test..."); }
 	}
 }

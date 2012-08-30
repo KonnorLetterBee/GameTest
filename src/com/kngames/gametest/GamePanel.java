@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.kngames.gametest.cards.graphics.*;
 import com.kngames.gametest.engine.ContentManager;
-import com.kngames.gametest.engine.graphics.*;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.data.GameData;
@@ -72,22 +71,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				deck.percWidth(), 0.15f, GameZone.STRETCH, 0);
 		EndTurnButtonZone end = new EndTurnButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, 0);
+		ActionButtonZone action = new ActionButtonZone(shop.percLeft() - 0.02f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, 0);
 		
 		REDeckViewZone hand = new REDeckViewZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
 				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, 0, card_back, 
-				game.getActivePlayer().hand(), new REDeckViewZone.REViewZoneCallback() {
+				new REDeckViewZone.REViewZoneCallback() {
 					public void onNonPINDownTouch(int index) { game.getVisiblePlayer().playCard(index); }
 					public REDeck getCompareStack() { return game.getActivePlayer().hand(); }
 				});
 		REDeckViewZone inPlay = new REDeckViewZone(0f, discard.percBottom(), GameZone.BOTTOM_LEFT,
 				hand.percWidth(), discard.percHeight(), GameZone.STRETCH, 0, card_back, 
-				game.getActivePlayer().inPlay(), new REDeckViewZone.REViewZoneCallback() {
+				new REDeckViewZone.REViewZoneCallback() {
 					public void onNonPINDownTouch(int index) { }
 					public REDeck getCompareStack() { return game.getActivePlayer().inPlay(); }
 				});
 		REDeckViewZone discardView = new REDeckViewZone(0.15f, discard.percBottom() - 0.04f, 1.01f, discard.percBottom() - 0.04f, GameZone.BOTTOM_LEFT,
 				hand.percWidth() - 0.15f, discard.percHeight() - 0.08f, GameZone.STRETCH, 10, card_back, 
-				game.getActivePlayer().discard(), new REDeckViewZone.REViewZoneCallback() {
+				new REDeckViewZone.REViewZoneCallback() {
 					public void onNonPINDownTouch(int index) { }
 					public REDeck getCompareStack() { return game.getActivePlayer().discard(); }
 				});
@@ -104,6 +105,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("info_button", info);
 		zoneManager.addZone("shop_button", shop);
 		zoneManager.addZone("explore_button", explore);
+		zoneManager.addZone("action_button", action);
 		zoneManager.addZone("end_turn_button", end);
 		zoneManager.postInit();
 		

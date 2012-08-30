@@ -1,12 +1,5 @@
 package com.kngames.gametest.redata.data;
 
-import java.util.ArrayList;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.util.Pair;
-
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
@@ -19,6 +12,7 @@ import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
+import com.kngames.gametest.regame.graphics.ActionButtonZone;
 import com.kngames.gametest.regame.graphics.REDeckViewZone;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
@@ -33,6 +27,7 @@ public class CardEffects {
 		public static class ShatteredMemoriesState extends PlayerInputState {
 			private int remaining = 2;
 			private REDeckViewZone discardZone;
+			private ActionButtonZone actionButton;
 			public ShatteredMemoriesState (Game game, Player actingPlayer) {
 				super(game, actingPlayer);
 			}
@@ -42,7 +37,10 @@ public class CardEffects {
 				else {
 					discardZone = (REDeckViewZone) REZoneManager.getREZoneManager().getZone("discard_view");
 					discardZone.activate();
+					actionButton.setActionText("DONE");
+					actionButton.activate();
 					gameStateMessage = "You may trash up to 2 cards from your discard pile.";
+					
 				}
 			}
 			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
@@ -57,98 +55,60 @@ public class CardEffects {
 				}
 				else { }
 			}
+			//	when extra button pressed, end the state
+			public void onExtraButtonPressed() {
+				game.state().endPlayerInput();
+			}
 			public void onPlayerInputFinish() {
 				if (discardZone != null) discardZone.deactivate();
+				if (actionButton != null) actionButton.deactivate();
 			}
 		}
 		
-		private Game game;
-		private Player actingPlayer;
-		private ArrayList<Pair<Integer,RECard>> discard;
-		private String[] names;
-		private int winNum = 0;
 		public void playAction(RECard card, Game game, Player actingPlayer) {
-			this.actingPlayer = actingPlayer;
-			this.game = game;
-			winNum = 0;
-			
-			//displayList();
 			game.state().startPlayerInput(new ShatteredMemoriesState(game, actingPlayer));
-		}
-		private void displayList() {
-			//	generate list of discarded cards
-			discard = actingPlayer.discard().getAllCardPairs();
-					
-			//	handle empty lists
-			if (discard.size() == 0) {
-				return;
-			}
-					
-			names = new String[discard.size()];
-			for (int i = 0; i < discard.size(); i++)
-				names[i] = discard.get(i).second.getName();
-			
-			//	build and popup list of discarded weapons
-			AlertDialog.Builder builder = new AlertDialog.Builder(game.getContext());
-			builder.setTitle("Choose a card to trash");
-			builder.setCancelable(false);
-			builder.setItems(names, new itemSelect());
-			builder.setNeutralButton("None", new cancelButton());
-			AlertDialog effectDialog = builder.create();
-			effectDialog.show();
-		}
-		private class itemSelect implements OnClickListener {
-			public void onClick(DialogInterface dialog, int item) {
-				onItemSelected(item);
-				if (winNum++ == 0) displayList();
-			}
-		}
-		private class cancelButton implements OnClickListener {
-			public void onClick(DialogInterface dialog, int which) { dialog.cancel(); }
-		}
-		private void onItemSelected(int item) {
-			RECard temp = (RECard)actingPlayer.discard().pop(discard.get(item).first);
-			game.shop().returnCard(temp);
 		}
 	}
 
 	public static class ReloadEffect implements OnPlayListener {
-		private Player actingPlayer;
-		private ArrayList<Pair<Integer,RECard>> disWeapons;
-		private String[] names;
-		public void playAction(RECard card, Game game, Player actingPlayer) {
-			this.actingPlayer = actingPlayer;
-			
-			//	generate list of discarded weapons
-			disWeapons = actingPlayer.discard().queryType(RECard.CardType.Weapon);
-			
-			//	handle empty lists, and lists with size 1
-			if (disWeapons.size() == 0) return;
-			else if (disWeapons.size() == 1) {
-				onItemSelected(0);
-				return;
+		public static class ReloadState extends PlayerInputState {
+			private REDeckViewZone discardZone;
+			public ReloadState (Game game, Player actingPlayer) {
+				super(game, actingPlayer);
 			}
-			
-			names = new String[disWeapons.size()];
-			for (int i = 0; i < disWeapons.size(); i++)
-				names[i] = disWeapons.get(i).second.getName();
-			
-			//	build and popup list of discarded weapons
-			AlertDialog.Builder builder = new AlertDialog.Builder(game.getContext());
-			builder.setTitle("Return a weapon to hand");
-			builder.setCancelable(false);
-			builder.setItems(names, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					onItemSelected(item);
+			public void onPlayerInputStart() {
+				//	if discard pile contains no weapons, immediately end state for lack of possible actions
+				if (actingPlayer.discard().queryType(CardType.Weapon).size() <= 0) game.state().endPlayerInput();
+				else {
+					discardZone = (REDeckViewZone) REZoneManager.getREZoneManager().getZone("discard_view");
+					discardZone.activate();
+					actionButton.activate();
+					actionButton.setActionText("NONE");
+					gameStateMessage = "You may return a weapon from your discard pile to your hand.";
 				}
-			});
-			AlertDialog effectDialog = builder.create();
-			effectDialog.show();
+			}
+			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
+				return source == actingPlayer.discard() && ((RECard) source.peek(index)).getCardType() == CardType.Weapon;
+			}
+			public void onCardSelected(REDeck source, int index) {
+				if (isSelectable(source, index)) {
+					actingPlayer.hand().addBack((RECard) source.pop(index));
+					game.state().endPlayerInput();
+				}
+				else { }
+			}
+			//	when extra button pressed, end the state
+			public void onExtraButtonPressed() {
+				game.state().endPlayerInput();
+			}
+			public void onPlayerInputFinish() {
+				if (discardZone != null) discardZone.deactivate();
+				if (actionButton != null) actionButton.deactivate();
+			}
 		}
-		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card);	}
-		private void onItemSelected(int item) {
-			RECard temp = (RECard)actingPlayer.discard().pop(disWeapons.get(item).first);
-			actingPlayer.hand().addBottom(temp);
+		
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			game.state().startPlayerInput(new ReloadState(game, actingPlayer));
 		}
 	}
 
@@ -167,6 +127,7 @@ public class CardEffects {
 				}
 				else { }
 			}
+			public void onExtraButtonPressed() { }
 			public void onPlayerInputFinish() { }
 		}
 		
@@ -219,6 +180,7 @@ public class CardEffects {
 				}
 				else { }
 			}
+			public void onExtraButtonPressed() { }
 			public void onPlayerInputFinish() { }
 		}
 		
@@ -247,6 +209,7 @@ public class CardEffects {
 				}
 				else { }
 			}
+			public void onExtraButtonPressed() { }
 			public void onPlayerInputFinish() { }
 		}
 		
