@@ -89,7 +89,6 @@ public class ZoneManager {
 			}
 			if (!added) drawOrder.add(drawOrder.size(), zones[i]);
 		}
-		assert 0 == 1;
 	}
 	
 	//	retrieves all zones in this ZoneManager and returns them in an array

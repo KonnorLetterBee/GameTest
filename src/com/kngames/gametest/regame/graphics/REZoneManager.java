@@ -17,11 +17,9 @@ public class REZoneManager extends ZoneManager {
 	//	instantiates a new ZoneManager if one doesn't exist
 	//	otherwise, returns the instance that already exists
 	public static REZoneManager initREZoneManager() {
-		if (zoneMan == null) return new REZoneManager();
-		else {
-			Log.e(TAG, "REZoneManager already instantiated!");
-			return (REZoneManager)zoneMan;
-		}
+		if (zoneMan == null) zoneMan = new REZoneManager();
+		else Log.e(TAG, "REZoneManager already instantiated!");
+		return (REZoneManager)zoneMan;
 	}
 	
 	//	returns the instance of the ZoneManager that already exists (even if there is none)

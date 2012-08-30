@@ -47,7 +47,6 @@ public class Game {
 	
 	private int gameTurn;
 	public int gameTurn() { return gameTurn; }
-	public String gameStateMessage;
 	
 	private Game(Context context, CharacterCard[] chars, Scenario scen) {
 		this.context = context;
@@ -121,6 +120,23 @@ public class Game {
 		while (exploreEffects.size() > 0) {
 			exploreEffects.get(0).applyEffect();
 			exploreEffects.remove(0);
+		}
+	}
+	
+	//	updates the gameStateMessage field depending on which phase the GameState is in
+	//	TODO: update with more meaningful names
+	public String gameStateMessage;
+	public void update() {
+		switch(state.currentState()) {
+		case StartTurn: gameStateMessage = "<beginning of turn>";  break;
+		case MainPhase: 
+			if (getActivePlayer().actions > 0) gameStateMessage = "Play ammunition, actions, and items.";
+			else gameStateMessage = "Play ammunition and items.";
+			break;
+		case ExploreWeapons: gameStateMessage = "Play weapons to explore with.";  break;
+		case EndTurn: gameStateMessage = "<end of turn>";  break;
+		case PlayerInput: gameStateMessage = state.playerState().gameStateMessage;  break;
+		default: gameStateMessage = "";  break;
 		}
 	}
 	

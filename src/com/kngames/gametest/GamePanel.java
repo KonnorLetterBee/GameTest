@@ -100,16 +100,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		
 		InfoZone info = new InfoZone (0f, 0f, GameZone.TOP_LEFT, 0.3f, inPlay.percTop() - 0.02f, GameZone.STRETCH, 0);
 		
-		zoneManager.addZone("deck_zone", deck);
+		zoneManager.addZone("deck", deck);
 		zoneManager.addZone("state_message", message);
-		zoneManager.addZone("hand_zone", hand);
-		zoneManager.addZone("in_play_zone", inPlay);
-		zoneManager.addZone("discard_zone", discard);
-		zoneManager.addZone("discard_view_zone", discardView);
+		zoneManager.addZone("hand", hand);
+		zoneManager.addZone("in_play", inPlay);
+		zoneManager.addZone("discard", discard);
+		zoneManager.addZone("discard_view", discardView);
 		zoneManager.addZone("info_button", info);
 		zoneManager.addZone("shop_button", shop);
 		zoneManager.addZone("explore_button", explore);
-		zoneManager.addZone("end_turn_zone", end);
+		zoneManager.addZone("end_turn_button", end);
 		zoneManager.postInit();
 		
 		//	create the game loop thread
@@ -183,6 +183,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	//	updates all elements in this view
 	public void update() {
+		game.update();
 		for (DrawObject d : drawables) {
 			d.update();
 		}

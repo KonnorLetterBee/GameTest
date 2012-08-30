@@ -19,6 +19,7 @@ import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
+import com.kngames.gametest.regame.graphics.REZoneManager;
 
 public class CardEffects {
 	public static class DeadlyAimEffect implements OnPlayListener {
@@ -28,6 +29,32 @@ public class CardEffects {
 	}
 
 	public static class ShatteredMemoriesEffect implements OnPlayListener {
+		public static class ShatteredMemoriesState extends PlayerInputState {
+			private int remaining = 2;
+			public ShatteredMemoriesState (Game game, Player actingPlayer) {
+				super(game, actingPlayer);
+				REZoneManager.getREZoneManager().getZone("discard_view").activate();
+				gameStateMessage = "You may trash up to 2 cards from your discard pile.";
+			}
+			public void onPlayerInputStart() {
+				//	if discard pile contains no cards, immediately end state for lack of possible actions
+				if (actingPlayer.hand().queryType(CardType.Ammunition).size() <= 0) game.state().endPlayerInput();
+			}
+			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
+				return source == actingPlayer.discard();
+			}
+			public void onCardSelected(REDeck source, int index) {
+				if (isSelectable(source, index)) {
+					game.shop().returnCard((RECard) source.pop(index));
+					remaining--;
+					if (remaining == 0) game.state().endPlayerInput();
+					else gameStateMessage = "You may trash 1 more card from your discard pile.";
+				}
+				else { }
+			}
+			public void onPlayerInputFinish() { }
+		}
+		
 		private Game game;
 		private Player actingPlayer;
 		private ArrayList<Pair<Integer,RECard>> discard;
@@ -38,7 +65,8 @@ public class CardEffects {
 			this.game = game;
 			winNum = 0;
 			
-			displayList();
+			//displayList();
+			game.state().startPlayerInput(new ShatteredMemoriesState(game, actingPlayer));
 		}
 		private void displayList() {
 			//	generate list of discarded cards
@@ -166,7 +194,10 @@ public class CardEffects {
 	//	TODO: add dialog for gaining an ammunition card from the shop
 	public static class ItemManagementEffect implements OnPlayListener {
 		public static class ItemManagementState extends PlayerInputState {
-			public ItemManagementState (Game game, Player actingPlayer) { super(game, actingPlayer); }
+			public ItemManagementState (Game game, Player actingPlayer) {
+				super(game, actingPlayer);
+				gameStateMessage = "You must trash an ammunition card from your hand.";
+			}
 			public void onPlayerInputStart() {
 				//	if hand contains no ammunition, immediately end state for lack of possible actions
 				if (actingPlayer.hand().queryType(CardType.Ammunition).size() <= 0) game.state().endPlayerInput();
@@ -190,38 +221,32 @@ public class CardEffects {
 	}
 	
 	public static class OminousBattleEffect implements OnPlayListener {
-		private Game game;
-		private Player actingPlayer;
-		private ArrayList<Pair<Integer,RECard>> hand;
-		private String[] names;
-		public void playAction(RECard card, Game game, Player actingPlayer) {
-			this.actingPlayer = actingPlayer;
-			this.game = game;
-			
-			//	generate list of discarded weapons
-			hand = actingPlayer.hand().getAllCardPairs();
-			
-			names = new String[hand.size()];
-			for (int i = 0; i < hand.size(); i++)
-				names[i] = hand.get(i).second.getName();
-			
-			//	build and popup list of discarded weapons
-			AlertDialog.Builder builder = new AlertDialog.Builder(game.getContext());
-			builder.setTitle("Trash a card from your hand");
-			builder.setCancelable(false);
-			builder.setItems(names, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					onItemSelected(item);
+		public static class OminousBattleState extends PlayerInputState {
+			public OminousBattleState (Game game, Player actingPlayer) {
+				super(game, actingPlayer);
+				gameStateMessage = "You must trash a card from your hand.";
+			}
+			public void onPlayerInputStart() {
+				//	if hand contains no cards, immediately end state for lack of possible actions
+				if (actingPlayer.hand().size() <= 0) game.state().endPlayerInput();
+			}
+			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
+				return source == actingPlayer.hand();
+			}
+			public void onCardSelected(REDeck source, int index) {
+				if (isSelectable(source, index)) {
+					game.shop().returnCard((RECard) source.pop(index));
+					game.state().endPlayerInput();
 				}
-			});
-			AlertDialog effectDialog = builder.create();
-			effectDialog.show();
+				else { }
+			}
+			public void onPlayerInputFinish() { }
+		}
+		
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			game.state().startPlayerInput(new OminousBattleState(game, actingPlayer));
 		}
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
-		private void onItemSelected(int item) {
-			RECard temp = (RECard)actingPlayer.hand().pop(hand.get(item).first);
-			game.shop().returnCard(temp);
-		}
 	}
 	
 	//	not implemented

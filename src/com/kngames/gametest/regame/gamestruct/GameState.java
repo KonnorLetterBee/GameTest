@@ -52,7 +52,7 @@ public class GameState {
 			//	TODO:  add search for beginning turn triggers
 			this.setState(State.MainPhase, true);
 			break;
-		case MainPhase:  break;		//	nothing needs to be done here
+		case MainPhase:	break;		//	nothing needs to be done here
 		case PlayCardResponse:
 			game.searchForResponses();
 			this.setState(State.PlayCardEffect, true);
@@ -128,6 +128,7 @@ public class GameState {
 	//	the abstract class for PlayerInputState
 	//	contains methods meant to be called by a specific
 	public static abstract class PlayerInputState {
+		protected String gameStateMessage;
 		protected Game game;
 		protected Player actingPlayer;
 		
@@ -140,6 +141,7 @@ public class GameState {
 		public abstract boolean isSelectable(REDeck source, int index);
 		public abstract void onCardSelected(REDeck source, int index);
 		public abstract void onPlayerInputFinish();
+		public String getStateMessage() { return gameStateMessage; }
 	}
 	
 	//	a PlayerInputState designed to test the functions of the PlayerInputState structure

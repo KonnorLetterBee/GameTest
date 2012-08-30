@@ -60,7 +60,7 @@ public class GameData {
 	public static final Scenario[] Scenarios = buildScenarioList();
 	
 	public static Scenario testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
-			"AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12"}, null, null);
+			"WE01", "WE02", "WE03", "WE08", "WE09", "AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12"}, null, null);
 	
 	
 	///

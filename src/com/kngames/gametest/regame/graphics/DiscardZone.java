@@ -58,9 +58,9 @@ public class DiscardZone extends REGameZone {
 	
 	public void update() { super.update(); }
 	public void handleDownTouch(MotionEvent event) {
-		GameZone zone = this.manager.getZone("discard_view_zone");
-		if (zone.isActive()) this.manager.getZone("discard_view_zone").deactivate();
-		else this.manager.getZone("discard_view_zone").activate();
+		GameZone zone = this.manager.getZone("discard_view");
+		if (zone.isActive()) this.manager.getZone("discard_view").deactivate();
+		else this.manager.getZone("discard_view").activate();
 	}
 	public void handleOffDownTouch(MotionEvent event) { }
 	public void handleMoveTouch(MotionEvent event) { }
