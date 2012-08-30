@@ -97,7 +97,7 @@ public class REDeckViewZone extends REGameZone {
 		for (int i = cardPics.size() - 1; i >= 0; i--) {
 			if (cardPics.get(i).isTouched(event.getX(), event.getY(), true)) {
 				if (state.currentState() == State.PlayerInput) {
-					state.playerState().onCardSelected(watchStack, i);
+					state.playerState().onCardSelected(callback.getCompareStack(), i);
 				} else {
 					callback.onNonPINDownTouch(i);
 					return;

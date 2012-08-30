@@ -19,6 +19,7 @@ import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
+import com.kngames.gametest.regame.graphics.REDeckViewZone;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
 public class CardEffects {
@@ -31,14 +32,18 @@ public class CardEffects {
 	public static class ShatteredMemoriesEffect implements OnPlayListener {
 		public static class ShatteredMemoriesState extends PlayerInputState {
 			private int remaining = 2;
+			private REDeckViewZone discardZone;
 			public ShatteredMemoriesState (Game game, Player actingPlayer) {
 				super(game, actingPlayer);
-				REZoneManager.getREZoneManager().getZone("discard_view").activate();
-				gameStateMessage = "You may trash up to 2 cards from your discard pile.";
 			}
 			public void onPlayerInputStart() {
 				//	if discard pile contains no cards, immediately end state for lack of possible actions
-				if (actingPlayer.hand().queryType(CardType.Ammunition).size() <= 0) game.state().endPlayerInput();
+				if (actingPlayer.discard().size() <= 0) game.state().endPlayerInput();
+				else {
+					discardZone = (REDeckViewZone) REZoneManager.getREZoneManager().getZone("discard_view");
+					discardZone.activate();
+					gameStateMessage = "You may trash up to 2 cards from your discard pile.";
+				}
 			}
 			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
 				return source == actingPlayer.discard();
@@ -47,12 +52,14 @@ public class CardEffects {
 				if (isSelectable(source, index)) {
 					game.shop().returnCard((RECard) source.pop(index));
 					remaining--;
-					if (remaining == 0) game.state().endPlayerInput();
+					if (remaining == 0 || actingPlayer.discard().size() <= 0) game.state().endPlayerInput();
 					else gameStateMessage = "You may trash 1 more card from your discard pile.";
 				}
 				else { }
 			}
-			public void onPlayerInputFinish() { }
+			public void onPlayerInputFinish() {
+				if (discardZone != null) discardZone.deactivate();
+			}
 		}
 		
 		private Game game;

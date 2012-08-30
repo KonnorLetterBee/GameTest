@@ -30,8 +30,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	//	the main game loop thread
 	private GameLoopThread thread;
 	
-	private ArrayList<DrawObject> drawables;
-    private DrawObject selected;
     private GameZone selectedZone;
     
     //private int screenWidth;
@@ -51,9 +49,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		//	initialize ContentManager
 		content = ContentManager.initContentManager(getResources());
-		
-		//	initialize DrawObject arraylist and fill it with a test object
-		drawables = new ArrayList<DrawObject>();
 		Bitmap card_back = content.getBitmap(R.drawable.card_back_small);
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -155,24 +150,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			//	calls the subroutine to detect which object if any was touched
-			selected = detectTouchedObject((int)event.getX(), (int)event.getY());
 			selectedZone = detectTouchedZone((int)event.getX(), (int)event.getY());
 			
 			//	calls the handleDownTouch method of the selected object
-			if (selected != null) selected.handleDownTouch(event);
 			if (selectedZone != null) selectedZone.handleDownTouch(event);
 			
 			Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
 		} if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			//	calls the handleMoveTouch method of the selected object
-			if (selected != null) selected.handleMoveTouch(event);
 			if (selectedZone != null) selectedZone.handleMoveTouch(event);
 		} if (event.getAction() == MotionEvent.ACTION_UP) {
 			//	calls the handleUpTouch method of the selected object, then sets selected to null again
-			if (selected != null) {
-				selected.handleUpTouch(event);
-				selected = null;
-			}
 			if (selectedZone != null) {
 				selectedZone.handleUpTouch(event);
 				selectedZone = null;
@@ -184,9 +172,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	//	updates all elements in this view
 	public void update() {
 		game.update();
-		for (DrawObject d : drawables) {
-			d.update();
-		}
 		zoneManager.update();
 	}
 
@@ -198,11 +183,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawColor(Color.BLACK);
 			
 			zoneManager.draw(canvas);
-			
-			//	draw each object in the drawables array
-			for (DrawObject d : drawables) {
-				d.draw(canvas);
-			}
 			
 			displayFps(canvas, avgFps);
 			if (Game.DEBUG_MODE) displayDebugMode(canvas);
@@ -233,7 +213,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	//	takes a set of coordinates and returns the DrawObject touched at that location
     //	if point is within two or more object's bounding boxes, returns the one whose center is closest to touch location
-    private DrawObject detectTouchedObject(float x, float y) {
+    /*private DrawObject detectTouchedObject(float x, float y) {
     	ArrayList<DrawObject> touched = new ArrayList<DrawObject>();
     	//	brute-forces checks with all objects (to be replaced with more efficient code at a later time)
     	for (DrawObject d : drawables) {
@@ -260,7 +240,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     		}
     		return temp;
     	}
-    }
+    }*/
     
     //	takes a set of coordinates and returns the DrawObject touched at that location
     //	if point is within two or more object's bounding boxes, returns the one whose center is closest to touch location
@@ -276,16 +256,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     	else if (touched.size() == 0) return null;
     	else {
     		GameZone temp = touched.get(0);
-    		double smallestDist = MovementComponent.distBetweenPoints(temp.centerX(), temp.centerY(), x, y);
+    		double dPri = temp.drawPriority();
     		int logTemp = 0;
     		
     		//	test every touched object to find the object that has the closest center to touch location
     		for (int i = 1; i < touched.size(); i++) {
     			GameZone temp2 = touched.get(i);
-    			double tempDist = MovementComponent.distBetweenPoints(temp2.centerX(), temp2.centerY(), x, y);
-    			Log.d(TAG, String.format("%d: %f vs %d: %f", logTemp, smallestDist, i, tempDist));
-    			if (tempDist < smallestDist) {
-    				smallestDist = tempDist;
+    			double tempDPri = temp.drawPriority();
+    			Log.d(TAG, String.format("%d: %f vs %d: %f", logTemp, dPri, i, tempDPri));
+    			if (tempDPri > dPri) {
+    				dPri = tempDPri;
     				temp = temp2;
     				logTemp = i;
     			}
