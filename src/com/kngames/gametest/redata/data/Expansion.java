@@ -1,9 +1,9 @@
-package com.kngames.gametest.redata.carddata;
+package com.kngames.gametest.redata.data;
 
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
-import com.kngames.gametest.redata.carddata.CardData.GameMode;
+import com.kngames.gametest.redata.data.GameData.GameMode;
 
 public enum Expansion {
 	BaseSet() {

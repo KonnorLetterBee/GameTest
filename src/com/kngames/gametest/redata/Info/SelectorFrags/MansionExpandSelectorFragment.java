@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 public class MansionExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public MansionExpandSelectorFragment() {
@@ -21,8 +21,8 @@ public class MansionExpandSelectorFragment extends BaseREExpandableSelectorFragm
 	public static RECard[][] generateCollection() {
 		ArrayList<ArrayList<RECard>> dualList = new ArrayList<ArrayList<RECard>>();
 		for (int i = 0; i < 4; i++) dualList.add(new ArrayList<RECard>());
-		for(int i = 0; i < CardData.Mansions.length; i++) {
-			RECard temp = CardData.Mansions[i];
+		for(int i = 0; i < GameData.Mansions.length; i++) {
+			RECard temp = GameData.Mansions[i];
 			int slot = temp.getExpansion();
 			dualList.get(slot).add(temp);
 		}

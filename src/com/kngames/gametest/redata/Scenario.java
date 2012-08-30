@@ -2,9 +2,9 @@ package com.kngames.gametest.redata;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.redata.carddata.CardData;
-import com.kngames.gametest.redata.carddata.CardData.Expans;
-import com.kngames.gametest.redata.carddata.CardData.GameMode;
+import com.kngames.gametest.redata.data.GameData;
+import com.kngames.gametest.redata.data.GameData.Expans;
+import com.kngames.gametest.redata.data.GameData.GameMode;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
 public class Scenario {
@@ -34,7 +34,7 @@ public class Scenario {
 	
 	//	creates a new scenario object and loads it with cards from a parsable tag string (see CardData)
 	public Scenario (int id, String name, GameMode gameMode, Expans expans, boolean basics, String tagList, String desc, String notes) {
-		this(id, name, gameMode, expans, basics, CardData.parseSingleTagString(tagList), desc, notes);
+		this(id, name, gameMode, expans, basics, GameData.parseSingleTagString(tagList), desc, notes);
 	}
 	
 	//	creates a new scenario object and loads it with cards from a list of tags (see CardData)
@@ -52,7 +52,7 @@ public class Scenario {
 	
 	//	creates a new scenario object and loads it with cards from a parsable tag string (see CardData)
 	public Scenario (int id, String name, GameMode gameMode, int expans, boolean basics, String tagList, String desc, String notes) {
-		this(id, name, gameMode, expans, basics, CardData.parseSingleTagString(tagList), desc, notes);
+		this(id, name, gameMode, expans, basics, GameData.parseSingleTagString(tagList), desc, notes);
 	}
 
 	public int getID() { return id; }
@@ -73,13 +73,13 @@ public class Scenario {
 	public void setNotes(String notes) { this.notes = notes; }
 	
 	public void setCards(String[] tagList) {
-		this.expansRequired = new boolean[CardData.Expans.values().length];
+		this.expansRequired = new boolean[GameData.Expans.values().length];
 		//	adds the list of cards specified by tags into the scenario object, then sets the proper Scenario Required flag to true
 		cards = new ArrayList<RECard[]>();
 		if (tagList.length == 1 && tagList[0].equals("")) return;
 		
 		for (int i = 0; i < tagList.length; i++) {
-			RECard[] temp = CardData.generateStackByTags(tagList[i]);
+			RECard[] temp = GameData.generateStackByTags(tagList[i]);
 			cards.add(temp);
 			for(RECard card : temp)
 				expansRequired[card.getExpansion()] = true;
@@ -94,7 +94,7 @@ public class Scenario {
 			StringBuilder currStack = new StringBuilder();
 			for (int j = 0; j < cards.get(i).length; j++) {
 				if (j > 0) currStack.append(" ");
-				currStack.append(CardData.generateTagString(cards.get(i)[j]));
+				currStack.append(GameData.generateTagString(cards.get(i)[j]));
 			}
 			out[i] = currStack.toString();
 		}

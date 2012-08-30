@@ -4,7 +4,7 @@ import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.CardTypes.InfectedCharacterCard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,9 +24,9 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 		if (type == 0 || type == 1) {
 			CharacterCard card;
 			if (type == 1) {
-				card = (CharacterCard) CardData.findCard(cardID, CardType.Character, 5);
+				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, 5);
 			} else {
-				card = (CharacterCard) CardData.findCard(cardID, CardType.Character, -1);
+				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, -1);
 			}
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
@@ -35,14 +35,14 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			infoText = String.format(
 					"Card Type:  Character\nExpansion Set:  %s\n" +
 					"Max Health:  %d\n\nAbilities:\n\n%d:  %s",
-					CardData.expansString(card.getExpansion()), 
+					GameData.expansString(card.getExpansion()), 
 					card.getMaxHealth(), card.getA1Price(), card.getAbility1());
 			if (card.getA2Price() != 0) infoText += String.format("\n\n%d:  %s", card.getA2Price(), card.getAbility2());
 			
 			footerText = String.format("CARD ID:  %s", card.getIDString());
 			
 		} else {
-			InfectedCharacterCard card = (InfectedCharacterCard)CardData.findCard(cardID, CardType.InfecChar, -1);
+			InfectedCharacterCard card = (InfectedCharacterCard)GameData.findCard(cardID, CardType.InfecChar, -1);
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 			titleText = String.format("%s", card.getName());
@@ -50,7 +50,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			infoText = String.format(
 					"Card Type:  Infected Character\nExpansion Set:  %s\n" +
 					"Max Health:  %d\nDamage:  %d\n\n%s",
-					CardData.expansString(card.getExpansion()), 
+					GameData.expansString(card.getExpansion()), 
 					card.getMaxHealth(), card.getDamage(), card.getText());
 
 			footerText = String.format("CARD ID:  %s", card.getIDString());

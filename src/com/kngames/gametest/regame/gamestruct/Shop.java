@@ -10,7 +10,7 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 public class Shop {
 	private static final String TAG = Shop.class.getSimpleName();
@@ -37,16 +37,16 @@ public class Shop {
 		ArrayList<RECard[]> cards = scen.getCards();
 		resourcePiles = new ArrayList<REDeck>();
 		//	set up basics piles, if scenario allows basics
-		resourcePiles.add(createDeck(CardData.findCard("Ammo x10", CardType.Ammunition, -1)));
-		resourcePiles.add(createDeck(CardData.findCard("Ammo x20", CardType.Ammunition, -1)));
-		resourcePiles.add(createDeck(CardData.findCard("Ammo x30", CardType.Ammunition, -1)));
+		resourcePiles.add(createDeck(GameData.findCard("Ammo x10", CardType.Ammunition, -1)));
+		resourcePiles.add(createDeck(GameData.findCard("Ammo x20", CardType.Ammunition, -1)));
+		resourcePiles.add(createDeck(GameData.findCard("Ammo x30", CardType.Ammunition, -1)));
 		resourcePiles.add(createDeck(new RECard[]{
-				CardData.findCard("Combat Knife", CardType.Weapon, -1),
-				CardData.findCard("Survival Knife", CardType.Weapon, -1) }, false));
+				GameData.findCard("Combat Knife", CardType.Weapon, -1),
+				GameData.findCard("Survival Knife", CardType.Weapon, -1) }, false));
 		resourcePiles.add(createDeck(new RECard[]{
-				CardData.findCard("Handgun", CardType.Weapon, -1),
-				CardData.findCard("Burst-Fire Handgun", CardType.Weapon, -1) }, false));
-		resourcePiles.add(createDeck(CardData.findCard("Green Herb", CardType.Item, -1)));
+				GameData.findCard("Handgun", CardType.Weapon, -1),
+				GameData.findCard("Burst-Fire Handgun", CardType.Weapon, -1) }, false));
+		resourcePiles.add(createDeck(GameData.findCard("Green Herb", CardType.Item, -1)));
 		
 		//	set up all scenario piles
 		for (int i = 0; i < cards.size(); i++) {

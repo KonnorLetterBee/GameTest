@@ -1,13 +1,17 @@
-package com.kngames.gametest.redata.carddata;
+package com.kngames.gametest.redata.data;
 
 import java.util.ArrayList;
 
+import android.database.Cursor;
+import android.util.Pair;
+
+import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
 
-public class CardData {
+public class GameData {
 	
 	///
 	///		Enums, Fields, and Lists
@@ -41,6 +45,10 @@ public class CardData {
 		return GameModeString[value];
 	}
 	
+	///
+	///		Data Lists
+	///
+	
 	public static final CharacterCard[] Characters = buildCharacterList();
 	public static final WeaponCard[] Weapons = buildWeaponsList();
 	public static final ActionCard[] Actions = buildActionsList();
@@ -49,6 +57,44 @@ public class CardData {
 	public static final InfectionCard[] Infections = buildinfectionsList();
 	public static final InfectedCharacterCard[] InfectedCharacters = buildInfectedCharacterList();
 	public static final AmmunitionCard[] Ammunition = buildAmmunitionList();
+	public static final Scenario[] Scenarios = buildScenarioList();
+	
+	public static Scenario testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
+			"AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12"}, null, null);
+	
+	
+	///
+	///		Custom Scenario Structures
+	///
+	
+	public static Pair<Integer,Scenario> customTempScenario;
+	public static ScenDBHelper dbHelper;
+	public static ArrayList<Pair<Integer,Scenario>> CustomScenarios = new ArrayList<Pair<Integer,Scenario>>();
+	
+	public static ArrayList<Pair<Integer,Scenario>> loadCustomScenarios() {
+		ArrayList<Pair<Integer,Scenario>> out = new ArrayList<Pair<Integer,Scenario>>();
+		Cursor scens = dbHelper.getAllScenarios();
+		//	extract data from Cursor object
+		if (scens.moveToFirst()) {
+			do {
+				int id = scens.getInt(0);
+				String name = scens.getString(1);
+				String contents = scens.getString(2);
+				String desc = scens.getString(3);
+				String notes = scens.getString(4);
+				GameMode gameMode = GameMode.values()[scens.getInt(5)];
+				
+				boolean usesBasics;
+				int temp = scens.getInt(6);
+				if (temp == 0) usesBasics = false;
+				else usesBasics = true;
+				
+				out.add(new Pair<Integer,Scenario>(id, new Scenario(0, name, gameMode, Expans.Custom, usesBasics, contents, desc, notes)));
+			} while(scens.moveToNext());
+		}
+		scens.close();
+		return out;
+	}
 	
 	
 	///
@@ -81,7 +127,6 @@ public class CardData {
 		return infected.toArray(new InfectedCharacterCard[1]);
 	}
 	
-	//	generates the weapons list built from each expansion's weapon list
 	public static WeaponCard[] buildWeaponsList() {
 		ArrayList<WeaponCard> weapons = new ArrayList<WeaponCard>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -94,7 +139,6 @@ public class CardData {
 		return weapons.toArray(new WeaponCard[1]);
 	}
 	
-	//	generates the actions list built from each expansion's action list
 	public static ActionCard[] buildActionsList() {
 		ArrayList<ActionCard> actions = new ArrayList<ActionCard>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -107,7 +151,6 @@ public class CardData {
 		return actions.toArray(new ActionCard[1]);
 	}
 	
-	//	generates the items list built from each expansion's item list
 	public static ItemCard[] buildItemsList() {
 		ArrayList<ItemCard> items = new ArrayList<ItemCard>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -120,7 +163,6 @@ public class CardData {
 		return items.toArray(new ItemCard[1]);
 	}
 	
-	//	generates the mansions list built from each expansion's mansion list
 	public static MansionCard[] buildMansionsList() {
 		ArrayList<MansionCard> mansions = new ArrayList<MansionCard>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -133,7 +175,6 @@ public class CardData {
 		return mansions.toArray(new MansionCard[1]);
 	}
 	
-	//	generates the infections list built from each expansion's infection list
 	public static InfectionCard[] buildinfectionsList() {
 		ArrayList<InfectionCard> infections = new ArrayList<InfectionCard>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -146,7 +187,6 @@ public class CardData {
 		return infections.toArray(new InfectionCard[1]);
 	}
 	
-	//	generates the ammunitions list built from each expansion's ammunition list
 	public static AmmunitionCard[] buildAmmunitionList() {
 		ArrayList<AmmunitionCard> ammunition = new ArrayList<AmmunitionCard>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -159,7 +199,6 @@ public class CardData {
 		return ammunition.toArray(new AmmunitionCard[1]);
 	}
 	
-	//	generates the scenario list built from each expansion's ammunition list
 	public static Scenario[] buildScenarioList() {
 		ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 		for (int i = 0; i < expansions.length; i++) {
@@ -252,6 +291,19 @@ public class CardData {
 				if ((expans == -1 || expans == Ammunition[i].getExpansion()) && Ammunition[i].getID() == id) return Ammunition[i];
 			} break;
 		}
+		return null;
+	}
+	
+	//	searches the Scenarios array for a Scenario with the specified id
+	//	returns null if nothing was found
+	public static Scenario findScenario(int id, boolean includeCustoms) {
+		for (int i = 0; i < Scenarios.length; i++) {
+			if (Scenarios[i].getID() == id) return Scenarios[i];
+		}
+		if (includeCustoms)
+			for (int i = 0; i < CustomScenarios.size(); i++) {
+				if (CustomScenarios.get(i).second.getID() == id) return CustomScenarios.get(i).second;
+			}
 		return null;
 	}
 	

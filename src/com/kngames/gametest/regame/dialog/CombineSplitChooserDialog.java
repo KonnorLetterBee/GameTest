@@ -2,7 +2,7 @@ package com.kngames.gametest.regame.dialog;
 
 import java.util.ArrayList;
 
-import com.kngames.gametest.redata.ScenData;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -122,11 +122,11 @@ public class CombineSplitChooserDialog extends Dialog {
     	//	set up list of items
     	scenarioPairs = new ArrayList<Pair<Integer,String>>();
     	scenarioStrings = new ArrayList<String>();
-    	for (int i = 0; i < ScenData.CustomScenarios.size(); i++) {
+    	for (int i = 0; i < GameData.CustomScenarios.size(); i++) {
     		scenarioPairs.add(new Pair<Integer, String>(
-    				ScenData.CustomScenarios.get(i).first, 
-    				ScenData.CustomScenarios.get(i).second.getName()));
-    		scenarioStrings.add(ScenData.CustomScenarios.get(i).second.getName());
+    				GameData.CustomScenarios.get(i).first, 
+    				GameData.CustomScenarios.get(i).second.getName()));
+    		scenarioStrings.add(GameData.CustomScenarios.get(i).second.getName());
     	}
     	int resID = android.R.layout.simple_list_item_1;
     	ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(context, resID, scenarioStrings);

@@ -1,9 +1,8 @@
 package com.kngames.gametest.redata.ScenEditor;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.ScenData;
-import com.kngames.gametest.redata.carddata.CardData;
-import com.kngames.gametest.redata.carddata.CardData.GameMode;
+import com.kngames.gametest.redata.data.GameData;
+import com.kngames.gametest.redata.data.GameData.GameMode;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -30,16 +29,16 @@ public class ScenarioInfoEditorActivity extends Activity {
 	    setContentView(R.layout.scenario_info_editor);
 	    
 	    nameField = (EditText)findViewById(R.id.nameField);
-	    nameField.setText(ScenData.customTempScenario.second.getName());
+	    nameField.setText(GameData.customTempScenario.second.getName());
 	    descField = (EditText)findViewById(R.id.descField);
-	    descField.setText(ScenData.customTempScenario.second.getDesc());
+	    descField.setText(GameData.customTempScenario.second.getDesc());
 	    notesField = (EditText)findViewById(R.id.notesField);
-	    notesField.setText(ScenData.customTempScenario.second.getNotes());
+	    notesField.setText(GameData.customTempScenario.second.getNotes());
 	    basicsBox = (CheckBox)findViewById(R.id.basicsBox);
-	    basicsBox.setChecked(ScenData.customTempScenario.second.useBasics());
+	    basicsBox.setChecked(GameData.customTempScenario.second.useBasics());
 	    
 	    typeChooser = (Spinner)findViewById(R.id.typeSpinner);
-	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CardData.GameModeString);
+	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, GameData.GameModeString);
 	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    typeChooser.setAdapter(adapter);
 	    
@@ -65,11 +64,11 @@ public class ScenarioInfoEditorActivity extends Activity {
 	
 	//	ends the activity and saves the proper data
 	private void saveAndFinish() {
-		ScenData.customTempScenario.second.setName(nameField.getText().toString());
-		ScenData.customTempScenario.second.setDesc(descField.getText().toString());
-		ScenData.customTempScenario.second.setNotes(notesField.getText().toString());
-		ScenData.customTempScenario.second.setMode(GameMode.values()[typeChooser.getSelectedItemPosition()]);
-		ScenData.customTempScenario.second.setBasics(basicsBox.isChecked());
+		GameData.customTempScenario.second.setName(nameField.getText().toString());
+		GameData.customTempScenario.second.setDesc(descField.getText().toString());
+		GameData.customTempScenario.second.setNotes(notesField.getText().toString());
+		GameData.customTempScenario.second.setMode(GameMode.values()[typeChooser.getSelectedItemPosition()]);
+		GameData.customTempScenario.second.setBasics(basicsBox.isChecked());
 		this.finish();
 	}
 }

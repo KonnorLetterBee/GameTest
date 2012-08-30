@@ -1,11 +1,10 @@
-package com.kngames.gametest.redata.carddata;
+package com.kngames.gametest.redata.data;
 
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.util.Log;
 import android.util.Pair;
 
 import com.kngames.gametest.redata.REDeck;

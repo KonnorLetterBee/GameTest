@@ -3,10 +3,9 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import java.util.ArrayList;
 
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
-import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int scenID = intent.getIntExtra("scenID", 0);
-		Scenario scen = ScenData.findScenario(scenID, true);
+		Scenario scen = GameData.findScenario(scenID, true);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", scen.getName());
@@ -52,7 +51,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		for (int i = 0; i < expansReqArray.length; i++) {
 			if (expansReqArray[i] == true) {
 				if (expCount > 0) expansReq.append(", ");
-				expansReq.append(CardData.expansString(i));
+				expansReq.append(GameData.expansString(i));
 				expCount++;
 			}
 		}

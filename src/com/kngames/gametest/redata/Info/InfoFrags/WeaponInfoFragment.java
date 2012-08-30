@@ -3,7 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ public class WeaponInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
-		WeaponCard card = (WeaponCard)CardData.findCard(cardID, CardType.Weapon, -1);
+		WeaponCard card = (WeaponCard)GameData.findCard(cardID, CardType.Weapon, -1);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", card.getName());
@@ -45,7 +45,7 @@ public class WeaponInfoFragment extends BaseInfoFragment {
 		String cardText = String.format(
 				"Card Type:  Weapon\nExpansion Set:  %s\nQuantity in Deck:  %d\nPrice:  %d\n" +
 				"Ammo Requirement:  %s\nDamage:  %s",
-				CardData.expansString(card.getExpansion()), card.getDeckQuantity(),card.getPrice(),
+				GameData.expansString(card.getExpansion()), card.getDeckQuantity(),card.getPrice(),
 				ammo, damage);
 		if (!cardDesc.equals("")) cardText += "\n\n"+cardDesc;
 		

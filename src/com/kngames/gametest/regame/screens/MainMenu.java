@@ -4,6 +4,7 @@ import com.kngames.gametest.GameLoopActivity;
 import com.kngames.gametest.redata.*;
 import com.kngames.gametest.redata.Info.MainInfoListActivity;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;
+import com.kngames.gametest.redata.data.GameData;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.testcode.*;
@@ -38,7 +39,7 @@ public class MainMenu extends Activity {
 		});
 		view.addButton("Scenario Editor", new View.OnClickListener() {
 			public void onClick(View v) {
-				if (ScenData.CustomScenarios.size() == 0) startScenEditor(-1);
+				if (GameData.CustomScenarios.size() == 0) startScenEditor(-1);
 				else popupScenChooserDialog();
 			}
 		});
@@ -50,8 +51,8 @@ public class MainMenu extends Activity {
 	}
 	
 	private void initializeGlobals() {
-		ScenData.dbHelper = new ScenDBHelper(this);
-		ScenData.CustomScenarios = ScenData.loadCustomScenarios();
+		GameData.dbHelper = new ScenDBHelper(this);
+		GameData.CustomScenarios = GameData.loadCustomScenarios();
 		
 		Display display = getWindowManager().getDefaultDisplay();
         int screenWidth = display.getWidth();

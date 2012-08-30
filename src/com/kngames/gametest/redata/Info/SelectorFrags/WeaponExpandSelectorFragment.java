@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public WeaponExpandSelectorFragment() {
@@ -21,8 +21,8 @@ public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragme
 	public static RECard[][] generateCollection() {
 		ArrayList<ArrayList<RECard>> dualList = new ArrayList<ArrayList<RECard>>();
 		for (int i = 0; i < 5; i++) dualList.add(new ArrayList<RECard>());
-		for(int i = 0; i < CardData.Weapons.length; i++) {
-			RECard temp = CardData.Weapons[i];
+		for(int i = 0; i < GameData.Weapons.length; i++) {
+			RECard temp = GameData.Weapons[i];
 			int slot = temp.getExpansion() + 1;
 			if (slot == 5) slot = 0;	//	to account for basics
 			dualList.get(slot).add(temp);

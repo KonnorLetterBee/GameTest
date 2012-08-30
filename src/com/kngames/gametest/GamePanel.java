@@ -6,9 +6,8 @@ import com.kngames.gametest.cards.graphics.*;
 import com.kngames.gametest.engine.ContentManager;
 import com.kngames.gametest.engine.graphics.*;
 import com.kngames.gametest.redata.REDeck;
-import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.graphics.*;
 
@@ -59,12 +58,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
-		//screenWidth = display.getWidth();
-		//screenHeight = display.getHeight();
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
-		game = Game.startGame(context, new CharacterCard[] {CardData.Characters[0]}, ScenData.testScenario);
+		game = Game.startGame(context, new CharacterCard[] {GameData.Characters[0]}, GameData.testScenario);
 		zoneManager.setGame(game);
 		
 		DeckZone deck = new DeckZone(1.0f, 0.95f, GameZone.BOTTOM_RIGHT, 

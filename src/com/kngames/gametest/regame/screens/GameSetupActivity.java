@@ -3,9 +3,8 @@ package com.kngames.gametest.regame.screens;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ public class GameSetupActivity extends Activity {
 	private String[] playerNumList = new String[] { "1", "2", "3", "4" };
 	private ArrayList<Pair<String,Scenario>> scenData = getScenarios();
 	private String[] scenNameList = getScenarioNameList(scenData);
-	private String[] gameTypeList = CardData.GameModeString;
+	private String[] gameTypeList = GameData.GameModeString;
 	
 	private GameSetupView playerPanel;
 	
@@ -90,8 +89,8 @@ public class GameSetupActivity extends Activity {
 	
 	private ArrayList<Pair<String,Scenario>> getScenarios() {
 		ArrayList<Pair<String,Scenario>> data = new ArrayList<Pair<String,Scenario>>();
-		for (int i = 0; i < ScenData.Scenarios.length; i++) {
-			Scenario temp = ScenData.Scenarios[i];
+		for (int i = 0; i < GameData.Scenarios.length; i++) {
+			Scenario temp = GameData.Scenarios[i];
 			data.add(new Pair<String, Scenario>(String.format("%s (%s)", temp.getName(), temp.getMode()), temp));
 		}
 		return data;

@@ -3,7 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ public class MansionInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int cardID = intent.getIntExtra("cardID", 0);
-		MansionCard card = (MansionCard)CardData.findCard(cardID, CardType.Mansion, -1);
+		MansionCard card = (MansionCard)GameData.findCard(cardID, CardType.Mansion, -1);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", card.getName());
@@ -35,7 +35,7 @@ public class MansionInfoFragment extends BaseInfoFragment {
 			String out = String.format(
 					"Card Type:  Infected\nExpansion Set:  %s\nQuantity in Mansion:  %d\n" +
 					"Health:  %d\nDamage:  %d\nDecorations:  %d",
-					CardData.expansString(infected.getExpansion()), infected.getDeckQuantity(), 
+					GameData.expansString(infected.getExpansion()), infected.getDeckQuantity(), 
 					infected.getHealth(), infected.getDamage(), infected.getDecorations());
 			if (!infected.getText().equals("")) out += "\n\n"+infected.getText();
 			return out;
@@ -43,12 +43,12 @@ public class MansionInfoFragment extends BaseInfoFragment {
 			TokenCard token = (TokenCard)card;
 			return String.format(
 					"Card Type:  Token\nExpansion Set:  %s\nQuantity in Mansion:  %s\n\n%s",
-					CardData.expansString(token.getExpansion()), token.getDeckQuantity(), token.getText());
+					GameData.expansString(token.getExpansion()), token.getDeckQuantity(), token.getText());
 		} else if (card.getCardType() == CardType.Event) {
 			EventCard event = (EventCard)card;
 			return String.format(
 					"Card Type:  Event\nExpansion Set:  %s\nQuantity in Mansion:  %s\n\n%s",
-					CardData.expansString(event.getExpansion()), event.getDeckQuantity(), event.getText());
+					GameData.expansString(event.getExpansion()), event.getDeckQuantity(), event.getText());
 		}
 		else return "";
 	}

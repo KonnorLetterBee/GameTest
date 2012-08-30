@@ -7,8 +7,8 @@ import java.util.List;
 import com.kngames.gametest.R;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
-import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,14 +51,14 @@ public class ScenExpandSelectorFragment extends Fragment {
 	public static Scenario[][] generateCollection() {
 		ArrayList<ArrayList<Scenario>> dualList = new ArrayList<ArrayList<Scenario>>();
 		for (int i = 0; i < 5; i++) dualList.add(new ArrayList<Scenario>());
-		for(int i = 0; i < ScenData.Scenarios.length; i++) {
-			Scenario temp = ScenData.Scenarios[i];
+		for(int i = 0; i < GameData.Scenarios.length; i++) {
+			Scenario temp = GameData.Scenarios[i];
 			int slot = temp.getExpans();
 			dualList.get(slot).add(temp);
 		}
 		
-		for(int i = 0; i < ScenData.CustomScenarios.size(); i++) {
-			Scenario temp = ScenData.CustomScenarios.get(i).second;
+		for(int i = 0; i < GameData.CustomScenarios.size(); i++) {
+			Scenario temp = GameData.CustomScenarios.get(i).second;
 			dualList.get(CUSTOM_SLOT).add(temp);
 		}
 		

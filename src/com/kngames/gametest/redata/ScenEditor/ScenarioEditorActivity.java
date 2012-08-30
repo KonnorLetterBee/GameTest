@@ -3,14 +3,12 @@ package com.kngames.gametest.redata.ScenEditor;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.redata.carddata.CardData;
-import com.kngames.gametest.redata.carddata.CardData.Expans;
-import com.kngames.gametest.redata.carddata.CardData.GameMode;
+import com.kngames.gametest.redata.data.GameData;
+import com.kngames.gametest.redata.data.GameData.Expans;
+import com.kngames.gametest.redata.data.GameData.GameMode;
 import com.kngames.gametest.redata.Scenario;
-import com.kngames.gametest.redata.ScenData;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-//import com.kngames.gametest.regame.Dialog.CombineSplitChooserDialog;
 import com.kngames.gametest.regame.dialog.CardChooserDialog;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
 import com.kngames.gametest.regame.screens.MainMenu;
@@ -120,7 +118,7 @@ public class ScenarioEditorActivity extends Activity {
 			public void onClick(View v) {
 				generateInitialList();
 				customIndex = -1;
-		        ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+		        GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
 		        updateViews();
 				popupToast("New scenario created.");
 			}
@@ -155,9 +153,9 @@ public class ScenarioEditorActivity extends Activity {
         //	determine what to do based on customIndex
         
         if (customIndex == -1) {
-        	ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+        	GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
         } else if (customIndex >= 0) {
-        	ScenData.customTempScenario = ScenData.CustomScenarios.get(customIndex);
+        	GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
         	loadScenarioData();
         } else {
         	loadScenarioData();
@@ -170,10 +168,10 @@ public class ScenarioEditorActivity extends Activity {
 		int listCounter = 0;
 		availableDataList = new ArrayList<ArrayList<Pair<RECard,Integer>>>();
 		usedDataList = new ArrayList<ArrayList<Pair<RECard,Integer>>>();
-		for (int i = 0; i < CardData.Weapons.length; i++, listCounter++) {
+		for (int i = 0; i < GameData.Weapons.length; i++, listCounter++) {
 			//	detect and remove basics
 			if (i != 3 && i != 4 && i != 5 && i != 6) {
-				Pair<RECard,Integer> tempCard = new Pair<RECard, Integer>((RECard)CardData.Weapons[i], listCounter);
+				Pair<RECard,Integer> tempCard = new Pair<RECard, Integer>((RECard)GameData.Weapons[i], listCounter);
 				//	detect and combine weapons to be initially combined
 				if (i != 11 && i != 13 && i != 15 && i != 17 && i != 20 && i != 22 && i != 26 && i != 29 && i != 32 && i != 36 && i != 38) {
 					ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
@@ -184,15 +182,15 @@ public class ScenarioEditorActivity extends Activity {
 				}
 			}
     	}
-    	for (int i = 0; i < CardData.Actions.length; i++, listCounter++) {
+    	for (int i = 0; i < GameData.Actions.length; i++, listCounter++) {
     		ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
-			temp.add(new Pair<RECard,Integer>((RECard)CardData.Actions[i], listCounter));
+			temp.add(new Pair<RECard,Integer>((RECard)GameData.Actions[i], listCounter));
     		availableDataList.add(temp);
     	}
-    	for (int i = 0; i < CardData.Items.length; i++, listCounter++) {
+    	for (int i = 0; i < GameData.Items.length; i++, listCounter++) {
     		if (i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 7) {
     			ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
-				temp.add(new Pair<RECard,Integer>((RECard)CardData.Items[i], listCounter));
+				temp.add(new Pair<RECard,Integer>((RECard)GameData.Items[i], listCounter));
     			availableDataList.add(temp);
     		}
     	}
@@ -200,7 +198,7 @@ public class ScenarioEditorActivity extends Activity {
 	
 	//	loads scenario data from the temp variable in ScenInfo
 	private void loadScenarioData() {
-		ArrayList<RECard[]> tempArray = ScenData.customTempScenario.second.getCards();
+		ArrayList<RECard[]> tempArray = GameData.customTempScenario.second.getCards();
 		//	iterate through piles of cards
 		for (int i = 0; i < tempArray.size(); i++) {
 			//	iterate through cards in pile
@@ -231,15 +229,15 @@ public class ScenarioEditorActivity extends Activity {
 		updateTempScenario();
 		if (customIndex == -1) {
 			//	adds the current temp scenario to the list of custom scenarios
-			customIndex = ScenData.CustomScenarios.size();
-			ScenData.dbHelper.addScenario(ScenData.customTempScenario.second);
-			ScenData.CustomScenarios = ScenData.loadCustomScenarios();
-	    	ScenData.customTempScenario = ScenData.CustomScenarios.get(customIndex);
+			customIndex = GameData.CustomScenarios.size();
+			GameData.dbHelper.addScenario(GameData.customTempScenario.second);
+			GameData.CustomScenarios = GameData.loadCustomScenarios();
+	    	GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
 		}
 		else {
 			//	replaces a scenario in the database
-			ScenData.dbHelper.updateScenario(ScenData.customTempScenario.first, ScenData.customTempScenario.second);
-	    	ScenData.CustomScenarios.set(customIndex, ScenData.customTempScenario);
+			GameData.dbHelper.updateScenario(GameData.customTempScenario.first, GameData.customTempScenario.second);
+	    	GameData.CustomScenarios.set(customIndex, GameData.customTempScenario);
 		}
 		popupToast("Scenario saved.");
 	}
@@ -249,11 +247,11 @@ public class ScenarioEditorActivity extends Activity {
 		if (customIndex == -1) {
 			popupToast("Scenario is not saved.");
 		} else {
-			ScenData.dbHelper.deleteScenario(ScenData.customTempScenario.first);
-			ScenData.CustomScenarios = ScenData.loadCustomScenarios();
+			GameData.dbHelper.deleteScenario(GameData.customTempScenario.first);
+			GameData.CustomScenarios = GameData.loadCustomScenarios();
 			generateInitialList();
 			customIndex = -1;
-	        ScenData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+	        GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
 	        updateViews();
 	        popupToast("Scenario erased.");
 		}
@@ -270,7 +268,7 @@ public class ScenarioEditorActivity extends Activity {
 			}
 			tags[i] = tempTag.toString();
 		}
-		ScenData.customTempScenario.second.setCards(tags);
+		GameData.customTempScenario.second.setCards(tags);
 	}
 	
     //	updates the UI views to reflect current values
@@ -280,7 +278,7 @@ public class ScenarioEditorActivity extends Activity {
     	
     	inUseLabel.setText("In-Use Cards  (" + usedDataList.size() + ")");
     	try {
-	    	String scenName = ScenData.customTempScenario.second.getName();
+	    	String scenName = GameData.customTempScenario.second.getName();
 	    	if (scenName.equals("")) scenLabel.setText("Untitled Scenario");
 	    	else scenLabel.setText(scenName);
     	} catch (NullPointerException e) {
@@ -372,7 +370,7 @@ public class ScenarioEditorActivity extends Activity {
 			public void buttonPressed(int value) {
 				customIndex = value;
 				generateInitialList();
-		        ScenData.customTempScenario = ScenData.CustomScenarios.get(customIndex);
+		        GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
 		        loadScenarioData();
 		        updateViews();
 				scenChooser.dismiss();
@@ -473,15 +471,15 @@ public class ScenarioEditorActivity extends Activity {
 	//	pops up a dialog box to preview the scenario in a CardChooserDialog
 	private void popupPreviewDialog() {
 		ArrayList<RECard> list = new ArrayList<RECard>();
-		if (ScenData.customTempScenario.second.useBasics()) {
-			list.add(CardData.findCard("Ammo x10", CardType.Ammunition, -1));
-			list.add(CardData.findCard("Ammo x20", CardType.Ammunition, -1));
-			list.add(CardData.findCard("Ammo x30", CardType.Ammunition, -1));
-			list.add(CardData.findCard("Combat Knife", CardType.Weapon, -1));
-			list.add(CardData.findCard("Survival Knife", CardType.Weapon, -1));
-			list.add(CardData.findCard("Handgun", CardType.Weapon, -1));
-			list.add(CardData.findCard("Burst-Fire Handgun", CardType.Weapon, -1));
-			list.add(CardData.findCard("Green Herb", CardType.Item, -1));
+		if (GameData.customTempScenario.second.useBasics()) {
+			list.add(GameData.findCard("Ammo x10", CardType.Ammunition, -1));
+			list.add(GameData.findCard("Ammo x20", CardType.Ammunition, -1));
+			list.add(GameData.findCard("Ammo x30", CardType.Ammunition, -1));
+			list.add(GameData.findCard("Combat Knife", CardType.Weapon, -1));
+			list.add(GameData.findCard("Survival Knife", CardType.Weapon, -1));
+			list.add(GameData.findCard("Handgun", CardType.Weapon, -1));
+			list.add(GameData.findCard("Burst-Fire Handgun", CardType.Weapon, -1));
+			list.add(GameData.findCard("Green Herb", CardType.Item, -1));
 		}
 		for (int i = 0; i < usedDataList.size(); i++) {
 			list.add(usedDataList.get(i).get(0).first);

@@ -10,7 +10,7 @@ import android.widget.ExpandableListView;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.carddata.CardData;
+import com.kngames.gametest.redata.data.GameData;
 
 public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public CharacterExpandSelectorFragment() {
@@ -49,25 +49,25 @@ public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFra
 		array[2] = new RECard[10];
 		array[3] = new RECard[10];
 		array[4] = new RECard[8];
-		array[5] = new RECard[CardData.InfectedCharacters.length];
+		array[5] = new RECard[GameData.InfectedCharacters.length];
 		
 		for (int i = 0; i < 10; i++) {
-			array[0][i] = CardData.Characters[i];
+			array[0][i] = GameData.Characters[i];
 		}
 		for (int i = 0; i < 10; i++) {
-			array[1][i] = CardData.Characters[i+10];
+			array[1][i] = GameData.Characters[i+10];
 		}
 		for (int i = 0; i < 10; i++) {
-			array[2][i] = CardData.Characters[i+20];
+			array[2][i] = GameData.Characters[i+20];
 		}
 		for (int i = 0; i < 10; i++) {
-			array[3][i] = CardData.Characters[i+30];
+			array[3][i] = GameData.Characters[i+30];
 		}
 		for (int i = 0; i < 8; i++) {
-			array[4][i] = CardData.Characters[i+40];
+			array[4][i] = GameData.Characters[i+40];
 		}
-		for (int i = 0; i < CardData.InfectedCharacters.length; i++) {
-			array[5][i] = CardData.InfectedCharacters[i];
+		for (int i = 0; i < GameData.InfectedCharacters.length; i++) {
+			array[5][i] = GameData.InfectedCharacters[i];
 		}
 		return array;
 	}
