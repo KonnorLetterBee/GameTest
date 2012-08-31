@@ -12,7 +12,6 @@ import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.gamestruct.Player;
-import com.kngames.gametest.regame.graphics.ActionButtonZone;
 import com.kngames.gametest.regame.graphics.REDeckViewZone;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
@@ -27,7 +26,6 @@ public class CardEffects {
 		public static class ShatteredMemoriesState extends PlayerInputState {
 			private int remaining = 2;
 			private REDeckViewZone discardZone;
-			private ActionButtonZone actionButton;
 			public ShatteredMemoriesState (Game game, Player actingPlayer) {
 				super(game, actingPlayer);
 			}
@@ -150,11 +148,11 @@ public class CardEffects {
 		}
 	}
 	
-	//	not implemented
+	//	not tested
 	public static class BackToBackTrigger implements OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
 			//	your character is attacked
-			return false;
+			return game.defendingPlayers().contains(actingPlayer);
 		}
 	}
 

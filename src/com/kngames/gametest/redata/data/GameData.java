@@ -3,6 +3,7 @@ package com.kngames.gametest.redata.data;
 import java.util.ArrayList;
 
 import android.database.Cursor;
+import android.util.Log;
 import android.util.Pair;
 
 import com.kngames.gametest.redata.ScenDBHelper;
@@ -16,6 +17,8 @@ public class GameData {
 	///
 	///		Enums, Fields, and Lists
 	///
+	
+	public static final String TAG = GameData.class.getSimpleName();
 	
 	//	enum to define which expansion a card belongs to
 	//	TODO: replace with the Expansion enum permanently
@@ -72,6 +75,7 @@ public class GameData {
 	public static ArrayList<Pair<Integer,Scenario>> CustomScenarios = new ArrayList<Pair<Integer,Scenario>>();
 	
 	public static ArrayList<Pair<Integer,Scenario>> loadCustomScenarios() {
+		Log.d(TAG, "loading custom scenarios");
 		ArrayList<Pair<Integer,Scenario>> out = new ArrayList<Pair<Integer,Scenario>>();
 		Cursor scens = dbHelper.getAllScenarios();
 		//	extract data from Cursor object
@@ -103,6 +107,7 @@ public class GameData {
 	
 	//	generates the character list built from each expansion's character list
 	public static CharacterCard[] buildCharacterList() {
+		Log.d(TAG, "loading characters");
 		ArrayList<CharacterCard> characters = new ArrayList<CharacterCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].characters() != null) {
@@ -116,6 +121,7 @@ public class GameData {
 	
 	//	generates the infected character list built from each expansion's infected character list
 	public static InfectedCharacterCard[] buildInfectedCharacterList() {
+		Log.d(TAG, "loading infected characters");
 		ArrayList<InfectedCharacterCard> infected = new ArrayList<InfectedCharacterCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].infecCharacters() != null) {
@@ -128,6 +134,7 @@ public class GameData {
 	}
 	
 	public static WeaponCard[] buildWeaponsList() {
+		Log.d(TAG, "loading weapons");
 		ArrayList<WeaponCard> weapons = new ArrayList<WeaponCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].weapons() != null) {
@@ -140,6 +147,7 @@ public class GameData {
 	}
 	
 	public static ActionCard[] buildActionsList() {
+		Log.d(TAG, "loading actions");
 		ArrayList<ActionCard> actions = new ArrayList<ActionCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].actions() != null) {
@@ -152,6 +160,7 @@ public class GameData {
 	}
 	
 	public static ItemCard[] buildItemsList() {
+		Log.d(TAG, "loading items");
 		ArrayList<ItemCard> items = new ArrayList<ItemCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].items() != null) {
@@ -164,6 +173,7 @@ public class GameData {
 	}
 	
 	public static MansionCard[] buildMansionsList() {
+		Log.d(TAG, "loading mansions");
 		ArrayList<MansionCard> mansions = new ArrayList<MansionCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].mansion() != null) {
@@ -176,6 +186,7 @@ public class GameData {
 	}
 	
 	public static InfectionCard[] buildinfectionsList() {
+		Log.d(TAG, "loading infections");
 		ArrayList<InfectionCard> infections = new ArrayList<InfectionCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].infections() != null) {
@@ -188,6 +199,7 @@ public class GameData {
 	}
 	
 	public static AmmunitionCard[] buildAmmunitionList() {
+		Log.d(TAG, "loading ammunition");
 		ArrayList<AmmunitionCard> ammunition = new ArrayList<AmmunitionCard>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].ammunition() != null) {
@@ -200,6 +212,7 @@ public class GameData {
 	}
 	
 	public static Scenario[] buildScenarioList() {
+		Log.d(TAG, "loading scenarios");
 		ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].scenarios() != null) {

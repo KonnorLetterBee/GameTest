@@ -6,8 +6,10 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
+import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
 public class Game {
@@ -39,11 +41,20 @@ public class Game {
 	private Shop shop;
 	public Shop shop() { return shop; }
 	
+	private REDeck mansion;		//	the mansion deck being used in this game
+	public REDeck mansion() { return mansion; }
+	
 	private GameState state;
 	public GameState state() { return state; }
 	
-	private ArrayList<ExploreEffect> exploreEffects;
+	private ArrayList<Player> attackingPlayers;		//	list of players attacking this explore
+	public ArrayList<Player> attackingPlayers() { return attackingPlayers; }
+	private ArrayList<Player> defendingPlayers;		//	list of players being attacked this explore (Versus mode only)
+	public ArrayList<Player> defendingPlayers() { return defendingPlayers; }
+	private ArrayList<ExploreEffect> exploreEffects;	//	list of effects to apply during this explore (to both attackers and defenders)
 	public ArrayList<ExploreEffect> exploreEffects() { return exploreEffects; }
+	private ArrayList<InfectedCard> defendingInfected;	//	list of infected being attacked this explore
+	public ArrayList<InfectedCard> defendingInfected() { return defendingInfected; }
 	
 	private int gameTurn;
 	public int gameTurn() { return gameTurn; }
@@ -70,7 +81,6 @@ public class Game {
 		
 		//	set game turn to 1
 		gameTurn = 1;
-		gameStateMessage = "sudo make_me_a_new_status_message";
 	}
 	
 	//	instantiates a new Game if one doesn't exist
