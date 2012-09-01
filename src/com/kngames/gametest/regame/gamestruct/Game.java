@@ -10,6 +10,7 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
+import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
 public class Game {
@@ -131,6 +132,26 @@ public class Game {
 			exploreEffects.get(0).applyEffect();
 			exploreEffects.remove(0);
 		}
+	}
+	
+	private class ExploreAgainState extends PlayerInputState {
+		public ExploreAgainState(Game game, Player actingPlayer) {
+			super(game, actingPlayer);
+		}
+		public void onPlayerInputStart() {
+			this.actionButton.setActionText("DONE");
+			this.gameStateMessage = updateStateString();
+		}
+		private String updateStateString() {
+			return String.format("You may explore up to %d additional time(s)", actingPlayer.explores);
+		}
+		//	cards cannot be selected, can only explore again or stop
+		public boolean isSelectable(REDeck source, int index) {	return false; }
+		public void onCardSelected(REDeck source, int index) { }
+		public void onExtraButtonPressed() {
+			state.endPlayerInput();
+		}
+		public void onPlayerInputFinish() { }
 	}
 	
 	//	updates the gameStateMessage field depending on which phase the GameState is in
