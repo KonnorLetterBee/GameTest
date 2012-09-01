@@ -38,6 +38,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private ContentManager content;
 	private REZoneManager zoneManager;
 	private Game game;
+	
+	private Bitmap card_back;
     
 	private float margin = 0.02f;
 	
@@ -49,16 +51,34 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 		//	initialize ContentManager
 		content = ContentManager.initContentManager(getResources());
-		Bitmap card_back = content.getBitmap(R.drawable.card_back_small);
+		card_back = content.getBitmap(R.drawable.card_back_small);
 
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		GameZone.initZones(display.getWidth(), display.getHeight());
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
-		game = Game.startGame(context, new CharacterCard[] {GameData.Characters[0]}, GameData.testScenario, GameData.populateMansion(0));
-		zoneManager.setGame(game);
 		
+		//	if the Game already exists, use the same Game object and REZoneManager, but change the context on
+		if (Game.exists()) {
+			game = Game.getGame();
+			game.setContext(context);
+			zoneManager = REZoneManager.getREZoneManager();
+		} else {
+			game = Game.startGame(context, new CharacterCard[] {GameData.Characters[0]}, GameData.testScenario, GameData.populateMansion(0));
+			zoneManager.setGame(game);
+			fillZoneManager();
+		}
+		
+		//	create the game loop thread
+		thread = new GameLoopThread(getHolder(), this);
+				
+		//	make the GamePanel focusable so it can handle events
+		setFocusable(true);
+	}
+	
+	//	fills the ZoneManager with the specified zones at the beginning of a game
+	private void fillZoneManager() {
 		DeckZone deck = new DeckZone(1.0f, 0.95f, GameZone.BOTTOM_RIGHT, 
 				0.75f, 0.29f, GameZone.PRESERVE_HEIGHT, 0);
 		GameStateZone message = new GameStateZone(0.01f, 0.9875f, GameZone.BOTTOM_LEFT,
@@ -115,12 +135,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		zoneManager.addZone("action_button", action);
 		zoneManager.addZone("end_turn_button", end);
 		zoneManager.postInit();
-		
-		//	create the game loop thread
-		thread = new GameLoopThread(getHolder(), this);
-				
-		//	make the GamePanel focusable so it can handle events
-		setFocusable(true);
 	}
 	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
@@ -145,10 +159,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		Log.d(TAG, "Thread was shut down cleanly");
 		
-		REZoneManager.destroy();
-		this.zoneManager = null;
-		Game.destroy();
-		this.game = null;
+		//	only completely destroy the game if it has been saved or concluded
+		if (game.gameConcluded) {
+			Log.d(TAG, "Game concluded, shutting down singletons");
+			REZoneManager.destroy();
+			this.zoneManager = null;
+			Game.destroy();
+			this.game = null;
+		}
+	}
+	
+	public boolean gameConcluded() {
+		return game.gameConcluded;
 	}
 
 	@Override

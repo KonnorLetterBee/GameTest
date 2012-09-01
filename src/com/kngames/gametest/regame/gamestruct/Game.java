@@ -50,6 +50,8 @@ public class Game {
 	private GameState state;
 	public GameState state() { return state; }
 	
+	public boolean gameConcluded;
+	
 	private ArrayList<Player> attackingPlayers;		//	list of players attacking this explore
 	public ArrayList<Player> attackingPlayers() { return attackingPlayers; }
 	private ArrayList<Player> defendingPlayers;		//	list of players being attacked this explore (Versus mode only)
@@ -87,6 +89,7 @@ public class Game {
 		
 		//	set game turn to 1
 		gameTurn = 1;
+		gameConcluded = false;
 	}
 	
 	//	instantiates a new Game if one doesn't exist
@@ -95,6 +98,21 @@ public class Game {
 		if (game == null)  game = new Game(context, chars, scen, mansion);
 		else  Log.e(TAG, "Game already instantiated!");
 		return game;
+	}
+	
+	//	returns the currently instantiated Game object, even if it is null
+	public static Game getGame() {
+		return game;
+	}
+	
+	//	returns true if there is a Game object, false otherwise
+	public static boolean exists() {
+		return game != null;
+	}
+	
+	//	sets the context of this Game object, in case the original context is missing
+	public void setContext(Context context) {
+		this.context = context;
 	}
 	
 	//	sets the stored Game to null
@@ -134,6 +152,13 @@ public class Game {
 		//	recursively call if the newly selected player has been eliminated
 		if (numPlayersRemaining() > 0 && getTempPlayer().isEliminated) return advanceTempPlayer();
 		else return tempPlayer == activePlayer;
+	}
+	
+	//	counts the number of players playing that haven't yet been eliminated
+	public int numPlayersRemaining() {
+		int remain = 0;
+		for (Player p : players) if (!p.isEliminated) remain++;
+		return remain;
 	}
 	
 	//	searches all player's play areas for responses, and allows them to play any of them
@@ -212,6 +237,25 @@ public class Game {
 		toast.show();
 	}
 	
+	public void popupMessage(String title, String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(title)
+			   .setMessage(message)
+			   .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+				   public void onClick(DialogInterface dialog, int id) {
+					   dialog.dismiss();
+				   }
+			   });
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	
+	///
+	///		Game Conclusion Methods
+	///
+	
+	
 	//	scans the mansion for boss characters
 	//	TODO: remove the hardcoded boss health number and use a value in the InfectedCard class to determine boss value
 	public boolean scanMansionForBoss() {
@@ -221,39 +265,51 @@ public class Game {
 		return false;
 	}
 	
+	//	scans the game for possible conclusion states, and displays the appropriate message
+	public void scanForConclusion() {
+		//	check to see if this explore has led to a game finish (no bosses exist)
+		if (scanMansionForBoss() == false) {
+			this.gameConcluded = true;
+			popupGameResults();
+		}
+				
+		//	check to see if there are any remaining players to play
+		if (numPlayersRemaining() == 0) {
+			this.gameConcluded = true;
+			popupGameLossMessage();
+		}
+	}
+	
+	//	pops up a dialog box that shows the game results and a winner, then ends the game
 	public void popupGameResults() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		
+		int winningIndex = 0;
+		for (int i = 0; i < players.length; i++) {
+			Player p = players[i];
+			if (p.countDecorations() > players[winningIndex].countDecorations()) winningIndex = i;
+		}
 		
 		StringBuilder message = new StringBuilder();
 		for (int i = 0; i < players.length; i++) {
 			Player p = players[i];
 			message.append(String.format("Player %d finished with %d decorations.\n", i+1, p.countDecorations()));
 		}
+		message.append(String.format("\nPlayer %d had the most decorations\nand wins the game.", winningIndex+1));
 		
 		builder.setTitle("Game Over")
 			   .setMessage(message.toString())
-			   .setPositiveButton("Finish Game", new DialogInterface.OnClickListener() {
+			   .setNeutralButton("Finish Game", new DialogInterface.OnClickListener() {
 				   public void onClick(DialogInterface dialog, int id) {
 					   ((Activity)context).finish();
 					   dialog.dismiss();
 				   }
-			   })
-			   .setNegativeButton("Return To Game", new DialogInterface.OnClickListener() {
-				   public void onClick(DialogInterface dialog, int id) {
-					   dialog.cancel();
-				   }
-			   });
+			   }).setCancelable(false);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
 	
-	//	counts the number of players playing that haven't yet been eliminated
-	public int numPlayersRemaining() {
-		int remain = 0;
-		for (Player p : players) if (!p.isEliminated) remain++;
-		return remain;
-	}
-	
+	//	pops up a dialog box that shows that every player has been eliminated, then ends the game
 	public void popupGameLossMessage() {
 		StringBuilder message = new StringBuilder();
 		for (int i = 0; i < players.length; i++) {
@@ -269,20 +325,7 @@ public class Game {
 					   ((Activity)context).finish();
 					   dialog.dismiss();
 				   }
-			   });
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-	
-	public void popupMessage(String title, String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(title)
-			   .setMessage(message)
-			   .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
-				   public void onClick(DialogInterface dialog, int id) {
-					   dialog.dismiss();
-				   }
-			   });
+			   }).setCancelable(false);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}

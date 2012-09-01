@@ -98,6 +98,7 @@ public class GameData {
 			} while(scens.moveToNext());
 		}
 		scens.close();
+		Log.d(TAG, "finished loading custom scenarios");
 		return out;
 	}
 	
@@ -116,6 +117,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading characters");
 		return characters.toArray(new CharacterCard[1]);
 	}
 	
@@ -129,6 +131,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading infected characters");
 		return infected.toArray(new InfectedCharacterCard[1]);
 	}
 	
@@ -142,6 +145,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading weapons");
 		return weapons.toArray(new WeaponCard[1]);
 	}
 	
@@ -155,6 +159,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading actions");
 		return actions.toArray(new ActionCard[1]);
 	}
 	
@@ -168,6 +173,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading items");
 		return items.toArray(new ItemCard[1]);
 	}
 	
@@ -181,6 +187,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading mansions");
 		return mansions.toArray(new MansionCard[1]);
 	}
 	
@@ -194,6 +201,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading infections");
 		return infections.toArray(new InfectionCard[1]);
 	}
 	
@@ -207,6 +215,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading ammunition");
 		return ammunition.toArray(new AmmunitionCard[1]);
 	}
 	
@@ -220,6 +229,7 @@ public class GameData {
 				}
 			}
 		}
+		Log.d(TAG, "finished loading scenarios");
 		return scenarios.toArray(new Scenario[1]);
 	}
 	

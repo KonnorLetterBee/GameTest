@@ -72,27 +72,36 @@ public class GameState {
 			game.attackingPlayers().add(game.getActivePlayer());
 			this.setState(State.ExploreWeapons, true);
 			break;
-		case ExploreWeapons:  break;	//	nothing needs to be done here
+			
+		//	lets the exploring player play their weapons, nothing automatic needs to be done
+		case ExploreWeapons:  break;
+		
+		//	allows all players to respond 
 		case ExploreRespond:
 			game.searchForResponses();
 			this.setState(State.ExploreReveal, true);
 			break;
+			
+		//	reveal the top card of the mansion
 		case ExploreReveal:
 			game.flipMansion();
 			this.setState(State.ExploreAgain, true);
 			break;
+			
+		//	if active player has more explores, prompt to explore again
 		case ExploreAgain:
+			//	player is out of explores, immediately advance to the damage phase
 			if (game.getActivePlayer().explores <= 0) {
 				this.setState(State.ExploreDamage, true);
 				zones.getZone("action_button").deactivate();
 			}
+			//	player has an extra explore, wait in this phase for choice
 			else {
 				zones.getZone("action_button").activate();
 			}
 			break;
-		case ExploreDamage:
-			//	TODO:  implement infected damage calculation
 			
+		case ExploreDamage:
 			//	apply explore effects to exploring players, then calculate damage dealt
 			game.applyExploreEffects();
 			int damage = 0;
@@ -130,30 +139,23 @@ public class GameState {
 				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer receives %d decorations.", 
 						infecInfo.toString(), damage, infecHealth, decs));
 			} else {	//	player loses
-				game.getActivePlayer().health -= infecDamage;
+				game.getActivePlayer().changeHealth(-infecDamage, true);
 				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer lost %d health.", 
 						infecInfo.toString(), damage, infecHealth, infecDamage));
 			}
 			
 			this.setState(State.ExploreEnd, true);
 			break;
+			
+		//	tells the game to end the explore and scan for a conclusion state
+		//	if game still continues, if player is dead, immediately end the turn, otherwise return to the main phase
 		case ExploreEnd:
 			game.endExplore();
-			
-			//	check to see if this explore has led to a game finish (no bosses exist)
-			if (game.scanMansionForBoss() == false) {
-				game.popupGameResults();
-			}
+			game.scanForConclusion();
 			
 			//	check to see if the active player has been killed
-			if (game.getActivePlayer().health <= 0) {
-				game.getActivePlayer().killPlayer(true);
+			if (game.getActivePlayer().isDead) {
 				this.setState(State.EndTurn, true);
-			}
-			
-			//	check to see if there are any remaining players to play
-			if (game.numPlayersRemaining() == 0) {
-				game.popupGameLossMessage();
 			}
 			
 			else this.setState(State.MainPhase, true);

@@ -39,20 +39,6 @@ public class InfoZone extends REGameZone {
 		paint.setTextSize(TITLE_TEXT_SIZE);
 		int textLocation = top() + TITLE_TEXT_SIZE + 5;
 		
-		drawTestData(canvas, generateInfoStrings(), textLocation);
-	}
-	
-	private String[] generateInfoStrings() {
-		String[] data = new String[] {
-				getVisiblePlayer().character().getName(),
-				String.format("health:   %d / %d", getVisiblePlayer().health, getVisiblePlayer().maxHealth),
-				String.format("actions:  %d", getVisiblePlayer().actions),
-				String.format("buys:     %d", getVisiblePlayer().buys),
-				String.format("explores: %d", getVisiblePlayer().explores),
-				String.format("ammo:     %d", getVisiblePlayer().ammo),
-				String.format("gold:     %d", getVisiblePlayer().gold),
-		};
-		if (getVisiblePlayer().mustExplore) data[3] += "  (must explore)";
-		return data;
+		drawTestData(canvas, this.getVisiblePlayer().generateInfoStrings(), textLocation);
 	}
 }

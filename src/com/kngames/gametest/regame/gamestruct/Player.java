@@ -18,8 +18,11 @@ public class Player {
 	private CharacterCard character;
 	public CharacterCard character() { return character; }
 	
-	public int health;
-	public int maxHealth;
+	private int health;
+	private int maxHealth;
+	public int health() { return health; }
+	public int maxHealth() { return maxHealth; }
+	
 	public int actions;
 	public int ammo;
 	public int buys;
@@ -167,6 +170,14 @@ public class Player {
 		}
 	}
 	
+	//	changes the player's health by a set amount, and handles if the health goes above the maximum, or hits zero
+	//	decMaxIfKilled, if true, will decrement the player's maximum health by 20 if killed
+	public void changeHealth(int amountChange, boolean decMaxIfKilled) {
+		health += amountChange;
+		if (health <= 0) killPlayer(decMaxIfKilled);
+		else if (health > maxHealth) health = maxHealth;
+	}
+	
 	//	kills the player (sets their life to zero, combines all cards into deck, sets isDead to true)
 	//	and check for elimination
 	public void killPlayer(boolean subtractMax) {
@@ -185,5 +196,19 @@ public class Player {
 			if (attachedCards.peek(i) instanceof InfectedCard) decs += ((InfectedCard)attachedCards.peek(i)).getDecorations();
 		}
 		return decs;
+	}
+	
+	public String[] generateInfoStrings() {
+		String[] data = new String[] {
+				character().getName(),
+				String.format("health:   %d / %d", health, maxHealth),
+				String.format("actions:  %d", actions),
+				String.format("buys:     %d", buys),
+				String.format("explores: %d", explores),
+				String.format("ammo:     %d", ammo),
+				String.format("gold:     %d", gold),
+		};
+		if (mustExplore) data[4] += "  (must explore)";
+		return data;
 	}
 }

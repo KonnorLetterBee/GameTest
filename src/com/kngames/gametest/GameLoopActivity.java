@@ -49,10 +49,13 @@ public class GameLoopActivity extends Activity {
     }
     
     @Override
-    //	triggers a log message
+    //	triggers a log message, and if the game is over, set mainPanel to null
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying...");
-		mainPanel = null;
+		if (mainPanel.gameConcluded()) {
+			mainPanel = null;
+			Log.d(TAG, "Game concluded, destroying main panel...");
+		}
 		super.onDestroy();
 	}
 
