@@ -35,7 +35,7 @@ public class CardEffects {
 				else {
 					discardZone = (REDeckViewZone) REZoneManager.getREZoneManager().getZone("discard_view");
 					discardZone.activate();
-					actionButton.setActionText("DONE");
+					actionButton.buttonText = "DONE";
 					actionButton.activate();
 					gameStateMessage = "You may trash up to 2 cards from your discard pile.";
 					
@@ -81,7 +81,7 @@ public class CardEffects {
 					discardZone = (REDeckViewZone) REZoneManager.getREZoneManager().getZone("discard_view");
 					discardZone.activate();
 					actionButton.activate();
-					actionButton.setActionText("NONE");
+					actionButton.buttonText = "NONE";
 					gameStateMessage = "You may return a weapon from your discard pile to your hand.";
 				}
 			}

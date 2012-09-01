@@ -1,10 +1,11 @@
 package com.kngames.gametest.regame.gamestruct;
 
+import com.kngames.gametest.cards.graphics.ButtonZone;
+import com.kngames.gametest.cards.graphics.ZoneManager;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
-import com.kngames.gametest.regame.graphics.ActionButtonZone;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
 import android.util.Log;
@@ -28,18 +29,18 @@ public class GameState {
 	//	EndTurn - draws the active player 5 cards, performs any needed effects, then switches the active player and starts their turn
 	public static enum State { 
 		StartTurn, MainPhase, PlayCardResponse, PlayCardEffect, 
-		ExploreInitial, ExploreWeapons, ExploreRespond, ExploreReveal, ExploreDamage, ExploreEnd, 
+		ExploreInitial, ExploreWeapons, ExploreRespond, ExploreReveal, ExploreAgain, ExploreDamage, ExploreEnd, 
 		PlayerInput, EndTurn };
 	private State currentState;
 	public State currentState() { return currentState; }
 	
 	private Game game;
-	//private ZoneManager zones;
+	private ZoneManager zones;
 	
 	public GameState(Game parent, State initialState) {
 		this.game = parent;
 		setState(initialState, true);
-		//zones = ZoneManager.getZoneManager();
+		zones = ZoneManager.getZoneManager();
 	}
 	
 	public void setState(State newState, boolean useChangeEffects) {
@@ -61,6 +62,7 @@ public class GameState {
 			break;
 		case PlayCardEffect:  break;
 		case ExploreInitial:
+			game.getActivePlayer().mustExplore = false;
 			this.setState(State.ExploreWeapons, true);
 			break;
 		case ExploreWeapons:  break;	//	nothing needs to be done here
@@ -70,7 +72,16 @@ public class GameState {
 			break;
 		case ExploreReveal:
 			//	TODO:  implement revealing infected from mansion
-			this.setState(State.ExploreDamage, true);
+			this.setState(State.ExploreAgain, true);
+			break;
+		case ExploreAgain:
+			if (game.getActivePlayer().explores <= 0) {
+				this.setState(State.ExploreDamage, true);
+				zones.getZone("action_button").deactivate();
+			}
+			else {
+				zones.getZone("action_button").activate();
+			}
 			break;
 		case ExploreDamage:
 			//	TODO:  implement infected damage calculation
@@ -133,15 +144,14 @@ public class GameState {
 		protected String gameStateMessage;
 		protected Game game;
 		protected Player actingPlayer;
-		protected ActionButtonZone actionButton;
+		protected ButtonZone actionButton;
 		
 		public PlayerInputState (Game game, Player actingPlayer) {
 			this.game = game;
 			this.actingPlayer = actingPlayer;
-			this.actionButton = (ActionButtonZone) REZoneManager.getREZoneManager().getZone("action_button");
+			this.actionButton = (ButtonZone) REZoneManager.getREZoneManager().getZone("action_button");
 		}
 		public abstract void onPlayerInputStart();
-		//public abstract boolean isSelectable(RECard card);
 		public abstract boolean isSelectable(REDeck source, int index);
 		public abstract void onCardSelected(REDeck source, int index);
 		public abstract void onExtraButtonPressed();

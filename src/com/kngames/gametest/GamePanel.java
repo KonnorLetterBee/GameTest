@@ -8,6 +8,7 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.data.GameData;
 import com.kngames.gametest.regame.gamestruct.Game;
+import com.kngames.gametest.regame.gamestruct.GameState.State;
 import com.kngames.gametest.regame.graphics.*;
 
 import android.content.Context;
@@ -71,8 +72,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 				deck.percWidth(), 0.15f, GameZone.STRETCH, 0);
 		EndTurnButtonZone end = new EndTurnButtonZone(1.0f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
 				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, 0);
-		ActionButtonZone action = new ActionButtonZone(shop.percLeft() - 0.02f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
-				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, 0);
+		ButtonZone action = new ButtonZone(shop.percLeft() - 0.02f, shop.percTop() - 0.02f, GameZone.BOTTOM_RIGHT, 
+				deck.percWidth(), shop.percHeight(), GameZone.STRETCH, 0, "ACTION", new ButtonZone.OnPressListener() {
+			public void buttonPressed() {
+				if (game.state().playerState() != null) game.state().playerState().onExtraButtonPressed();
+				else if (game.state().currentState() == State.ExploreAgain) game.state().setState(State.ExploreDamage, true);
+			}
+		});
+		action.deactivate();
 		
 		REDeckViewZone hand = new REDeckViewZone(0f, deck.percTop(), GameZone.TOP_LEFT, 
 				deck.percLeft() - 0.01f, deck.percHeight(), GameZone.STRETCH, 0, card_back, 

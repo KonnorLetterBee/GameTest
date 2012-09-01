@@ -10,7 +10,6 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
-import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
 public class Game {
@@ -134,26 +133,6 @@ public class Game {
 		}
 	}
 	
-	private class ExploreAgainState extends PlayerInputState {
-		public ExploreAgainState(Game game, Player actingPlayer) {
-			super(game, actingPlayer);
-		}
-		public void onPlayerInputStart() {
-			this.actionButton.setActionText("DONE");
-			this.gameStateMessage = updateStateString();
-		}
-		private String updateStateString() {
-			return String.format("You may explore up to %d additional time(s)", actingPlayer.explores);
-		}
-		//	cards cannot be selected, can only explore again or stop
-		public boolean isSelectable(REDeck source, int index) {	return false; }
-		public void onCardSelected(REDeck source, int index) { }
-		public void onExtraButtonPressed() {
-			state.endPlayerInput();
-		}
-		public void onPlayerInputFinish() { }
-	}
-	
 	//	updates the gameStateMessage field depending on which phase the GameState is in
 	//	TODO: update with more meaningful names
 	public String gameStateMessage;
@@ -165,6 +144,7 @@ public class Game {
 			else gameStateMessage = "Play ammunition and items.";
 			break;
 		case ExploreWeapons: gameStateMessage = "Play weapons to explore with.";  break;
+		case ExploreAgain: gameStateMessage = String.format("You may explore up to %d more time(s).", getActivePlayer().explores);  break;
 		case EndTurn: gameStateMessage = "<end of turn>";  break;
 		case PlayerInput: gameStateMessage = state.playerState().gameStateMessage;  break;
 		default: gameStateMessage = "";  break;

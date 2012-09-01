@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 public class ButtonZone extends REGameZone {
 
 	protected OnPressListener press;
-	protected String buttonText;
+	public String buttonText;
 	
 	public ButtonZone(int x, int y, int originCorner, float width, float height, int sizeMode, int drawOrder, String text, ButtonZone.OnPressListener listener) {
 		super(x, y, originCorner, width, height, sizeMode, drawOrder);
