@@ -4,6 +4,7 @@ package com.kngames.gametest.regame.gamestruct;
 
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.*;
+import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
 import com.kngames.gametest.redata.data.GameData;
 
 public class Player {
@@ -25,6 +26,9 @@ public class Player {
 	public int explores;
 	public boolean mustExplore;
 	public int gold;
+	
+	public boolean isDead;
+	public boolean isEliminated;
 	
 	private REDeck deck;
 	private REDeck hand;
@@ -50,6 +54,8 @@ public class Player {
 		health = ch.getMaxHealth();
 		maxHealth = ch.getMaxHealth();
 		this.customInventory = customInventory;
+		
+		isDead = false;
 		
 		resetGame();
 		resetTurn();
@@ -86,13 +92,14 @@ public class Player {
 	//		clears the hand and field of all cards and puts them into the discard pile
 	//		draws a new hand of 5 cards
 	public void resetTurn() {
-		//	reset all stats
+		//	reset all stats and revives the player
 		actions = 1;
 		ammo = 0;
 		buys = 1;
 		explores = 1;
 		mustExplore = false;
 		gold = 0;
+		isDead = false;
 		
 		//	clear hand and field, then draw 5 cards
 		while(hand.size() > 0) {
@@ -158,5 +165,25 @@ public class Player {
 		while (weapons.size() > 0) {
 			inPlay.addBack(weapons.popFirst());
 		}
+	}
+	
+	//	kills the player (sets their life to zero, combines all cards into deck, sets isDead to true)
+	//	and check for elimination
+	public void killPlayer(boolean subtractMax) {
+		isDead = true;
+		if (subtractMax) maxHealth -= 20;
+		if (maxHealth == 0) isEliminated = true;
+		health = maxHealth;
+		while (hand.size() > 0) deck.addBottom(hand.pop(0));
+		while (discard.size() > 0) deck.addBottom(discard.pop(0));
+	}
+	
+	//	counts the number of decorations this player currently has
+	public int countDecorations() {
+		int decs = 0;
+		for (int i = 0; i < attachedCards.size(); i++) {
+			if (attachedCards.peek(i) instanceof InfectedCard) decs += ((InfectedCard)attachedCards.peek(i)).getDecorations();
+		}
+		return decs;
 	}
 }

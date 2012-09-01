@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
@@ -92,13 +93,17 @@ public class REDeckViewZone extends REGameZone {
 	}
 	public void handleDownTouch(MotionEvent event) {
 		for (int i = cardPics.size() - 1; i >= 0; i--) {
-			if (cardPics.get(i).isTouched(event.getX(), event.getY(), true)) {
-				if (state.currentState() == State.PlayerInput) {
-					state.playerState().onCardSelected(callback.getCompareStack(), i);
-				} else {
-					callback.onNonPINDownTouch(i);
-					return;
+			try {
+				if (cardPics.get(i).isTouched(event.getX(), event.getY(), true)) {
+					if (state.currentState() == State.PlayerInput) {
+						state.playerState().onCardSelected(callback.getCompareStack(), i);
+					} else {
+						callback.onNonPINDownTouch(i);
+						return;
+					}
 				}
+			} catch (IndexOutOfBoundsException e) {
+				Log.d(TAG, "Caught IndexOutOfBoundsException");
 			}
 		}
 	}

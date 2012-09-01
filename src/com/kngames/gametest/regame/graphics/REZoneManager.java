@@ -26,7 +26,7 @@ public class REZoneManager extends ZoneManager {
 	public static REZoneManager getREZoneManager() {
 		return (REZoneManager)zoneMan;
 	}
-	
+
 	//	adds a new GameZone to this REZoneManager
 	//	sets the REGameZone's game field before adding it so that it doesn't have to be done manually
 	public void addZone(String key, REGameZone zone) {

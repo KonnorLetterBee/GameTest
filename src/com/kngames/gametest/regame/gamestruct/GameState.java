@@ -6,6 +6,7 @@ import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
+import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
 import android.util.Log;
@@ -53,6 +54,10 @@ public class GameState {
 		switch(currentState) {
 		case StartTurn:
 			//	TODO:  add search for beginning turn triggers
+			if (game.getActivePlayer().isDead) {
+				game.getActivePlayer().resetTurn();
+				this.setState(State.EndTurn, true);
+			}
 			this.setState(State.MainPhase, true);
 			break;
 		case MainPhase:	break;		//	nothing needs to be done here
@@ -62,7 +67,9 @@ public class GameState {
 			break;
 		case PlayCardEffect:  break;
 		case ExploreInitial:
+			game.startExplore();
 			game.getActivePlayer().mustExplore = false;
+			game.attackingPlayers().add(game.getActivePlayer());
 			this.setState(State.ExploreWeapons, true);
 			break;
 		case ExploreWeapons:  break;	//	nothing needs to be done here
@@ -71,7 +78,7 @@ public class GameState {
 			this.setState(State.ExploreReveal, true);
 			break;
 		case ExploreReveal:
-			//	TODO:  implement revealing infected from mansion
+			game.flipMansion();
 			this.setState(State.ExploreAgain, true);
 			break;
 		case ExploreAgain:
@@ -95,16 +102,66 @@ public class GameState {
 				if (weaponDam > 0) damage += weaponDam;
 			}
 			Log.d(TAG, String.format("Player %d managed %d damage this explore.", game.activePlayer(), damage));
-			game.popupToast(String.format("%d damage", damage));
+			
+			//	calculate health and damage of all infected, and print out proper information
+			int infecHealth = 0;
+			int infecDamage = 0;
+			REDeck infected = game.defendingInfected();
+			StringBuilder infecInfo = new StringBuilder();
+			for (int i = 0; i < infected.size(); i++) {
+				if (infected.peek(i) instanceof InfectedCard) {
+					InfectedCard temp = (InfectedCard)infected.peek(i);
+					int infecDam = temp.getDamage();
+					if (infecDam > 0) infecDamage += infecDam;
+					if (temp.getHealth() > 0) infecHealth += temp.getHealth();
+					infecInfo.append(String.format("%s (%d health, %d damage, %d decs)\n", temp.getName(), temp.getHealth(), temp.getDamage(), temp.getDecorations()));
+				} else infecInfo.append(String.format("%s\n", ((RECard)infected.peek(i)).getName()));
+			}
+			
+			//	compare damage and health values to determine the outcome
+			if (damage >= infecHealth) {	//	player wins
+				int decs = 0;
+				while(infected.size() > 0) {
+					if (infected.peek(0) instanceof InfectedCard) {
+						decs += ((InfectedCard)infected.peek(0)).getDecorations();
+					}
+					game.getActivePlayer().attachedCards().addBack(infected.pop(0));
+				}
+				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer receives %d decorations.", 
+						infecInfo.toString(), damage, infecHealth, decs));
+			} else {	//	player loses
+				game.getActivePlayer().health -= infecDamage;
+				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer lost %d health.", 
+						infecInfo.toString(), damage, infecHealth, infecDamage));
+			}
+			
 			this.setState(State.ExploreEnd, true);
 			break;
 		case ExploreEnd:
-			game.getActivePlayer().flushWeaponsDeck();
-			this.setState(State.MainPhase, true);
+			game.endExplore();
+			
+			//	check to see if this explore has led to a game finish (no bosses exist)
+			if (game.scanMansionForBoss() == false) {
+				game.popupGameResults();
+			}
+			
+			//	check to see if the active player has been killed
+			if (game.getActivePlayer().health <= 0) {
+				game.getActivePlayer().killPlayer(true);
+				this.setState(State.EndTurn, true);
+			}
+			
+			//	check to see if there are any remaining players to play
+			if (game.numPlayersRemaining() == 0) {
+				game.popupGameLossMessage();
+			}
+			
+			else this.setState(State.MainPhase, true);
 			break;
 		case EndTurn:
 			//	calls the method to end the current players turn, then advances to the next player's turn
-			game.getActivePlayer().resetTurn();
+			//	if player's alive, reset turn like normal
+			if (!game.getActivePlayer().isDead) game.getActivePlayer().resetTurn();
 			game.advanceActivePlayer();
 			this.setState(State.StartTurn, true);
 			break;

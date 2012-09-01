@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 import android.util.Pair;
 
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
@@ -63,7 +64,7 @@ public class GameData {
 	public static final Scenario[] Scenarios = buildScenarioList();
 	
 	public static Scenario testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
-			"WE01", "WE02", "WE03", "WE08", "WE09", "AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12"}, null, null);
+			"WE01", "WE02", "WE03", "WE08", "WE09", "WE10", "WE11 WE12", "WE13 WE14", "WE15 WE16", "AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12"}, null, null);
 	
 	
 	///
@@ -105,7 +106,6 @@ public class GameData {
 	///		List Building Methods
 	///
 	
-	//	generates the character list built from each expansion's character list
 	public static CharacterCard[] buildCharacterList() {
 		Log.d(TAG, "loading characters");
 		ArrayList<CharacterCard> characters = new ArrayList<CharacterCard>();
@@ -119,7 +119,6 @@ public class GameData {
 		return characters.toArray(new CharacterCard[1]);
 	}
 	
-	//	generates the infected character list built from each expansion's infected character list
 	public static InfectedCharacterCard[] buildInfectedCharacterList() {
 		Log.d(TAG, "loading infected characters");
 		ArrayList<InfectedCharacterCard> infected = new ArrayList<InfectedCharacterCard>();
@@ -318,6 +317,42 @@ public class GameData {
 				if (CustomScenarios.get(i).second.getID() == id) return CustomScenarios.get(i).second;
 			}
 		return null;
+	}
+	
+	
+	///
+	///		Misc. Methods
+	///
+	
+	//	searches the GameData's Mansion list and Item list for every card with the selected expansions (and in 
+	//	Item's case, if it should be in the Mansion) and creates a new Deck with those cards, preshuffled
+	//	uses the array mansionsToUse
+	public static REDeck populateMansion(int mansionNum) {
+		REDeck mansion = new REDeck();
+		
+		//	search for matching Mansion cards
+		for (MansionCard c : GameData.Mansions) {
+			if (c.getExpansion() == mansionNum) {
+				for (int i = 0; i < c.getDeckQuantity(); i++) {
+					mansion.addTop(c);
+				}
+			}
+		}
+		
+		//	search for matching Item cards
+		for (ItemCard c : GameData.Items) {
+			ItemCard ic = (ItemCard)c;
+			if (c.getExpansion() == mansionNum && (ic.getOrigin() == 1 || ic.getOrigin() == 2)) {
+				for (int i = 0; i < c.getDeckQuantity(); i++) {
+					mansion.addTop(c);
+				}
+			}
+		}
+				
+		//	shuffle the mansion, flip it, and return the new Deck object
+		mansion.shuffle(2);
+		mansion.flipDeck();
+		return mansion;
 	}
 	
 	

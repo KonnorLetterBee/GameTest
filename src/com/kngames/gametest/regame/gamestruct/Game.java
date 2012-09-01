@@ -2,7 +2,10 @@ package com.kngames.gametest.regame.gamestruct;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -53,13 +56,13 @@ public class Game {
 	public ArrayList<Player> defendingPlayers() { return defendingPlayers; }
 	private ArrayList<ExploreEffect> exploreEffects;	//	list of effects to apply during this explore (to both attackers and defenders)
 	public ArrayList<ExploreEffect> exploreEffects() { return exploreEffects; }
-	private ArrayList<InfectedCard> defendingInfected;	//	list of infected being attacked this explore
-	public ArrayList<InfectedCard> defendingInfected() { return defendingInfected; }
+	private REDeck defendingInfected;		//	list of infected being attacked this explore
+	public REDeck defendingInfected() { return defendingInfected; }
 	
 	private int gameTurn;
 	public int gameTurn() { return gameTurn; }
 	
-	private Game(Context context, CharacterCard[] chars, Scenario scen) {
+	private Game(Context context, CharacterCard[] chars, Scenario scen, REDeck mansion) {
 		this.context = context;
 		
 		//	set the scenario and resource piles
@@ -73,6 +76,9 @@ public class Game {
 			players[i] = new Player(i, this, chars[i], null);
 		}
 		
+		//	set the mansion
+		this.mansion = mansion;
+		
 		//	set the game state to StartTurn
 		state = new GameState(this, State.StartTurn);
 		
@@ -85,10 +91,15 @@ public class Game {
 	
 	//	instantiates a new Game if one doesn't exist
 	//	otherwise, returns the instance that already exists
-	public static Game startGame(Context context, CharacterCard[] chars, Scenario scen) {
-		if (game == null)  game = new Game(context, chars, scen);
+	public static Game startGame(Context context, CharacterCard[] chars, Scenario scen, REDeck mansion) {
+		if (game == null)  game = new Game(context, chars, scen, mansion);
 		else  Log.e(TAG, "Game already instantiated!");
 		return game;
+	}
+	
+	//	sets the stored Game to null
+	public static void destroy() {
+		game = null;
 	}
 	
 	//	checks whether it's the current player's turn
@@ -109,6 +120,9 @@ public class Game {
 			gameTurn++;
 		}
 		tempPlayer = activePlayer;
+		
+		//	recursively call if the newly selected player has been eliminated
+		if (numPlayersRemaining() > 0 && getActivePlayer().isEliminated) advanceActivePlayer();
 	}
 	
 	//	advances the temp player to the next player
@@ -116,13 +130,28 @@ public class Game {
 	public boolean advanceTempPlayer() {
 		tempPlayer++;
 		if (tempPlayer == numPlayers) tempPlayer = 0;
-		return tempPlayer == activePlayer;
+		
+		//	recursively call if the newly selected player has been eliminated
+		if (numPlayersRemaining() > 0 && getTempPlayer().isEliminated) return advanceTempPlayer();
+		else return tempPlayer == activePlayer;
 	}
 	
 	//	searches all player's play areas for responses, and allows them to play any of them
 	public void searchForResponses () {
 		for (Player p : players)
 			p.searchForResponses();
+	}
+	
+	
+	///
+	///		Explore Methods
+	///
+	
+	//	preps all explore-specific structures for explore
+	public void startExplore() {
+		attackingPlayers = new ArrayList<Player>();
+		defendingPlayers = new ArrayList<Player>();
+		defendingInfected = new REDeck();
 	}
 	
 	//	applies all explore effects to the currently exploring characters, then removes them from the effects list
@@ -132,6 +161,33 @@ public class Game {
 			exploreEffects.remove(0);
 		}
 	}
+	
+	//	takes the top card of the mansion and adds it to the list of revealed mansion cards for this explore
+	public void flipMansion() {
+		if (mansion.size() > 0) defendingInfected.addBack(mansion.popTop());
+	}
+	
+	//	takes the bottom card of the mansion and adds it to the list of revealed mansion cards for this explore
+	public void flipBottomMansion() {
+		if (mansion.size() > 0) defendingInfected.addBack(mansion.popTop());
+	}
+	
+	//	ends the explore by moving undefeated infected to the bottom of the mansion, and emptying the exploring character's weapon pile
+	public void endExplore() {
+		if (attackingPlayers != null) {
+			for (Player p : attackingPlayers) p.flushWeaponsDeck();
+		}
+		defendingPlayers = null;
+		if (defendingInfected != null) {
+			while (defendingInfected.size() > 0) mansion.addBottom(defendingInfected.popFirst());
+			defendingInfected = null;
+		}
+	}
+	
+	
+	///
+	///		Misc. Methods
+	///
 	
 	//	updates the gameStateMessage field depending on which phase the GameState is in
 	//	TODO: update with more meaningful names
@@ -154,5 +210,80 @@ public class Game {
 	public void popupToast(String text) {
 		Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
 		toast.show();
+	}
+	
+	//	scans the mansion for boss characters
+	//	TODO: remove the hardcoded boss health number and use a value in the InfectedCard class to determine boss value
+	public boolean scanMansionForBoss() {
+		for (int i = 0; i < mansion.size(); i++) {
+			if (mansion.peek(i) instanceof InfectedCard && ((InfectedCard)mansion.peek(i)).getHealth() >= 90) return true;
+		}
+		return false;
+	}
+	
+	public void popupGameResults() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		
+		StringBuilder message = new StringBuilder();
+		for (int i = 0; i < players.length; i++) {
+			Player p = players[i];
+			message.append(String.format("Player %d finished with %d decorations.\n", i+1, p.countDecorations()));
+		}
+		
+		builder.setTitle("Game Over")
+			   .setMessage(message.toString())
+			   .setPositiveButton("Finish Game", new DialogInterface.OnClickListener() {
+				   public void onClick(DialogInterface dialog, int id) {
+					   ((Activity)context).finish();
+					   dialog.dismiss();
+				   }
+			   })
+			   .setNegativeButton("Return To Game", new DialogInterface.OnClickListener() {
+				   public void onClick(DialogInterface dialog, int id) {
+					   dialog.cancel();
+				   }
+			   });
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	//	counts the number of players playing that haven't yet been eliminated
+	public int numPlayersRemaining() {
+		int remain = 0;
+		for (Player p : players) if (!p.isEliminated) remain++;
+		return remain;
+	}
+	
+	public void popupGameLossMessage() {
+		StringBuilder message = new StringBuilder();
+		for (int i = 0; i < players.length; i++) {
+			Player p = players[i];
+			message.append(String.format("Player %d finished with %d decorations.\n", i+1, p.countDecorations()));
+		}
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle("Game Over")
+			   .setMessage("All players have been permanently eliminated.\n\n" + message.toString())
+			   .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+				   public void onClick(DialogInterface dialog, int id) {
+					   ((Activity)context).finish();
+					   dialog.dismiss();
+				   }
+			   });
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void popupMessage(String title, String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(title)
+			   .setMessage(message)
+			   .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+				   public void onClick(DialogInterface dialog, int id) {
+					   dialog.dismiss();
+				   }
+			   });
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 }

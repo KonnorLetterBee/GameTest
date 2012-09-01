@@ -56,7 +56,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
-		game = Game.startGame(context, new CharacterCard[] {GameData.Characters[0]}, GameData.testScenario);
+		game = Game.startGame(context, new CharacterCard[] {GameData.Characters[0]}, GameData.testScenario, GameData.populateMansion(0));
 		zoneManager.setGame(game);
 		
 		DeckZone deck = new DeckZone(1.0f, 0.95f, GameZone.BOTTOM_RIGHT, 
@@ -122,14 +122,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		//	make the GamePanel focusable so it can handle events
 		setFocusable(true);
 	}
-
-	public void pauseGameThread() {
-		
-	}
-	
-	public void resumeGameThread() {
-		
-	}
 	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
 
@@ -152,6 +144,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			//	try again shutting down the thread if retry hasn't been set to false (exception caught)
 		}
 		Log.d(TAG, "Thread was shut down cleanly");
+		
+		REZoneManager.destroy();
+		this.zoneManager = null;
+		Game.destroy();
+		this.game = null;
 	}
 
 	@Override

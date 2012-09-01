@@ -52,6 +52,7 @@ public class GameLoopActivity extends Activity {
     //	triggers a log message
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying...");
+		mainPanel = null;
 		super.onDestroy();
 	}
 

@@ -38,6 +38,11 @@ public class ZoneManager {
 		return zoneMan;
 	}
 	
+	//	sets the stored ZoneManager to null
+	public static void destroy() {
+		zoneMan = null;
+	}
+	
 	//	sets the game object this ZoneManager is watching
 	public void setGame(Game g) {
 		game = g;
