@@ -65,10 +65,13 @@ public class GameState {
 			game.searchForResponses();
 			this.setState(State.PlayCardEffect, true);
 			break;
+		
+		
 		case PlayCardEffect:  break;
+		
+		//	sets up all structures needed for the explore, 
 		case ExploreInitial:
 			game.startExplore();
-			game.getActivePlayer().mustExplore = false;
 			game.attackingPlayers().add(game.getActivePlayer());
 			this.setState(State.ExploreWeapons, true);
 			break;
@@ -101,6 +104,7 @@ public class GameState {
 			}
 			break;
 			
+		//	after player(s) are finished exploring, calculate damage dealt by both parties and assign an outcome
 		case ExploreDamage:
 			//	apply explore effects to exploring players, then calculate damage dealt
 			game.applyExploreEffects();
@@ -160,9 +164,11 @@ public class GameState {
 			
 			else this.setState(State.MainPhase, true);
 			break;
+			
+		//	ends the current turn, advances the active player, and then starts their turn
 		case EndTurn:
-			//	calls the method to end the current players turn, then advances to the next player's turn
 			//	if player's alive, reset turn like normal
+			//	otherwise, wait until their next StartTurn state handles it
 			if (!game.getActivePlayer().isDead) game.getActivePlayer().resetTurn();
 			game.advanceActivePlayer();
 			this.setState(State.StartTurn, true);

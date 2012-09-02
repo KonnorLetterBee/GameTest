@@ -28,18 +28,11 @@ public class GameLoopActivity extends Activity {
         setContentView(mainPanel);
         Log.d(TAG, "View added");
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_game_loop, menu);
-        return true;
-    }
     
     @Override
     protected void onPause() {
     	Log.d(TAG, "Pausing...");
 		super.onPause();
-		
     }
     
     @Override

@@ -4,7 +4,6 @@ import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.ButtonZone;
 import com.kngames.gametest.regame.gamestruct.Game;
-import com.kngames.gametest.regame.gamestruct.GameState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
 //	a ButtonZone made specifically for the Explore button, changes the text and listener based on the game state
@@ -23,6 +22,7 @@ public class ExploreButtonZone extends ButtonZone{
 			if (game.state().currentState() == State.MainPhase && game.getActivePlayer().explores > 0) {
 				if (game.getActivePlayer().explores > 0 || Game.DEBUG_MODE) {
 					game.getActivePlayer().explores--;
+					game.getActivePlayer().mustExplore = false;
 					game.state().setState(State.ExploreInitial, true);
 				}
 			}
