@@ -17,7 +17,7 @@ public class ActionCard extends RECard implements Playable {
 	private int extraCards;
 	
 	private OnPlayListener playListener = null;
-	private OnPlayFinishListener playFinishListener = null;
+	private OnFinishListener playFinishListener = null;
 	private OnTriggerListener trigger = null;
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text) {
@@ -37,7 +37,7 @@ public class ActionCard extends RECard implements Playable {
 	}
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
-			OnPlayListener onPlay, OnPlayFinishListener onPlayFinish, OnTriggerListener onRespond) {
+			OnPlayListener onPlay, OnFinishListener onPlayFinish, OnTriggerListener onRespond) {
 		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text);
 		playListener = onPlay;
 		playFinishListener = onPlayFinish;

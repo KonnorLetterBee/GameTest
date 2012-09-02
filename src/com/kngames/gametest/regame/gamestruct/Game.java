@@ -46,6 +46,8 @@ public class Game {
 	
 	private REDeck mansion;		//	the mansion deck being used in this game
 	public REDeck mansion() { return mansion; }
+	private REDeck mansionRemoved;	//	the pile of cards removed from the mansion
+	public REDeck mansionRemoved() { return mansionRemoved; }
 	
 	private GameState state;
 	public GameState state() { return state; }
@@ -80,6 +82,7 @@ public class Game {
 		
 		//	set the mansion
 		this.mansion = mansion;
+		this.mansionRemoved = new REDeck();
 		
 		//	set the game state to StartTurn
 		state = new GameState(this, State.StartTurn);

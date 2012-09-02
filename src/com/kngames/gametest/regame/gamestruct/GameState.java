@@ -3,6 +3,7 @@ package com.kngames.gametest.regame.gamestruct;
 import com.kngames.gametest.cards.graphics.ButtonZone;
 import com.kngames.gametest.cards.graphics.ZoneManager;
 import com.kngames.gametest.redata.REDeck;
+import com.kngames.gametest.redata.CardTypes.ItemCard;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
@@ -117,22 +118,32 @@ public class GameState {
 			Log.d(TAG, String.format("Player %d managed %d damage this explore.", game.activePlayer(), damage));
 			
 			//	calculate health and damage of all infected, and print out proper information
+			boolean infectedPresent = false;
 			int infecHealth = 0;
 			int infecDamage = 0;
 			REDeck infected = game.defendingInfected();
 			StringBuilder infecInfo = new StringBuilder();
-			for (int i = 0; i < infected.size(); i++) {
+			StringBuilder itemInfo = new StringBuilder();
+			itemInfo.append("Items found:");
+			for (int i = 0; i < infected.size(); i++) {	//	for infected, calculate numbers needed
 				if (infected.peek(i) instanceof InfectedCard) {
 					InfectedCard temp = (InfectedCard)infected.peek(i);
 					int infecDam = temp.getDamage();
 					if (infecDam > 0) infecDamage += infecDam;
 					if (temp.getHealth() > 0) infecHealth += temp.getHealth();
+					infectedPresent = true;
 					infecInfo.append(String.format("%s (%d health, %d damage, %d decs)\n", temp.getName(), temp.getHealth(), temp.getDamage(), temp.getDecorations()));
-				} else infecInfo.append(String.format("%s\n", ((RECard)infected.peek(i)).getName()));
+				} else {	//	for items, activate their reveal effects immediately
+					RECard temp = (RECard)infected.peek(i);
+					itemInfo.append(String.format("\n%s", temp.getName()));
+					if (temp instanceof ItemCard) {
+						((ItemCard)temp).onMansionReveal(game);
+					}
+				}
 			}
 			
 			//	compare damage and health values to determine the outcome
-			if (damage >= infecHealth) {	//	player wins
+			if (damage >= infecHealth && infectedPresent) {	//	player wins
 				int decs = 0;
 				while(infected.size() > 0) {
 					if (infected.peek(0) instanceof InfectedCard) {
@@ -140,12 +151,15 @@ public class GameState {
 					}
 					game.getActivePlayer().attachedCards().addBack(infected.pop(0));
 				}
-				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer receives %d decorations.", 
-						infecInfo.toString(), damage, infecHealth, decs));
+				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer receives %d decorations.\n\n%s", 
+						infecInfo.toString(), damage, infecHealth, decs, itemInfo.toString()));
+			} else if (!infectedPresent) { //	no infected were present to fight
+				game.popupMessage("Explore Results",String.format("No infected found.\n\n%s", 
+						itemInfo.toString()));
 			} else {	//	player loses
 				game.getActivePlayer().changeHealth(-infecDamage, true);
-				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer lost %d health.", 
-						infecInfo.toString(), damage, infecHealth, infecDamage));
+				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer lost %d health.\n\n%s", 
+						infecInfo.toString(), damage, infecHealth, infecDamage, itemInfo.toString()));
 			}
 			
 			this.setState(State.ExploreEnd, true);

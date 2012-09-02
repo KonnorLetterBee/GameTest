@@ -7,31 +7,62 @@ import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
-public class ItemCard extends RECard implements Playable {
+public class ItemCard extends RECard implements Playable, MansionCard {
 	private int price;
 	private int origin;
 	
 	private OnPlayListener playListener = null;
-	private OnPlayFinishListener playFinishListener = null;
+	private OnFinishListener playFinishListener = null;
 	private OnTriggerListener trigger = null;
+	private OnMansionRevealListener mansionListener = null;
+	private OnMansionFinishListener mansionFinishListener = null;
 	
+	//	default ItemCard
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text) {
 		super(name, CardType.Item, getItemIDPrefix(origin), ID, expans, quantity, text);
 		this.price = price;
 		this.origin = origin;
 	}
 	
+	//	ItemCard with special OnPlayListener
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
 			OnPlayListener onPlay) {
 		this(name, ID, expans, price, quantity, origin, text, onPlay, null, null);
 	}
 	
+	//	ItemCard with OnPlayListener, OnFinishListener, and OnTriggerListener
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
-			OnPlayListener onPlay, OnPlayFinishListener onFinish, OnTriggerListener onTrigger) {
+			OnPlayListener onPlay, OnFinishListener onFinish, OnTriggerListener onTrigger) {
 		this(name, ID, expans, price, quantity, origin, text);
 		this.playListener = onPlay;
 		this.playFinishListener = onFinish;
 		this.trigger = onTrigger;
+	}
+	
+	//	ItemCard with OnMansionRevealListener
+	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
+			OnMansionRevealListener onReveal) {
+		this(name, ID, expans, price, quantity, origin, text, onReveal, null);
+	}
+	
+	//	ItemCard with OnMansionRevealListener and OnMansionFinishListener
+	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
+			OnMansionRevealListener onReveal, OnMansionFinishListener onFinish) {
+		this(name, ID, expans, price, quantity, origin, text);
+		this.mansionListener = onReveal;
+		this.mansionFinishListener = onFinish;
+	}
+	
+	//	ItemCard with all types of listeners
+	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
+			OnPlayListener onPlay, OnFinishListener onFinish, OnTriggerListener onTrigger,
+			OnMansionRevealListener onReveal, OnMansionFinishListener onMansionFinish) {
+		this(name, ID, expans, price, quantity, origin, text);
+		this.playListener = onPlay;
+		this.playFinishListener = onFinish;
+		this.trigger = onTrigger;
+		this.mansionListener = onReveal;
+		this.mansionFinishListener = onMansionFinish;
 	}
 	
 	private static String getItemIDPrefix(int origin) {
@@ -41,6 +72,11 @@ public class ItemCard extends RECard implements Playable {
 	public int getPrice() { return price; }
 	public int getOrigin() { return origin; }
 
+	
+	///
+	///		Gameplay Hooks
+	///
+	
 	//	items from a player's hand can be played during your main phase, or when the trigger is true
 	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
 		if (trigger != null && trigger.isTriggered(this, game, actingPlayer)) return true;
@@ -55,5 +91,15 @@ public class ItemCard extends RECard implements Playable {
 		//	otherwise, simply move the card to the field
 		if (playFinishListener != null) playFinishListener.finish(this, game, actingPlayer);
 		else actingPlayer.inPlay().addBack(this);
+	}
+	
+	public void onMansionReveal(Game game) {
+		//	if an extra OnMansionListener is attached, use that effect
+		if (mansionListener != null) mansionListener.revealed(this, game);
+		
+		//	if an extra OnMansionFinishListener is attached, use that effect
+		//	otherwise, simply add the card to the mansion removed cards pile
+		if (mansionFinishListener != null) mansionFinishListener.finish(this, game);
+		else game.mansionRemoved().addBack(this);
 	}
 }

@@ -71,7 +71,7 @@ public abstract class RECard extends Card {
 		public void playAction(RECard card, Game game, Player actingPlayer);
 	}
 	
-	public interface OnPlayFinishListener {
+	public interface OnFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer);
 	}
 	
@@ -81,6 +81,10 @@ public abstract class RECard extends Card {
 
 	public interface Playable {
 		public boolean canPlay(Game game, Player actingPlayer, REDeck source);
+	}
+	
+	public interface MansionCard {
+		public void onMansionReveal(Game game);
 	}
 	
 	public interface OnMansionRevealListener {
@@ -93,5 +97,9 @@ public abstract class RECard extends Card {
 	
 	public interface OnMansionNotDefeatedListener {
 		public void notDefeated(RECard card, Game game);
+	}
+	
+	public interface OnMansionFinishListener {
+		public void finish(RECard card, Game game);
 	}
 }

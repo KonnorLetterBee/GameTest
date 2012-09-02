@@ -178,12 +178,18 @@ public class Player {
 		else if (health > maxHealth) health = maxHealth;
 	}
 	
+	//	changes the player's maximum health by a set amount, and handles if the max hits zero
+	public void changeMaxHealth(int amountChange) {
+		maxHealth += amountChange;
+		if (maxHealth <= 0) isEliminated = true;
+		else if (maxHealth > maxHealth) health = maxHealth;
+	}
+	
 	//	kills the player (sets their life to zero, combines all cards into deck, sets isDead to true)
 	//	and check for elimination
 	public void killPlayer(boolean subtractMax) {
 		isDead = true;
-		if (subtractMax) maxHealth -= 20;
-		if (maxHealth == 0) isEliminated = true;
+		if (subtractMax) changeMaxHealth(-20);
 		health = maxHealth;
 		while (hand.size() > 0) deck.addBottom(hand.pop(0));
 		while (discard.size() > 0) deck.addBottom(discard.pop(0));

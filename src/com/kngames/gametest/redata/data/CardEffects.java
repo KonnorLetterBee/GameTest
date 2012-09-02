@@ -1,5 +1,7 @@
 package com.kngames.gametest.redata.data;
 
+import android.util.Log;
+
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.*;
@@ -132,7 +134,7 @@ public class CardEffects {
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
 	}
 
-	public static class TrashOnFinish implements OnPlayFinishListener {
+	public static class TrashOnFinish implements OnFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer) {
 			game.shop().returnCard(card);
 		}
@@ -274,6 +276,22 @@ public class CardEffects {
 		}
 		public void playAction(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new AnotherHerbState(game, actingPlayer));
+		}
+	}
+	
+	public static class YellowHerbEffect implements OnMansionRevealListener {
+		public void revealed(RECard card, Game game) {
+			Player p = game.attackingPlayers().get(0);
+			p.attachedCards().addBack(card);
+			p.changeMaxHealth(10);
+			p.changeHealth(10, true);
+			Log.d("YellowHerbEffect", "Yellow Herb attached to player");
+		}
+	}
+	
+	public static class FirstAidSprayEffect implements OnPlayListener {
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			actingPlayer.changeHealth(9999, true);
 		}
 	}
 }
