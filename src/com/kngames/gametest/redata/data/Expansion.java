@@ -83,7 +83,8 @@ public enum Expansion {
 			new ActionCard("Struggle for Survival",				12, 0, 5,  30, 1, 0,  0,  0, 0, 1, "You can Discard this card from your Hand to lower the Damage of 1 Weapon being used costing 40 Gold or less to 0.", new CardEffects.StruggleForSurvivalEffect(), null, new CardEffects.StruggleForSurvivalTrigger()),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
-			new ItemCard("Green Herb", 		1,  4, 20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60."),
+			new ItemCard("Green Herb", 		1,  4, 20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60.", 
+					new CardEffects.GreenHerbEffect(), new CardEffects.TrashOnFinish(), null),
 			new ItemCard("Yellow Herb", 	2,  0, 0,  3, 1, "When this Item is Gained, attach this Item to your Character instead.  While it is attached, that Character's Maximum Health is increased by 10.  Then, Heal that Character's Health by 10."),
 			new ItemCard("First Aid Spray", 3,  0, 60, 5, 0, "Trash this Item to Heal a Character's Health to full.")
 		}; }
@@ -107,10 +108,10 @@ public enum Expansion {
 			new InfectedCard("Executioner", 		17, 1, 0, 30, 25, 3, "")
 		}; }
 		public AmmunitionCard[] ammunition() { return new AmmunitionCard[] {
-				new AmmunitionCard("Ammo x10", 1, 4, 0,  28, 10, 10),
-				new AmmunitionCard("Ammo x20", 2, 4, 30, 15, 20, 20),
-				new AmmunitionCard("Ammo x30", 3, 4, 60, 15, 30, 30),
-				new AmmunitionCard("Treasure", 4, 1, 40, 10, 0,  30),
+			new AmmunitionCard("Ammo x10", 1, 4, 0,  28, 10, 10),
+			new AmmunitionCard("Ammo x20", 2, 4, 30, 15, 20, 20),
+			new AmmunitionCard("Ammo x30", 3, 4, 60, 15, 30, 30),
+			new AmmunitionCard("Treasure", 4, 1, 40, 10, 0,  30),
 		}; }
 		public Scenario[] scenarios() { return new Scenario[] {
 			new Scenario (1, "First Timer", GameMode.Story, 0, true, new String[] {

@@ -82,4 +82,16 @@ public abstract class RECard extends Card {
 	public interface Playable {
 		public boolean canPlay(Game game, Player actingPlayer, REDeck source);
 	}
+	
+	public interface OnMansionRevealListener {
+		public void revealed(RECard card, Game game);
+	}
+	
+	public interface OnMansionDefeatedListener {
+		public void defeated(RECard card, Game game);
+	}
+	
+	public interface OnMansionNotDefeatedListener {
+		public void notDefeated(RECard card, Game game);
+	}
 }

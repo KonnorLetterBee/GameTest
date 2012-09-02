@@ -94,7 +94,7 @@ public class Shop {
 	//	then shuffles the deck
 	public RECard gainCardSearch(Player player, String tag) {
 		for (int i = 0; i < resourcePiles.size(); i++) {
-			int index = resourcePiles.get(i).contains(tag);
+			int index = resourcePiles.get(i).indexOf(tag);
 			if (index != -1) {
 				return (RECard) resourcePiles.get(i).pop(index);
 			}

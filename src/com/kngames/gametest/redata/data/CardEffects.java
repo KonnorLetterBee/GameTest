@@ -1,11 +1,8 @@
 package com.kngames.gametest.redata.data;
 
 import com.kngames.gametest.redata.REDeck;
-import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-import com.kngames.gametest.redata.CardTypes.RECard.OnPlayFinishListener;
-import com.kngames.gametest.redata.CardTypes.RECard.OnPlayListener;
-import com.kngames.gametest.redata.CardTypes.RECard.OnTriggerListener;
+import com.kngames.gametest.redata.CardTypes.*;
+import com.kngames.gametest.redata.CardTypes.RECard.*;
 import com.kngames.gametest.regame.gamestruct.ExploreEffect;
 import com.kngames.gametest.regame.gamestruct.ExploreEffect.BuffAllWeaponsEffect;
 import com.kngames.gametest.regame.gamestruct.Game;
@@ -235,6 +232,48 @@ public class CardEffects {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
 			//	triggers during a combat phase that isn't yours
 			return game.state().currentState() == State.ExploreRespond && !game.isActivePlayer(actingPlayer);
+		}
+	}
+	
+	public static class GreenHerbEffect implements OnPlayListener {
+		public static class AnotherHerbState extends PlayerInputState {
+			private int healAmount;
+			public AnotherHerbState (Game game, Player actingPlayer) {
+				super(game, actingPlayer);
+				healAmount = 20;	//	minimum heal amount is 20
+			}
+			public void onPlayerInputStart() {
+				//	if discard pile contains no weapons, immediately end state for lack of possible actions
+				if (actingPlayer.hand().indexOf("IT01") == -1) game.state().endPlayerInput();
+				else {
+					actionButton.activate();
+					actionButton.buttonText = "NONE";
+					gameStateMessage = "You may trash another Green Herb card from your hand to heal an additional 40.";
+				}
+			}
+			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
+				return source == actingPlayer.hand() && ((RECard) source.peek(index)).getName().equalsIgnoreCase("Green Herb");
+			}
+			public void onCardSelected(REDeck source, int index) {
+				if (isSelectable(source, index)) {
+					//	trash the second herb and heal health by an additional 40
+					game.shop().returnCard((RECard)source.pop(index));
+					healAmount += 40;
+					game.state().endPlayerInput();
+				}
+				else { }
+			}
+			//	when extra button pressed, end the state
+			public void onExtraButtonPressed() {
+				game.state().endPlayerInput();
+			}
+			public void onPlayerInputFinish() {
+				actingPlayer.changeHealth(healAmount, true);
+				if (actionButton != null) actionButton.deactivate();
+			}
+		}
+		public void playAction(RECard card, Game game, Player actingPlayer) {
+			game.state().startPlayerInput(new AnotherHerbState(game, actingPlayer));
 		}
 	}
 }

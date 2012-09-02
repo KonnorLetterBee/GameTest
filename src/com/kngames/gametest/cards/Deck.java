@@ -79,7 +79,7 @@ public abstract class Deck {
 	
 	//	searches this deck for a card with the specified tag, and returns the first index
 	//	that a card with that tag occurs, or -1 if no such card exists
-	public int contains(String tag) {
+	public int indexOf(String tag) {
 		if (indexContains(tag)) {
 			for (int i = 0; i < cards.size(); i++) {
 				if (cards.get(i).tag.equals(tag)) return i;
