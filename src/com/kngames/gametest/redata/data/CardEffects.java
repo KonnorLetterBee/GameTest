@@ -239,6 +239,7 @@ public class CardEffects {
 	
 	public static class GreenHerbEffect implements OnPlayListener {
 		public static class AnotherHerbState extends PlayerInputState {
+			//	duuuuude...  there's two Krausers...  hand me some more a' that Green Herb...
 			private int healAmount;
 			public AnotherHerbState (Game game, Player actingPlayer) {
 				super(game, actingPlayer);
@@ -286,6 +287,24 @@ public class CardEffects {
 			p.changeMaxHealth(10);
 			p.changeHealth(10, true);
 			Log.d("YellowHerbEffect", "Yellow Herb attached to player");
+		}
+	}
+	
+	public static class GGunCaseEffect implements OnMansionRevealListener {
+		public void revealed(RECard card, Game game) {
+			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE09");
+			if (temp == null) game.attackingPlayers().get(0).discard().addTop(GameData.findByCardTag("WE09"));
+			else game.attackingPlayers().get(0).discard().addTop(temp);
+			game.mansionRemoved().addTop(card);
+		}
+	}
+	
+	public static class RocketCaseEffect implements OnMansionRevealListener {
+		public void revealed(RECard card, Game game) {
+			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE10");
+			if (temp == null) game.attackingPlayers().get(0).discard().addTop(GameData.findByCardTag("WE10"));
+			else game.attackingPlayers().get(0).discard().addTop(temp);
+			game.mansionRemoved().addTop(card);
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package com.kngames.gametest.regame.gamestruct;
 
+import java.util.ArrayList;
+
 import com.kngames.gametest.cards.graphics.ButtonZone;
 import com.kngames.gametest.cards.graphics.ZoneManager;
 import com.kngames.gametest.redata.REDeck;
@@ -7,7 +9,7 @@ import com.kngames.gametest.redata.CardTypes.ItemCard;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
-import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
+import com.kngames.gametest.redata.CardTypes.Mansion.*;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
 import android.util.Log;
@@ -86,9 +88,18 @@ public class GameState {
 			this.setState(State.ExploreReveal, true);
 			break;
 			
-		//	reveal the top card of the mansion
+		//	reveal the top card of the mansion and apply its reveal effect
 		case ExploreReveal:
-			game.flipMansion();
+			RECard flip = game.flipMansion();
+			if (flip instanceof MansionCard) {
+				((MansionCard) flip).onMansionReveal(game);
+				//	only add name to the list if the flipped card isn't infected
+				if (!(flip instanceof InfectedCard)) game.mansionItems().add(flip.getName());
+			}
+			else if (flip instanceof ItemCard) {
+				((ItemCard) flip).onMansionReveal(game);
+				game.mansionItems().add(flip.getName());
+			}
 			this.setState(State.ExploreAgain, true);
 			break;
 			
@@ -123,8 +134,6 @@ public class GameState {
 			int infecDamage = 0;
 			REDeck infected = game.defendingInfected();
 			StringBuilder infecInfo = new StringBuilder();
-			StringBuilder itemInfo = new StringBuilder();
-			itemInfo.append("Items found:");
 			for (int i = 0; i < infected.size(); i++) {	//	for infected, calculate numbers needed
 				if (infected.peek(i) instanceof InfectedCard) {
 					InfectedCard temp = (InfectedCard)infected.peek(i);
@@ -133,13 +142,15 @@ public class GameState {
 					if (temp.getHealth() > 0) infecHealth += temp.getHealth();
 					infectedPresent = true;
 					infecInfo.append(String.format("%s (%d health, %d damage, %d decs)\n", temp.getName(), temp.getHealth(), temp.getDamage(), temp.getDecorations()));
-				} else {	//	for items, activate their reveal effects immediately
-					RECard temp = (RECard)infected.peek(i);
-					itemInfo.append(String.format("\n%s", temp.getName()));
-					if (temp instanceof ItemCard) {
-						((ItemCard)temp).onMansionReveal(game);
-					}
-				}
+				}	//	other cards have already (maybe) been processed
+			}
+			
+			ArrayList<String> items = game.mansionItems();
+			StringBuilder itemInfo = new StringBuilder();
+			if (items.size() > 0) {
+				itemInfo.append("\n\nItems found:");
+				for (String s : items)
+					itemInfo.append(String.format("\n%s", s));
 			}
 			
 			//	compare damage and health values to determine the outcome
@@ -151,14 +162,14 @@ public class GameState {
 					}
 					game.getActivePlayer().attachedCards().addBack(infected.pop(0));
 				}
-				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer receives %d decorations.\n\n%s", 
+				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer receives %d decorations.%s", 
 						infecInfo.toString(), damage, infecHealth, decs, itemInfo.toString()));
 			} else if (!infectedPresent) { //	no infected were present to fight
-				game.popupMessage("Explore Results",String.format("No infected found.\n\n%s", 
+				game.popupMessage("Explore Results",String.format("No infected found.%s", 
 						itemInfo.toString()));
 			} else {	//	player loses
 				game.getActivePlayer().changeHealth(-infecDamage, true);
-				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer lost %d health.\n\n%s", 
+				game.popupMessage("Explore Results",String.format("%s\nPlayer (%d) -> %d needed\nPlayer lost %d health.%s", 
 						infecInfo.toString(), damage, infecHealth, infecDamage, itemInfo.toString()));
 			}
 			

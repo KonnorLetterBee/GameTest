@@ -7,7 +7,7 @@ import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
 
-public class ItemCard extends RECard implements Playable, MansionCard {
+public class ItemCard extends RECard implements Playable, InMansion {
 	private int price;
 	private int origin;
 	
@@ -101,5 +101,12 @@ public class ItemCard extends RECard implements Playable, MansionCard {
 		//	otherwise, simply add the card to the mansion removed cards pile
 		if (mansionFinishListener != null) mansionFinishListener.finish(this, game);
 		else game.mansionRemoved().addBack(this);
+	}
+	
+	public void onMansionFinish(Game game) {
+			//	if an extra OnMansionFinishListener is attached, use that effect
+			//	otherwise, simply add the card to the mansion removed cards pile
+			if (mansionFinishListener != null) mansionFinishListener.finish(this, game);
+			else game.mansionRemoved().addBack(this);
 	}
 }

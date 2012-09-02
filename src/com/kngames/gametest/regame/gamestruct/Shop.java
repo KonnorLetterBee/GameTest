@@ -93,7 +93,7 @@ public class Shop {
 	//	searches all piles for a specific card, and removes it from the first pile it's found in
 	//	then shuffles the deck
 	public RECard gainCardSearch(Player player, String tag) {
-		for (int i = 0; i < resourcePiles.size(); i++) {
+		for (int i = resourcePiles.size() - 1; i >= 0; i--) {
 			int index = resourcePiles.get(i).indexOf(tag);
 			if (index != -1) {
 				return (RECard) resourcePiles.get(i).pop(index);

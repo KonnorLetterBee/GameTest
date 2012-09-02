@@ -48,6 +48,8 @@ public class Game {
 	public REDeck mansion() { return mansion; }
 	private REDeck mansionRemoved;	//	the pile of cards removed from the mansion
 	public REDeck mansionRemoved() { return mansionRemoved; }
+	private ArrayList<String> mansionItems;	//	a list of item names to be displayed during an explore, since they usually don't stay around after revealing
+	public ArrayList<String> mansionItems() { return mansionItems; }
 	
 	private GameState state;
 	public GameState state() { return state; }
@@ -180,6 +182,7 @@ public class Game {
 		attackingPlayers = new ArrayList<Player>();
 		defendingPlayers = new ArrayList<Player>();
 		defendingInfected = new REDeck();
+		mansionItems = new ArrayList<String>();
 	}
 	
 	//	applies all explore effects to the currently exploring characters, then removes them from the effects list
@@ -191,13 +194,22 @@ public class Game {
 	}
 	
 	//	takes the top card of the mansion and adds it to the list of revealed mansion cards for this explore
-	public void flipMansion() {
-		if (mansion.size() > 0) defendingInfected.addBack(mansion.popTop());
+	//	returns the flipped over card
+	public RECard flipMansion() {
+		if (mansion.size() > 0) {
+			defendingInfected.addBack(mansion.popTop());
+			return (RECard) defendingInfected.peekLast();
+		}
+		return null;
 	}
 	
 	//	takes the bottom card of the mansion and adds it to the list of revealed mansion cards for this explore
-	public void flipBottomMansion() {
-		if (mansion.size() > 0) defendingInfected.addBack(mansion.popTop());
+	public RECard flipBottomMansion() {
+		if (mansion.size() > 0) {
+			defendingInfected.addBack(mansion.popTop());
+			return (RECard) defendingInfected.peekLast();
+		}
+		return null;
 	}
 	
 	//	ends the explore by moving undefeated infected to the bottom of the mansion, and emptying the exploring character's weapon pile
@@ -210,6 +222,7 @@ public class Game {
 			while (defendingInfected.size() > 0) mansion.addBottom(defendingInfected.popFirst());
 			defendingInfected = null;
 		}
+		mansionItems = null;
 	}
 	
 	

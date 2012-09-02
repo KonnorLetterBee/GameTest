@@ -83,7 +83,7 @@ public abstract class RECard extends Card {
 		public boolean canPlay(Game game, Player actingPlayer, REDeck source);
 	}
 	
-	public interface MansionCard {
+	public interface InMansion {
 		public void onMansionReveal(Game game);
 	}
 	
