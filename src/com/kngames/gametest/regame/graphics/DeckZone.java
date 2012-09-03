@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.cards.graphics.IDObject;
@@ -34,8 +33,8 @@ public class DeckZone extends REGameZone {
 		float ratio = (float)height / width;
 		int cardWidth = 0;
 		int cardHeight = 0;
-		int cardX = left();
-		int cardY = top();
+		int cardX = 0;
+		int cardY = 0;
 		if (ratio > 1.4f) {	//	taller than necessary
 			cardWidth = width;
 			cardHeight = (int) (cardWidth * 1.4);
@@ -54,24 +53,24 @@ public class DeckZone extends REGameZone {
 	public void postInit() { }
 	
 	public void update() { super.update(); }
-	public void handleDownTouch(MotionEvent event) {
+	public void handleDownTouch(float x, float y) {
 		if (Game.DEBUG_MODE) getVisiblePlayer().drawToHand();
 	}
-	public void handleOffDownTouch(MotionEvent event) { }
-	public void handleMoveTouch(MotionEvent event) { }
-	public void handleUpTouch(MotionEvent event) { }
-	public void handlePressTouch(MotionEvent event) { }
+	public void handleOffDownTouch(float x, float y) { }
+	public void handleMoveTouch(float x, float y) { }
+	public void handleUpTouch(float x, float y) { }
+	public void handlePressTouch(float x, float y) { }
 	
 	//	draws this DeckZone to the screen
 	private final int TEXT_SIZE = 25;
-	public void draw(Canvas canvas) {
+	public void drawToBitmapCanvas(Canvas canvas) {
 		Paint paint = new Paint(); 
 		deckBackground.draw(canvas);
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TEXT_SIZE);
-		int x = left() + (width / 2);
-		int y = top() + (height / 2) - (TEXT_SIZE / 2);
+		int x = (width / 2);
+		int y = (height / 2) - (TEXT_SIZE / 2);
 		canvas.drawText(""+getVisibleDeck().size(), x, y, paint);
 	}
 }

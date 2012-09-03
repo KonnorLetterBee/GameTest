@@ -48,14 +48,14 @@ public abstract class REGameZone extends GameZone {
 		Paint paint = new Paint(); 
 		paint.setColor(Color.WHITE); 
 		paint.setStyle(Style.FILL); 
-		canvas.drawRect(generateRect(), paint);
+		canvas.drawRect(new Rect (0, 0, width, height), paint);
 
 		paint.setColor(Color.BLACK);
 		canvas.drawRect(new Rect (
-				left() + BORDER_THICKNESS,
-				top() + BORDER_THICKNESS,
-				right() - BORDER_THICKNESS,
-				bottom() - BORDER_THICKNESS), paint);
+				0 + BORDER_THICKNESS,
+				0 + BORDER_THICKNESS,
+				width - BORDER_THICKNESS,
+				height - BORDER_THICKNESS), paint);
 	}
 	
 	private final int DATA_TEXT_SIZE = 20;

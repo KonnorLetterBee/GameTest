@@ -3,7 +3,6 @@ package com.kngames.gametest.regame.graphics;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
 
@@ -23,21 +22,21 @@ public class InfoZone extends REGameZone {
 	public void postInit() { }
 	
 	public void update() { super.update(); }
-	public void handleDownTouch(MotionEvent event) { }
-	public void handleOffDownTouch(MotionEvent event) { }
-	public void handleMoveTouch(MotionEvent event) { }
-	public void handleUpTouch(MotionEvent event) { }
-	public void handlePressTouch(MotionEvent event) { }
+	public void handleDownTouch(float x, float y) { }
+	public void handleOffDownTouch(float x, float y) { }
+	public void handleMoveTouch(float x, float y) { }
+	public void handleUpTouch(float x, float y) { }
+	public void handlePressTouch(float x, float y) { }
 
 	//	draws this InfoZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;
-	public void draw(Canvas canvas) {
+	public void drawToBitmapCanvas(Canvas canvas) {
 		Paint paint = new Paint();
 		drawTestBorder(canvas);
 		
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(TITLE_TEXT_SIZE);
-		int textLocation = top() + TITLE_TEXT_SIZE + 5;
+		int textLocation = 0 + TITLE_TEXT_SIZE + 5;
 		
 		drawTestData(canvas, this.getVisiblePlayer().generateInfoStrings(), textLocation);
 	}

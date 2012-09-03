@@ -3,7 +3,6 @@ package com.kngames.gametest.regame.graphics;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 import com.kngames.gametest.cards.graphics.IDObject;
 import com.kngames.gametest.redata.CardTypes.RECard;
@@ -25,15 +24,15 @@ public class InPlayZone extends REGameZone {
 	public void postInit() { }
 	
 	public void update() { super.update(); }
-	public void handleDownTouch(MotionEvent event) { }
-	public void handleOffDownTouch(MotionEvent event) { }
-	public void handleMoveTouch(MotionEvent event) { }
-	public void handleUpTouch(MotionEvent event) { }
-	public void handlePressTouch(MotionEvent event) { }
+	public void handleDownTouch(float x, float y) { }
+	public void handleOffDownTouch(float x, float y) { }
+	public void handleMoveTouch(float x, float y) { }
+	public void handleUpTouch(float x, float y) { }
+	public void handlePressTouch(float x, float y) { }
 
 	//	draws this DeckZone to the screen
 	private final int TITLE_TEXT_SIZE = 25;
-	public void draw(Canvas canvas) {
+	public void drawToBitmapCanvas(Canvas canvas) {
 		Paint paint = new Paint(); 
 		drawTestBorder(canvas);
 		

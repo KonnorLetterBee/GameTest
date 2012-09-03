@@ -4,7 +4,9 @@ import com.kngames.gametest.engine.graphics.AnimationComponent;
 import com.kngames.gametest.engine.graphics.MovementComponent;
 import com.kngames.gametest.engine.interfaces.*;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
@@ -295,26 +297,38 @@ public abstract class GameZone implements Touchable, Drawable {
 					(y < move.y() + height);
 	}
 	
-	public void handleDownTouch(MotionEvent event) {
+	public void handleDownTouch(MotionEvent event) { handleDownTouch(event.getX() + move.x(), event.getY() + move.y()); }
+	public void handleDownTouch(float x, float y) {
 		selectedZone = this;
 	}
 	
-	public abstract void handleOffDownTouch(MotionEvent event);
+	public void handleOffDownTouch(MotionEvent event) { handleOffDownTouch(event.getX() + move.x(), event.getY() + move.y()); }
+	public abstract void handleOffDownTouch(float x, float y);
 
-	public abstract void handleMoveTouch(MotionEvent event);
+	public void handleMoveTouch(MotionEvent event) { handleMoveTouch(event.getX() + move.x(), event.getY() + move.y()); }
+	public abstract void handleMoveTouch(float x, float y);
 
-	public void handleUpTouch(MotionEvent event) {
+	public void handleUpTouch(MotionEvent event) { handleUpTouch(event.getX() + move.x(), event.getY() + move.y()); }
+	public void handleUpTouch(float x, float y) {
 		if (selectedZone == this) 
-			this.handlePressTouch(event);
+			this.handlePressTouch(x, y);
 		selectedZone = null;
 	}
 	
-	public abstract void handlePressTouch(MotionEvent event);
+	public void handlePressTouch(MotionEvent event) { handleMoveTouch(event.getX() + move.x(), event.getY() + move.y()); }
+	public abstract void handlePressTouch(float x, float y);
 	
 	public void update() {
 		this.move.update();
 		this.ani.update();
 	}
 	
-	public abstract void draw(Canvas canvas);
+	public void draw(Canvas canvas) {
+		Bitmap draw = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		Canvas zoneCanvas = new Canvas(draw);
+		drawToBitmapCanvas(zoneCanvas);
+		canvas.drawBitmap(draw, move.x(), move.y(), new Paint());
+	}
+	
+	public abstract void drawToBitmapCanvas(Canvas canvas);
 }

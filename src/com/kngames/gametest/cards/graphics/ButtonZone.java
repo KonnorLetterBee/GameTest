@@ -5,7 +5,6 @@ import com.kngames.gametest.regame.graphics.REGameZone;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 public class ButtonZone extends REGameZone {
 
@@ -25,17 +24,13 @@ public class ButtonZone extends REGameZone {
 	}
 
 	public void postInit() { }
-	public void handleDownTouch(MotionEvent event) {
-		super.handleDownTouch(event);
+	public void handleDownTouch(float x, float y) {
+		super.handleDownTouch(x, y);
 	}
-	public void handleOffDownTouch(MotionEvent event) { }
-	public void handleMoveTouch(MotionEvent event) { }
-	public void handleUpTouch(MotionEvent event) {
-		super.handleUpTouch(event);
-	}
-	public void handlePressTouch(MotionEvent event) {
-		if (active && press != null) press.buttonPressed();
-	}
+	public void handleOffDownTouch(float x, float y) { }
+	public void handleMoveTouch(float x, float y) { }
+	public void handleUpTouch(float x, float y) { super.handleUpTouch(x, y); }
+	public void handlePressTouch(float x, float y) { if (active && press != null) press.buttonPressed(); }
 	
 	public void activate() {
 		this.active = true;
@@ -46,15 +41,16 @@ public class ButtonZone extends REGameZone {
 
 	public void update() { }
 
-	public void draw(Canvas canvas) {
+	private final int TEXT_SIZE = 20;
+	public void drawToBitmapCanvas(Canvas canvas) {
 		if (active) {
 			Paint paint = new Paint();
 			drawTestBorder(canvas);
 			
 			paint.setColor(Color.WHITE);
-			paint.setTextSize(20);
-			int textLocation = (int)move.y() + 20 + 5;
-			canvas.drawText(buttonText, (int)move.x() + 10, textLocation, paint);
+			paint.setTextSize(TEXT_SIZE);
+			int textLocation = TEXT_SIZE + 5;
+			canvas.drawText(buttonText, 10, textLocation, paint);
 		}
 	}
 
