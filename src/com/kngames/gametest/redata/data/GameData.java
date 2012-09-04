@@ -30,8 +30,8 @@ public class GameData {
 		return ExpansionString[value];
 	}
 	
-	public static final Expansion[] expansions = Expansion.values();
-	public static final boolean[] expansionsEnabled = new boolean[] { true, true, true, true, true };
+	public static final Expansion[] expansions = Expansion.expansions;
+	public static final boolean[] expansionsEnabled = Expansion.expansionsEnabled;
 	
 	//	enum to define where an ItemCard comes from
 	public static enum Origin {Inventory, Mansion, MansionWithID}

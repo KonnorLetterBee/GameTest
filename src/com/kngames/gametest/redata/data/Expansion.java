@@ -5,8 +5,13 @@ import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
 import com.kngames.gametest.redata.data.GameData.GameMode;
 
-public enum Expansion {
-	BaseSet() {
+public class Expansion {
+	public static final Expansion[] expansions = new Expansion[] {
+		new BaseSet(), new AlliancesExpans(), new OutbreakExpans(), new NightmareExpans(), new PromoCharacters1()
+	};
+	public static final boolean[] expansionsEnabled = new boolean[] { true, true, true, true, true };
+	
+	public static class BaseSet extends Expansion {
 		public String expansName() { return "Base Set"; }
 		public CharacterCard[] characters() { return new CharacterCard[] {
 			new CharacterCard("Albert Wesker",					1,  0, 100, 
@@ -152,9 +157,9 @@ public enum Expansion {
 					"AC11", "AC12", "AC08", "AC10", "AC01", "AC03", "WE01", "WE08", "WE02", "WE09", "WE13 WE14", "WE15 WE16", "WE10"},
 					"Feel like you can handle it all? With this setup, the most powerful Weapons in the game, the Rocket Launcher and the Gatling Gun, join the Resource Piles. Drop one of these on your friends and they won't be able to recover before you put them down for good.", null)
 		}; }
-	},
+	}
 	
-	AlliancesExpans() {
+	public static class AlliancesExpans  extends Expansion{
 		public String expansName() { return "Alliances"; }
 		public CharacterCard[] characters() { return new CharacterCard[] {
 			new CharacterCard("Carlos Oliveira",				11, 1, 90, 
@@ -280,9 +285,9 @@ public enum Expansion {
 					"AC22", "WE19", "AC18", "WE20 WE21", "AC17", "AC15", "AC14", "WE24", "AC13", "AM04", "WE22 WE23", "AC19"},
 					"Having more cards in your Hand will demand smarter choices be made, less your Partner be killed.", null),
 		}; }
-	},
+	}
 	
-	OutbreakExpans() {
+	public static class OutbreakExpans  extends Expansion{
 		public String expansName() { return "Outbreak"; }
 		public CharacterCard[] characters() { return new CharacterCard[] {
 			new CharacterCard("Excella Gionne",					21, 2, 70, 
@@ -431,9 +436,9 @@ public enum Expansion {
 					"WE19", "WE20 WE21", "AC15", "AC13", "AC14", "AC19", "IT04", "WE29 WE30", "AC22", "AC17", "AM04", "WE22 WE23"},
 					"Welcome to Raccoon City Mall, where anything great is located, everything is on sale, and everyone greets you with rotting teeth and a monstrous hunger! We've got what cures your hunger for Infected destruction!", null),
 		}; }
-	},
+	}
 	
-	NightmareExpans() {
+	public static class NightmareExpans  extends Expansion{
 		public String expansName() { return "Nightmare"; }
 		public CharacterCard[] characters() { return new CharacterCard[] {
 			new CharacterCard("Chris Redfield",					34, 3, 90, 
@@ -575,9 +580,9 @@ public enum Expansion {
 					"WE38 WE39", "WE35", "WE41", "WE32 WE33", "WE34", "AC19", "AC21", "AC15", "WE36 WE37", "WE22 WE23", "AC39", "WE20 WE21"},
 					"Walls and cabinets stand in front of you, filled to the brim with every Weapon imaginable, eagerly awaiting use against those who had wronged their owner...", null)
 		}; }
-	},
+	}
 	
-	PromoCharacters1() {
+	public static class PromoCharacters1  extends Expansion{
 		public String expansName() { return "Promo Characters"; }
 		public CharacterCard[] characters() { return new CharacterCard[] {
 			new CharacterCard("Chris Redfield", true,			1, 5, 90, 
@@ -613,7 +618,7 @@ public enum Expansion {
 					  5, "At the beginning of your turn, if Cindy is at full Health, Cindy deals an additional 20 Damage during this turn.",
 					  ""),
 		}; }
-	};
+	}
 	
 	public String expansName() { return ""; }
 	public CharacterCard[] characters() { return null; }
