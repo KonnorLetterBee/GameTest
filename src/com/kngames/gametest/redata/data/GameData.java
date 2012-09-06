@@ -44,6 +44,7 @@ public class GameData {
 	//	enum to define what game mode a scenario is intended for
 	public static enum GameMode {Story, Mercenary, Versus, Outbreak, PartnerStory}
 	public static final String[] GameModeString = {"Story", "Mercenary", "Versus", "Outbreak", "Story (Partners)"};
+	public static final boolean[] GameModesAllowed = { true, false, false, false, false };
 	public static String getGameModeString(int value) {
 		if (value < 0 || value >= GameModeString.length) return "";
 		return GameModeString[value];

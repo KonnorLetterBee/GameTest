@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -59,17 +60,53 @@ public class REDeckViewZone extends REGameZone {
 		cardPics = new ArrayList<TestRECard>();
 		int cardHeight = this.height();
 		cardBack = Bitmap.createScaledBitmap(image, cardHeight * 2/3, cardHeight, false);
+		DIST_BETWEEN_POINTS = cardBack.getWidth() + DIST_BETWEEN_CARDS;
 	}
 	public void postInit() { }
 	
 	//	XPosition variables
-	private int currentXPos = 0;
-	private int getNextXPos() {
-		int temp = currentXPos;
-		currentXPos += cardBack.getWidth() + 10;
-		return temp;
+	private static final int DIST_BETWEEN_CARDS = 10;
+	private int DIST_BETWEEN_POINTS;
+	
+	private int[] generateCardLocations(int numCards) {
+		int[] cardlocs = new int[numCards];
+		
+		//	generate middlemost left and right points
+		int left = -999;
+		int right = -999;
+		
+		int leftIndex = -1;
+		int rightIndex = -1;
+		
+		int squish = 0;		//	amount to offset the cards to be able to fit them into the view properly
+		
+		if (numCards % 2 == 0) { 	//	even number of cards, no "middle"
+			left = (int) (this.move.x()) + (this.width / 2 - (DIST_BETWEEN_POINTS / 2) + squish) - (cardBack.getWidth() / 2);
+			right = (int) (this.move.x()) + (this.width / 2 + (DIST_BETWEEN_POINTS / 2) - squish) - (cardBack.getWidth() / 2);
+			
+			leftIndex = (numCards / 2) - 1;
+			rightIndex = (numCards / 2);
+		} else if (numCards % 2 == 1) {		//	odd number of cards
+			left = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
+			right = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
+			
+			leftIndex = (numCards / 2);
+			rightIndex = (numCards / 2);
+		}
+		
+		//	left side of middle
+		for (; leftIndex >= 0; leftIndex--) {
+			cardlocs[leftIndex] = left;
+			left -= (DIST_BETWEEN_POINTS - squish);
+		}
+		//	right side of middle
+		for (; rightIndex < numCards; rightIndex++) {
+			cardlocs[rightIndex] = right;
+			right += (DIST_BETWEEN_POINTS - squish);
+		}
+		
+		return cardlocs;
 	}
-	private void resetYPos() { currentXPos = left() + 10; }
 	
 	//	checks to see if the card list is the same as before
 	//	if there is a difference, recreate the pics list
@@ -77,16 +114,13 @@ public class REDeckViewZone extends REGameZone {
 		super.update();
 		if (callback != null) {
 			REDeck newCards = callback.getCompareStack();
-			//	(check no longer applied)
-			//	if the list of cards to display has changed, recreate the list of cards to draw
-			//if (!cards.equals(newCards)) {
 			cards = new REDeck(newCards);
-			resetYPos();
 			cardPics = new ArrayList<TestRECard>();
-				
+			int[] cardLocs = generateCardLocations(cards.size());
+			
 			//	add the card pics for each card, and test to see whether or not they're playable
-			for (int i = 0; i < cards.size(); i++) {
-				cardPics.add(new TestRECard(getNextXPos() + cardBack.getWidth()/2, top() + cardBack.getHeight()/2 - BORDER_WIDTH, 
+			for (int i = 0; i < cards.size() && i < cardLocs.length; i++) {
+				cardPics.add(new TestRECard(cardLocs[i] + cardBack.getWidth()/2, top() + cardBack.getHeight()/2 - BORDER_WIDTH, 
 						(RECard)cards.peek(i), cardBack));
 			}
 		}

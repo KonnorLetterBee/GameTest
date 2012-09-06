@@ -26,7 +26,6 @@ public class GameSetupActivity extends Activity {
 	private String[] playerNumList = new String[] { "1", "2", "3", "4" };
 	private ArrayList<Pair<String,Scenario>> scenData = getScenarios();
 	private String[] scenNameList = getScenarioNameList(scenData);
-	private String[] gameTypeList = GameData.GameModeString;
 	
 	private GameSetupView playerPanel;
 	
@@ -74,7 +73,13 @@ public class GameSetupActivity extends Activity {
 	    scenarioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    scenario.setAdapter(scenarioAdapter);
 	    
-	    ArrayAdapter<String> gameTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gameTypeList);
+	    //	create the list of available game types
+	    ArrayList<String> types = new ArrayList<String>();
+	    for (int i = 0; i < GameData.GameModeString.length && i < GameData.GameModesAllowed.length; i++) {
+	    	if (GameData.GameModesAllowed[i]) types.add(GameData.GameModeString[i]);
+	    }
+	    
+	    ArrayAdapter<String> gameTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
 	    gameTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    gameType.setAdapter(gameTypeAdapter);
 		
