@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -79,16 +78,20 @@ public class REDeckViewZone extends REGameZone {
 		int rightIndex = -1;
 		
 		int squish = 0;		//	amount to offset the cards to be able to fit them into the view properly
+		if (numCards * DIST_BETWEEN_POINTS > this.width)
+			squish = ((numCards * DIST_BETWEEN_POINTS) - this.width) / (numCards - 1);
+		
+		int centerZone = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
 		
 		if (numCards % 2 == 0) { 	//	even number of cards, no "middle"
-			left = (int) (this.move.x()) + (this.width / 2 - (DIST_BETWEEN_POINTS / 2) + squish) - (cardBack.getWidth() / 2);
-			right = (int) (this.move.x()) + (this.width / 2 + (DIST_BETWEEN_POINTS / 2) - squish) - (cardBack.getWidth() / 2);
+			left = centerZone - (DIST_BETWEEN_POINTS / 2) + (squish / 2);
+			right = centerZone + (DIST_BETWEEN_POINTS / 2) - (squish / 2);
 			
 			leftIndex = (numCards / 2) - 1;
 			rightIndex = (numCards / 2);
 		} else if (numCards % 2 == 1) {		//	odd number of cards
-			left = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
-			right = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
+			left = centerZone;
+			right = centerZone;
 			
 			leftIndex = (numCards / 2);
 			rightIndex = (numCards / 2);

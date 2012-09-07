@@ -151,7 +151,7 @@ public class CardEffects {
 	public static class BackToBackTrigger implements OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
 			//	your character is attacked
-			return game.defendingPlayers().contains(actingPlayer);
+			return game.defendingPlayers() != null && game.defendingPlayers().contains(actingPlayer);
 		}
 	}
 
