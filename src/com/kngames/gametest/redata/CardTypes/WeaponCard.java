@@ -36,12 +36,12 @@ public class WeaponCard extends RECard implements Playable {
 	//	adds the cards to the weapons deck of the current player
 	public void onPlay(Game g, Player originPlayer) {
 		damageThisRound = damage;
-		originPlayer.ammo -= this.ammoRec;
+		originPlayer.ammoRemaining -= this.ammoRec;
 		originPlayer.weapons().addBack(this);
 	}
 	
 	//	weapons can be played only during your ExploreWeapons phase and if you have enough ammunition
 	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
-		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.ExploreWeapons && source == actingPlayer.hand() && actingPlayer.ammo >= this.ammoRec;
+		return game.isActivePlayer(actingPlayer) && game.state().currentState() == State.ExploreWeapons && source == actingPlayer.hand() && actingPlayer.ammoRemaining >= this.ammoRec;
 	}
 }

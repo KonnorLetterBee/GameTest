@@ -26,6 +26,7 @@ public class AmmunitionCard extends RECard implements Playable {
 	@Override
 	public void onPlay(Game g, Player originPlayer) {
 		originPlayer.ammo += provAmmo;
+		originPlayer.ammoRemaining += provAmmo;
 		originPlayer.gold += provGold;
 		originPlayer.inPlay().addBack(this);
 	}

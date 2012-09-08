@@ -59,6 +59,7 @@ public class ActionCard extends RECard implements Playable {
 		
 		actingPlayer.actions += extraActions;
 		actingPlayer.ammo += extraAmmo;
+		actingPlayer.ammoRemaining += extraAmmo;
 		actingPlayer.buys += extraBuys;
 		actingPlayer.explores += extraExplores;
 		for (int i = 0; i < extraCards; i++) actingPlayer.drawToHand();

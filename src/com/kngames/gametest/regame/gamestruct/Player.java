@@ -25,6 +25,7 @@ public class Player {
 	
 	public int actions;
 	public int ammo;
+	public int ammoRemaining;
 	public int buys;
 	public int explores;
 	public boolean mustExplore;
@@ -98,6 +99,7 @@ public class Player {
 		//	reset all stats and revives the player
 		actions = 1;
 		ammo = 0;
+		ammoRemaining = 0;
 		buys = 1;
 		explores = 1;
 		mustExplore = false;
@@ -211,7 +213,7 @@ public class Player {
 				String.format("actions:  %d", actions),
 				String.format("buys:     %d", buys),
 				String.format("explores: %d", explores),
-				String.format("ammo:     %d", ammo),
+				String.format("ammo:     %d   (remaining: %d)", ammo, ammoRemaining),
 				String.format("gold:     %d", gold),
 		};
 		if (mustExplore) data[4] += "  (must explore)";
