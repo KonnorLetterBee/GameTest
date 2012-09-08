@@ -71,17 +71,17 @@ public class REDeckViewZone extends REGameZone {
 		int[] cardlocs = new int[numCards];
 		
 		//	generate middlemost left and right points
-		int left = -999;
-		int right = -999;
+		float left = -999;
+		float right = -999;
 		
 		int leftIndex = -1;
 		int rightIndex = -1;
 		
-		int squish = 0;		//	amount to offset the cards to be able to fit them into the view properly
+		float squish = 0;		//	amount to offset the cards to be able to fit them into the view properly
 		if (numCards * DIST_BETWEEN_POINTS > this.width)
-			squish = ((numCards * DIST_BETWEEN_POINTS) - this.width) / (numCards - 1);
+			squish = (float)((numCards * DIST_BETWEEN_POINTS) - this.width) / (numCards - 1);
 		
-		int centerZone = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
+		float centerZone = (int) (this.move.x()) + this.width / 2 - (cardBack.getWidth() / 2);
 		
 		if (numCards % 2 == 0) { 	//	even number of cards, no "middle"
 			left = centerZone - (DIST_BETWEEN_POINTS / 2) + (squish / 2);
@@ -99,12 +99,12 @@ public class REDeckViewZone extends REGameZone {
 		
 		//	left side of middle
 		for (; leftIndex >= 0; leftIndex--) {
-			cardlocs[leftIndex] = left;
+			cardlocs[leftIndex] = (int)left;
 			left -= (DIST_BETWEEN_POINTS - squish);
 		}
 		//	right side of middle
 		for (; rightIndex < numCards; rightIndex++) {
-			cardlocs[rightIndex] = right;
+			cardlocs[rightIndex] = (int)right;
 			right += (DIST_BETWEEN_POINTS - squish);
 		}
 		
