@@ -3,10 +3,10 @@ package com.kngames.gametest.redata.data;
 import android.util.Log;
 
 import com.kngames.gametest.redata.REDeck;
+import com.kngames.gametest.redata.data.ExploreEffects.*;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.*;
 import com.kngames.gametest.regame.gamestruct.ExploreEffect;
-import com.kngames.gametest.regame.gamestruct.ExploreEffect.BuffAllWeaponsEffect;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
@@ -16,7 +16,7 @@ import com.kngames.gametest.regame.graphics.REZoneManager;
 
 public class CardEffects {
 	public static class DeadlyAimEffect implements OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BuffAllWeaponsEffect(10)));
 		}
 	}
@@ -62,7 +62,7 @@ public class CardEffects {
 			}
 		}
 		
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new ShatteredMemoriesState(game, actingPlayer));
 		}
 	}
@@ -104,7 +104,7 @@ public class CardEffects {
 			}
 		}
 		
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new ReloadState(game, actingPlayer));
 		}
 	}
@@ -128,7 +128,7 @@ public class CardEffects {
 			public void onPlayerInputFinish() { }
 		}
 		
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new GetCardFromHandState(game, actingPlayer));
 		}
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
@@ -142,7 +142,7 @@ public class CardEffects {
 
 	//	not implemented
 	public static class BackToBackEffect implements OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			
 		}
 	}
@@ -181,7 +181,7 @@ public class CardEffects {
 			public void onPlayerInputFinish() { }
 		}
 		
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new ItemManagementState(game, actingPlayer));
 		}
 	}
@@ -210,7 +210,7 @@ public class CardEffects {
 			public void onPlayerInputFinish() { }
 		}
 		
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new OminousBattleState(game, actingPlayer));
 		}
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
@@ -218,14 +218,14 @@ public class CardEffects {
 	
 	//	not implemented
 	public static class MasterOfUnlockingEffect implements OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			
 		}
 	}
 	
 	//	not implemented
 	public static class StruggleForSurvivalEffect implements OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			
 		}
 	}
@@ -275,7 +275,7 @@ public class CardEffects {
 				if (actionButton != null) actionButton.deactivate();
 			}
 		}
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.state().startPlayerInput(new AnotherHerbState(game, actingPlayer));
 		}
 	}
@@ -309,8 +309,15 @@ public class CardEffects {
 	}
 	
 	public static class FirstAidSprayEffect implements OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer) {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
 			actingPlayer.changeHealth(9999, true);
+		}
+	}
+	
+	public static class SurvivalKnifeEffect implements OnPlayListener {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
+			if (card instanceof WeaponCard)
+				game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new SurvivalKnifeBuff((WeaponCard)card)));
 		}
 	}
 }

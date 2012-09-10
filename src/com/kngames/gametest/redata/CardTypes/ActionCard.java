@@ -66,7 +66,7 @@ public class ActionCard extends RECard implements Playable {
 		actingPlayer.gold += extraGold;
 		
 		//	if an extra OnPlayListener is attached, use that effect
-		if (playListener != null) playListener.playAction(this, game, actingPlayer);
+		if (playListener != null) playListener.playCard(this, game, actingPlayer);
 		
 		//	if an extra OnPlayFinishListener is attached, use that effect
 		//	otherwise, simply move the card to the field

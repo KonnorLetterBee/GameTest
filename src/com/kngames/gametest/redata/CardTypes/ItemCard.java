@@ -85,7 +85,7 @@ public class ItemCard extends RECard implements Playable, InMansion {
 	
 	public void onPlay(Game game, Player actingPlayer) {
 		//	if an extra OnPlayListener is attached, use that effect
-		if (playListener != null) playListener.playAction(this, game, actingPlayer);
+		if (playListener != null) playListener.playCard(this, game, actingPlayer);
 			
 		//	if an extra OnPlayFinishListener is attached, use that effect
 		//	otherwise, simply move the card to the field

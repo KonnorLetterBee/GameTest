@@ -9,8 +9,8 @@ import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.kngames.gametest.redata.REDeck;
-import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.*;
+import com.kngames.gametest.redata.data.GameData.GameMode;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
 import com.kngames.gametest.regame.gamestruct.GameState.State;
@@ -18,6 +18,9 @@ import com.kngames.gametest.regame.gamestruct.GameState.State;
 public class Game {
 	private static final String TAG = Game.class.getSimpleName();
 	public static final boolean DEBUG_MODE = true;
+	
+	private GameMode gameMode;
+	public GameMode gameMode() { return gameMode; }
 	
 	private Context context;
 	public Context getContext() { return context; }
@@ -68,8 +71,10 @@ public class Game {
 	private int gameTurn;
 	public int gameTurn() { return gameTurn; }
 	
-	private Game(Context context, CharacterCard[] chars, Scenario scen, REDeck mansion) {
+	private Game(Context context, GameMode mode, CharacterCard[] chars, Scenario scen, REDeck mansion) {
 		this.context = context;
+		
+		this.gameMode = mode;
 		
 		//	set the scenario and resource piles
 		shop = new Shop(this, scen, chars.length);
@@ -100,7 +105,7 @@ public class Game {
 	//	instantiates a new Game if one doesn't exist
 	//	otherwise, returns the instance that already exists
 	public static Game startGame(Context context, CharacterCard[] chars, Scenario scen, REDeck mansion) {
-		if (game == null)  game = new Game(context, chars, scen, mansion);
+		if (game == null)  game = new Game(context, GameMode.Story, chars, scen, mansion);
 		else  Log.e(TAG, "Game already instantiated!");
 		return game;
 	}

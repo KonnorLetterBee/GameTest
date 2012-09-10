@@ -2,8 +2,10 @@ package com.kngames.gametest.redata.data;
 
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
+import com.kngames.gametest.redata.CardTypes.WeaponCard.WeaponType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
-import com.kngames.gametest.redata.data.GameData.GameMode;
+import com.kngames.gametest.redata.data.CardEffects.*;
+import com.kngames.gametest.redata.data.GameData.*;
 
 public class Expansion {
 	public static final Expansion[] expansions = new Expansion[] {
@@ -56,22 +58,22 @@ public class Expansion {
 					  "")
 		}; }
 		public WeaponCard[] weapons() { return new WeaponCard[] {
-			new WeaponCard("Grenade", 						1,  0, 40,  0,  15, true,  5, "Story Mode or Mercenary Mode:  Deal 5 additional damage to each adjacent Player to the Attacking Player.\nVersus Mode:  Deal an additional 5 Damage to each adjacent Player to the Attacked Player."),
-			new WeaponCard("Longbow", 						2,  0, 110, 0,  25, false, 5, ""),
-			new WeaponCard("Submission", 					3,  0, 20,  0,  5,  false, 5, "Story Mode or Mercenary Mode:  This Weapon gets +5 Damage while your Character's Health is 80 or higher.\nVersus Mode:  Attacked Player must discard a Weapon from their hand."),
-			new WeaponCard("Combat Knife", 					4,  4, 0,   0,  5,  false, 11, ""),
-			new WeaponCard("Survival Knife", 				5,  4, 50,  0,  10, false, 1, "This Weapon gets +5 Damage for every other Knife Weapon used this turn."),
-			new WeaponCard("Handgun", 						6,  4, 20,  20, 10, false, 9, ""),
-			new WeaponCard("Burst-Fire Handgun",			7,  4, 60,  30, 20, false, 1, "While Attacking with more than 1 Weapon, this Weapon gets +20 Damage during this turn."),
-			new WeaponCard("Six Shooter", 					8,  0, 90,  50, 50, false, 5, ""),
-			new WeaponCard("Gatling Gun", 					9,  0, 110, -1, -1, false, 1, ""),
-			new WeaponCard("Rocket Launcher", 				10, 0, 130, 0,  90, true,  1, "When Trashed, shuffle the the \"Rocket Launcher Case\" Token into the Mansion."),
-			new WeaponCard("Assault Machine Gun", 			11, 0, 30,  40, 20, false, 4, ""),
-			new WeaponCard("Full-Bore Machine Gun", 		12, 0, 100, 70, 40, false, 1, "If you have more than 100 Ammo, this Weapon gets +30 Damage."),
-			new WeaponCard("Pump-Action Shotgun", 			13, 0, 40,  40, 25, false, 4, "You get +1 Explore this turn."),
-			new WeaponCard("Automatic Shotgun", 			14, 0, 80,  80, 50, false, 1, "The next time an Infected is Revealed this turn, if its Health is 40 or lower, defeat it immediately.  Additionally, you get +1 Explore this turn."),
-			new WeaponCard("Bolt-Action Rifle", 			15, 0, 50,  50, 20, false, 4, "Reveal the top card of your Inventory.  If its cost is 40 or more, this Weapon gets +30 Damage this turn."),
-			new WeaponCard("Semi-Automatic Rifle", 			16, 0, 90,  70, 30, false, 1, "This Weapon gets +10 Damage for every Action played this turn."),
+			new WeaponCard("Grenade", 						1,  0, WeaponType.Explosive,  40,  0,  15, true,  5, "Story Mode or Mercenary Mode:  Deal 5 additional damage to each adjacent Player to the Attacking Player.\nVersus Mode:  Deal an additional 5 Damage to each adjacent Player to the Attacked Player."),
+			new WeaponCard("Longbow", 						2,  0, WeaponType.none, 	  110, 0,  25, false, 5, ""),
+			new WeaponCard("Submission", 					3,  0, WeaponType.Melee, 	  20,  0,  5,  false, 5, "Story Mode or Mercenary Mode:  This Weapon gets +5 Damage while your Character's Health is 80 or higher.\nVersus Mode:  Attacked Player must discard a Weapon from their hand."),
+			new WeaponCard("Combat Knife", 					4,  4, WeaponType.Knife, 	  0,   0,  5,  false, 11, ""),
+			new WeaponCard("Survival Knife", 				5,  4, WeaponType.Knife, 	  50,  0,  10, false, 1, "This Weapon gets +5 Damage for every other Knife Weapon used this turn.", new SurvivalKnifeEffect(), null),
+			new WeaponCard("Handgun", 						6,  4, WeaponType.Pistol, 	  20,  20, 10, false, 9, ""),
+			new WeaponCard("Burst-Fire Handgun",			7,  4, WeaponType.Pistol, 	  60,  30, 20, false, 1, "While Attacking with more than 1 Weapon, this Weapon gets +20 Damage during this turn."),
+			new WeaponCard("Six Shooter", 					8,  0, WeaponType.Magnum, 	  90,  50, 50, false, 5, ""),
+			new WeaponCard("Gatling Gun", 					9,  0, WeaponType.none, 	  110, -1, -1, false, 1, ""),
+			new WeaponCard("Rocket Launcher", 				10, 0, WeaponType.Explosive,  130, 0,  90, true,  1, "When Trashed, shuffle the the \"Rocket Launcher Case\" Token into the Mansion."),
+			new WeaponCard("Assault Machine Gun", 			11, 0, WeaponType.MachineGun, 30,  40, 20, false, 4, ""),
+			new WeaponCard("Full-Bore Machine Gun", 		12, 0, WeaponType.MachineGun, 100, 70, 40, false, 1, "If you have more than 100 Ammo, this Weapon gets +30 Damage."),
+			new WeaponCard("Pump-Action Shotgun", 			13, 0, WeaponType.Shotgun, 	  40,  40, 25, false, 4, "You get +1 Explore this turn."),
+			new WeaponCard("Automatic Shotgun", 			14, 0, WeaponType.Shotgun, 	  80,  80, 50, false, 1, "The next time an Infected is Revealed this turn, if its Health is 40 or lower, defeat it immediately.  Additionally, you get +1 Explore this turn."),
+			new WeaponCard("Bolt-Action Rifle", 			15, 0, WeaponType.Rifle, 	  50,  50, 20, false, 4, "Reveal the top card of your Inventory.  If its cost is 40 or more, this Weapon gets +30 Damage this turn."),
+			new WeaponCard("Semi-Automatic Rifle", 			16, 0, WeaponType.Rifle, 	  90,  70, 30, false, 1, "This Weapon gets +10 Damage for every Action played this turn."),
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
 			new ActionCard("Mansion Foyer",						1,  0, 10, 30, 0, 0,  0,  2, 0, 0, ""),
@@ -204,15 +206,15 @@ public class Expansion {
 					  ""),
 		}; }
 		public WeaponCard[] weapons() { return new WeaponCard[] {
-			new WeaponCard("Flash Grenade", 				17, 1, 20,  0,  0,  true,  5, "The next time a \"Las Plagas\" Infected is Revealed this turn, Defeat it immediately.  While your Character(s) is/are Battling, you can move 1 Infected with 20 or less Health to the bottom of the Mansion."),
-			new WeaponCard("Grenade Launcher", 				18, 1, 80,  0,  20, false, 1, "All \"Explosive\" Weapons your Character uses during this turn go to your Discard Pile instead of being Trashed."),
-			new WeaponCard("Telescopic Sight Rifle", 		19, 1, 50,  50, 30, false, 7, "During this turn, when your Character Explores, Reveal the bottom of the Mansion instead of the top."),
-			new WeaponCard("Riot Shotgun", 					20, 1, 70,  60, 45, false, 7, "You get +1 Explore this turn."),
-			new WeaponCard("Triple-Barreled Shotgun", 		21, 1, 90,  80, 50, false, 1, "You get +2 Explore this turn.  This Weapon gets +10 Damage during this turn for every Infected your Character(s) is/are Battling."),
-			new WeaponCard("Russian Assault Rifle", 		22, 1, 40,  -1, -1, false, 4, "You cannot use more than 20 Ammo for this Weapon."),
-			new WeaponCard("Signature Special", 			23, 1, 70,  -1, -1, false, 1, "You cannot use more than 60 Ammo for this Weapon."),
-			new WeaponCard("Flamethrower", 					24, 1, 90,  0,  -1, false, 5, "X() { return 5 times the number of cards in your Discard Pile."),
-			new WeaponCard("Blowback Pistol", 				25, 1, 40,  30, 20, false, 5, "You can Discard any number of \"Pistol\" Weapons from your Hand to give this Weapon +10 Damage during this turn for each \"Pistol\" Weapon Discarded due to this effect."),
+			new WeaponCard("Flash Grenade", 				17, 1, WeaponType.Explosive,  20,  0,  0,  true,  5, "The next time a \"Las Plagas\" Infected is Revealed this turn, Defeat it immediately.  While your Character(s) is/are Battling, you can move 1 Infected with 20 or less Health to the bottom of the Mansion."),
+			new WeaponCard("Grenade Launcher", 				18, 1, WeaponType.Explosive,  80,  0,  20, false, 1, "All \"Explosive\" Weapons your Character uses during this turn go to your Discard Pile instead of being Trashed."),
+			new WeaponCard("Telescopic Sight Rifle", 		19, 1, WeaponType.Rifle,	  50,  50, 30, false, 7, "During this turn, when your Character Explores, Reveal the bottom of the Mansion instead of the top."),
+			new WeaponCard("Riot Shotgun", 					20, 1, WeaponType.Shotgun,	  70,  60, 45, false, 7, "You get +1 Explore this turn."),
+			new WeaponCard("Triple-Barreled Shotgun", 		21, 1, WeaponType.Shotgun,	  90,  80, 50, false, 1, "You get +2 Explore this turn.  This Weapon gets +10 Damage during this turn for every Infected your Character(s) is/are Battling."),
+			new WeaponCard("Russian Assault Rifle", 		22, 1, WeaponType.Rifle,	  40,  -1, -1, false, 4, "You cannot use more than 20 Ammo for this Weapon."),
+			new WeaponCard("Signature Special", 			23, 1, WeaponType.Rifle,	  70,  -1, -1, false, 1, "You cannot use more than 60 Ammo for this Weapon."),
+			new WeaponCard("Flamethrower", 					24, 1, WeaponType.none,		  90,  0,  -1, false, 5, "X() { return 5 times the number of cards in your Discard Pile."),
+			new WeaponCard("Blowback Pistol", 				25, 1, WeaponType.Pistol,	  40,  30, 20, false, 5, "You can Discard any number of \"Pistol\" Weapons from your Hand to give this Weapon +10 Damage during this turn for each \"Pistol\" Weapon Discarded due to this effect."),
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
 			new ActionCard("Partners",							13, 1, 5,  30, 2, 0,  20, 0, 0, 0, "Attach this card to your Partner if you have one.  If this card is attached to your Partner at the beginning of your turn, you get +1 Action during this turn."),
@@ -337,12 +339,12 @@ public class Expansion {
 				new InfectedCharacterCard("Zombie C", 33, 2, 140, "At the beginning of your turn, you can move 1 Infection card in your Hand to the bottom of the Infection Deck.  In that case, move the top card of the Infection Deck to your Hand.", 10),
 			}; }
 		public WeaponCard[] weapons() { return new WeaponCard[] {
-			new WeaponCard("Standard Sidearm", 				26, 2, 30,  10, 10, false, 4, "This Weapon gets +5 Damage for each non-Item you Gained this turn."),
-			new WeaponCard("Samurai Edge", 					27, 2, 70,  60, 30, false, 1, "This Weapon gets +20 Damage for each card you Gained this turn."),
-			new WeaponCard("Stun Rod", 						28, 2, 30,  0,  10, false, 5, "You get +1 Explore this turn.  While your Character is Battling 2 or more Infected, you can move 1 of those Infected with 20 or less Health to the top of the Mansion."),
-			new WeaponCard("Lightning Hawk", 				29, 2, 100, 60, 60, false, 4, ""),
-			new WeaponCard("Hand Cannon", 					30, 2, 120, 80, 80, false, 1, "Trash 1 Ammunition from your Play Area.  This card cannot be attached to Characters."),
-			new WeaponCard("Night Scope Rocket Launcher", 	31, 2, 80,  0,  60, true,  5, "While it is nighttime outside of the game, this Weapon gets +20 Damage."),
+			new WeaponCard("Standard Sidearm", 				26, 2, WeaponType.Pistol,	  30,  10, 10, false, 4, "This Weapon gets +5 Damage for each non-Item you Gained this turn."),
+			new WeaponCard("Samurai Edge", 					27, 2, WeaponType.Pistol,	  70,  60, 30, false, 1, "This Weapon gets +20 Damage for each card you Gained this turn."),
+			new WeaponCard("Stun Rod", 						28, 2, WeaponType.Melee,	  30,  0,  10, false, 5, "You get +1 Explore this turn.  While your Character is Battling 2 or more Infected, you can move 1 of those Infected with 20 or less Health to the top of the Mansion."),
+			new WeaponCard("Lightning Hawk", 				29, 2, WeaponType.Magnum,	  100, 60, 60, false, 4, ""),
+			new WeaponCard("Hand Cannon", 					30, 2, WeaponType.Magnum,	  120, 80, 80, false, 1, "Trash 1 Ammunition from your Play Area.  This card cannot be attached to Characters."),
+			new WeaponCard("Night Scope Rocket Launcher", 	31, 2, WeaponType.Explosive,  80,  0,  60, true,  5, "While it is nighttime outside of the game, this Weapon gets +20 Damage."),
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
 			new ActionCard("Power of the T-Virus",				23, 2, 5,  20, 0, 0,  0,  0, 0, 0, "Your Character deals an additional 20 Damage this turn.  You can Trash this card to get +20 Gold during this turn.  At the end of the turn, if you Explored or Attacked, increase your Infection Level by 1."),
@@ -483,17 +485,17 @@ public class Expansion {
 					  ""),
 		}; }
 		public WeaponCard[] weapons() { return new WeaponCard[] {
-			new WeaponCard("Silver Ghost", 					32, 3, 30,  10, 10, false, 4, "You get +1 Card and +1 Action during this turn."),
-			new WeaponCard("Punisher", 						33, 3, 70,  30, 30, false, 1, "You get +2 Cards and +1 Action during this turn."),
-			new WeaponCard("Mine Thrower", 					34, 3, 120, 0,  0,  false, 5, "This Weapon gets +10 Damage during this turn for each Ammunition in your Play Area."),
-			new WeaponCard("Broken Butterfly", 				35, 3, 80,  40, 40, false, 5, "This Weapon gets +20 Damage if the Exploring Character's Player has 10 or more cards in their inventory."),
-			new WeaponCard("Single Shot Rifle W/ Scope", 	36, 3, 50,  40, 30, false, 4, "Select a Player.  That Player Discards 1 card from their Hand."),
-			new WeaponCard("Special Ops Rifle", 			37, 3, 80,  50, 50, false, 1, "Every non-Exploring Character's Player Discards 1 card from their Hand."),
-			new WeaponCard("Machine Pistol W/ Stock", 		38, 3, 40,  30, 20, false, 4, "You get +20 Gold during this turn."),
-			new WeaponCard("Gangster's Machine Gun", 		39, 3, 80,  50, 50, false, 1, "This Weapon gets +10 Damage during this turn for each \"Machine Gun\" Weapon in your Discard Pile."),
-			new WeaponCard("Flashbang", 					40, 3, 20,  0,  10, true,  5, "You get +1 Explore this turn.  Additionally, while your Character is Exploring, all Revealed Infected with 40 or less Health deal 0 Damage."),
-			new WeaponCard("HE Grenade", 					41, 3, 40,  0,  20, true,  5, ""),
-			new WeaponCard("Incendiary Grenade", 			42, 3, 30,  0,  10, true,  5, "This Weapon gets +5 Damage this turn for each Infected your Character is Battling against.")
+			new WeaponCard("Silver Ghost", 					32, 3, WeaponType.Pistol,	  30,  10, 10, false, 4, "You get +1 Card and +1 Action during this turn."),
+			new WeaponCard("Punisher", 						33, 3, WeaponType.Pistol,	  70,  30, 30, false, 1, "You get +2 Cards and +1 Action during this turn."),
+			new WeaponCard("Mine Thrower", 					34, 3, WeaponType.Explosive,  120, 0,  0,  false, 5, "This Weapon gets +10 Damage during this turn for each Ammunition in your Play Area."),
+			new WeaponCard("Broken Butterfly", 				35, 3, WeaponType.Magnum,	  80,  40, 40, false, 5, "This Weapon gets +20 Damage if the Exploring Character's Player has 10 or more cards in their inventory."),
+			new WeaponCard("Single Shot Rifle W/ Scope", 	36, 3, WeaponType.Rifle,	  50,  40, 30, false, 4, "Select a Player.  That Player Discards 1 card from their Hand."),
+			new WeaponCard("Special Ops Rifle", 			37, 3, WeaponType.Rifle,	  80,  50, 50, false, 1, "Every non-Exploring Character's Player Discards 1 card from their Hand."),
+			new WeaponCard("Machine Pistol W/ Stock", 		38, 3, WeaponType.MachineGun, 40,  30, 20, false, 4, "You get +20 Gold during this turn."),
+			new WeaponCard("Gangster's Machine Gun", 		39, 3, WeaponType.MachineGun, 80,  50, 50, false, 1, "This Weapon gets +10 Damage during this turn for each \"Machine Gun\" Weapon in your Discard Pile."),
+			new WeaponCard("Flashbang", 					40, 3, WeaponType.Explosive,  20,  0,  10, true,  5, "You get +1 Explore this turn.  Additionally, while your Character is Exploring, all Revealed Infected with 40 or less Health deal 0 Damage."),
+			new WeaponCard("HE Grenade", 					41, 3, WeaponType.Explosive,  40,  0,  20, true,  5, ""),
+			new WeaponCard("Incendiary Grenade", 			42, 3, WeaponType.Explosive,  30,  0,  10, true,  5, "This Weapon gets +5 Damage this turn for each Infected your Character is Battling against.")
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
 			new ActionCard("Lonewolf",							32, 3, 5,  80, 0, 0,  20, 0, 0, 0, "When your Character Explores, select 1 Weapon they are using.  That Weapon gets +5 Damage this turn for each card in your Discard Pile."),

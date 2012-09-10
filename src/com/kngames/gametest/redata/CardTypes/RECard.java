@@ -68,11 +68,15 @@ public abstract class RECard extends Card {
 	
 	//	interfaces meant to be used by subclasses
 	public interface OnPlayListener {
-		public void playAction(RECard card, Game game, Player actingPlayer);
+		public void playCard(RECard card, Game game, Player actingPlayer);
 	}
 	
 	public interface OnFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer);
+	}
+	
+	public interface OnExploreFinishListener {
+		public void exploreFinish(RECard card, Game game, Player actingPlayer);
 	}
 	
 	public interface OnTriggerListener {
