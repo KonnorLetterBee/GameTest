@@ -25,6 +25,7 @@ public class WeaponCard extends RECard implements Playable {
 		this.ammoRec = ammo;
 		this.damage = damage;
 		this.trashFlag = trashFlag;
+		this.type = type;
 	}
 	
 	public WeaponCard(String name, int ID, int expans, WeaponType type, int price, int ammo, int damage, boolean trashFlag, int quantity, String text,

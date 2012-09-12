@@ -2,21 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    
-    <TextView
-        android:id="@+id/name_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top"
-        android:text="@string/scen_edit_name" />
 
 	<LinearLayout
 	    android:id="@+id/label_layout"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:gravity="top"
-	    android:weightSum="2" 
-	    android:layout_below="@+id/name_view">
+	    android:weightSum="2">
 	
 	    <TextView
 	        android:id="@+id/available_label"
@@ -44,7 +36,6 @@
 	    android:layout_height="fill_parent"
 	    android:gravity="top"
 	    android:layout_below="@+id/label_layout"
-	    android:layout_above="@+id/button_panel_scroller"
 	    android:weightSum="2" >
 	
 	    <ListView
@@ -64,56 +55,5 @@
 	    </ListView>
 	
 	</LinearLayout>
-
-	<HorizontalScrollView
-	    android:id="@+id/button_panel_scroller"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentLeft="true" >
-		
-		<LinearLayout
-		    android:id="@+id/button_panel"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content" >
-		    
-		    <Button
-		        android:id="@+id/scen_edit_new_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/scen_edit_new" />
-	
-		    <Button
-		        android:id="@+id/scen_edit_save_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/scen_save" />
-	
-		    <Button
-		        android:id="@+id/scen_edit_load_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/scen_load" />
-	
-		    <Button
-		        android:id="@+id/scen_edit_delete_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/scen_edit_delete" />
-		    
-		    <Button
-		        android:id="@+id/scen_edit_preview_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/scen_preview" />
-	
-		    <Button
-		        android:id="@+id/scen_edit_info_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/scen_info" />
-	
-		</LinearLayout>
-	</HorizontalScrollView>
 		
 </RelativeLayout>

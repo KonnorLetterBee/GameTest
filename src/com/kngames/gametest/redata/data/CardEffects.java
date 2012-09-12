@@ -320,4 +320,11 @@ public class CardEffects {
 				game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new SurvivalKnifeBuff((WeaponCard)card)));
 		}
 	}
+	
+	public static class BurstFireHandgunEffect implements OnPlayListener {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
+			if (card instanceof WeaponCard)
+				game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BurstFireHandgunBuff((WeaponCard)card)));
+		}
+	}
 }

@@ -8,8 +8,6 @@ import com.kngames.gametest.redata.data.GameData.Expans;
 import com.kngames.gametest.redata.data.GameData.GameMode;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.RECard;
-import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-import com.kngames.gametest.regame.dialog.CardChooserDialog;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
 import com.kngames.gametest.regame.screens.MainMenu;
 
@@ -21,12 +19,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -36,14 +35,7 @@ public class ScenarioEditorActivity extends Activity {
 	
 	ListView availableList;
 	ListView usedList;
-	TextView scenLabel;
 	TextView inUseLabel;
-	Button newButton;
-	Button saveButton;
-	Button loadButton;
-	Button previewButton;
-	Button deleteButton;
-	Button infoButton;
 	
 	private int customIndex;
 	private ArrayList<ArrayList<Pair<RECard,Integer>>> availableDataList;
@@ -54,114 +46,112 @@ public class ScenarioEditorActivity extends Activity {
 	private ArrayList<String> usedStrings;
 	
 	private ScenarioChooser scenChooser;
-	private CardChooserDialog cardChooser;
-	//private CombineSplitChooserDialog combineSplitChooser;
 	private ArrayList<ArrayList<Pair<RECard,Integer>>> selectedStackList;
 	private int selectedStack;
 	
 	private int listResID = android.R.layout.simple_list_item_1;
 	
 	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
+		super.onCreate(savedInstanceState);
+		Intent intent = getIntent();
 		customIndex = intent.getIntExtra("scen_index", -1);
 
-        if (MainMenu.TABLET_VIEW == false) {
-        	this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        	listResID = R.layout.listentry;
-        }
-        setContentView(R.layout.scenario_editor);
-        
-        availableList = (ListView)findViewById(R.id.scenario_list_available);
-        usedList = (ListView)findViewById(R.id.scenario_list_using);
-        scenLabel = (TextView)findViewById(R.id.name_view);
-        inUseLabel = (TextView)findViewById(R.id.using_label);
-        
-        availableList.setOnItemClickListener(new OnItemClickListener() {
+		if (MainMenu.TABLET_VIEW == false) {
+			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+			listResID = R.layout.listentry;
+		}
+		setContentView(R.layout.scenario_editor);
+		
+		availableList = (ListView)findViewById(R.id.scenario_list_available);
+		usedList = (ListView)findViewById(R.id.scenario_list_using);
+		inUseLabel = (TextView)findViewById(R.id.using_label);
+		
+		availableList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> aV, View v, int index, long l) {
 				ArrayList<Pair<RECard, Integer>> temp = availableDataList.get(index);
 				availableDataList.remove(index);
 				addToStackList(usedDataList, temp);
 			}
 		});
-        
-        availableList.setOnItemLongClickListener(new OnItemLongClickListener() {
+		
+		availableList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> a, View v, int index, long l) {
 				popupStackOptionsDialog(availableDataList, index);
 				return true;
 			}
 		});
-        
-        usedList.setOnItemClickListener(new OnItemClickListener() {
+		
+		usedList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> aV, View v, int index, long l) {
 				ArrayList<Pair<RECard,Integer>> temp = usedDataList.get(index);
 				usedDataList.remove(index);
 				addToStackList(availableDataList, temp);
 			}
 		});
-        
-        usedList.setOnItemLongClickListener(new OnItemLongClickListener() {
+		
+		usedList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> a, View v, int index, long l) {
 				popupStackOptionsDialog(usedDataList, index);
 				return true;
 			}
 		});
-        
-        newButton = (Button)findViewById(R.id.scen_edit_new_button);
-        saveButton = (Button)findViewById(R.id.scen_edit_save_button);
-        loadButton = (Button)findViewById(R.id.scen_edit_load_button);
-        previewButton = (Button)findViewById(R.id.scen_edit_preview_button);
-        deleteButton = (Button)findViewById(R.id.scen_edit_delete_button);
-        infoButton = (Button)findViewById(R.id.scen_edit_info_button);
-        
-        newButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				generateInitialList();
-				customIndex = -1;
-		        GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
-		        updateViews();
-				popupToast("New scenario created.");
-			}
-		});
-        saveButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				saveScenario();
-			}
-		});
-        loadButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				popupScenChooserDialog();
-			}
-		});
-        previewButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				popupPreviewDialog();
-			}
-		});
-        deleteButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				deleteScenario();
-			}
-		});
-        infoButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				startScenInfoEditor();
-			}
-		});
-        
-        generateInitialList();
-        //	determine what to do based on customIndex
-        
-        if (customIndex == -1) {
-        	GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
-        } else if (customIndex >= 0) {
-        	GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
-        	loadScenarioData();
-        } else {
-        	loadScenarioData();
-        }
-        updateViews();
-    }
+		
+		generateInitialList();
+		//	determine what to do based on customIndex
+		
+		if (customIndex == -1) {
+			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+		} else if (customIndex >= 0) {
+			GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
+			loadScenarioData();
+		} else {
+			loadScenarioData();
+		}
+		updateViews();
+	}
+	
+	public void onResume() {
+		super.onResume();
+		updateViews();
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.scenario_editor_menu, menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.new_scen:
+			generateInitialList();
+			customIndex = -1;
+			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+			updateViews();
+			popupToast("New scenario created.");
+			return true;
+		case R.id.load_scen:
+			popupScenChooserDialog();
+			return true;
+		case R.id.save_scen:
+			saveScenario();
+			return true;
+		case R.id.import_scen:
+			popupToast("Not yet implemented.");
+			return true;
+		case R.id.export_scen:
+			popupToast("Not yet implemented.");
+			return true;
+		case R.id.delete_scen:
+			deleteScenario();
+			return true;
+		case R.id.change_info:
+			startScenInfoEditor();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 	
 	//	generates the initial list of cards in the availableDataList array
 	private void generateInitialList() {
@@ -181,19 +171,19 @@ public class ScenarioEditorActivity extends Activity {
 					addToStack(availableDataList.get(availableDataList.size() - 1), tempCard);
 				}
 			}
-    	}
-    	for (int i = 0; i < GameData.Actions.length; i++, listCounter++) {
-    		ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
+		}
+		for (int i = 0; i < GameData.Actions.length; i++, listCounter++) {
+			ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
 			temp.add(new Pair<RECard,Integer>((RECard)GameData.Actions[i], listCounter));
-    		availableDataList.add(temp);
-    	}
-    	for (int i = 0; i < GameData.Items.length; i++, listCounter++) {
-    		if (i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 7) {
-    			ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
+			availableDataList.add(temp);
+		}
+		for (int i = 0; i < GameData.Items.length; i++, listCounter++) {
+			if (i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 7) {
+				ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
 				temp.add(new Pair<RECard,Integer>((RECard)GameData.Items[i], listCounter));
-    			availableDataList.add(temp);
-    		}
-    	}
+				availableDataList.add(temp);
+			}
+		}
 	}
 	
 	//	loads scenario data from the temp variable in ScenInfo
@@ -232,12 +222,12 @@ public class ScenarioEditorActivity extends Activity {
 			customIndex = GameData.CustomScenarios.size();
 			GameData.dbHelper.addScenario(GameData.customTempScenario.second);
 			GameData.CustomScenarios = GameData.loadCustomScenarios();
-	    	GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
+			GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
 		}
 		else {
 			//	replaces a scenario in the database
 			GameData.dbHelper.updateScenario(GameData.customTempScenario.first, GameData.customTempScenario.second);
-	    	GameData.CustomScenarios.set(customIndex, GameData.customTempScenario);
+			GameData.CustomScenarios.set(customIndex, GameData.customTempScenario);
 		}
 		popupToast("Scenario saved.");
 	}
@@ -251,9 +241,9 @@ public class ScenarioEditorActivity extends Activity {
 			GameData.CustomScenarios = GameData.loadCustomScenarios();
 			generateInitialList();
 			customIndex = -1;
-	        GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
-	        updateViews();
-	        popupToast("Scenario erased.");
+			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+			updateViews();
+			popupToast("Scenario erased.");
 		}
 	}
 	
@@ -271,23 +261,21 @@ public class ScenarioEditorActivity extends Activity {
 		GameData.customTempScenario.second.setCards(tags);
 	}
 	
-    //	updates the UI views to reflect current values
-    private void updateViews() {
-    	refreshAvailable();
-    	refreshUsed();
-    	
-    	inUseLabel.setText("In-Use Cards  (" + usedDataList.size() + ")");
-    	try {
-	    	String scenName = GameData.customTempScenario.second.getName();
-	    	if (scenName.equals("")) scenLabel.setText("Untitled Scenario");
-	    	else scenLabel.setText(scenName);
-    	} catch (NullPointerException e) {
-    		scenLabel.setText("Untitled Scenario");
-    	}
-    }
-    
-    //	refreshes the hand String list
-    private void refreshAvailable() {
+	//	updates the UI views to reflect current values
+	private void updateViews() {
+		refreshAvailable();
+		refreshUsed();
+		
+		inUseLabel.setText("In-Use Cards  (" + usedDataList.size() + ")");
+		if (GameData.customTempScenario != null) {
+			String scenName = GameData.customTempScenario.second.getName();
+			if (scenName.equals("")) this.setTitle("Untitled Scenario");
+		   	else this.setTitle(scenName);
+		} else this.setTitle("Untitled Scenario");
+	}
+	
+	//	refreshes the hand String list
+	private void refreshAvailable() {
 		availableStrings = new ArrayList<String>();
 		for (int i = 0; i < availableDataList.size(); i++) {
 			availableStrings.add(getStackString(availableDataList.get(i)));
@@ -295,9 +283,9 @@ public class ScenarioEditorActivity extends Activity {
 		availableAdapter = new ArrayAdapter<String>(this, listResID, availableStrings);
 		availableList.setAdapter(availableAdapter);
 	}
-    
-    //	refreshes the play area String list
-    private void refreshUsed() {
+	
+	//	refreshes the play area String list
+	private void refreshUsed() {
 		usedStrings = new ArrayList<String>();
 		for (int i = 0; i < usedDataList.size(); i++) {
 			usedStrings.add(getStackString(usedDataList.get(i)));
@@ -305,10 +293,10 @@ public class ScenarioEditorActivity extends Activity {
 		usedAdapter = new ArrayAdapter<String>(this, listResID, usedStrings);
 		usedList.setAdapter(usedAdapter);
 	}
-    
-    //	adds a stack of cards to a list of stacks
-    private void addToStackList(ArrayList<ArrayList<Pair<RECard,Integer>>> stackList, ArrayList<Pair<RECard,Integer>> stack) {
-    	int i;
+	
+	//	adds a stack of cards to a list of stacks
+	private void addToStackList(ArrayList<ArrayList<Pair<RECard,Integer>>> stackList, ArrayList<Pair<RECard,Integer>> stack) {
+		int i;
 		for (i = 0; i < stackList.size(); i++) {
 			if (stack.get(0).second.intValue() < stackList.get(i).get(0).second.intValue()) {
 				break;
@@ -316,11 +304,11 @@ public class ScenarioEditorActivity extends Activity {
 		}
 		stackList.add(i, stack);
 		updateViews();
-    }
-    
-    //	adds a card to a stack of cards
-    private void addToStack(ArrayList<Pair<RECard,Integer>> stack, Pair<RECard,Integer> card) {
-    	int i;
+	}
+	
+	//	adds a card to a stack of cards
+	private void addToStack(ArrayList<Pair<RECard,Integer>> stack, Pair<RECard,Integer> card) {
+		int i;
 		for (i = 0; i < stack.size(); i++) {
 			if (card.second.intValue() < stack.get(i).second.intValue()) {
 				break;
@@ -328,37 +316,37 @@ public class ScenarioEditorActivity extends Activity {
 		}
 		stack.add(i, card);
 		updateViews();
-    }
-    
-    //	combines the contents of two stacks to preserve numeric order
-    private ArrayList<Pair<RECard,Integer>> combineStacks(ArrayList<Pair<RECard,Integer>> first, ArrayList<Pair<RECard,Integer>> other) {
-    	ArrayList<Pair<RECard,Integer>> out = new ArrayList<Pair<RECard,Integer>>();
-    	int firstPos = 0, otherPos = 0;
-    	
-    	//	merge sort the lists
-    	while(firstPos < first.size() || otherPos < other.size()) {
-    		if (firstPos < first.size() && otherPos < other.size()) {	//	both lists have extra elements, compare
-    			if (first.get(firstPos).second.intValue() < other.get(otherPos).second.intValue()) {
-    				out.add(first.get(firstPos));
-    				firstPos++;
-    			} else {
-    				out.add(other.get(otherPos));
-    				otherPos++;
-    			}
-    		} else if (firstPos < first.size()) {
-    			out.add(first.get(firstPos));
+	}
+	
+	//	combines the contents of two stacks to preserve numeric order
+	private ArrayList<Pair<RECard,Integer>> combineStacks(ArrayList<Pair<RECard,Integer>> first, ArrayList<Pair<RECard,Integer>> other) {
+		ArrayList<Pair<RECard,Integer>> out = new ArrayList<Pair<RECard,Integer>>();
+		int firstPos = 0, otherPos = 0;
+		
+		//	merge sort the lists
+		while(firstPos < first.size() || otherPos < other.size()) {
+			if (firstPos < first.size() && otherPos < other.size()) {	//	both lists have extra elements, compare
+				if (first.get(firstPos).second.intValue() < other.get(otherPos).second.intValue()) {
+					out.add(first.get(firstPos));
+					firstPos++;
+				} else {
+					out.add(other.get(otherPos));
+					otherPos++;
+				}
+			} else if (firstPos < first.size()) {
+				out.add(first.get(firstPos));
 				firstPos++;
-    		} else {
-    			out.add(other.get(otherPos));
+			} else {
+				out.add(other.get(otherPos));
 				otherPos++;
-    		}
-    	}
-    	
-    	return out;
-    }
-    
+			}
+		}
+		
+		return out;
+	}
+	
 	//	provides a shorthand for starting the scenario editor
-    private void startScenInfoEditor() {
+	private void startScenInfoEditor() {
 		Intent intent = new Intent().setClass(this, ScenarioInfoEditorActivity.class);
 		intent.putExtra("scen_index", customIndex);
 		this.startActivity(intent);
@@ -370,9 +358,9 @@ public class ScenarioEditorActivity extends Activity {
 			public void buttonPressed(int value) {
 				customIndex = value;
 				generateInitialList();
-		        GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
-		        loadScenarioData();
-		        updateViews();
+				GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
+				loadScenarioData();
+				updateViews();
 				scenChooser.dismiss();
 			}
 		});
@@ -466,29 +454,6 @@ public class ScenarioEditorActivity extends Activity {
 			});
 		AlertDialog alert = builder.create();
 		alert.show();
-	}
-	
-	//	pops up a dialog box to preview the scenario in a CardChooserDialog
-	private void popupPreviewDialog() {
-		ArrayList<RECard> list = new ArrayList<RECard>();
-		if (GameData.customTempScenario.second.useBasics()) {
-			list.add(GameData.findCard("Ammo x10", CardType.Ammunition, -1));
-			list.add(GameData.findCard("Ammo x20", CardType.Ammunition, -1));
-			list.add(GameData.findCard("Ammo x30", CardType.Ammunition, -1));
-			list.add(GameData.findCard("Combat Knife", CardType.Weapon, -1));
-			list.add(GameData.findCard("Survival Knife", CardType.Weapon, -1));
-			list.add(GameData.findCard("Handgun", CardType.Weapon, -1));
-			list.add(GameData.findCard("Burst-Fire Handgun", CardType.Weapon, -1));
-			list.add(GameData.findCard("Green Herb", CardType.Item, -1));
-		}
-		for (int i = 0; i < usedDataList.size(); i++) {
-			list.add(usedDataList.get(i).get(0).first);
-		}
-		RECard[] arr = new RECard[list.size()];
-		list.toArray(arr);
-		cardChooser = new CardChooserDialog(this, arr, new CardChooserDialog.CardChosenListener() {
-			public void buttonPressed(int value) {} });
-		cardChooser.show();
 	}
 	
 	private void popupToast(String message) {

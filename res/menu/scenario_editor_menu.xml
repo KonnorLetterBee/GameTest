@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/change_info"
+        android:title="Change Scen. Info"> </item>
+    <item android:id="@+id/new_scen"
+        android:title="New Scenario"> </item>
+    <item android:id="@+id/load_scen"
+        android:title="Load Scenario"> </item>
+	<item android:id="@+id/save_scen"
+        android:title="Save Scenario"> </item>
+	<item android:id="@+id/import_scen"
+        android:title="Import from SD"> </item>
+	<item android:id="@+id/export_scen"
+        android:title="Export to SD"> </item>
+	<item android:id="@+id/delete_scen"
+        android:title="Delete Scenario"> </item>
+</menu>
