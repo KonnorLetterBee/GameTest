@@ -168,7 +168,7 @@ public class Player {
 	//	returns all weapons from the weapons deck to the inPlay area, meant to be called after combat has finished
 	public void flushWeaponsDeck() {
 		while (weapons.size() > 0) {
-			inPlay.addBack(weapons.popFirst());
+			((WeaponCard)weapons.popFirst()).onExploreFinish(game, this);
 		}
 	}
 	

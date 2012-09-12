@@ -60,8 +60,9 @@ public class WeaponCard extends RECard implements Playable {
 	
 	public void onExploreFinish(Game game, Player actingPlayer) {
 		//	if an extra OnExploreFinishListener is attached, use that effect
-		//	otherwise, simply move the card to the field
+		//	otherwise, look at the trash flag to determine behavior
 		if (exploreFinishListener != null) exploreFinishListener.exploreFinish(this, game, actingPlayer);
+		else if (trashFlag == true) game.shop().returnCard(this);
 		else actingPlayer.inPlay().addBack(this);
 	}
 	
