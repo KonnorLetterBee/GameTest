@@ -15,6 +15,9 @@ import com.kngames.gametest.regame.graphics.REDeckViewZone;
 import com.kngames.gametest.regame.graphics.REZoneManager;
 
 public class CardEffects {
+
+	//region Action Effects
+	
 	public static class DeadlyAimEffect implements OnPlayListener {
 		public void playCard(RECard card, Game game, Player actingPlayer) {
 			game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BuffAllWeaponsEffect(10)));
@@ -151,7 +154,7 @@ public class CardEffects {
 	public static class BackToBackTrigger implements OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
 			//	your character is attacked
-			return game.defendingPlayers() != null && game.defendingPlayers().contains(actingPlayer);
+			return game.defendingPlayer() != null && game.defendingPlayer() == actingPlayer;
 		}
 	}
 
@@ -237,6 +240,10 @@ public class CardEffects {
 		}
 	}
 	
+	//endregion
+	
+	//region Item and Token Effects
+	
 	public static class GreenHerbEffect implements OnPlayListener {
 		public static class AnotherHerbState extends PlayerInputState {
 			//	duuuuude...  there's two Krausers...  hand me some more a' that Green Herb...
@@ -314,6 +321,10 @@ public class CardEffects {
 		}
 	}
 	
+	//endregion
+	
+	//region Weapon Effects
+	
 	public static class SurvivalKnifeEffect implements OnPlayListener {
 		public void playCard(RECard card, Game game, Player actingPlayer) {
 			if (card instanceof WeaponCard)
@@ -327,4 +338,52 @@ public class CardEffects {
 				game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BurstFireHandgunBuff((WeaponCard)card)));
 		}
 	}
+	
+	//	"Story Mode or Mercenary Mode:  Deal 5 additional damage to each adjacent Player to the Attacking Player.
+	//	Versus Mode:  Deal an additional 5 Damage to each adjacent Player to the Attacked Player."
+	public static class GrenadeEffect implements OnPlayListener {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
+			int middle = 0, left, right;
+			
+			//	determine middle player
+			switch (game.gameMode()) {
+			case Story:
+			case Mercenary:
+			case Outbreak:
+			case PartnerStory:
+				middle = game.activePlayer();
+				break;
+			case Versus:
+				middle = game.defendingPlayer().playerId();
+				break;
+			}
+			
+			//	determine left and right players and inflict damage to them
+			left = game.playerBefore(middle);
+			right = game.playerAfter(middle);
+			if (left != middle) game.getPlayer(left).changeHealth(5, true);
+			if (right != middle && left != right) game.getPlayer(right).changeHealth(5, true);
+		}
+	}
+
+	//	"Story Mode or Mercenary Mode:  This Weapon gets +5 Damage while your Character's Health is 80 or higher.
+	//	Versus Mode:  Attacked Player must discard a Weapon from their hand."
+	//	not fully implemented
+	//	TODO: implement versus effect
+	public static class SubmissionEffect implements OnPlayListener {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
+			switch (game.gameMode()) {
+			case Story:
+			case Mercenary:
+			case Outbreak:
+			case PartnerStory:
+				if (actingPlayer.health() >= 80) ((WeaponCard)card).damageThisRound += 5;
+				break;
+			case Versus:
+				break;
+			}
+		}
+	}
+	
+	//endregion
 }

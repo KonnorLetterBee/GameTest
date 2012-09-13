@@ -33,6 +33,7 @@ public class Game {
 	private int numPlayers;
 	private Player[] players;
 	public Player[] players() { return players; }
+	public Player getPlayer(int index) { return players[index]; }
 	
 	private int activePlayer = 0;	//	the player currently taking a turn
 	private int visiblePlayer = 0;	//	the player who's hand is showing
@@ -43,6 +44,17 @@ public class Game {
 	public Player getActivePlayer() { return players[activePlayer]; }
 	public Player getVisiblePlayer() { return players[visiblePlayer]; }
 	public Player getTempPlayer() { return players[tempPlayer]; }
+	
+	public int playerBefore(int compare) { 
+		int temp = compare - 1;
+		if (temp < 0) temp = numPlayers - 1;
+		return temp;
+	}
+	public int playerAfter(int compare) { 
+		int temp = compare + 1;
+		if (temp >= numPlayers) temp = 0;
+		return temp;
+	}
 	
 	private Shop shop;
 	public Shop shop() { return shop; }
@@ -61,8 +73,8 @@ public class Game {
 	
 	private ArrayList<Player> attackingPlayers;		//	list of players attacking this explore
 	public ArrayList<Player> attackingPlayers() { return attackingPlayers; }
-	private ArrayList<Player> defendingPlayers;		//	list of players being attacked this explore (Versus mode only)
-	public ArrayList<Player> defendingPlayers() { return defendingPlayers; }
+	private Player defendingPlayer;		//	list of players being attacked this explore (Versus mode only)
+	public Player defendingPlayer() { return defendingPlayer; }
 	private ArrayList<ExploreEffect> exploreEffects;	//	list of effects to apply during this explore (to both attackers and defenders)
 	public ArrayList<ExploreEffect> exploreEffects() { return exploreEffects; }
 	private REDeck defendingInfected;		//	list of infected being attacked this explore
@@ -185,7 +197,7 @@ public class Game {
 	//	preps all explore-specific structures for explore
 	public void startExplore() {
 		attackingPlayers = new ArrayList<Player>();
-		defendingPlayers = new ArrayList<Player>();
+		defendingPlayer = null;
 		defendingInfected = new REDeck();
 		mansionItems = new ArrayList<String>();
 	}
@@ -222,7 +234,7 @@ public class Game {
 		if (attackingPlayers != null) {
 			for (Player p : attackingPlayers) p.flushWeaponsDeck();
 		}
-		defendingPlayers = null;
+		defendingPlayer = null;
 		if (defendingInfected != null) {
 			while (defendingInfected.size() > 0) mansion.addBottom(defendingInfected.popFirst());
 			defendingInfected = null;

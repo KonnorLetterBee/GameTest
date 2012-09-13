@@ -49,9 +49,10 @@ public class WeaponCard extends RECard implements Playable {
 	
 	//	standard onPlay method for weapons
 	//	adds the cards to the weapons deck of the current player
+	//	if ammo or damage are -1 (X), don't add them to ammo, or set damage
 	public void onPlay(Game game, Player actingPlayer) {
-		damageThisRound = damage;
-		actingPlayer.ammoRemaining -= this.ammoRec;
+		if (damage != -1) damageThisRound = damage;
+		if (ammoRec != -1) actingPlayer.ammoRemaining -= this.ammoRec;
 		actingPlayer.weapons().addBack(this);
 		
 		//	if an extra OnPlayListener is attached, use that effect
