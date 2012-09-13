@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.redata.data.GameData;
-import com.kngames.gametest.redata.data.GameData.Expans;
+import com.kngames.gametest.redata.data.Expansion.Expans;
 import com.kngames.gametest.redata.data.GameData.GameMode;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.RECard;
