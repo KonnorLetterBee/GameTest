@@ -3,6 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class MansionInfoFragment extends BaseInfoFragment {
 			String out = String.format(
 					"Card Type:  Infected\nExpansion Set:  %s\nQuantity in Mansion:  %d\n" +
 					"Health:  %d\nDamage:  %d\nDecorations:  %d",
-					GameData.expansString(infected.getExpansion()), infected.getDeckQuantity(), 
+					Expansion.expansString(infected.getExpansion()), infected.getDeckQuantity(), 
 					infected.getHealth(), infected.getDamage(), infected.getDecorations());
 			if (!infected.getText().equals("")) out += "\n\n"+infected.getText();
 			return out;
@@ -43,12 +44,12 @@ public class MansionInfoFragment extends BaseInfoFragment {
 			TokenCard token = (TokenCard)card;
 			return String.format(
 					"Card Type:  Token\nExpansion Set:  %s\nQuantity in Mansion:  %s\n\n%s",
-					GameData.expansString(token.getExpansion()), token.getDeckQuantity(), token.getText());
+					Expansion.expansString(token.getExpansion()), token.getDeckQuantity(), token.getText());
 		} else if (card.getCardType() == CardType.Event) {
 			EventCard event = (EventCard)card;
 			return String.format(
 					"Card Type:  Event\nExpansion Set:  %s\nQuantity in Mansion:  %s\n\n%s",
-					GameData.expansString(event.getExpansion()), event.getDeckQuantity(), event.getText());
+					Expansion.expansString(event.getExpansion()), event.getDeckQuantity(), event.getText());
 		}
 		else return "";
 	}

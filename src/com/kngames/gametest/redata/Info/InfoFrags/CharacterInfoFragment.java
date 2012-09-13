@@ -4,6 +4,8 @@ import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.CardTypes.InfectedCharacterCard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
+import com.kngames.gametest.redata.data.Expansion;
+import com.kngames.gametest.redata.data.Expansion.Expans;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -24,7 +26,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 		if (type == 0 || type == 1) {
 			CharacterCard card;
 			if (type == 1) {
-				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, 5);
+				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, Expans.Promo.ordinal());
 			} else {
 				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, -1);
 			}
@@ -35,7 +37,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			infoText = String.format(
 					"Card Type:  Character\nExpansion Set:  %s\n" +
 					"Max Health:  %d\n\nAbilities:\n\n%d:  %s",
-					GameData.expansString(card.getExpansion()), 
+					Expansion.expansString(card.getExpansion()), 
 					card.getMaxHealth(), card.getA1Price(), card.getAbility1());
 			if (card.getA2Price() != 0) infoText += String.format("\n\n%d:  %s", card.getA2Price(), card.getAbility2());
 			
@@ -50,7 +52,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			infoText = String.format(
 					"Card Type:  Infected Character\nExpansion Set:  %s\n" +
 					"Max Health:  %d\nDamage:  %d\n\n%s",
-					GameData.expansString(card.getExpansion()), 
+					Expansion.expansString(card.getExpansion()), 
 					card.getMaxHealth(), card.getDamage(), card.getText());
 
 			footerText = String.format("CARD ID:  %s", card.getIDString());

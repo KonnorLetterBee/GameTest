@@ -3,6 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.ActionCard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -47,7 +48,7 @@ public class ActionInfoFragment extends BaseInfoFragment {
 		temp = card.getExtraGold();
 		if (temp != 0) extras.append("Extra gold:  "+temp+"\n");
 		
-		String cardText = "Card Type:  Action\nExpansion Set:  "+GameData.expansString(card.getExpansion())+
+		String cardText = "Card Type:  Action\nExpansion Set:  "+Expansion.expansString(card.getExpansion())+
 				"\nQuantity in Deck:  "+card.getDeckQuantity()+"\n" + 
 				extras.toString();
 		if (!card.getText().equals("")) cardText += "\n"+card.getText();

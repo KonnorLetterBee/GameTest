@@ -3,6 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.WeaponCard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -45,7 +46,7 @@ public class WeaponInfoFragment extends BaseInfoFragment {
 		String cardText = String.format(
 				"Card Type:  Weapon\nExpansion Set:  %s\nQuantity in Deck:  %d\nPrice:  %d\n" +
 				"Ammo Requirement:  %s\nDamage:  %s",
-				GameData.expansString(card.getExpansion()), card.getDeckQuantity(),card.getPrice(),
+				Expansion.expansString(card.getExpansion()), card.getDeckQuantity(),card.getPrice(),
 				ammo, damage);
 		if (!cardDesc.equals("")) cardText += "\n\n"+cardDesc;
 		

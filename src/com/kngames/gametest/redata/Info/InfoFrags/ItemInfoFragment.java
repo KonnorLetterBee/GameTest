@@ -3,6 +3,7 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.ItemCard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -32,7 +33,7 @@ public class ItemInfoFragment extends BaseInfoFragment {
 		return String.format(
 				"Card Type:  Item\nExpansion Set:  %s\nQuantity in Deck:  %d\nPrice:  %d\n" +
 				"Found In:  %s\n\n%s",
-				GameData.expansString(card.getExpansion()), card.getDeckQuantity(),card.getPrice(),
+				Expansion.expansString(card.getExpansion()), card.getDeckQuantity(),card.getPrice(),
 				GameData.originString(card.getOrigin()), card.getText());
 	}
 }

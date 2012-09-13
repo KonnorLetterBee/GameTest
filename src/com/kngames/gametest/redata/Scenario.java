@@ -2,8 +2,9 @@ package com.kngames.gametest.redata;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
-import com.kngames.gametest.redata.data.GameData.Expans;
+import com.kngames.gametest.redata.data.Expansion.Expans;
 import com.kngames.gametest.redata.data.GameData.GameMode;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
@@ -75,7 +76,7 @@ public class Scenario {
 	public void setNotes(String notes) { this.notes = notes; }
 	
 	public void setCards(String[] tagList) {
-		this.expansRequired = new boolean[GameData.Expans.values().length];
+		this.expansRequired = new boolean[Expansion.Expans.values().length];
 		//	adds the list of cards specified by tags into the scenario object, then sets the proper Scenario Required flag to true
 		cards = new ArrayList<RECard[]>();
 		if (tagList.length == 1 && tagList[0].equals("")) return;

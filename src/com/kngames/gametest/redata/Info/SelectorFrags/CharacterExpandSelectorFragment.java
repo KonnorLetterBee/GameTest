@@ -1,15 +1,17 @@
 package com.kngames.gametest.redata.Info.SelectorFrags;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
+import com.kngames.gametest.redata.CardTypes.InfectedCharacterCard;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.data.Expansion;
+import com.kngames.gametest.redata.data.Expansion.Expans;
 import com.kngames.gametest.redata.data.GameData;
 
 public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFragment {
@@ -20,63 +22,64 @@ public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFra
 		this.cardCollection = generateCollection();
 	}
 	
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View temp = super.onCreateView(inflater, container, savedInstanceState);
-		
-		listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				int type = 0;
-				if (groupPosition < 4) type = 0;
-				else if (groupPosition == 4) type = 1;
-				else type = 2;
-				
-				openInfoWindow(cardCollection[groupPosition][childPosition].getID(), type);
-				return true;
-			}
-		});
-		
-		return temp;
-	}
-	
 	public static String[] generateTitles() {
-		return new String[] { "Base Set", "Alliances", "Outbreak", "Nightmare", "Promo", "Infected" };
+		Expansion[] temp = Expansion.expansObjectsEnabled();
+		ArrayList<String> titles = new ArrayList<String>();
+		
+		//	fill the String array with expansion titles that actually have characters in them, and add an "Infected" field
+		for (int i = 0; i < temp.length; i++) {
+			if (temp[i].characters() != null) titles.add(temp[i].expansName());
+		}
+		if (Expansion.isExpansEnabled(Expans.Outbreak)) {
+			titles.add("Infected Characters");
+		}
+		
+		String[] titlesArray = new String[titles.size()];
+		titles.toArray(titlesArray);
+		return titlesArray;
 	}
 	
 	public static RECard[][] generateCollection() {
-		RECard[][] array = new RECard[6][];
-		array[0] = new RECard[10];
-		array[1] = new RECard[10];
-		array[2] = new RECard[10];
-		array[3] = new RECard[10];
-		array[4] = new RECard[8];
-		array[5] = new RECard[GameData.InfectedCharacters.length];
+		ArrayList<ArrayList<RECard>> dualList = new ArrayList<ArrayList<RECard>>();
+		for (int i = 0; i <= Expansion.expansions.length + 1; i++) dualList.add(new ArrayList<RECard>());
 		
-		for (int i = 0; i < 10; i++) {
-			array[0][i] = GameData.Characters[i];
+		//	add characters from game expansions
+		for(int i = 0; i < GameData.Characters.length; i++) {
+			RECard temp = GameData.Characters[i];
+			int slot = temp.getExpansion();
+			dualList.get(slot).add(temp);
 		}
-		for (int i = 0; i < 10; i++) {
-			array[1][i] = GameData.Characters[i+10];
+		
+		//	add infected characters if Outbreak expansion is present
+		if (Expansion.isExpansEnabled(Expans.Outbreak)) {
+			for(int i = 0; i < GameData.InfectedCharacters.length; i++) {
+				RECard temp = GameData.InfectedCharacters[i];
+				dualList.get(dualList.size() - 1).add(temp);
+			}
 		}
-		for (int i = 0; i < 10; i++) {
-			array[2][i] = GameData.Characters[i+20];
+		
+		//	remove character lists that have nothing in them
+		for (int i = dualList.size() - 1; i >= 0; i--) {
+			if (dualList.get(i).size() == 0) dualList.remove(i);
 		}
-		for (int i = 0; i < 10; i++) {
-			array[3][i] = GameData.Characters[i+30];
+		
+		RECard[][] array = new RECard[dualList.size()][];
+		for (int i = 0; i < dualList.size(); i++) {
+			array[i] = new RECard[dualList.get(i).size()];
+			dualList.get(i).toArray(array[i]);
 		}
-		for (int i = 0; i < 8; i++) {
-			array[4][i] = GameData.Characters[i+40];
-		}
-		for (int i = 0; i < GameData.InfectedCharacters.length; i++) {
-			array[5][i] = GameData.InfectedCharacters[i];
-		}
+		
 		return array;
 	}
 	
 	public boolean onClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 		int type = 0;
-		if (groupPosition < 4) type = 0;
-		else if (groupPosition == 4) type = 1;
-		else type = 2;
+		RECard temp = cardCollection[groupPosition][childPosition];
+		if (temp instanceof InfectedCharacterCard) {
+			type = 2;
+		} else if (temp.getExpansion() == Expans.Promo.ordinal()) {
+			type = 1;
+		}
 		
 		openInfoWindow(cardCollection[groupPosition][childPosition].getID(), type);
 		return true;

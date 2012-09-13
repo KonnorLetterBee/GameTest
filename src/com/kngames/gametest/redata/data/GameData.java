@@ -12,6 +12,7 @@ import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
+import com.kngames.gametest.redata.data.Expansion.Expans;
 
 public class GameData {
 	
@@ -20,15 +21,6 @@ public class GameData {
 	///
 	
 	public static final String TAG = GameData.class.getSimpleName();
-	
-	//	enum to define which expansion a card belongs to
-	//	TODO: replace with the Expansion enum permanently
-	public static enum Expans {Base, Alliaces, Outbreak, Nightmare, Basic, Promo, Custom}
-	private static String[] ExpansionString = {"Base Set", "Alliances", "Outbreak", "Nightmare", "Basic", "Promo", "Custom"};
-	public static String expansString(int value) {
-		if (value < 0 || value >= ExpansionString.length) return "";
-		return ExpansionString[value];
-	}
 	
 	public static final Expansion[] expansions = Expansion.expansions;
 	public static final boolean[] expansionsEnabled = Expansion.expansEnabled;

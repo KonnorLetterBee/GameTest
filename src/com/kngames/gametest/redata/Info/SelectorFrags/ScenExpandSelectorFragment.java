@@ -47,7 +47,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 		Expansion[] temp = Expansion.expansObjectsEnabled();
 		ArrayList<String> titles = new ArrayList<String>();
 		
-		//	fill the String array with scenario titles that actually have scenarios in them, and add a "Custom" field
+		//	fill the String array with expansion titles that actually have scenarios in them, and add a "Custom" field
 		for (int i = 0; i < temp.length; i++) {
 			if (temp[i].scenarios() != null) titles.add(temp[i].expansName());
 		}

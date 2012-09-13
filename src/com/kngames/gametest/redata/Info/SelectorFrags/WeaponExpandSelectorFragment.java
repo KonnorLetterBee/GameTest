@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragment {
@@ -15,30 +16,46 @@ public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragme
 	}
 	
 	public static String[] generateTitles() {
-		return new String[] { "Basic Resources", "Base Set", "Alliances", "Outbreak", "Nightmare" };
+		Expansion[] temp = Expansion.expansObjectsEnabled();
+		ArrayList<String> titles = new ArrayList<String>();
+		
+		//	fill the String array with expansion titles that actually have weapons in them
+		titles.add("Basic Resources");
+		for (int i = 0; i < temp.length; i++) {
+			if (temp[i].weapons() != null) titles.add(temp[i].expansName());
+		}
+		
+		String[] titlesArray = new String[titles.size()];
+		titles.toArray(titlesArray);
+		return titlesArray;
 	}
 	
 	public static RECard[][] generateCollection() {
 		ArrayList<ArrayList<RECard>> dualList = new ArrayList<ArrayList<RECard>>();
-		for (int i = 0; i < 5; i++) dualList.add(new ArrayList<RECard>());
+		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<RECard>());
+		
+		//	add weapons from game expansions
 		for(int i = 0; i < GameData.Weapons.length; i++) {
 			RECard temp = GameData.Weapons[i];
-			int slot = temp.getExpansion() + 1;
-			if (slot == 5) slot = 0;	//	to account for basics
+			int slot = temp.getExpansion();
+			
+			//	handle basic resources
+			if (slot == Expansion.Expans.Basic.ordinal()) {	slot = 0; }
+			else { slot++; }
+			
 			dualList.get(slot).add(temp);
 		}
 		
-		RECard[][] array = new RECard[5][];
-		array[0] = new RECard[dualList.get(0).size()];
-		array[1] = new RECard[dualList.get(1).size()];
-		array[2] = new RECard[dualList.get(2).size()];
-		array[3] = new RECard[dualList.get(3).size()];
-		array[4] = new RECard[dualList.get(4).size()];
-		dualList.get(0).toArray(array[0]);
-		dualList.get(1).toArray(array[1]);
-		dualList.get(2).toArray(array[2]);
-		dualList.get(3).toArray(array[3]);
-		dualList.get(4).toArray(array[4]);
+		//	remove weapon lists that have nothing in them
+		for (int i = dualList.size() - 1; i >= 0; i--) {
+			if (dualList.get(i).size() == 0) dualList.remove(i);
+		}
+		
+		RECard[][] array = new RECard[dualList.size()][];
+		for (int i = 0; i < dualList.size(); i++) {
+			array[i] = new RECard[dualList.get(i).size()];
+			dualList.get(i).toArray(array[i]);
+		}
 		
 		return array;
 	}

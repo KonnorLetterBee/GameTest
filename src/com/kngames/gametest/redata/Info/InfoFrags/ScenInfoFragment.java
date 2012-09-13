@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -51,7 +52,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		for (int i = 0; i < expansReqArray.length; i++) {
 			if (expansReqArray[i] == true) {
 				if (expCount > 0) expansReq.append(", ");
-				expansReq.append(GameData.expansString(i));
+				expansReq.append(Expansion.expansString(i));
 				expCount++;
 			}
 		}
