@@ -8,6 +8,7 @@ import com.kngames.gametest.R;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
@@ -31,8 +32,6 @@ public class ScenExpandSelectorFragment extends Fragment {
 	private static final String PARENT_KEY = "parent";
 	private static final String CHILD_KEY = "child";
 	
-	private static final int CUSTOM_SLOT = 4;
-	
 	public ScenExpandSelectorFragment() {
 		super();
 		this.catTitles = generateTitles();
@@ -44,35 +43,48 @@ public class ScenExpandSelectorFragment extends Fragment {
 		this.getActivity().setTitle("Scenario Encyclopedia");
 	}
 	
-	public static String[] generateTitles() {
-		return new String[] { "Base Set", "Alliances", "Outbreak", "Nightmare", "Custom Scenarios" };
+	private String[] generateTitles() {
+		Expansion[] temp = Expansion.expansObjectsEnabled();
+		ArrayList<String> titles = new ArrayList<String>();
+		
+		//	fill the String array with scenario titles that actually have scenarios in them, and add a "Custom" field
+		for (int i = 0; i < temp.length; i++) {
+			if (temp[i].scenarios() != null) titles.add(temp[i].expansName());
+		}
+		titles.add("Custom Scenarios");
+		
+		String[] titlesArray = new String[titles.size()];
+		titles.toArray(titlesArray);
+		return titlesArray;
 	}
 	
-	public static Scenario[][] generateCollection() {
+	private Scenario[][] generateCollection() {
 		ArrayList<ArrayList<Scenario>> dualList = new ArrayList<ArrayList<Scenario>>();
-		for (int i = 0; i < 5; i++) dualList.add(new ArrayList<Scenario>());
+		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<Scenario>());
+		
+		//	add scenarios from game expansions
 		for(int i = 0; i < GameData.Scenarios.length; i++) {
 			Scenario temp = GameData.Scenarios[i];
 			int slot = temp.getExpans();
 			dualList.get(slot).add(temp);
 		}
 		
+		//	add custom scenarios
 		for(int i = 0; i < GameData.CustomScenarios.size(); i++) {
 			Scenario temp = GameData.CustomScenarios.get(i).second;
-			dualList.get(CUSTOM_SLOT).add(temp);
+			dualList.get(dualList.size() - 1).add(temp);
 		}
 		
-		Scenario[][] array = new Scenario[5][];
-		array[0] = new Scenario[dualList.get(0).size()];
-		array[1] = new Scenario[dualList.get(1).size()];
-		array[2] = new Scenario[dualList.get(2).size()];
-		array[3] = new Scenario[dualList.get(3).size()];
-		array[4] = new Scenario[dualList.get(4).size()];
-		dualList.get(0).toArray(array[0]);
-		dualList.get(1).toArray(array[1]);
-		dualList.get(2).toArray(array[2]);
-		dualList.get(3).toArray(array[3]);
-		dualList.get(4).toArray(array[4]);
+		//	remove scenario lists that have nothing in them
+		for (int i = dualList.size() - 1; i >= 0; i--) {
+			if (dualList.get(i).size() == 0) dualList.remove(i);
+		}
+		
+		Scenario[][] array = new Scenario[dualList.size()][];
+		for (int i = 0; i < dualList.size(); i++) {
+			array[i] = new Scenario[dualList.get(i).size()];
+			dualList.get(i).toArray(array[i]);
+		}
 		
 		return array;
 	}

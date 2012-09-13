@@ -31,7 +31,7 @@ public class GameData {
 	}
 	
 	public static final Expansion[] expansions = Expansion.expansions;
-	public static final boolean[] expansionsEnabled = Expansion.expansionsEnabled;
+	public static final boolean[] expansionsEnabled = Expansion.expansEnabled;
 	
 	//	enum to define where an ItemCard comes from
 	public static enum Origin {Inventory, Mansion, MansionWithID}
@@ -226,7 +226,10 @@ public class GameData {
 		for (int i = 0; i < expansions.length; i++) {
 			if (expansionsEnabled[i] == true && expansions[i].scenarios() != null) {
 				for (int j = 0; j < expansions[i].scenarios().length; j++) {
-					scenarios.add(expansions[i].scenarios()[j]);
+					Scenario temp = expansions[i].scenarios()[j];
+					if (temp.complete()) {
+						scenarios.add(temp);
+					}
 				}
 			}
 		}

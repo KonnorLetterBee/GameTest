@@ -1,5 +1,7 @@
 package com.kngames.gametest.redata.data;
 
+import java.util.ArrayList;
+
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.WeaponCard.WeaponType;
@@ -9,9 +11,24 @@ import com.kngames.gametest.redata.data.GameData.*;
 
 public class Expansion {
 	public static final Expansion[] expansions = new Expansion[] {
-		new BaseSet(), new AlliancesExpans(), new OutbreakExpans(), new NightmareExpans(), new PromoCharacters1()
+		new BaseSet(), new AlliancesExpans(), new OutbreakExpans(), new NightmareExpans(), new MercenariesExpans(), new PromoCharacters1()
 	};
-	public static final boolean[] expansionsEnabled = new boolean[] { true, true, true, true, true };
+	public static final boolean[] expansEnabled = new boolean[] { true, true, true, true, false, true };
+	private static Expansion[] expansObjectsEnabled = null;
+	
+	//	returns a clone of the expansObjectsEnabled array (so it can't be modified by other methods)
+	//	if the array is null, generate it
+	public static Expansion[] expansObjectsEnabled() {
+		if (expansObjectsEnabled == null) {
+			ArrayList<Expansion> expans = new ArrayList<Expansion>();
+			for (int i = 0; i < expansEnabled.length; i++) {
+				if (expansEnabled[i]) expans.add(expansions[i]);
+			}
+			expansObjectsEnabled = new Expansion[expans.size()];
+			expans.toArray(expansObjectsEnabled);
+		}
+		return expansObjectsEnabled.clone();
+	}
 	
 	public static class BaseSet extends Expansion {
 		public String expansName() { return "Base Set"; }
@@ -581,6 +598,32 @@ public class Expansion {
 			new Scenario (54, "Infested Gun Shop", GameMode.Mercenary, 3, true, new String[] {
 					"WE38 WE39", "WE35", "WE41", "WE32 WE33", "WE34", "AC19", "AC21", "AC15", "WE36 WE37", "WE22 WE23", "AC39", "WE20 WE21"},
 					"Walls and cabinets stand in front of you, filled to the brim with every Weapon imaginable, eagerly awaiting use against those who had wronged their owner...", null)
+		}; }
+	}
+	
+	//	TODO: change deck quantities when the set is finally released
+	public static class MercenariesExpans extends Expansion {
+		public String expansName() { return "Mercenaries"; }
+		public CharacterCard[] characters() { return new CharacterCard[] {
+			new CharacterCard("Hunk",			45,  5, 90, 
+					  3, "When Hunk would take any damage, you can lower that Damage by 20.  In that case, Gain 1 \"Ammo x10\".", 
+					  0, "",
+					  "")
+		}; }
+		public WeaponCard[] weapons() { return new WeaponCard[] {
+			new WeaponCard("Custom Standard Sidearm", 	48,  5, WeaponType.Pistol,	  20, 20, 10, false,  0, "You can give this Weapon +10 Damage during this turn.  In that case, Trash this Weapon at the end of this turn."),
+			new WeaponCard("Reliable Blade", 			50,  5, WeaponType.Knife,	  0,  0,  5,  false,  0, "When you Defeat 1 or more Infected during this turn, you can Gain +10 Gold.  In that case, Trash this Weapon at the end of the turn."),
+		}; }
+		public ActionCard[] actions() { return new ActionCard[] { }; }
+		public ItemCard[] items() { return new ItemCard[] { }; }
+		public MansionCard[] mansion() { return new MansionCard[] { }; }
+		public AmmunitionCard[] ammunition() { return new AmmunitionCard[] {
+			new AmmunitionCard("Ammo x10", 5, 5, 0,  28, 10, 10),
+			new AmmunitionCard("Ammo x20", 6, 5, 30, 15, 20, 20),
+			new AmmunitionCard("Ammo x30", 7, 5, 60, 15, 30, 30),
+		}; }
+		public Scenario[] scenarios() { return new Scenario[] {
+			
 		}; }
 	}
 	

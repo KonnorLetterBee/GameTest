@@ -14,6 +14,7 @@ public class Scenario {
 	private GameMode mode;
 	private int expans;
 	private boolean[] expansRequired;
+	private boolean complete = true;
 	private ArrayList<RECard[]> cards;
 	private boolean basics;
 	private String desc;
@@ -60,6 +61,7 @@ public class Scenario {
 	public GameMode getMode() { return mode; }
 	public int getExpans() { return expans; }
 	public boolean[] getExpansRequired() { return expansRequired; }
+	public boolean complete() { return complete; }
 	public ArrayList<RECard[]> getCards() { return cards; }
 	public boolean useBasics() { return basics; }
 	public String getDesc() { return desc; }
@@ -81,8 +83,13 @@ public class Scenario {
 		for (int i = 0; i < tagList.length; i++) {
 			RECard[] temp = GameData.generateStackByTags(tagList[i]);
 			cards.add(temp);
-			for(RECard card : temp)
-				expansRequired[card.getExpansion()] = true;
+			for(RECard card : temp) {
+				if (card != null) expansRequired[card.getExpansion()] = true;
+				else {	//	if the card was not found, set complete to false and stop creating the list
+					complete = false;
+					return;
+				}
+			}
 		}
 	}
 	
