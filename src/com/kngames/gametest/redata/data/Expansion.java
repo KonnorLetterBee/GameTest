@@ -86,9 +86,9 @@ public class Expansion {
 					  "")
 		}; }
 		public WeaponCard[] weapons() { return new WeaponCard[] {
-			new WeaponCard("Grenade", 					1,  exp,		WeaponType.Explosive,	  40,  0,  15, true,  5, "Story Mode or Mercenary Mode:  Deal 5 additional damage to each adjacent Player to the Attacking Player.\nVersus Mode:  Deal an additional 5 Damage to each adjacent Player to the Attacked Player."),
+			new WeaponCard("Grenade", 					1,  exp,		WeaponType.Explosive,	  40,  0,  15, true,  5, "Story Mode or Mercenary Mode:  Deal 5 additional damage to each adjacent Player to the Attacking Player.\nVersus Mode:  Deal an additional 5 Damage to each adjacent Player to the Attacked Player.", new GrenadeEffect(), null),
 			new WeaponCard("Longbow", 					2,  exp,		WeaponType.Bow, 	  	  110, 0,  25, false, 5, ""),
-			new WeaponCard("Submission", 				3,  exp, 		WeaponType.Melee,	 	  20,  0,  5,  false, 5, "Story Mode or Mercenary Mode:  This Weapon gets +5 Damage while your Character's Health is 80 or higher.\nVersus Mode:  Attacked Player must discard a Weapon from their hand."),
+			new WeaponCard("Submission", 				3,  exp, 		WeaponType.Melee,	 	  20,  0,  5,  false, 5, "Story Mode or Mercenary Mode:  This Weapon gets +5 Damage while your Character's Health is 80 or higher.\nVersus Mode:  Attacked Player must discard a Weapon from their hand.", new SubmissionEffect(), null),
 			new WeaponCard("Combat Knife", 				4,  basicExp,	WeaponType.Knife,		  0,   0,  5,  false, 11, ""),
 			new WeaponCard("Survival Knife", 			5,  basicExp,	WeaponType.Knife,	 	  50,  0,  10, false, 1, "This Weapon gets +5 Damage for every other Knife Weapon used this turn.", new SurvivalKnifeEffect(), null),
 			new WeaponCard("Handgun", 					6,  basicExp,	WeaponType.Pistol,	 	  20,  20, 10, false, 9, ""),

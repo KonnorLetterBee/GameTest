@@ -67,18 +67,23 @@ public abstract class RECard extends Card {
 	}
 	
 	//	interfaces meant to be used by subclasses
+	
+	//	used when a card is played (usually from the hand)
 	public interface OnPlayListener {
 		public void playCard(RECard card, Game game, Player actingPlayer);
 	}
 	
+	//	used 
 	public interface OnFinishListener {
 		public void finish(RECard card, Game game, Player actingPlayer);
 	}
 	
+	//	used by weapons after exploring has concluded, and the weapons are placed in the play area
 	public interface OnExploreFinishListener {
 		public void exploreFinish(RECard card, Game game, Player actingPlayer);
 	}
 	
+	//	used by cards that can respond to certain situations
 	public interface OnTriggerListener {
 		public boolean isTriggered(RECard card, Game game, Player actingPlayer);
 	}

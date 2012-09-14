@@ -385,5 +385,13 @@ public class CardEffects {
 		}
 	}
 	
+	//	"When Trashed, shuffle the the "Rocket Launcher Case" Token into the Mansion."
+	//	not fully implemented
+	public static class RocketLauncherEffect implements OnPlayListener {
+		public void playCard(RECard card, Game game, Player actingPlayer) {
+			
+		}
+	}
+	
 	//endregion
 }
