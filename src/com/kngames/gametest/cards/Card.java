@@ -2,26 +2,48 @@ package com.kngames.gametest.cards;
 
 import com.kngames.gametest.engine.graphics.DrawObject;
 
-public abstract class Card {
+public class Card {
 	protected int cardID;
+	
+	@Deprecated
 	protected String tag;
+	
+	protected String catTag;
+	protected int intTag;
+	
 	protected DrawObject cardPic;
 	
-	//	constructs a default card with no picture
+	//	constructs a card object with no picture
 	public Card(int ID) {
 		this.cardID = ID;
 	}
 	
-	//	constructs a default card with a specified DrawObject
-	public Card(int ID, DrawObject draw) {
+	//	constructs a card object with a specified tag and no picture
+	public Card(int ID, String tag) {
 		this.cardID = ID;
-		this.cardPic = draw;
+		this.setTags(tag);
+	}
+	
+	//	constructs a card object with a specified picture
+	public Card(int ID, DrawObject pic) {
+		this.cardID = ID;
+		this.cardPic = pic;
+	}
+	
+	//	constructs a card object with a specified tag and specified picture
+	public Card(int ID, String tag, DrawObject pic) {
+		this.cardID = ID;
+		this.setTags(tag);
 	}
 	
 	//	accessor methods
 	public int getID() { return cardID; }
-	public String getTag() { return tag; }
+	public String getCatTag() { return catTag; }
+	public int getIntTag() { return intTag; }
 	public DrawObject pic() { return cardPic; }
+	
+	@Deprecated
+	public String getTag() { return tag; }
 	
 	//	checks to see if two cards have the same tag
 	public boolean equals(Object other) {
@@ -29,7 +51,8 @@ public abstract class Card {
 		try { otherCard = (Card)other; }
 		catch (Exception e) { return false; }
 		
-		return this.tag.equals(otherCard.tag);
+		return (this.tag.equals(otherCard.tag)) ||
+				(this.catTag.equals(otherCard.catTag) && this.intTag == otherCard.intTag);
 	}
 	
 	//	provides a way to get a card based on tag info provided by extended classes
@@ -37,8 +60,16 @@ public abstract class Card {
 		return null;
 	}
 	
+	//	splits the tag string by the semicolon and sets the appropriate tag fields
+	public void setTags(String fullTag) {
+		String[] fields = fullTag.split(";");
+		this.catTag = fields[0];
+		this.intTag = Integer.parseInt(fields[1]);
+	}
+	
 	//	provides a way to generate a (usually) unique tag for extended classes
-	protected abstract String generateTag();
+	@Deprecated
+	protected String generateTag() { return ""; }
 	
 	//	the general toString method of a card is to output its tag that was generated during construction
 	@Override

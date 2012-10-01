@@ -1,6 +1,7 @@
 package com.kngames.gametest.regame.screens;
 
 import com.kngames.gametest.GameLoopActivity;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.*;
 import com.kngames.gametest.redata.Info.MainInfoListActivity;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;
@@ -51,8 +52,7 @@ public class MainMenu extends Activity {
 	}
 	
 	private void initializeGlobals() {
-		GameData.dbHelper = new ScenDBHelper(this);
-		GameData.CustomScenarios = GameData.loadCustomScenarios();
+		GameData.initialize(this);
 		
 		Display display = getWindowManager().getDefaultDisplay();
         int screenWidth = display.getWidth();

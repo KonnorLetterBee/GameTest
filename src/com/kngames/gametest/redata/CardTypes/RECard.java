@@ -18,7 +18,7 @@ public abstract class RECard extends Card {
 	public static final String[] CardTypes = {"Ammunition", "Character", "Infected Character", "Weapon", "Action", "Item", "Infected", "Event", "Token", "Infection"};
 	
 	public RECard(String name, CardType type, String idPrefix, int ID, int expans, int quantity, String text) {
-		super(ID);
+		super(ID, idPrefix+";"+ID);
 		this.name = name;
 		this.cardType = type;
 		this.idPrefix = idPrefix;

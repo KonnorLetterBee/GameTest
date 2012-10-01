@@ -2,10 +2,12 @@ package com.kngames.gametest.redata.data;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.util.Pair;
 
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.Scenario;
@@ -46,18 +48,19 @@ public class GameData {
 	///		Data Lists
 	///
 	
-	public static final CharacterCard[] Characters = buildCharacterList();
-	public static final WeaponCard[] Weapons = buildWeaponsList();
-	public static final ActionCard[] Actions = buildActionsList();
-	public static final ItemCard[] Items = buildItemsList();
-	public static final MansionCard[] Mansions = buildMansionsList();
-	public static final InfectionCard[] Infections = buildinfectionsList();
-	public static final InfectedCharacterCard[] InfectedCharacters = buildInfectedCharacterList();
-	public static final AmmunitionCard[] Ammunition = buildAmmunitionList();
-	public static final Scenario[] Scenarios = buildScenarioList();
+	private static CardData data;
 	
-	public static Scenario testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
-			"WE01", "WE02", "WE03", "WE08", "WE09", "WE10", "WE11 WE12", "WE13 WE14", "WE15 WE16", "AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12", "IT03"}, null, null);
+	public static CharacterCard[] Characters;
+	public static WeaponCard[] Weapons;
+	public static ActionCard[] Actions;
+	public static ItemCard[] Items;
+	public static MansionCard[] Mansions;
+	public static InfectionCard[] Infections;
+	public static InfectedCharacterCard[] InfectedCharacters;
+	public static AmmunitionCard[] Ammunition;
+	public static Scenario[] Scenarios;
+	
+	public static Scenario testScenario;
 	
 	
 	///
@@ -100,6 +103,26 @@ public class GameData {
 	///		List Building Methods
 	///
 	
+	public static void initialize(Context context) {
+		data = CardData.initCardData();
+		
+		Characters = buildCharacterList();
+		Weapons = buildWeaponsList();
+		Actions = buildActionsList();
+		Items = buildItemsList();
+		Mansions = buildMansionsList();
+		Infections = buildinfectionsList();
+		InfectedCharacters = buildInfectedCharacterList();
+		Ammunition = buildAmmunitionList();
+		Scenarios = buildScenarioList();
+		
+		dbHelper = new ScenDBHelper(context);
+		CustomScenarios = GameData.loadCustomScenarios();
+		
+		testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
+				"WE01", "WE02", "WE03", "WE08", "WE09", "WE10", "WE11 WE12", "WE13 WE14", "WE15 WE16", "AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12", "IT03"}, null, null);
+	}
+	
 	public static CharacterCard[] buildCharacterList() {
 		Log.d(TAG, "loading characters");
 		ArrayList<CharacterCard> characters = new ArrayList<CharacterCard>();
@@ -107,6 +130,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].characters() != null) {
 				for (int j = 0; j < expansions[i].characters().length; j++) {
 					characters.add(expansions[i].characters()[j]);
+					data.addCard(expansions[i].characters()[j]);
 				}
 			}
 		}
@@ -121,6 +145,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].infecCharacters() != null) {
 				for (int j = 0; j < expansions[i].infecCharacters().length; j++) {
 					infected.add(expansions[i].infecCharacters()[j]);
+					data.addCard(expansions[i].infecCharacters()[j]);
 				}
 			}
 		}
@@ -135,6 +160,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].weapons() != null) {
 				for (int j = 0; j < expansions[i].weapons().length; j++) {
 					weapons.add(expansions[i].weapons()[j]);
+					data.addCard(expansions[i].weapons()[j]);
 				}
 			}
 		}
@@ -149,6 +175,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].actions() != null) {
 				for (int j = 0; j < expansions[i].actions().length; j++) {
 					actions.add(expansions[i].actions()[j]);
+					data.addCard(expansions[i].actions()[j]);
 				}
 			}
 		}
@@ -163,6 +190,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].items() != null) {
 				for (int j = 0; j < expansions[i].items().length; j++) {
 					items.add(expansions[i].items()[j]);
+					data.addCard(expansions[i].items()[j]);
 				}
 			}
 		}
@@ -177,6 +205,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].mansion() != null) {
 				for (int j = 0; j < expansions[i].mansion().length; j++) {
 					mansions.add(expansions[i].mansion()[j]);
+					data.addCard(expansions[i].mansion()[j]);
 				}
 			}
 		}
@@ -191,6 +220,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].infections() != null) {
 				for (int j = 0; j < expansions[i].infections().length; j++) {
 					infections.add(expansions[i].infections()[j]);
+					data.addCard(expansions[i].infections()[j]);
 				}
 			}
 		}
@@ -205,6 +235,7 @@ public class GameData {
 			if (expansionsEnabled[i] == true && expansions[i].ammunition() != null) {
 				for (int j = 0; j < expansions[i].ammunition().length; j++) {
 					ammunition.add(expansions[i].ammunition()[j]);
+					data.addCard(expansions[i].ammunition()[j]);
 				}
 			}
 		}
@@ -371,6 +402,8 @@ public class GameData {
 	public static RECard findByCardTag(String tag) {
 		String type = tag.substring(0, 2);
 		int id = Integer.parseInt(tag.substring(2));
+		RECard out = (RECard)(data.getCard(type, id));
+		if (out != null) return out;
 		
 		if (type.equalsIgnoreCase("CH")) {
 			RECard temp = findCard(id, CardType.Character, -1);
