@@ -7,12 +7,12 @@ import android.database.Cursor;
 import android.util.Log;
 import android.util.Pair;
 
+import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
-import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
 import com.kngames.gametest.redata.data.Expansion.Expans;
 
@@ -26,14 +26,6 @@ public class GameData {
 	
 	public static final Expansion[] expansions = Expansion.expansions;
 	public static final boolean[] expansionsEnabled = Expansion.expansEnabled;
-	
-	//	enum to define where an ItemCard comes from
-	public static enum Origin {Inventory, Mansion, MansionWithID}
-	private static String[] OriginString = {"Inventory", "Mansion", "Mansion"};
-	public static String originString(int value) {
-		if (value < 0 || value >= OriginString.length) return "";
-		return OriginString[value];
-	}
 	
 	//	enum to define what game mode a scenario is intended for
 	public static enum GameMode {Story, Mercenary, Versus, Outbreak, PartnerStory}
@@ -49,15 +41,6 @@ public class GameData {
 	///
 	
 	private static CardData data;
-	
-	public static CharacterCard[] Characters;
-	public static WeaponCard[] Weapons;
-	public static ActionCard[] Actions;
-	public static ItemCard[] Items;
-	public static MansionCard[] Mansions;
-	public static InfectionCard[] Infections;
-	public static InfectedCharacterCard[] InfectedCharacters;
-	public static AmmunitionCard[] Ammunition;
 	public static Scenario[] Scenarios;
 	
 	public static Scenario testScenario;
@@ -100,147 +83,99 @@ public class GameData {
 	
 	
 	///
-	///		List Building Methods
+	///		Initialization
 	///
 	
+	private static boolean initialized = false;
 	public static void initialize(Context context) {
-		data = CardData.initCardData();
-		
-		Characters = buildCharacterList();
-		Weapons = buildWeaponsList();
-		Actions = buildActionsList();
-		Items = buildItemsList();
-		Mansions = buildMansionsList();
-		Infections = buildinfectionsList();
-		InfectedCharacters = buildInfectedCharacterList();
-		Ammunition = buildAmmunitionList();
-		Scenarios = buildScenarioList();
-		
-		dbHelper = new ScenDBHelper(context);
-		CustomScenarios = GameData.loadCustomScenarios();
-		
-		testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
-				"WE01", "WE02", "WE03", "WE08", "WE09", "WE10", "WE11 WE12", "WE13 WE14", "WE15 WE16", "AC01", "AC02", "AC03", "AC04", "AC05", "AC06", "AC07", "AC08", "AC09", "AC10", "AC11", "AC12", "IT03"}, null, null);
-	}
-	
-	public static CharacterCard[] buildCharacterList() {
-		Log.d(TAG, "loading characters");
-		ArrayList<CharacterCard> characters = new ArrayList<CharacterCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].characters() != null) {
-				for (int j = 0; j < expansions[i].characters().length; j++) {
-					characters.add(expansions[i].characters()[j]);
-					data.addCard(expansions[i].characters()[j]);
+		if (!initialized) {
+			data = CardData.initCardData();
+			
+			//	load characters and infected characters
+			Log.d(TAG, "loading characters");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true) {
+					if (expansions[i].characters() != null) {
+						for (int j = 0; j < expansions[i].characters().length; j++) {
+							data.addCard(expansions[i].characters()[j]);
+					}}
+					if (expansions[i].infecCharacters() != null) {
+						for (int j = 0; j < expansions[i].infecCharacters().length; j++) {
+							data.addCard(expansions[i].infecCharacters()[j]);
+					}}
 				}
-			}
-		}
-		Log.d(TAG, "finished loading characters");
-		return characters.toArray(new CharacterCard[1]);
-	}
-	
-	public static InfectedCharacterCard[] buildInfectedCharacterList() {
-		Log.d(TAG, "loading infected characters");
-		ArrayList<InfectedCharacterCard> infected = new ArrayList<InfectedCharacterCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].infecCharacters() != null) {
-				for (int j = 0; j < expansions[i].infecCharacters().length; j++) {
-					infected.add(expansions[i].infecCharacters()[j]);
-					data.addCard(expansions[i].infecCharacters()[j]);
+			}	Log.d(TAG, "finished loading characters");
+			
+			//	load weapons
+			Log.d(TAG, "loading weapons");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].weapons() != null) {
+					for (int j = 0; j < expansions[i].weapons().length; j++) {
+						data.addCard(expansions[i].weapons()[j]);
+					}
 				}
-			}
-		}
-		Log.d(TAG, "finished loading infected characters");
-		return infected.toArray(new InfectedCharacterCard[1]);
-	}
-	
-	public static WeaponCard[] buildWeaponsList() {
-		Log.d(TAG, "loading weapons");
-		ArrayList<WeaponCard> weapons = new ArrayList<WeaponCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].weapons() != null) {
-				for (int j = 0; j < expansions[i].weapons().length; j++) {
-					weapons.add(expansions[i].weapons()[j]);
-					data.addCard(expansions[i].weapons()[j]);
+			}	Log.d(TAG, "finished loading weapons");
+			
+			//	load actions
+			Log.d(TAG, "loading actions");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].actions() != null) {
+					for (int j = 0; j < expansions[i].actions().length; j++) {
+						data.addCard(expansions[i].actions()[j]);
+					}
 				}
-			}
-		}
-		Log.d(TAG, "finished loading weapons");
-		return weapons.toArray(new WeaponCard[1]);
-	}
-	
-	public static ActionCard[] buildActionsList() {
-		Log.d(TAG, "loading actions");
-		ArrayList<ActionCard> actions = new ArrayList<ActionCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].actions() != null) {
-				for (int j = 0; j < expansions[i].actions().length; j++) {
-					actions.add(expansions[i].actions()[j]);
-					data.addCard(expansions[i].actions()[j]);
+			}	Log.d(TAG, "finished loading actions");
+			
+			//	load items
+			Log.d(TAG, "loading items");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].items() != null) {
+					for (int j = 0; j < expansions[i].items().length; j++) {
+						data.addCard(expansions[i].items()[j]);
+					}
 				}
-			}
-		}
-		Log.d(TAG, "finished loading actions");
-		return actions.toArray(new ActionCard[1]);
-	}
-	
-	public static ItemCard[] buildItemsList() {
-		Log.d(TAG, "loading items");
-		ArrayList<ItemCard> items = new ArrayList<ItemCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].items() != null) {
-				for (int j = 0; j < expansions[i].items().length; j++) {
-					items.add(expansions[i].items()[j]);
-					data.addCard(expansions[i].items()[j]);
+			}	Log.d(TAG, "finished loading items");
+			
+			//	load mansion cards
+			Log.d(TAG, "loading mansions");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].mansion() != null) {
+					for (int j = 0; j < expansions[i].mansion().length; j++) {
+						data.addCard(expansions[i].mansion()[j]);
+					}
 				}
-			}
-		}
-		Log.d(TAG, "finished loading items");
-		return items.toArray(new ItemCard[1]);
-	}
-	
-	public static MansionCard[] buildMansionsList() {
-		Log.d(TAG, "loading mansions");
-		ArrayList<MansionCard> mansions = new ArrayList<MansionCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].mansion() != null) {
-				for (int j = 0; j < expansions[i].mansion().length; j++) {
-					mansions.add(expansions[i].mansion()[j]);
-					data.addCard(expansions[i].mansion()[j]);
+			}	Log.d(TAG, "finished loading mansions");
+			
+			//	load infections
+			Log.d(TAG, "loading infections");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].infections() != null) {
+					for (int j = 0; j < expansions[i].infections().length; j++) {
+						data.addCard(expansions[i].infections()[j]);
+					}
 				}
-			}
-		}
-		Log.d(TAG, "finished loading mansions");
-		return mansions.toArray(new MansionCard[1]);
-	}
-	
-	public static InfectionCard[] buildinfectionsList() {
-		Log.d(TAG, "loading infections");
-		ArrayList<InfectionCard> infections = new ArrayList<InfectionCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].infections() != null) {
-				for (int j = 0; j < expansions[i].infections().length; j++) {
-					infections.add(expansions[i].infections()[j]);
-					data.addCard(expansions[i].infections()[j]);
+			}	Log.d(TAG, "finished loading infections");
+			
+			//	load ammunition
+			Log.d(TAG, "loading ammunition");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].ammunition() != null) {
+					for (int j = 0; j < expansions[i].ammunition().length; j++) {
+						data.addCard(expansions[i].ammunition()[j]);
+					}
 				}
-			}
+			}	Log.d(TAG, "finished loading ammunition");
+			
+			//	load scenarios
+			Scenarios = buildScenarioList();
+			
+			dbHelper = new ScenDBHelper(context);
+			CustomScenarios = GameData.loadCustomScenarios();
+			
+			testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
+					"WE;01", "WE;02", "WE;03", "WE;08", "WE;09", "WE;10", "WE;11 WE;12", "WE;13 WE;14", "WE;15 WE;16", "AC;01", "AC;02", "AC;03", "AC;04", "AC;05", "AC;06", "AC;07", "AC;08", "AC;09", "AC;10", "AC;11", "AC;12", "IT;03"}, null, null);
+			initialized = true;
 		}
-		Log.d(TAG, "finished loading infections");
-		return infections.toArray(new InfectionCard[1]);
-	}
-	
-	public static AmmunitionCard[] buildAmmunitionList() {
-		Log.d(TAG, "loading ammunition");
-		ArrayList<AmmunitionCard> ammunition = new ArrayList<AmmunitionCard>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].ammunition() != null) {
-				for (int j = 0; j < expansions[i].ammunition().length; j++) {
-					ammunition.add(expansions[i].ammunition()[j]);
-					data.addCard(expansions[i].ammunition()[j]);
-				}
-			}
-		}
-		Log.d(TAG, "finished loading ammunition");
-		return ammunition.toArray(new AmmunitionCard[1]);
 	}
 	
 	public static Scenario[] buildScenarioList() {
@@ -252,6 +187,7 @@ public class GameData {
 					Scenario temp = expansions[i].scenarios()[j];
 					if (temp.complete()) {
 						scenarios.add(temp);
+						Log.d(TAG, "loaded scenario \""+temp.getName()+"\"");
 					}
 				}
 			}
@@ -264,84 +200,6 @@ public class GameData {
 	///
 	///		Search Methods
 	///
-	
-	//	searches a specified array in the card collection for a card with a specified name in a specified expansion (use -1 to search regardless of expansion)
-	public static RECard findCard(String name, CardType type, int expans) {
-		switch (type) {
-		case Character:
-			for (int i = 0; i < Characters.length; i++) {
-				if ((expans == -1 || expans == Characters[i].getExpansion()) && Characters[i].getName().equalsIgnoreCase(name)) return Characters[i];
-			} break;
-		case InfecChar:
-			for (int i = 0; i < InfectedCharacters.length; i++) {
-				if ((expans == -1 || expans == InfectedCharacters[i].getExpansion()) && InfectedCharacters[i].getName().equalsIgnoreCase(name)) return InfectedCharacters[i];
-			} break;
-		case Mansion:
-			for (int i = 0; i < Mansions.length; i++) {
-				if ((expans == -1 || expans == Mansions[i].getExpansion()) && Mansions[i].getName().equalsIgnoreCase(name)) return Mansions[i];
-			} break;
-		case Weapon:
-			for (int i = 0; i < Weapons.length; i++) {
-				if ((expans == -1 || expans == Weapons[i].getExpansion()) && Weapons[i].getName().equalsIgnoreCase(name)) return Weapons[i];
-			} break;
-		case Action:
-			for (int i = 0; i < Actions.length; i++) {
-				if ((expans == -1 || expans == Actions[i].getExpansion()) && Actions[i].getName().equalsIgnoreCase(name)) return Actions[i];
-			} break;
-		case Item:
-			for (int i = 0; i < Items.length; i++) {
-				if ((expans == -1 || expans == Items[i].getExpansion()) && Items[i].getName().equalsIgnoreCase(name)) return Items[i];
-			} break;
-		case Infection:
-			for (int i = 0; i < Infections.length; i++) {
-				if ((expans == -1 || expans == Infections[i].getExpansion()) && Infections[i].getName().equalsIgnoreCase(name)) return Infections[i];
-			} break;
-		case Ammunition:
-			for (int i = 0; i < Ammunition.length; i++) {
-				if ((expans == -1 || expans == Ammunition[i].getExpansion()) && Ammunition[i].getName().equalsIgnoreCase(name)) return Ammunition[i];
-			} break;
-		}
-		return null;
-	}
-	
-	//	searches a specified array in the card collection for a card with a specified id number in a specified expansion (use -1 to search regardless of expansion)
-	public static RECard findCard(int id, CardType type, int expans) {
-		switch (type) {
-		case Character:
-			for (int i = 0; i < Characters.length; i++) {
-				if ((expans == -1 || expans == Characters[i].getExpansion()) && Characters[i].getID() == id) return Characters[i];
-			} break;
-		case InfecChar:
-			for (int i = 0; i < InfectedCharacters.length; i++) {
-				if ((expans == -1 || expans == InfectedCharacters[i].getExpansion()) && InfectedCharacters[i].getID() == id) return InfectedCharacters[i];
-			} break;
-		case Mansion:
-			for (int i = 0; i < Mansions.length; i++) {
-				if ((expans == -1 || expans == Mansions[i].getExpansion()) && Mansions[i].getID() == id) return Mansions[i];
-			} break;
-		case Weapon:
-			for (int i = 0; i < Weapons.length; i++) {
-				if ((expans == -1 || expans == Weapons[i].getExpansion()) && Weapons[i].getID() == id) return Weapons[i];
-			} break;
-		case Action:
-			for (int i = 0; i < Actions.length; i++) {
-				if ((expans == -1 || expans == Actions[i].getExpansion()) && Actions[i].getID() == id) return Actions[i];
-			} break;
-		case Item:
-			for (int i = 0; i < Items.length; i++) {
-				if ((expans == -1 || expans == Items[i].getExpansion()) && Items[i].getID() == id) return Items[i];
-			} break;
-		case Infection:
-			for (int i = 0; i < Infections.length; i++) {
-				if ((expans == -1 || expans == Infections[i].getExpansion()) && Infections[i].getID() == id) return Infections[i];
-			} break;
-		case Ammunition:
-			for (int i = 0; i < Ammunition.length; i++) {
-				if ((expans == -1 || expans == Ammunition[i].getExpansion()) && Ammunition[i].getID() == id) return Ammunition[i];
-			} break;
-		}
-		return null;
-	}
 	
 	//	searches the Scenarios array for a Scenario with the specified id
 	//	returns null if nothing was found
@@ -368,19 +226,21 @@ public class GameData {
 		REDeck mansion = new REDeck();
 		
 		//	search for matching Mansion cards
-		for (MansionCard c : GameData.Mansions) {
-			if (c.getExpansion() == mansionNum) {
-				for (int i = 0; i < c.getDeckQuantity(); i++) {
+		Card[] cards = CardData.getCardData().getCategory("MA");
+		for (Card c : cards) {
+			if (((MansionCard)c).getExpansion() == mansionNum) {
+				for (int i = 0; i < ((MansionCard)c).getDeckQuantity(); i++) {
 					mansion.addTop(c);
 				}
 			}
 		}
 		
 		//	search for matching Item cards
-		for (ItemCard c : GameData.Items) {
+		cards = CardData.getCardData().getCategory("IT");
+		for (Card c : cards) {
 			ItemCard ic = (ItemCard)c;
-			if (c.getExpansion() == mansionNum && (ic.getOrigin() == 1 || ic.getOrigin() == 2)) {
-				for (int i = 0; i < c.getDeckQuantity(); i++) {
+			if (((ItemCard)c).getExpansion() == mansionNum && (ic.getOrigin() == 1 || ic.getOrigin() == 2)) {
+				for (int i = 0; i < ((ItemCard)c).getDeckQuantity(); i++) {
 					mansion.addTop(c);
 				}
 			}
@@ -401,22 +261,10 @@ public class GameData {
 	//	returns null if nothing was found
 	public static RECard findByCardTag(String tag) {
 		String type = tag.substring(0, 2);
-		int id = Integer.parseInt(tag.substring(2));
+		int id = Integer.parseInt(tag.substring(3));
 		RECard out = (RECard)(data.getCard(type, id));
+		
 		if (out != null) return out;
-		
-		if (type.equalsIgnoreCase("CH")) {
-			RECard temp = findCard(id, CardType.Character, -1);
-			if (temp == null) temp = findCard(id, CardType.InfecChar, -1);
-			return temp;
-		}
-		else if (type.equalsIgnoreCase("PR")) return findCard(id, CardType.Character, 5);
-		else if (type.equalsIgnoreCase("WE")) return findCard(id, CardType.Weapon, -1);
-		else if (type.equalsIgnoreCase("AC")) return findCard(id, CardType.Action, -1);
-		else if (type.equalsIgnoreCase("IT")) return findCard(id, CardType.Item, -1);
-		else if (type.equalsIgnoreCase("MA")) return findCard(id, CardType.Mansion, -1);
-		else if (type.equalsIgnoreCase("AM")) return findCard(id, CardType.Ammunition, -1);
-		
 		return null;
 	}
 	
@@ -431,6 +279,7 @@ public class GameData {
 	}
 	
 	//	generates an ID tag for this card
+	/*
 	public static String generateTagString(RECard card) {
 		StringBuilder out = new StringBuilder();
 		switch (card.getCardType()) {
@@ -445,7 +294,7 @@ public class GameData {
 		}
 		out.append(String.format("%02d", card.getID()));
 		return out.toString();
-	}
+	}*/
 	
 	//	generates a single String containing the contents of a tag array delimited with a '/' to separate cards
 	public static String generateSingleTagString(String[] tags) {

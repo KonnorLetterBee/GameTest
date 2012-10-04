@@ -2,10 +2,10 @@ package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.data.Expansion;
-import com.kngames.gametest.redata.data.GameData;
 
 public class ActionExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public ActionExpandSelectorFragment() {
@@ -34,8 +34,9 @@ public class ActionExpandSelectorFragment extends BaseREExpandableSelectorFragme
 		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<RECard>());
 		
 		//	add actions from game expansions
-		for(int i = 0; i < GameData.Actions.length; i++) {
-			RECard temp = GameData.Actions[i];
+		Card[] cards = data.getCategory("AC");
+		for(int i = 0; i < cards.length; i++) {
+			RECard temp = (RECard)cards[i];
 			int slot = temp.getExpansion();
 			dualList.get(slot).add(temp);
 		}

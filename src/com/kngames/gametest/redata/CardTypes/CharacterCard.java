@@ -8,7 +8,7 @@ public class CharacterCard extends RECard {
 	private String customInventory;
 	
 	public CharacterCard(String name, int ID, int expans, int maxHealth, int a1price, String ability1, int a2price, String ability2, String customInv) {
-		super(name, CardType.Character, "CH", ID, expans, 1, ability1);
+		super(name, CardType.Character, "CH", "CH", ID, ID, expans, 1, ability1);
 		this.maxHealth = maxHealth;
 		this.a1price = a1price;
 		this.a2price = a2price;
@@ -16,8 +16,8 @@ public class CharacterCard extends RECard {
 		this.customInventory = customInv;
 	}
 	
-	public CharacterCard(String name, boolean isPromo, int ID, int expans, int maxHealth, int a1price, String ability1, int a2price, String ability2, String customInv) {
-		super(name, CardType.Character, getExpPrefix(isPromo), ID, expans, 1, ability1);
+	public CharacterCard(String name, boolean isPromo, int ID, int tagID, int expans, int maxHealth, int a1price, String ability1, int a2price, String ability2, String customInv) {
+		super(name, CardType.Character, getExpPrefix(isPromo), "CH", ID, tagID, expans, 1, ability1);
 		this.maxHealth = maxHealth;
 		this.a1price = a1price;
 		this.a2price = a2price;

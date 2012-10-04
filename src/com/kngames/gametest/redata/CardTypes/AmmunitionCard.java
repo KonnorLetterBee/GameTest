@@ -12,7 +12,7 @@ public class AmmunitionCard extends RECard implements Playable {
 	private int provGold;
 	
 	public AmmunitionCard(String name, int ID, int expans, int price, int quantity, int provAmmo, int provGold) {
-		super(name, CardType.Ammunition, "AM", ID, expans, quantity, "");
+		super(name, CardType.Ammunition, "AM", "AM", ID, ID, expans, quantity, "");
 		this.price = price;
 		this.provAmmo = provAmmo;
 		this.provGold = provGold;

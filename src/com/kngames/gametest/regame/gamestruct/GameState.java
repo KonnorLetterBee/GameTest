@@ -198,6 +198,8 @@ public class GameState {
 			game.advanceActivePlayer();
 			this.setState(State.StartTurn, true);
 			break;
+		default:
+			break;
 		}
 	}
 	

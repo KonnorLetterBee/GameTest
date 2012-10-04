@@ -2,10 +2,10 @@ package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.data.Expansion;
-import com.kngames.gametest.redata.data.GameData;
 
 public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public WeaponExpandSelectorFragment() {
@@ -35,8 +35,9 @@ public class WeaponExpandSelectorFragment extends BaseREExpandableSelectorFragme
 		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<RECard>());
 		
 		//	add weapons from game expansions
-		for(int i = 0; i < GameData.Weapons.length; i++) {
-			RECard temp = GameData.Weapons[i];
+		Card[] cards = data.getCategory("WE");
+		for(int i = 0; i < cards.length; i++) {
+			RECard temp = (RECard)cards[i];
 			int slot = temp.getExpansion();
 			
 			//	handle basic resources

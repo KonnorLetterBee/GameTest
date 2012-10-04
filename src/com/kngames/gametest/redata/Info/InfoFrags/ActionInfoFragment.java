@@ -1,10 +1,9 @@
 package com.kngames.gametest.redata.Info.InfoFrags;
 
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.ActionCard;
-import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.data.Expansion;
-import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +17,11 @@ public class ActionInfoFragment extends BaseInfoFragment {
 		
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
-		int cardID = intent.getIntExtra("cardID", 0);
-		ActionCard card = (ActionCard) GameData.findCard(cardID, CardType.Action, -1);
+		String catTag = intent.getStringExtra("catTag");
+		int intTag = intent.getIntExtra("intTag", 0);
+		
+		CardData data = CardData.getCardData();
+		ActionCard card = (ActionCard)data.getCard(catTag, intTag);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", card.getName());
@@ -48,7 +50,7 @@ public class ActionInfoFragment extends BaseInfoFragment {
 		temp = card.getExtraGold();
 		if (temp != 0) extras.append("Extra gold:  "+temp+"\n");
 		
-		String cardText = "Card Type:  Action\nExpansion Set:  "+Expansion.expansString(card.getExpansion())+
+		String cardText = "Card Type:  Action\nExpansion Set:  "+Expansion.expansNames()[card.getExpansion()]+
 				"\nQuantity in Deck:  "+card.getDeckQuantity()+"\n" + 
 				extras.toString();
 		if (!card.getText().equals("")) cardText += "\n"+card.getText();

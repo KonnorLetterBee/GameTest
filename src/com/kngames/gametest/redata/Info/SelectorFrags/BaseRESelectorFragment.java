@@ -1,6 +1,8 @@
 package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import com.kngames.gametest.R;
+import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.*;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public abstract class BaseRESelectorFragment extends Fragment {
+	protected static CardData data = CardData.getCardData();
+	
 	//	UI elements
 	private ListView listView;
 	protected ArrayList<String> strings;
@@ -30,6 +34,15 @@ public abstract class BaseRESelectorFragment extends Fragment {
 		this.cardArray = array;
 	}
 	
+	public BaseRESelectorFragment(int fragType, Card[] array) {
+		this.fragType = fragType;
+		RECard[] cards = new RECard[array.length];
+		for (int i = 0; i < array.length; i++) {
+			cards[i] = (RECard)array[i];
+		}
+		this.cardArray = cards;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,7 +52,7 @@ public abstract class BaseRESelectorFragment extends Fragment {
 		listView = (ListView) view.findViewById(R.id.cardList);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> aV, View v, int index, long l) {
-				openInfoWindow(cardArray[index].getID());
+				openInfoWindow(cardArray[index].getCatTag(), cardArray[index].getIntTag());
 			}
 		});
 		
@@ -58,9 +71,10 @@ public abstract class BaseRESelectorFragment extends Fragment {
 		}
 	}
 	
-	protected void openInfoWindow(int ID) {
+	protected void openInfoWindow(String catTag, int intTag) {
 		Intent infoIntent = new Intent(getActivity(), REInfoFragmentActivity.class);
-		infoIntent.putExtra("cardID", ID);
+		infoIntent.putExtra("catTag", catTag);
+		infoIntent.putExtra("intTag", intTag);
 		infoIntent.putExtra("groupType", REInfoFragmentActivity.INFO_FRAG);
 		infoIntent.putExtra("fragType", fragType);
 		this.startActivity(infoIntent);

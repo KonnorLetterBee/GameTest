@@ -5,7 +5,6 @@ package com.kngames.gametest.regame.gamestruct;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.InfectedCard;
-import com.kngames.gametest.redata.data.GameData;
 
 public class Player {
 	//private static final String TAG = Player.class.getSimpleName();
@@ -71,13 +70,13 @@ public class Player {
 		
 		//	add 7 "Ammo x10" cards to the Inventory
 		for (int i = 0; i < 7; i++) {
-			inventory.addTop(game.shop().gainCardSearch(this, GameData.Ammunition[0].getTag()));
+			inventory.addTop(game.shop().gainCardSearch(this, "AM;1"));
 		}
 		
 		//	add the two "Combat Knives" and "Handgun" to the Inventory
-		inventory.addTop(game.shop().gainCardSearch(this, GameData.Weapons[3].getTag()));
-		inventory.addTop(game.shop().gainCardSearch(this, GameData.Weapons[3].getTag()));
-		inventory.addTop(game.shop().gainCardSearch(this, GameData.Weapons[5].getTag()));
+		inventory.addTop(game.shop().gainCardSearch(this, "WE;04"));
+		inventory.addTop(game.shop().gainCardSearch(this, "WE;04"));
+		inventory.addTop(game.shop().gainCardSearch(this, "WE;06"));
 		
 		//	shuffle the mansion, flip it, and return the new Deck object
 		inventory.shuffle(2);

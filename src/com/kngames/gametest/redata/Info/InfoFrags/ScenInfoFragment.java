@@ -52,7 +52,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		for (int i = 0; i < expansReqArray.length; i++) {
 			if (expansReqArray[i] == true) {
 				if (expCount > 0) expansReq.append(", ");
-				expansReq.append(Expansion.expansString(i));
+				expansReq.append(Expansion.expansNames()[i]);
 				expCount++;
 			}
 		}

@@ -17,15 +17,15 @@ public abstract class RECard extends Card {
 	public static enum CardType {Ammunition, Character, InfecChar, Weapon, Action, Item, Infected, Event, Token, Infection, Mansion}
 	public static final String[] CardTypes = {"Ammunition", "Character", "Infected Character", "Weapon", "Action", "Item", "Infected", "Event", "Token", "Infection"};
 	
-	public RECard(String name, CardType type, String idPrefix, int ID, int expans, int quantity, String text) {
-		super(ID, idPrefix+";"+ID);
+	public RECard(String name, CardType type, String idPrefix, String catTag, int ID, int intTag, int expans, int quantity, String text) {
+		super(ID, catTag+";"+intTag);
 		this.name = name;
 		this.cardType = type;
 		this.idPrefix = idPrefix;
 		this.expansion = expans;
 		this.text = text;
 		this.deckQuantity = quantity;
-		this.tag = generateTag();
+		//this.tag = generateTag();
 	}
 	
 	public String getName() { return name; }
@@ -36,14 +36,14 @@ public abstract class RECard extends Card {
 	public int getExpansion() { return expansion; }
 	public int getDeckQuantity() { return deckQuantity; }
 	public String getText() { return text; }
-	public String getTag() { return tag; }
+	//public String getTag() { return tag; }
 	
 	public static Card parseTag(String tag) {
 		return GameData.findByCardTag(tag);
 	}
-	public String generateTag() {
-		return GameData.generateTagString(this);
-	}
+	//public String generateTag() {
+	//	return GameData.generateTagString(this);
+	//}
 	
 	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
 		switch (cardType) {

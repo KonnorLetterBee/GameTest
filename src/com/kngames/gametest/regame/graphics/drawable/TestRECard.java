@@ -40,7 +40,7 @@ public class TestRECard extends DrawObject {
 		anim = new AnimationComponent(move);
 	}
 	
-	public String getTag() { return card.getTag(); }
+	public String getTag() { return card.generateTag(); }
 	
 	//	draws this DrawObject to the screen
 	private final int TITLE_TEXT_SIZE = 20;

@@ -2,17 +2,13 @@ package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
-import android.view.View;
-import android.widget.ExpandableListView;
-
+import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
-import com.kngames.gametest.redata.REInfoFragmentActivity;
-import com.kngames.gametest.redata.CardTypes.InfectedCharacterCard;
 import com.kngames.gametest.redata.CardTypes.RECard;
+import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.Expansion.Expans;
-import com.kngames.gametest.redata.data.GameData;
 
 public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public CharacterExpandSelectorFragment() {
@@ -44,18 +40,16 @@ public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFra
 		for (int i = 0; i <= Expansion.expansions.length + 1; i++) dualList.add(new ArrayList<RECard>());
 		
 		//	add characters from game expansions
-		for(int i = 0; i < GameData.Characters.length; i++) {
-			RECard temp = GameData.Characters[i];
-			int slot = temp.getExpansion();
-			dualList.get(slot).add(temp);
-		}
+		Card[] chars = CardData.getCardData().getCategory("CH");
 		
-		//	add infected characters if Outbreak expansion is present
-		if (Expansion.isExpansEnabled(Expans.Outbreak)) {
-			for(int i = 0; i < GameData.InfectedCharacters.length; i++) {
-				RECard temp = GameData.InfectedCharacters[i];
-				dualList.get(dualList.size() - 1).add(temp);
+		for(int i = 0; i < chars.length; i++) {
+			RECard temp = (RECard)chars[i];
+			int slot = temp.getExpansion();
+			if (temp.getCardType() == CardType.InfecChar) {
+				//	for infected characters, change the slot to the last available
+				slot = dualList.size() - 1;
 			}
+			dualList.get(slot).add(temp);
 		}
 		
 		//	remove character lists that have nothing in them
@@ -70,27 +64,5 @@ public class CharacterExpandSelectorFragment extends BaseREExpandableSelectorFra
 		}
 		
 		return array;
-	}
-	
-	public boolean onClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-		int type = 0;
-		RECard temp = cardCollection[groupPosition][childPosition];
-		if (temp instanceof InfectedCharacterCard) {
-			type = 2;
-		} else if (temp.getExpansion() == Expans.Promo.ordinal()) {
-			type = 1;
-		}
-		
-		openInfoWindow(cardCollection[groupPosition][childPosition].getID(), type);
-		return true;
-	}
-	
-	protected void openInfoWindow(int ID, int charType) {
-		Intent infoIntent = new Intent(getActivity(), REInfoFragmentActivity.class);
-		infoIntent.putExtra("cardID", ID);
-		infoIntent.putExtra("groupType", REInfoFragmentActivity.INFO_FRAG);
-		infoIntent.putExtra("fragType", fragType);
-		infoIntent.putExtra("charType", charType);
-		this.startActivity(infoIntent);
 	}
 }

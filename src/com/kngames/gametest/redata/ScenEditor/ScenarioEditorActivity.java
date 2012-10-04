@@ -3,6 +3,8 @@ package com.kngames.gametest.redata.ScenEditor;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
+import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.data.GameData;
 import com.kngames.gametest.redata.data.Expansion.Expans;
 import com.kngames.gametest.redata.data.GameData.GameMode;
@@ -158,10 +160,12 @@ public class ScenarioEditorActivity extends Activity {
 		int listCounter = 0;
 		availableDataList = new ArrayList<ArrayList<Pair<RECard,Integer>>>();
 		usedDataList = new ArrayList<ArrayList<Pair<RECard,Integer>>>();
-		for (int i = 0; i < GameData.Weapons.length; i++, listCounter++) {
+		
+		Card[] cards = CardData.getCardData().getCategory("WE");
+		for (int i = 0; i < cards.length; i++, listCounter++) {
 			//	detect and remove basics
 			if (i != 3 && i != 4 && i != 5 && i != 6) {
-				Pair<RECard,Integer> tempCard = new Pair<RECard, Integer>((RECard)GameData.Weapons[i], listCounter);
+				Pair<RECard,Integer> tempCard = new Pair<RECard, Integer>((RECard)cards[i], listCounter);
 				//	detect and combine weapons to be initially combined
 				if (i != 11 && i != 13 && i != 15 && i != 17 && i != 20 && i != 22 && i != 26 && i != 29 && i != 32 && i != 36 && i != 38) {
 					ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
@@ -172,15 +176,18 @@ public class ScenarioEditorActivity extends Activity {
 				}
 			}
 		}
-		for (int i = 0; i < GameData.Actions.length; i++, listCounter++) {
+		
+		cards = CardData.getCardData().getCategory("AC");
+		for (int i = 0; i < cards.length; i++, listCounter++) {
 			ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
-			temp.add(new Pair<RECard,Integer>((RECard)GameData.Actions[i], listCounter));
+			temp.add(new Pair<RECard,Integer>((RECard)cards[i], listCounter));
 			availableDataList.add(temp);
 		}
-		for (int i = 0; i < GameData.Items.length; i++, listCounter++) {
+		cards = CardData.getCardData().getCategory("IT");
+		for (int i = 0; i < cards.length; i++, listCounter++) {
 			if (i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 7) {
 				ArrayList<Pair<RECard,Integer>> temp = new ArrayList<Pair<RECard,Integer>>();
-				temp.add(new Pair<RECard,Integer>((RECard)GameData.Items[i], listCounter));
+				temp.add(new Pair<RECard,Integer>((RECard)cards[i], listCounter));
 				availableDataList.add(temp);
 			}
 		}
@@ -197,7 +204,7 @@ public class ScenarioEditorActivity extends Activity {
 				for (int k = 0; k < availableDataList.size(); k++) {
 					//	if matches, move card over to used and break out
 					ArrayList<Pair<RECard,Integer>> tempCard = availableDataList.get(k);
-					if (tempArray.get(i)[j].getTag().equals(tempCard.get(0).first.getTag())) {
+					if (tempArray.get(i)[j].generateTag().equals(tempCard.get(0).first.generateTag())) {
 						availableDataList.remove(k);
 						//	place card in correct position on used side
 						int l;
@@ -254,7 +261,7 @@ public class ScenarioEditorActivity extends Activity {
 			StringBuilder tempTag = new StringBuilder();
 			for (int j = 0; j < usedDataList.get(i).size(); j++) {
 				if (j > 0) tempTag.append(" ");
-				tempTag.append(usedDataList.get(i).get(j).first.getTag());
+				tempTag.append(usedDataList.get(i).get(j).first.generateTag());
 			}
 			tags[i] = tempTag.toString();
 		}

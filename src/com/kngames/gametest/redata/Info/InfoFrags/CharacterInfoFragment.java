@@ -1,12 +1,12 @@
 package com.kngames.gametest.redata.Info.InfoFrags;
 
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.CardTypes.InfectedCharacterCard;
+import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 import com.kngames.gametest.redata.data.Expansion;
-import com.kngames.gametest.redata.data.Expansion.Expans;
-import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,17 +19,14 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
-		int cardID = intent.getIntExtra("cardID", 0);
-		int type = intent.getIntExtra("charType", 0);
+		String catTag = intent.getStringExtra("catTag");
+		int intTag = intent.getIntExtra("intTag", 0);
 		
+		CardData data = CardData.getCardData();
+		RECard c = (RECard)data.getCard(catTag, intTag);
 		//	determine which list the card came from
-		if (type == 0 || type == 1) {
-			CharacterCard card;
-			if (type == 1) {
-				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, Expans.Promo.ordinal());
-			} else {
-				card = (CharacterCard) GameData.findCard(cardID, CardType.Character, -1);
-			}
+		if (c.getCardType() == CardType.Character) {
+			CharacterCard card = (CharacterCard)c;
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 			titleText = String.format("%s", card.getName());
@@ -37,14 +34,14 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			infoText = String.format(
 					"Card Type:  Character\nExpansion Set:  %s\n" +
 					"Max Health:  %d\n\nAbilities:\n\n%d:  %s",
-					Expansion.expansString(card.getExpansion()), 
+					Expansion.expansNames()[card.getExpansion()], 
 					card.getMaxHealth(), card.getA1Price(), card.getAbility1());
 			if (card.getA2Price() != 0) infoText += String.format("\n\n%d:  %s", card.getA2Price(), card.getAbility2());
 			
 			footerText = String.format("CARD ID:  %s", card.getIDString());
 			
 		} else {
-			InfectedCharacterCard card = (InfectedCharacterCard)GameData.findCard(cardID, CardType.InfecChar, -1);
+			InfectedCharacterCard card = (InfectedCharacterCard)c;
 			
 			//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 			titleText = String.format("%s", card.getName());
@@ -52,7 +49,7 @@ public class CharacterInfoFragment extends BaseInfoFragment {
 			infoText = String.format(
 					"Card Type:  Infected Character\nExpansion Set:  %s\n" +
 					"Max Health:  %d\nDamage:  %d\n\n%s",
-					Expansion.expansString(card.getExpansion()), 
+					Expansion.expansNames()[card.getExpansion()], 
 					card.getMaxHealth(), card.getDamage(), card.getText());
 
 			footerText = String.format("CARD ID:  %s", card.getIDString());

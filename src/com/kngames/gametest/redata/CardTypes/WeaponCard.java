@@ -20,7 +20,7 @@ public class WeaponCard extends RECard implements Playable {
 	private OnExploreFinishListener exploreFinishListener = null;
 	
 	public WeaponCard(String name, int ID, int expans, WeaponType type, int price, int ammo, int damage, boolean trashFlag, int quantity, String text) {
-		super(name, CardType.Weapon, "WE", ID, expans, quantity, text);
+		super(name, CardType.Weapon, "WE", "WE", ID, ID, expans, quantity, text);
 		this.price = price;
 		this.ammoRec = ammo;
 		this.damage = damage;

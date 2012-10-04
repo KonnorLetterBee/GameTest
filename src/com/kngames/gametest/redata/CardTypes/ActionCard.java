@@ -21,7 +21,7 @@ public class ActionCard extends RECard implements Playable {
 	private OnTriggerListener trigger = null;
 	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text) {
-		super(name, CardType.Action, "AC", ID, expans, quantity, text);
+		super(name, CardType.Action, "AC", "AC", ID, ID, expans, quantity, text);
 		this.price = price;
 		this.extraActions = actions;
 		this.extraBuys = buys;

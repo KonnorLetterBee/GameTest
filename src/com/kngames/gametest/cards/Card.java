@@ -5,9 +5,6 @@ import com.kngames.gametest.engine.graphics.DrawObject;
 public class Card {
 	protected int cardID;
 	
-	@Deprecated
-	protected String tag;
-	
 	protected String catTag;
 	protected int intTag;
 	
@@ -42,17 +39,13 @@ public class Card {
 	public int getIntTag() { return intTag; }
 	public DrawObject pic() { return cardPic; }
 	
-	@Deprecated
-	public String getTag() { return tag; }
-	
 	//	checks to see if two cards have the same tag
 	public boolean equals(Object other) {
 		Card otherCard;
 		try { otherCard = (Card)other; }
 		catch (Exception e) { return false; }
 		
-		return (this.tag.equals(otherCard.tag)) ||
-				(this.catTag.equals(otherCard.catTag) && this.intTag == otherCard.intTag);
+		return 	(this.catTag.equals(otherCard.catTag) && this.intTag == otherCard.intTag);
 	}
 	
 	//	provides a way to get a card based on tag info provided by extended classes
@@ -68,12 +61,11 @@ public class Card {
 	}
 	
 	//	provides a way to generate a (usually) unique tag for extended classes
-	@Deprecated
-	protected String generateTag() { return ""; }
+	public String generateTag() { return catTag + ";" + intTag; }
 	
 	//	the general toString method of a card is to output its tag that was generated during construction
 	@Override
 	public String toString() {
-		return tag;
+		return generateTag();
 	}
 }

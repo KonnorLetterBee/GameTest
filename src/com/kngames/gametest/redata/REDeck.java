@@ -34,11 +34,6 @@ public class REDeck extends Deck {
 	public Card parseTag(String tag) {
 		return RECard.parseTag(tag);
 	}
-
-	@Override
-	public String generateTag(Card c) {
-		return c.getTag();
-	}
 	
 	//	creates an array list of pairs, the first element being the index in the deck the card is found,
 	//	the second being a reference to the card itself, of this deck object

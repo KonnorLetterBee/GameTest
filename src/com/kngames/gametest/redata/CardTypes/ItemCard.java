@@ -19,7 +19,7 @@ public class ItemCard extends RECard implements Playable, InMansion {
 	
 	//	default ItemCard
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text) {
-		super(name, CardType.Item, getItemIDPrefix(origin), ID, expans, quantity, text);
+		super(name, CardType.Item, getItemIDPrefix(origin), "IT", ID, ID, expans, quantity, text);
 		this.price = price;
 		this.origin = origin;
 	}

@@ -6,22 +6,24 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
-import com.kngames.gametest.redata.data.GameData;
 
 public class Shop {
 	private static final String TAG = Shop.class.getSimpleName();
 	
 	private Game game;
+	private CardData data;
 	//private Scenario scen;
 	private ArrayList<REDeck> resourcePiles;
 	private String[] available;
 	
 	public Shop(Game g, Scenario scen, int players) {
 		this.game = g;
+		this.data = CardData.getCardData();
 		//this.scen = scen;
 		if (scen != null) setupResourcePiles(scen, players);
 	}
@@ -37,16 +39,16 @@ public class Shop {
 		ArrayList<RECard[]> cards = scen.getCards();
 		resourcePiles = new ArrayList<REDeck>();
 		//	set up basics piles, if scenario allows basics
-		resourcePiles.add(createDeck(GameData.findCard("Ammo x10", CardType.Ammunition, -1)));
-		resourcePiles.add(createDeck(GameData.findCard("Ammo x20", CardType.Ammunition, -1)));
-		resourcePiles.add(createDeck(GameData.findCard("Ammo x30", CardType.Ammunition, -1)));
+		resourcePiles.add(createDeck((RECard) data.getCard("AM;01")));
+		resourcePiles.add(createDeck((RECard) data.getCard("AM;02")));
+		resourcePiles.add(createDeck((RECard) data.getCard("AM;03")));
 		resourcePiles.add(createDeck(new RECard[]{
-				GameData.findCard("Combat Knife", CardType.Weapon, -1),
-				GameData.findCard("Survival Knife", CardType.Weapon, -1) }, false));
+				(RECard) data.getCard("WE;04"),
+				(RECard) data.getCard("WE;05") }, false));
 		resourcePiles.add(createDeck(new RECard[]{
-				GameData.findCard("Handgun", CardType.Weapon, -1),
-				GameData.findCard("Burst-Fire Handgun", CardType.Weapon, -1) }, false));
-		resourcePiles.add(createDeck(GameData.findCard("Green Herb", CardType.Item, -1)));
+				(RECard) data.getCard("WE;06"),
+				(RECard) data.getCard("WE;07") }, false));
+		resourcePiles.add(createDeck((RECard) data.getCard("IT;01")));
 		
 		//	set up all scenario piles
 		for (int i = 0; i < cards.size(); i++) {
@@ -93,6 +95,9 @@ public class Shop {
 	//	searches all piles for a specific card, and removes it from the first pile it's found in
 	//	then shuffles the deck
 	public RECard gainCardSearch(Player player, String tag) {
+		String[] parts = tag.split(";");
+		tag = parts[0]+";"+Integer.parseInt(parts[1]);
+		
 		for (int i = resourcePiles.size() - 1; i >= 0; i--) {
 			int index = resourcePiles.get(i).indexOf(tag);
 			if (index != -1) {
@@ -117,7 +122,7 @@ public class Shop {
 	//	returns a card to the resource area
 	public void returnCard(RECard card) {
 		for (int i = 0; i < resourcePiles.size(); i++) {
-			if (resourcePiles.get(i).indexContains(card.getTag())) {
+			if (resourcePiles.get(i).indexContains(card.generateTag())) {
 				resourcePiles.get(i).addBottom(card);
 			}
 		}

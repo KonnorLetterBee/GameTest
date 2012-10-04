@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kngames.gametest.R;
+import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
@@ -18,6 +20,8 @@ import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 
 public class BaseREExpandableSelectorFragment extends Fragment {
+	protected static CardData data = CardData.getCardData();
+	
 	//	UI elements
 	protected ArrayList<String> titles;
 	protected ExpandableListView listView;
@@ -78,13 +82,15 @@ public class BaseREExpandableSelectorFragment extends Fragment {
 	}
 
 	public boolean onClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-		openInfoWindow(cardCollection[groupPosition][childPosition].getID());
+		Card c = cardCollection[groupPosition][childPosition];
+		openInfoWindow(c.getCatTag(), c.getIntTag());
 		return true;
 	}
 	
-	protected void openInfoWindow(int ID) {
+	protected void openInfoWindow(String catTag, int intTag) {
 		Intent infoIntent = new Intent(getActivity(), REInfoFragmentActivity.class);
-		infoIntent.putExtra("cardID", ID);
+		infoIntent.putExtra("catTag", catTag);
+		infoIntent.putExtra("intTag", intTag);
 		infoIntent.putExtra("groupType", REInfoFragmentActivity.INFO_FRAG);
 		infoIntent.putExtra("fragType", fragType);
 		this.startActivity(infoIntent);

@@ -102,7 +102,7 @@ public class Scenario {
 			StringBuilder currStack = new StringBuilder();
 			for (int j = 0; j < cards.get(i).length; j++) {
 				if (j > 0) currStack.append(" ");
-				currStack.append(GameData.generateTagString(cards.get(i)[j]));
+				currStack.append(cards.get(i)[j].generateTag());
 			}
 			out[i] = currStack.toString();
 		}

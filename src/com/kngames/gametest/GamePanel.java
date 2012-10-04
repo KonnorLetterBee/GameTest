@@ -2,6 +2,7 @@ package com.kngames.gametest;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.cards.graphics.*;
 import com.kngames.gametest.engine.ContentManager;
 import com.kngames.gametest.redata.REDeck;
@@ -35,6 +36,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     //private int screenWidth;
     //private int screenHeight;
     
+    private CardData cardData;
     private ContentManager content;
 	private REZoneManager zoneManager;
 	private Game game;
@@ -58,6 +60,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 		
 		//	initialize ZoneManager and Game, then set ZoneManager's Game to the instantiated Game
 		zoneManager = REZoneManager.initREZoneManager();
+		cardData = CardData.getCardData();
 		
 		//	if the Game already exists, use the same Game object and REZoneManager, but change the context on
 		if (Game.exists()) {
@@ -65,7 +68,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 			game.setContext(context);
 			zoneManager = REZoneManager.getREZoneManager();
 		} else {
-			game = Game.startGame(context, new CharacterCard[] {GameData.Characters[0]}, GameData.testScenario, GameData.populateMansion(0));
+			game = Game.startGame(context, new CharacterCard[] {(CharacterCard) cardData.getCard("CH", 1)}, GameData.testScenario, GameData.populateMansion(0));
 			zoneManager.setGame(game);
 			fillZoneManager();
 		}

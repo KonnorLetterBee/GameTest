@@ -1,7 +1,6 @@
 package com.kngames.gametest.regame.screens;
 
 import com.kngames.gametest.GameLoopActivity;
-import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.*;
 import com.kngames.gametest.redata.Info.MainInfoListActivity;
 import com.kngames.gametest.redata.ScenEditor.ScenarioEditorActivity;

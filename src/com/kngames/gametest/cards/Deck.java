@@ -82,7 +82,7 @@ public abstract class Deck {
 	public int indexOf(String tag) {
 		if (indexContains(tag)) {
 			for (int i = 0; i < cards.size(); i++) {
-				if (cards.get(i).tag.equals(tag)) return i;
+				if (cards.get(i).generateTag().equals(tag)) return i;
 			}
 		}
 		return -1;
@@ -91,27 +91,27 @@ public abstract class Deck {
 	//	adds a Card to the front of this Deck (index 0)
 	public void addFront(Card toAdd) {
 		cards.add(0, toAdd);
-		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
+		if (!indexContains(toAdd.generateTag())) index.add(toAdd.generateTag());
 	}
 	
 	//	adds a Card to the back of this Deck (index size() - 1)
 	public void addBack(Card toAdd) {
 		cards.add(cards.size(), toAdd);
-		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
+		if (!indexContains(toAdd.generateTag())) index.add(toAdd.generateTag());
 	}
 	
 	//	adds a Card to the top of this Deck, depends on face-up/face-down
 	public void addTop(Card toAdd) {
 		if (faceUp) { cards.add(0, toAdd); }
 		else { cards.add(cards.size(), toAdd); }
-		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
+		if (!indexContains(toAdd.generateTag())) index.add(toAdd.generateTag());
 	}
 	
 	//	adds a Card to the bottom of this Deck, depends on face-up/face-down
 	public void addBottom(Card toAdd) {
 		if (faceUp) { cards.add(cards.size(), toAdd); }
 		else { cards.add(0, toAdd); }
-		if (!indexContains(toAdd.tag)) index.add(toAdd.tag);
+		if (!indexContains(toAdd.generateTag())) index.add(toAdd.generateTag());
 	}
 	
 	//	removes and returns the first card in this Deck object (from index 0)
@@ -225,7 +225,7 @@ public abstract class Deck {
 		String[] out = new String[cards.size()];
 		
 		for (int i = 0; i < cards.size(); i++) {
-			out[i] = generateTag(cards.get(i));
+			out[i] = cards.get(i).generateTag();
 		}
 		
 		return out;
@@ -244,7 +244,4 @@ public abstract class Deck {
 	
 	//	searches for a card based on tag information
 	public abstract Card parseTag(String tag);
-	
-	//	finds/generates the tag for a given card
-	public abstract String generateTag(Card c);
 }

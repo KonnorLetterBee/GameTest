@@ -12,12 +12,12 @@ public class MansionCard extends RECard implements InMansion {
 	protected OnMansionFinishListener finishListener = null;
 	
 	public MansionCard(String name, CardType type, int ID, int quantity, int expans, String text) {
-		super(name, type, "MA", ID, expans, quantity, text);
+		super(name, type, "MA", "MA", ID, ID, expans, quantity, text);
 	}
 	public MansionCard(String name, CardType type, int ID, int quantity, int expans, String text,
 			OnMansionRevealListener reveal, OnMansionDefeatedListener defeat, 
 			OnMansionNotDefeatedListener notDefeat, OnMansionFinishListener finish) {
-		super(name, type, "MA", ID, expans, quantity, text);
+		super(name, type, "MA", "MA", ID, ID, expans, quantity, text);
 		this.mansionListener = reveal;
 		this.defeatListener = defeat;
 		this.notDefeatListener = notDefeat;

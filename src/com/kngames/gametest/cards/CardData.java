@@ -12,7 +12,7 @@ public class CardData {
 	//	the primary storage method for cards is a HashMap of SparseArrays
 	//	outer HashMap corresponds to the card's string portion of the key
 	//	inner SparseArrays correspond to the card's int portion of the key
-	HashMap<String, SparseArray<Card>> cards;
+	private HashMap<String, SparseArray<Card>> cards;
 	
 	//	constructs a new CardData
 	//	since CardData is a singleton, instantiate the CardData using initCardData
@@ -46,7 +46,6 @@ public class CardData {
 	
 	//	adds a card to this CardData's collection
 	//	if the card's string tag isn't present in the collection, it will be created
-	//	TODO: change card's tag to two separate fields
 	//	returns true if the insertion was successful (meaning no card was already in the same position)
 	//	returns false otherwise (on a false return, CardData will not be changed)
 	public boolean addCard(Card c) {
@@ -82,6 +81,13 @@ public class CardData {
 		return c;
 	}
 	
+	//	gets the card with the specified tag
+	//	splits the tag along the semicolon and passes the result to the other getCard function
+	public Card getCard(String concatTag) {
+		String[] parts = concatTag.split(";");
+		return getCard(parts[0], Integer.parseInt(parts[1]));
+	}
+	
 	//	removes a card from the collection
 	//	if the category the card was in is empty after removal, also remove the category
 	public void removeCard(String cat, int pos) {
@@ -97,26 +103,24 @@ public class CardData {
 		}
 	}
 	
+	//	gets the contents of a specified category and returns the cards in that category
+	//	in an array
+	public Card[] getCategory(String cat) {
+		SparseArray<Card> category = cards.get(cat);
+		if (category == null) {
+			Log.e(TAG, "Category "+cat+" doesn't exist!");
+			return null;
+		}
+		
+		Card[] out = new Card[category.size()];
+		for (int i = 0; i < category.size(); i++) {
+			out[i] = category.valueAt(i);
+		}
+		return out;
+	}
+	
 	//	removes an entire category from this collection if it exists
 	public void removeCategory(String cat) {
 		cards.remove(cat);
-	}
-	
-	@SuppressWarnings("unused")
-	public static void runTests() {
-		CardData data = initCardData();
-		for (int i = 1; i <= 10; i++) {
-			data.addCard(new Card(i, "CLUB;"+i));
-			data.addCard(new Card(i, "DIAM;"+i));
-			data.addCard(new Card(i, "HEAR;"+i));
-			data.addCard(new Card(i, "SPAD;"+i));
-		}
-		Card a = data.getCard("CLUB", 1);
-		Card b = data.getCard("CLUB", 10);
-		Card c = data.getCard("DIAM", 6);
-		Card d = data.getCard("HEAR", 10);
-		Card e = data.getCard("SPAD", 90);
-		
-		CardData.destroy();
 	}
 }

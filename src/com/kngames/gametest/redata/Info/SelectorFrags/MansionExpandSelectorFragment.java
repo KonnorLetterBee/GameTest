@@ -2,10 +2,11 @@ package com.kngames.gametest.redata.Info.SelectorFrags;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.data.Expansion;
-import com.kngames.gametest.redata.data.GameData;
 
 public class MansionExpandSelectorFragment extends BaseREExpandableSelectorFragment {
 	public MansionExpandSelectorFragment() {
@@ -34,8 +35,9 @@ public class MansionExpandSelectorFragment extends BaseREExpandableSelectorFragm
 		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<RECard>());
 		
 		//	add mansions from game expansions
-		for(int i = 0; i < GameData.Mansions.length; i++) {
-			RECard temp = GameData.Mansions[i];
+		Card[] cards = CardData.getCardData().getCategory("MA");
+		for(int i = 0; i < cards.length; i++) {
+			RECard temp = (RECard)cards[i];
 			int slot = temp.getExpansion();
 			dualList.get(slot).add(temp);
 		}

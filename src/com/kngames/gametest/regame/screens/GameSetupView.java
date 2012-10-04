@@ -2,9 +2,10 @@ package com.kngames.gametest.regame.screens;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.Card;
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.CardTypes.CharacterCard;
 import com.kngames.gametest.redata.data.Expansion;
-import com.kngames.gametest.redata.data.GameData;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -162,9 +163,13 @@ public class GameSetupView extends LinearLayout {
 	
 	private ArrayList<Pair<String,CharacterCard>> getCharacterCards() {
 		ArrayList<Pair<String,CharacterCard>> data = new ArrayList<Pair<String,CharacterCard>>();
-		for (int i = 0; i < GameData.Characters.length; i++) {
-			CharacterCard temp = GameData.Characters[i];
-			data.add(new Pair<String, CharacterCard>(String.format("%s (%s)", temp.getName(), Expansion.expansString(temp.getExpansion())), temp));
+		Card[] test = CardData.getCardData().getCategory("CH");
+		for (int i = 0; i < test.length; i++) {
+			CharacterCard temp = null;
+			if (test[i] instanceof CharacterCard) {
+				temp = (CharacterCard)test[i];
+				data.add(new Pair<String, CharacterCard>(String.format("%s (%s)", temp.getName(), Expansion.expansNames()[temp.getExpansion()]), temp));
+			}
 		}
 		return data;
 	}
