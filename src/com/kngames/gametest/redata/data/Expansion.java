@@ -629,7 +629,7 @@ public class Expansion {
 					  "")
 		}; }
 		public WeaponCard[] weapons() { return new WeaponCard[] {
-			new WeaponCard("Custom Standard Sidearm", 	48,  exp, WeaponType.Pistol,	  20, 20, 10, false,  0, "You can give this Weapon +10 Damage during this turn.  In that case, Trash this Weapon at the end of this turn."),
+			new WeaponCard("Custom Standard Sidearm", 	48,  exp, WeaponType.Pistol,  20, 20, 10, false,  0, "You can give this Weapon +10 Damage during this turn.  In that case, Trash this Weapon at the end of this turn."),
 			new WeaponCard("Reliable Blade", 			50,  exp, WeaponType.Knife,	  0,  0,  5,  false,  0, "When you Defeat 1 or more Infected during this turn, you can Gain +10 Gold.  In that case, Trash this Weapon at the end of the turn."),
 		}; }
 		//public ActionCard[] actions() { return new ActionCard[] { }; }
@@ -639,6 +639,11 @@ public class Expansion {
 			new AmmunitionCard("Ammo x10", 5, exp, 0,  28, 10, 10),
 			new AmmunitionCard("Ammo x20", 6, exp, 30, 15, 20, 20),
 			new AmmunitionCard("Ammo x30", 7, exp, 60, 15, 30, 30),
+		}; }
+		public SkillsCard[] skills() { return new SkillsCard[] {
+			new SkillsCard("Medic Lv. 1", 4, 4, exp, 0, "When you would Heal your Character, you can Heal that amount, plus 10 instead.", 1),
+			new SkillsCard("Medic Lv. 2", 5, 5, exp, 0, "When you Heal your Character, you can Trash 1 card from your Discard Pile.", 2),
+			new SkillsCard("Medic Lv. 3", 6, 6, exp, 0, "At the beginning of your turn, Heal your Character's Health by 20.  If your Character is at Maximum Health, you can get +1 Explore during this turn instead.", 5),
 		}; }
 		//public Scenario[] scenarios() { return new Scenario[] { }; }
 	}
@@ -691,6 +696,7 @@ public class Expansion {
 	public InfectionCard[] infections() { return null; }
 	public MansionCard[] mansion() { return null; }
 	public AmmunitionCard[] ammunition() { return null; }
+	public SkillsCard[] skills() { return null; }
 	public Scenario[] scenarios() { return null; }
 	public Scenario[] mansionConfigs() { return null; }
 }

@@ -166,6 +166,16 @@ public class GameData {
 				}
 			}	Log.d(TAG, "finished loading ammunition");
 			
+			//	load skills
+			Log.d(TAG, "loading skills");
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].ammunition() != null) {
+					for (int j = 0; j < expansions[i].skills().length; j++) {
+						data.addCard(expansions[i].skills()[j]);
+					}
+				}
+			}	Log.d(TAG, "finished loading skills");
+			
 			//	load scenarios
 			Scenarios = buildScenarioList();
 			
