@@ -29,11 +29,11 @@ public class ScenarioInfoEditorActivity extends Activity {
 	    setContentView(R.layout.scenario_info_editor);
 	    
 	    nameField = (EditText)findViewById(R.id.nameField);
-	    nameField.setText(GameData.customTempScenario.second.getName());
+	    nameField.setText(GameData.customTempScenario.second.name());
 	    descField = (EditText)findViewById(R.id.descField);
-	    descField.setText(GameData.customTempScenario.second.getDesc());
+	    descField.setText(GameData.customTempScenario.second.description());
 	    notesField = (EditText)findViewById(R.id.notesField);
-	    notesField.setText(GameData.customTempScenario.second.getNotes());
+	    notesField.setText(GameData.customTempScenario.second.notes());
 	    basicsBox = (CheckBox)findViewById(R.id.basicsBox);
 	    basicsBox.setChecked(GameData.customTempScenario.second.useBasics());
 	    

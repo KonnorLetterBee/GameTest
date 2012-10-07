@@ -36,7 +36,7 @@ public class Shop {
 	
 	//	set the scenario and resource piles
 	private void setupResourcePiles(Scenario scen, int players) {
-		ArrayList<RECard[]> cards = scen.getCards();
+		ArrayList<RECard[]> cards = scen.cards();
 		resourcePiles = new ArrayList<REDeck>();
 		//	set up basics piles, if scenario allows basics
 		resourcePiles.add(createDeck((RECard) data.getCard("AM;01")));

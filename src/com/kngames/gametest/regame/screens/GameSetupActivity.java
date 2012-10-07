@@ -96,7 +96,7 @@ public class GameSetupActivity extends Activity {
 		ArrayList<Pair<String,Scenario>> data = new ArrayList<Pair<String,Scenario>>();
 		for (int i = 0; i < GameData.Scenarios.length; i++) {
 			Scenario temp = GameData.Scenarios[i];
-			data.add(new Pair<String, Scenario>(String.format("%s (%s)", temp.getName(), temp.getMode()), temp));
+			data.add(new Pair<String, Scenario>(String.format("%s (%s)", temp.name(), temp.mode()), temp));
 		}
 		return data;
 	}

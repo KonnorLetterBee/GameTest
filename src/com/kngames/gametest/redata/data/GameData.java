@@ -197,7 +197,7 @@ public class GameData {
 					Scenario temp = expansions[i].scenarios()[j];
 					if (temp.complete()) {
 						scenarios.add(temp);
-						Log.d(TAG, "loaded scenario \""+temp.getName()+"\"");
+						Log.d(TAG, "loaded scenario \""+temp.name()+"\"");
 					}
 				}
 			}
@@ -215,11 +215,11 @@ public class GameData {
 	//	returns null if nothing was found
 	public static Scenario findScenario(int id, boolean includeCustoms) {
 		for (int i = 0; i < Scenarios.length; i++) {
-			if (Scenarios[i].getID() == id) return Scenarios[i];
+			if (Scenarios[i].id() == id) return Scenarios[i];
 		}
 		if (includeCustoms)
 			for (int i = 0; i < CustomScenarios.size(); i++) {
-				if (CustomScenarios.get(i).second.getID() == id) return CustomScenarios.get(i).second;
+				if (CustomScenarios.get(i).second.id() == id) return CustomScenarios.get(i).second;
 			}
 		return null;
 	}

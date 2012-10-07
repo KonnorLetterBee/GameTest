@@ -65,7 +65,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 		//	add scenarios from game expansions
 		for(int i = 0; i < GameData.Scenarios.length; i++) {
 			Scenario temp = GameData.Scenarios[i];
-			int slot = temp.getExpans();
+			int slot = temp.expans();
 			dualList.get(slot).add(temp);
 		}
 		
@@ -129,7 +129,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 			ArrayList<HashMap<String,String>> secList = new ArrayList<HashMap<String,String>>();
 			for(int n = 0; n < scenCollection[i].length; n++ ) {
 				HashMap<String,String> child = new HashMap<String,String>();
-				child.put(CHILD_KEY, scenCollection[i][n].getName());			
+				child.put(CHILD_KEY, scenCollection[i][n].name());			
 				secList.add( child );
 			}
 			result.add(secList);
@@ -138,7 +138,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 	}
 
 	public boolean onClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-		openInfoWindow(scenCollection[groupPosition][childPosition].getID());
+		openInfoWindow(scenCollection[groupPosition][childPosition].id());
 		return true;
 	}
 	

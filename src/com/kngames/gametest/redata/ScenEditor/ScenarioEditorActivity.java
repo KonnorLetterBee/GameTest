@@ -195,7 +195,7 @@ public class ScenarioEditorActivity extends Activity {
 	
 	//	loads scenario data from the temp variable in ScenInfo
 	private void loadScenarioData() {
-		ArrayList<RECard[]> tempArray = GameData.customTempScenario.second.getCards();
+		ArrayList<RECard[]> tempArray = GameData.customTempScenario.second.cards();
 		//	iterate through piles of cards
 		for (int i = 0; i < tempArray.size(); i++) {
 			//	iterate through cards in pile
@@ -275,7 +275,7 @@ public class ScenarioEditorActivity extends Activity {
 		
 		inUseLabel.setText("In-Use Cards  (" + usedDataList.size() + ")");
 		if (GameData.customTempScenario != null) {
-			String scenName = GameData.customTempScenario.second.getName();
+			String scenName = GameData.customTempScenario.second.name();
 			if (scenName.equals("")) this.setTitle("Untitled Scenario");
 		   	else this.setTitle(scenName);
 		} else this.setTitle("Untitled Scenario");

@@ -57,16 +57,16 @@ public class Scenario {
 		this(id, name, gameMode, expans, basics, GameData.parseSingleTagString(tagList), desc, notes);
 	}
 
-	public int getID() { return id; }
-	public String getName() { return name; }
-	public GameMode getMode() { return mode; }
-	public int getExpans() { return expans; }
-	public boolean[] getExpansRequired() { return expansRequired; }
+	public int id() { return id; }
+	public String name() { return name; }
+	public GameMode mode() { return mode; }
+	public int expans() { return expans; }
+	public boolean[] expansRequired() { return expansRequired; }
 	public boolean complete() { return complete; }
-	public ArrayList<RECard[]> getCards() { return cards; }
+	public ArrayList<RECard[]> cards() { return cards; }
 	public boolean useBasics() { return basics; }
-	public String getDesc() { return desc; }
-	public String getNotes() { return notes; }
+	public String description() { return desc; }
+	public String notes() { return notes; }
 	
 	public void setName(String name) { this.name = name; }
 	public void setMode(GameMode mode) { this.mode = mode; }

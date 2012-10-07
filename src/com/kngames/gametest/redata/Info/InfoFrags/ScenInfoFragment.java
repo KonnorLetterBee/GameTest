@@ -23,7 +23,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		Scenario scen = GameData.findScenario(scenID, true);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
-		titleText = String.format("%s", scen.getName());
+		titleText = String.format("%s", scen.name());
 		
 		infoText = generateScenarioInfo(scen);
 		
@@ -34,7 +34,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 	public static String generateScenarioInfo(Scenario scen) {
 		//	generate the list of cards in the scenario
 		StringBuilder cards = new StringBuilder();
-		ArrayList<RECard[]> cardList = scen.getCards();
+		ArrayList<RECard[]> cardList = scen.cards();
 			
 		for (int i = 0; i < cardList.size(); i++) {
 			cards.append("   ");
@@ -47,7 +47,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 			
 		//	generate the list of expansions required
 		StringBuilder expansReq = new StringBuilder("Expansions required:  ");
-		boolean[] expansReqArray = scen.getExpansRequired();
+		boolean[] expansReqArray = scen.expansRequired();
 		int expCount = 0;
 		for (int i = 0; i < expansReqArray.length; i++) {
 			if (expansReqArray[i] == true) {
@@ -57,11 +57,11 @@ public class ScenInfoFragment extends BaseInfoFragment {
 			}
 		}
 		
-		String gameMode = "Intended Game Mode:  " + scen.getMode();
+		String gameMode = "Intended Game Mode:  " + scen.mode();
 			
 		//	set up the info string
 		StringBuilder infoString = new StringBuilder();
-		if (!scen.getDesc().equals("")) infoString.append(scen.getDesc() + "\n\n");
+		if (!scen.description().equals("")) infoString.append(scen.description() + "\n\n");
 		infoString.append(expansReq.toString() + "\n" + gameMode + "\n\n" + cards.toString());
 		
 		return infoString.toString();

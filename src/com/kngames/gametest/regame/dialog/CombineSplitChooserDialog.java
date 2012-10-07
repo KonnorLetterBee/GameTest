@@ -125,8 +125,8 @@ public class CombineSplitChooserDialog extends Dialog {
     	for (int i = 0; i < GameData.CustomScenarios.size(); i++) {
     		scenarioPairs.add(new Pair<Integer, String>(
     				GameData.CustomScenarios.get(i).first, 
-    				GameData.CustomScenarios.get(i).second.getName()));
-    		scenarioStrings.add(GameData.CustomScenarios.get(i).second.getName());
+    				GameData.CustomScenarios.get(i).second.name()));
+    		scenarioStrings.add(GameData.CustomScenarios.get(i).second.name());
     	}
     	int resID = android.R.layout.simple_list_item_1;
     	ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(context, resID, scenarioStrings);
