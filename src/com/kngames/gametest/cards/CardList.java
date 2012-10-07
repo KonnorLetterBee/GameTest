@@ -2,6 +2,7 @@ package com.kngames.gametest.cards;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.engine.data.DataOps;
 import com.kngames.gametest.redata.CardTypes.RECard;
 
 /**
@@ -67,7 +68,8 @@ public class CardList {
 	}
 	
 	public void saveToFile(String path) {
-		
+		DataOps.exportToFile(path, String.format(
+				format, args));
 	}
 	
 	public void saveToDB(String table) {
