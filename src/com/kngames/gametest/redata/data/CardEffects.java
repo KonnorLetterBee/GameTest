@@ -2,6 +2,7 @@ package com.kngames.gametest.redata.data;
 
 import android.util.Log;
 
+import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.data.ExploreEffects.*;
 import com.kngames.gametest.redata.CardTypes.*;
@@ -300,7 +301,7 @@ public class CardEffects {
 	public static class GGunCaseEffect implements OnMansionRevealListener {
 		public void revealed(RECard card, Game game) {
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE09");
-			if (temp == null) game.attackingPlayers().get(0).discard().addTop(GameData.findByCardTag("WE09"));
+			if (temp == null) game.attackingPlayers().get(0).discard().addTop(CardData.getCardData().getCard("WE;09"));
 			else game.attackingPlayers().get(0).discard().addTop(temp);
 			game.mansionRemoved().addTop(card);
 		}
