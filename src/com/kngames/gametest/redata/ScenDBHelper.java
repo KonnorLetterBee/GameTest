@@ -29,7 +29,7 @@ public class ScenDBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
-		db.execSQL("CREATE TABLE " + customscentable + " (" + 
+		db.execSQL("CREATE TABLE " + scentable + " (" + 
 				scentableID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 				scentableName + " TEXT, " + 
 				scentableContents + " TEXT, " +

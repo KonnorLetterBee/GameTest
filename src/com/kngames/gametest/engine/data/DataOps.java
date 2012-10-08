@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import android.os.Environment;
 import android.util.Log;
@@ -20,9 +20,9 @@ public class DataOps {
 	public static final int TYPE_FILE = 0;
 	public static final int TYPE_FOLDER = 1;
 	
-	//	loads data from a file and returns a hashtable with the data allocated into String/String pairs
-	public static Hashtable<String, String> importFromFile(String relPath) throws IOException {
-		Hashtable<String,String> table = new Hashtable<String, String>();
+	//	loads data from a file and returns a hashmap with the data allocated into String/String pairs
+	public static HashMap<String,String> importFromFile(String relPath) throws IOException {
+		HashMap<String,String> table = new HashMap<String, String>();
 		BufferedReader reader = new BufferedReader(new FileReader(getFile(TYPE_FILE, relPath, true)));
 		for(String line = reader.readLine(); line != null; line = reader.readLine()) {
 			int delimIndex = line.indexOf(KEY_DATA_DELIM);

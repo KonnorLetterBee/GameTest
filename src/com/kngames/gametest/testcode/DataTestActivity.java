@@ -1,9 +1,10 @@
 package com.kngames.gametest.testcode;
 
 import java.io.File;
-import java.util.Hashtable;
 
+import com.kngames.gametest.cards.CardList;
 import com.kngames.gametest.engine.data.DataOps;
+import com.kngames.gametest.redata.CLScenario;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -95,7 +96,8 @@ public class DataTestActivity extends Activity {
 	
 	private void doRelativeFileWriteTest(String path, String data) {
 		try {
-			DataOps.exportToFile(path, data);
+			CLScenario list = new CLScenario(1, "Test Scenario", new String[] {"WE;01", "WE;02", "WE;03", "WE;04", "WE;05"}, "Here's a test scenario.", "", 1, 1, true, false);
+			list.saveToFile(path);
 			Log.d(TAG, "Write complete");
 		} catch (Exception e) {
 			Log.e(TAG, String.format("Error: exception: %s", path));
@@ -104,13 +106,7 @@ public class DataTestActivity extends Activity {
 	
 	private void doRelativeFileReadTest(String path) {
 		try {
-			Hashtable<String,String> data = DataOps.importFromFile(path);
-			Object[] keys = data.keySet().toArray();
-			for (int i = 0; i < keys.length; i++) {
-				String key = (String)keys[i];
-				String val = data.get(key);
-				Log.d(TAG, String.format("(%d: %s, %s)", i, key, val));
-			}
+			CLScenario list = new CLScenario(true, path, true);
 			Log.d(TAG, "Read complete");
 		} catch (Exception e) {
 			Log.e(TAG, String.format("Error: exception: %s", path));

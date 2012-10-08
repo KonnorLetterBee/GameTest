@@ -169,7 +169,7 @@ public class GameData {
 			//	load skills
 			Log.d(TAG, "loading skills");
 			for (int i = 0; i < expansions.length; i++) {
-				if (expansionsEnabled[i] == true && expansions[i].ammunition() != null) {
+				if (expansionsEnabled[i] == true && expansions[i].skills() != null) {
 					for (int j = 0; j < expansions[i].skills().length; j++) {
 						data.addCard(expansions[i].skills()[j]);
 					}
@@ -287,24 +287,6 @@ public class GameData {
 		}
 		return cardList;
 	}
-	
-	//	generates an ID tag for this card
-	/*
-	public static String generateTagString(RECard card) {
-		StringBuilder out = new StringBuilder();
-		switch (card.getCardType()) {
-			case Character:  out.append("CH"); break;
-			case Weapon: 	 out.append("WE"); break;
-			case Action: 	 out.append("AC"); break;
-			case Item: 		 out.append("IT"); break;
-			case Infected: 	 out.append("MA"); break;
-			case Token: 	 out.append("MA"); break;
-			case Event:		 out.append("MA"); break;
-			case Ammunition: out.append("AM"); break;
-		}
-		out.append(String.format("%02d", card.getID()));
-		return out.toString();
-	}*/
 	
 	//	generates a single String containing the contents of a tag array delimited with a '/' to separate cards
 	public static String generateSingleTagString(String[] tags) {
