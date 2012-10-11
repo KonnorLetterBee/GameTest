@@ -3,7 +3,7 @@ package com.kngames.gametest.cards;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Deck {
+public class Deck {
 	
 	/*	This structure assumes that index 0 corresponds to the top of the face-up deck.
 	 *  If the deck is face-down, the top of the deck is at index size() - 1
@@ -34,7 +34,7 @@ public abstract class Deck {
 		
 		if (tags.length > 0 && !tags[0].equals("")) {
 			for (int i = 0; i < tags.length; i++) {
-				Card temp = parseTag(tags[i]);
+				Card temp = CardData.getCardData().getCard(tags[i]);
 				cards.add(temp);
 			}
 		}
@@ -241,7 +241,4 @@ public abstract class Deck {
 		}
 		return out.toString();
 	}
-	
-	//	searches for a card based on tag information
-	public abstract Card parseTag(String tag);
 }

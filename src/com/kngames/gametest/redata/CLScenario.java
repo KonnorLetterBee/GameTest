@@ -56,6 +56,10 @@ public class CLScenario extends CardList {
 		super(file, path, loadImmediately);
 	}
 
+	///
+	///		Getters and Setters
+	///
+	
 	public int mode() { return mode; }
 	public int expans() { return expans; }
 	public boolean[] expansRequired() { return expansRequired; }
@@ -109,10 +113,6 @@ public class CLScenario extends CardList {
 		this.basics = Boolean.parseBoolean(map.get("basics"));
 	}
 	
-	public void loadFromDB(String table) throws MethodNotSupportedException {
-		throw new MethodNotSupportedException("Database function not yet implemented.");
-	}
-	
 	/**
 	 * Saves the information of this CLScenario to an external file at the path stored in this CLScenario.  Does not save the data 
 	 * for the Card objects themselves.
@@ -141,9 +141,5 @@ public class CLScenario extends CardList {
 	public void saveToFile(String savePath) throws IOException, NullPointerException {
 		path = savePath;
 		saveToFile();
-	}
-	
-	public void saveToDB(String table) throws MethodNotSupportedException {
-		throw new MethodNotSupportedException("Database function not yet implemented.");
 	}
 }

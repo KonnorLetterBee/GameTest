@@ -2,7 +2,6 @@ package com.kngames.gametest.redata.CardTypes;
 
 import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.redata.REDeck;
-import com.kngames.gametest.redata.data.GameData;
 import com.kngames.gametest.regame.gamestruct.Game;
 import com.kngames.gametest.regame.gamestruct.Player;
 
@@ -36,14 +35,6 @@ public abstract class RECard extends Card {
 	public int getExpansion() { return expansion; }
 	public int getDeckQuantity() { return deckQuantity; }
 	public String getText() { return text; }
-	//public String getTag() { return tag; }
-	
-	public static Card parseTag(String tag) {
-		return GameData.findByCardTag(tag);
-	}
-	//public String generateTag() {
-	//	return GameData.generateTagString(this);
-	//}
 	
 	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
 		switch (cardType) {

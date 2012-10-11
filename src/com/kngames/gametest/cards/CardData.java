@@ -88,6 +88,21 @@ public class CardData {
 		return getCard(parts[0], Integer.parseInt(parts[1]));
 	}
 	
+	/**
+	 * Searches CardData for a series of tags and creates an array of Card objects that correspond to those tags.
+	 * @param concatTags the list of concatenated card tags to search the lists for
+	 * @return the array filled with the card objects that correspond to the tags supplied
+	 */
+	public Card[] getCardList(String[] concatTags) {
+		Card[] out = new Card[concatTags.length];
+		
+		for(int i = 0; i < out.length; i++) {
+			out[i] = getCard(concatTags[i]);
+		}
+		
+		return out;
+	}
+	
 	//	removes a card from the collection
 	//	if the category the card was in is empty after removal, also remove the category
 	public void removeCard(String cat, int pos) {

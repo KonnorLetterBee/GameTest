@@ -2,6 +2,7 @@ package com.kngames.gametest.redata.data;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.redata.CLScenario;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.WeaponCard.WeaponType;
@@ -190,6 +191,30 @@ public class Expansion {
 					"AC;11", "AC;12", "AC;08", "AC;10", "AC;01", "AC;03", "WE;01", "WE;08", "WE;02", "WE;09", "WE;13 WE;14", "WE;15 WE;16", "WE;10"},
 					"Feel like you can handle it all? With this setup, the most powerful Weapons in the game, the Rocket Launcher and the Gatling Gun, join the Resource Piles. Drop one of these on your friends and they won't be able to recover before you put them down for good.", null)
 		}; }
+		public CLScenario[] clScenarios() { return new CLScenario[] {
+				new CLScenario (1, "First Timer", new String[] {"AC;07", "AC;01", "AC;04", "AC;02", "AC;03", "AC;06", "AC;05", "WE;01", "WE;08", "WE;13 WE;14", "WE;15 WE;16", "WE;11 WE;12"},
+						"", "", GameMode.Story.ordinal(), exp, true, false),
+				new CLScenario (2, "Classic Horror", new String[] {"AC;07", "AC;01", "AC;02", "AC;03", "AC;05", "AC;09", "IT;03", "WE;02", "WE;01", "WE;13 WE;14", "WE;11 WE;12", "WE;03"},
+						"Featuring many of the Weapons and Item cards found in the original Resident Evil game.  The Player who manages their Inventory effectively will find themselves closer to escaping.", "", GameMode.Story.ordinal(), exp, true, false),
+				new CLScenario (3, "Spy Games", new String[] {"AC;07", "AC;10", "AC;04", "AC;11", "AC;09", "AC;02", "IT;03", "WE;02", "WE;01", "WE;08", "WE;13 WE;14", "WE;11 WE;12"},
+						"A few new cards are added to this setup, including a card that allows Players to steal Weaponry from the other survivors, adding to their own armory of Infected destruction.", "", GameMode.Story.ordinal(), exp, true, false),
+				new CLScenario (4, "Whaddya Buyin?", new String[] {"AC;06", "AC;10", "AC;05", "AC;02", "AC;04", "AC;11", "WE;03", "WE;01", "WE;08", "WE;13 WE;14", "WE;11 WE;12", "WE;15 WE;16"},
+						"With a change in scenery comes new Resources available for purchase just in time as the Infected have rallied.  The Merchant appears in the most unlikely of places to offer you \"A lot of good things for sale, Stranger.\"", "", GameMode.Story.ordinal(), exp, true, false),
+				new CLScenario (5, "Battle-Hardened Veteran", new String[] {"AC;06", "AC;07", "AC;01", "AC;03", "AC;05", "AC;02", "WE;03", "WE;02", "WE;08", "WE;13 WE;14", "WE;11 WE;12", "WE;15 WE;16"},
+						"You have survived this long, only to face a final surge of Infected.  Only those with strong wills and brave hearts will prove themselves able to stand at the top and escape with their lives.", "", GameMode.Story.ordinal(), exp, true, false),
+				new CLScenario (6, "Special Forces", new String[] {"AC;02", "AC;09", "AC;07", "IT;03", "AC;03", "AC;11", "AC;10", "AC;05", "WE;01", "WE;13 WE;14", "WE;11 WE;12", "WE;08"},
+						"Being quick on your feet and managing your Teams Inventory will be the key to this battle.  If you find yourself running low on Health, you can always have one of your teammates Buy you a First Aid Spray.", "", GameMode.Mercenary.ordinal(), exp, true, false),
+				new CLScenario (7, "Limited Movement", new String[] {"AC;02", "AC;06", "AC;09", "AC;01", "AC;11", "AC;10", "AC;03", "WE;01", "WE;08", "WE;15 WE;16", "WE;11 WE;12", "WE;13 WE;14"},
+						"Make no wasted movements as your Team will be down to one or two Actions per turn.  Make every card count and you will come out victorious!", "", GameMode.Mercenary.ordinal(), exp, true, false),
+				new CLScenario (8, "Jack Of All Trades", new String[] {"AC;04", "AC;05", "AC;02", "AC;09", "AC;3", "AC;11", "AC;06", "WE;01", "WE;13 WE;14", "WE;15 WE;16", "WE;11 WE;12", "WE;08"},
+						"", "", GameMode.Mercenary.ordinal(), exp, true, false),
+				new CLScenario (9, "Quick And Easy", new String[] {"AC;06", "AC;01", "AC;03", "AC;09", "AC;05", "AC;02", "AC;12", "WE;01", "WE;03", "WE;15 WE;16", "WE;13 WE;14", "WE;08"},
+						"Bigger is not always better, but beware the Magnum, a gun that will certainly make anyone's day.", "", GameMode.Versus.ordinal(), exp, true, false),
+				new CLScenario (10, "Big Guns, Big Explosions", new String[] {"AC;10", "AC;12", "AC;03", "AC;01", "AC;08", "WE;01", "WE;08", "WE;02", "WE;03", "WE;13 WE;14", "WE;15 WE;16", "WE;11 WE;12"},
+						"Use this setup if your play style is to Buy everything that explodes or destroys.  More defensive cards are added, along with more 'Trash' abilities and larger Damage dealing Weapons.", "", GameMode.Versus.ordinal(), exp, true, false),
+				new CLScenario (11, "I've Covered Wars", new String[] {"AC;11", "AC;12", "AC;08", "AC;10", "AC;01", "AC;03", "WE;01", "WE;08", "WE;02", "WE;09", "WE;13 WE;14", "WE;15 WE;16", "WE;10"},
+						"Feel like you can handle it all? With this setup, the most powerful Weapons in the game, the Rocket Launcher and the Gatling Gun, join the Resource Piles. Drop one of these on your friends and they won't be able to recover before you put them down for good.", "", GameMode.Versus.ordinal(), exp, true, false)
+			}; }
 	}
 	
 	public static class AlliancesExpans  extends Expansion{
@@ -289,16 +314,16 @@ public class Expansion {
 					"AC;17", "AC;21", "AC;22", "AC;19", "AC;14", "AC;18", "IT;04", "WE;19", "WE;20 WE;21", "WE;17 WE;18", "WE;22 WE;23"},
 					"", null),
 			new Scenario (13, "Bound Advance", GameMode.Story, exp, true, new String[] {
-					"AM04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;19", "IT;04", "WE;24", "AC;14", "WE;25", "WE;17 WE;18", "WE;22 WE;23"},
+					"AM;04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;19", "IT;04", "WE;24", "AC;14", "WE;25", "WE;17 WE;18", "WE;22 WE;23"},
 					"Providing Players with little to no Drawing ability, this setup will strain resources as they attempt to make the most of their initial 5 cards.", null),
 			new Scenario (14, "Backlog", GameMode.Story, exp, true, new String[] {
 					"AC;18", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;13", "AC;15", "WE;24", "AC;14", "AC;16", "WE;17 WE;18", "WE;22 WE;23"},
 					"Players will find themselves with a bit too many Resources as they battle to control their Inventory sizes with this setup.", null),
 			new Scenario (15, "Fast Action", GameMode.Story, exp, true, new String[] {
-					"AM04", "WE;19", "AC;13", "WE;20 WE;21", "AC;21", "AC;17", "AC;22", "WE;24", "AC;14", "AC;19", "WE;17 WE;18", "WE;22 WE;23"},
+					"AM;04", "WE;19", "AC;13", "WE;20 WE;21", "AC;21", "AC;17", "AC;22", "WE;24", "AC;14", "AC;19", "WE;17 WE;18", "WE;22 WE;23"},
 					"Feel like ending the game quickly? This setup will allow Players to build up their Inventory the quickest and have everything they need when they decide to Explore the Mansion.", null),
 			new Scenario (16, "Lethal Injection", GameMode.Story, exp, true, new String[] {
-					"AM04", "WE;02", "AC;10", "AC;02", "WE;20 WE;21", "WE;08", "AC;17", "AC;19", "AC;09", "AC;05", "WE;11 WE;12", "WE;22 WE;23"},
+					"AM;04", "WE;02", "AC;10", "AC;02", "WE;20 WE;21", "WE;08", "AC;17", "AC;19", "AC;09", "AC;05", "WE;11 WE;12", "WE;22 WE;23"},
 					"Ignore all those tiny weapons and go for nothing but the best! Use your Treasure to get the large Weaponry you need to annihilate the Infected.", null),
 			new Scenario (17, "Top of the Class", GameMode.Story, exp, true, new String[] {
 					"WE;01 WE;17 WE;18", "WE;02", "AC;10", "AC;02", "WE;20 WE;21 WE;13 WE;14", "WE;08", "AC;18", "AC;03", "AC;09", "AC;05", "WE;22 WE;23", "WE;19 WE;15 WE;16"},
@@ -307,7 +332,7 @@ public class Expansion {
 					"AC;18", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;15", "AC;17", "WE;24", "AC;16", "AC;19", "WE;17 WE;18", "WE;22 WE;23"},
 					"Featuring all the Weapons you could ever need, this abandoned Supply Depot guarantees one thing: Mass Destruction.", null),
 			new Scenario (19, "Infested Shopping Mall", GameMode.Mercenary, exp, true, new String[] {
-					"IT;04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;15", "AC;17", "AC;13", "AM04", "AC;19", "AC;14", "WE;22 WE;23"},
+					"IT;04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;15", "AC;17", "AC;13", "AM;04", "AC;19", "AC;14", "WE;22 WE;23"},
 					"Welcome to Raccoon City Mall, where anything great is located, everything is on sale, and everyone greets you with rotting teeth and a monstrous hunger! We've got what cures your hunger for Infected destruction!", null),
 			new Scenario (20, "Partners in Escape", GameMode.PartnerStory, exp, true, new String[] {
 					"AC;13", "WE;19", "AC;20", "WE;20 WE;21", "IT;04", "AC;15", "AC;14", "WE;24", "WE;17 WE;18", "AC;16", "WE;22 WE;23", "AC;19"},
@@ -316,8 +341,32 @@ public class Expansion {
 					"AC;21", "AC;22", "AC;20", "AC;18", "IT;04", "AC;13", "AC;14", "WE;24", "AC;16", "WE;17 WE;18", "WE;25", "AC;19"},
 					"Sometimes, the person who is more accurate is the one who survives, as proven by this Scenario.", null),
 			new Scenario (22, "Tactical Advance", GameMode.PartnerStory, exp, true, new String[] {
-					"AC;22", "WE;19", "AC;18", "WE;20 WE;21", "AC;17", "AC;15", "AC;14", "WE;24", "AC;13", "AM04", "WE;22 WE;23", "AC;19"},
+					"AC;22", "WE;19", "AC;18", "WE;20 WE;21", "AC;17", "AC;15", "AC;14", "WE;24", "AC;13", "AM;04", "WE;22 WE;23", "AC;19"},
 					"Having more cards in your Hand will demand smarter choices be made, less your Partner be killed.", null),
+		}; }
+		public CLScenario[] clscenarios() { return new CLScenario[] {
+			new CLScenario (12, "Initial Horror", new String[] {"AC;17", "AC;21", "AC;22", "AC;19", "AC;14", "AC;18", "IT;04", "WE;19", "WE;20 WE;21", "WE;17 WE;18", "WE;22 WE;23"},
+					"", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (13, "Bound Advance", new String[] {"AM;04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;19", "IT;04", "WE;24", "AC;14", "WE;25", "WE;17 WE;18", "WE;22 WE;23"},
+					"Providing Players with little to no Drawing ability, this setup will strain resources as they attempt to make the most of their initial 5 cards.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (14, "Backlog", new String[] {"AC;18", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;13", "AC;15", "WE;24", "AC;14", "AC;16", "WE;17 WE;18", "WE;22 WE;23"},
+					"Players will find themselves with a bit too many Resources as they battle to control their Inventory sizes with this setup.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (15, "Fast Action", new String[] {"AM;04", "WE;19", "AC;13", "WE;20 WE;21", "AC;21", "AC;17", "AC;22", "WE;24", "AC;14", "AC;19", "WE;17 WE;18", "WE;22 WE;23"},
+					"Feel like ending the game quickly? This setup will allow Players to build up their Inventory the quickest and have everything they need when they decide to Explore the Mansion.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (16, "Lethal Injection", new String[] {"AM;04", "WE;02", "AC;10", "AC;02", "WE;20 WE;21", "WE;08", "AC;17", "AC;19", "AC;09", "AC;05", "WE;11 WE;12", "WE;22 WE;23"},
+					"Ignore all those tiny weapons and go for nothing but the best! Use your Treasure to get the large Weaponry you need to annihilate the Infected.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (17, "Top of the Class", new String[] {"WE;01 WE;17 WE;18", "WE;02", "AC;10", "AC;02", "WE;20 WE;21 WE;13 WE;14", "WE;08", "AC;18", "AC;03", "AC;09", "AC;05", "WE;22 WE;23", "WE;19 WE;15 WE;16"},
+					"Combining the best of the best from Sets 1 and 2, this set up will give you everything you need to rip through the Mansion.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (18, "Infested Supply Depot", new String[] {"AC;18", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;15", "AC;17", "WE;24", "AC;16", "AC;19", "WE;17 WE;18", "WE;22 WE;23"},
+					"Featuring all the Weapons you could ever need, this abandoned Supply Depot guarantees one thing: Mass Destruction.", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (19, "Infested Shopping Mall", new String[] {"IT;04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;15", "AC;17", "AC;13", "AM;04", "AC;19", "AC;14", "WE;22 WE;23"},
+					"Welcome to Raccoon City Mall, where anything great is located, everything is on sale, and everyone greets you with rotting teeth and a monstrous hunger! We've got what cures your hunger for Infected destruction!", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (20, "Partners in Escape", new String[] {"AC;13", "WE;19", "AC;20", "WE;20 WE;21", "IT;04", "AC;15", "AC;14", "WE;24", "WE;17 WE;18", "AC;16", "WE;22 WE;23", "AC;19"},
+					"An Introduction to the Partner Modification, many cards that had limited uses before are completely changed when adding in more Characters.", "", GameMode.PartnerStory.ordinal(), exp, true, false),
+			new CLScenario (21, "A Little Gun Goes A Long Way", new String[] {"AC;21", "AC;22", "AC;20", "AC;18", "IT;04", "AC;13", "AC;14", "WE;24", "AC;16", "WE;17 WE;18", "WE;25", "AC;19"},
+					"Sometimes, the person who is more accurate is the one who survives, as proven by this Scenario.", "", GameMode.PartnerStory.ordinal(), exp, true, false),
+			new CLScenario (22, "Tactical Advance", new String[] {"AC;22", "WE;19", "AC;18", "WE;20 WE;21", "AC;17", "AC;15", "AC;14", "WE;24", "AC;13", "AM;04", "WE;22 WE;23", "AC;19"},
+					"Having more cards in your Hand will demand smarter choices be made, less your Partner be killed.", "", GameMode.PartnerStory.ordinal(), exp, true, false),
 		}; }
 	}
 	
@@ -438,7 +487,7 @@ public class Expansion {
 					"WE;01", "AC;27", "AC;10", "AC;02", "AC;23", "WE;08", "AC;03", "AC;31", "AC;28", "WE;03", "WE;15 WE;16", "WE;13 WE;14"},
 					"Being an Infected isn't all that bad..... is it?", null),
 			new Scenario (28, "Quick Game", GameMode.Outbreak, exp, true, new String[] {
-					"WE;22 WE;23", "AC;29", "WE;20 WE;21", "WE;29 WE;30", "AC;15", "AM04", "AC;19", "AC;17", "AC;30", "AC;21", "WE;24", "WE;25"},
+					"WE;22 WE;23", "AC;29", "WE;20 WE;21", "WE;29 WE;30", "AC;15", "AM;04", "AC;19", "AC;17", "AC;30", "AC;21", "WE;24", "WE;25"},
 					"Don't have the full hour to play? Use this Scenario!", null),
 			new Scenario (29, "Trouble Around Every Corner", GameMode.Outbreak, exp, true, new String[] {
 					"WE;22 WE;23", "WE;25", "AC;24", "WE;26 WE;27", "WE;20 WE;21", "AC;18", "WE;29 WE;30", "AC;19", "WE;28", "AC;31", "AC;25", "AC;21"},
@@ -447,10 +496,10 @@ public class Expansion {
 					"WE;25", "WE;26 WE;27", "WE;24", "AC;26", "WE;29 WE;30", "WE;28", "AC;19", "WE;22 WE;23", "WE;17", "AC;17", "WE;19", "WE;20 WE;21"},
 					"Arm yourself to the teeth with this near Weapons only setup!", null),
 			new Scenario (31, "Explosions and Flames", GameMode.Outbreak, exp, true, new String[] {
-					"WE;01", "WE;24", "WE;03", "WE;31", "AC;22", "WE;28", "AC;03", "AC;27", "AM04", "WE;26 WE;27", "WE;02", "WE;22 WE;23"},
+					"WE;01", "WE;24", "WE;03", "WE;31", "AC;22", "WE;28", "AC;03", "AC;27", "AM;04", "WE;26 WE;27", "WE;02", "WE;22 WE;23"},
 					"Hardly any Ammo is required in this quirky Scenario.", null),
 			new Scenario (32, "Mega Money", GameMode.Outbreak, exp, true, new String[] {
-					"AC;09", "AC;06", "WE;08", "AC;29", "WE;24", "WE;20 WE;21", "AM04", "AC;03", "AC;21", "WE;02", "WE;29 WE;30", "AC;30"},
+					"AC;09", "AC;06", "WE;08", "AC;29", "WE;24", "WE;20 WE;21", "AM;04", "AC;03", "AC;21", "WE;02", "WE;29 WE;30", "AC;30"},
 					"", null),
 			new Scenario (33, "A Gun Is a Gun", GameMode.Outbreak, exp, true, new String[] {
 					"WE;01 WE;17 WE;18", "WE;25 WE;26 WE;27", "AC;23", "WE;08 WE;29 WE;30", "WE;22 WE;23 WE;11 WE;12", "AC;25", "WE;13 WE;14 WE;20 WE;21", "WE;15 WE;16 WE;19", "AC;28", "AC;04", "AC;03", "AC;21"},
@@ -468,8 +517,42 @@ public class Expansion {
 					"WE;28", "WE;20 WE;21", "AC;15", "WE;24", "WE;26 WE;27", "AC;19", "AC;18", "AC;21", "AC;22", "AC;17", "AC;24", "WE;22 WE;23"},
 					"Featuring all the Weapons you could ever need, this abandoned Supply Depot guarantees one thing: Mass Destruction.", null),
 			new Scenario (38, "Infested Shopping Mall", GameMode.Mercenary, exp, true, new String[] {
-					"WE;19", "WE;20 WE;21", "AC;15", "AC;13", "AC;14", "AC;19", "IT;04", "WE;29 WE;30", "AC;22", "AC;17", "AM04", "WE;22 WE;23"},
+					"WE;19", "WE;20 WE;21", "AC;15", "AC;13", "AC;14", "AC;19", "IT;04", "WE;29 WE;30", "AC;22", "AC;17", "AM;04", "WE;22 WE;23"},
 					"Welcome to Raccoon City Mall, where anything great is located, everything is on sale, and everyone greets you with rotting teeth and a monstrous hunger! We've got what cures your hunger for Infected destruction!", null),
+		}; }
+		public CLScenario[] clscenarios() { return new CLScenario[] {
+			new CLScenario (23, "Outbreak", new String[] {"WE;15 WE;16", "WE;29 WE;30", "WE;28", "WE;13 WE;14", "AC;26", "AC;24", "AC;01", "AC;25", "AC;23", "AC;02", "AC;06", "AC;03", "AC;04"},
+					"", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (24, "Dawn of Nightmares", new String[] {"WE;19", "WE;20 WE;21", "AC;19", "AC;24", "AC;23", "AC;25", "AC;17", "AC;21", "AC;22", "WE;29 WE;30", "AC;26", "WE;22 WE;23"},
+					"", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (25, "Infection Balance", new String[] {"WE;02", "WE;15 WE;16", "AC;10", "AC;27", "AC;02", "AC;04", "AC;09", "AC;23", "AC;26", "AC;03", "WE;29", "WE;13 WE;14"},
+					"Learn to master the Virus within you in order to get the most out of this Scenario.", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (26, "Duplicity", new String[] {"WE;26 WE;27", "AC;05", "WE;28", "AC;02", "WE;15", "AC;30", "AC;04", "AC;26", "AC;03", "WE;03", "WE;29 WE;30", "WE;13 WE;14"},
+					"Sometimes having multiple copies of the same card isn't a bad idea...", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (27, "Embrace the Darkness", new String[] {"WE;01", "AC;27", "AC;10", "AC;02", "AC;23", "WE;08", "AC;03", "AC;31", "AC;28", "WE;03", "WE;15 WE;16", "WE;13 WE;14"},
+					"Being an Infected isn't all that bad..... is it?", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (28, "Quick Game", new String[] {"WE;22 WE;23", "AC;29", "WE;20 WE;21", "WE;29 WE;30", "AC;15", "AM;04", "AC;19", "AC;17", "AC;30", "AC;21", "WE;24", "WE;25"},
+					"Don't have the full hour to play? Use this Scenario!", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (29, "Trouble Around Every Corner", new String[] {"WE;22 WE;23", "WE;25", "AC;24", "WE;26 WE;27", "WE;20 WE;21", "AC;18", "WE;29 WE;30", "AC;19", "WE;28", "AC;31", "AC;25", "AC;21"},
+					"Find inventive ways to keep your opponent's away from winning!", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (30, "Resident Reaper", new String[] {"WE;25", "WE;26 WE;27", "WE;24", "AC;26", "WE;29 WE;30", "WE;28", "AC;19", "WE;22 WE;23", "WE;17", "AC;17", "WE;19", "WE;20 WE;21"},
+					"Arm yourself to the teeth with this near Weapons only setup!", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (31, "Explosions and Flames", new String[] {"WE;01", "WE;24", "WE;03", "WE;31", "AC;22", "WE;28", "AC;03", "AC;27", "AM;04", "WE;26 WE;27", "WE;02", "WE;22 WE;23"},
+					"Hardly any Ammo is required in this quirky Scenario.", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (32, "Mega Money", new String[] {"AC;09", "AC;06", "WE;08", "AC;29", "WE;24", "WE;20 WE;21", "AM;04", "AC;03", "AC;21", "WE;02", "WE;29 WE;30", "AC;30"},
+					"", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (33, "A Gun Is a Gun", new String[] {"WE;01 WE;17 WE;18", "WE;25 WE;26 WE;27", "AC;23", "WE;08 WE;29 WE;30", "WE;22 WE;23 WE;11 WE;12", "AC;25", "WE;13 WE;14 WE;20 WE;21", "WE;15 WE;16 WE;19", "AC;28", "AC;04", "AC;03", "AC;21"},
+					"Pushing all Weapon types into the same Resource Pile gives Players a much different game than normal...", "", GameMode.Outbreak.ordinal(), exp, true, false),
+			new CLScenario (34, "Special Forces", new String[] {"IT;03", "WE;13 WE;14", "AC;03", "WE;01", "WE;08", "AC;07", "AC;02", "AC;05", "AC;30", "AC;29", "AC;10", "WE;11 WE;12"},
+					"Being quick on your feet and managing your Team's Inventory will be the key to this battle. If you find yourself running low on Health, you can always have one of your teammates Buy a First Aid Spray.", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (35, "Jack of All Trades", new String[] {"AC;04", "AC;03", "WE;08", "WE;13 WE;14", "WE;15 WE;16", "WE;01", "AC;09", "AC;29", "AC;02", "AC;24", "AC;30", "WE;11 WE;12"},
+					"A little bit of everything can be found in this scenario.", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (36, "Limited Movement", new String[] {"WE;15 WE;16", "WE;13 WE;14", "AC;06", "AC;09", "AC;24", "AC;11", "AC;02", "AC;30", "AC;03", "WE;01", "WE;29 WE;30", "WE;11 WE;12"},
+					"Make no wasted movements as your Team will be down to one or two Actions per turn. Make every card count and you will come out victorious!", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (37, "Infested Supply Depot", new String[] {"WE;28", "WE;20 WE;21", "AC;15", "WE;24", "WE;26 WE;27", "AC;19", "AC;18", "AC;21", "AC;22", "AC;17", "AC;24", "WE;22 WE;23"},
+					"Featuring all the Weapons you could ever need, this abandoned Supply Depot guarantees one thing: Mass Destruction.", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (38, "Infested Shopping Mall", new String[] {"WE;19", "WE;20 WE;21", "AC;15", "AC;13", "AC;14", "AC;19", "IT;04", "WE;29 WE;30", "AC;22", "AC;17", "AM;04", "WE;22 WE;23"},
+					"Welcome to Raccoon City Mall, where anything great is located, everything is on sale, and everyone greets you with rotting teeth and a monstrous hunger! We've got what cures your hunger for Infected destruction!", "", GameMode.Mercenary.ordinal(), exp, true, false),
 		}; }
 	}
 	
@@ -583,7 +666,7 @@ public class Expansion {
 					"AC;40", "AC;35", "AC;38", "WE;08", "AC;10", "AC;37", "AC;02", "AC;41", "WE;38 WE;39", "WE;34", "WE;13 WE;14", "WE;36 WE;37"},
 					"You only have 1 goal: Complete. Global. Saturation. And you intend to meet it.", null),
 			new Scenario (44, "Loaded for Bear", GameMode.Story, exp, true, new String[] {
-					"AM04", "WE;34", "AC;19", "AC;17", "AC;15", "WE;41", "AC;21", "WE;35", "WE;24", "WE;20 WE;21", "WE;36 WE;37", "WE;32 WE;33"},
+					"AM;04", "WE;34", "AC;19", "AC;17", "AC;15", "WE;41", "AC;21", "WE;35", "WE;24", "WE;20 WE;21", "WE;36 WE;37", "WE;32 WE;33"},
 					"Itching for a fight? Make sure to go in with an ample supply of Weaponry", null),
 			new Scenario (45, "Griefing", GameMode.Story, exp, true, new String[] {
 					"AC;18", "AC;19", "WE;40", "WE;34", "AC;37", "AC;38", "WE;35", "AC;36", "AC;39", "WE;36 WE;37", "WE;32 WE;33", "WE;20 WE;21"},
@@ -592,10 +675,10 @@ public class Expansion {
 					"AC;33", "WE;42", "AC;36", "AC;40", "AC;17", "WE;34", "AC;32", "AC;34", "WE;38 WE;39", "WE;32 WE;33", "WE;20 WE;21", "WE;19"},
 					"No Trash is the centerpiece of this Scenario", null),
 			new Scenario (47, "Disposable", GameMode.Story, exp, true, new String[] {
-					"WE;41", "AC;10", "AC;06", "WE;42", "AM04", "WE;40", "AC;17", "AC;22", "AC;34", "AC;03", "WE;31", "WE;29 WE;30"},
+					"WE;41", "AC;10", "AC;06", "WE;42", "AM;04", "WE;40", "AC;17", "AC;22", "AC;34", "AC;03", "WE;31", "WE;29 WE;30"},
 					"One and done is the easiest way to sum up this odd Scenario", null),
 			new Scenario (48, "Millionaire", GameMode.Story, exp, true, new String[] {
-					"AM04", "AC;09", "AC;03", "AC;06", "AC;21", "AC;33", "WE;34", "AC;36", "WE;24", "AC;17", "WE;29 WE;30", "WE;20 WE;21"},
+					"AM;04", "AC;09", "AC;03", "AC;06", "AC;21", "AC;33", "WE;34", "AC;36", "WE;24", "AC;17", "WE;29 WE;30", "WE;20 WE;21"},
 					"You'll feel like a million bucks when everything is within your grasp.", null),
 			new Scenario (49, "Competitive", GameMode.Story, exp, true, new String[] {
 					"WE;31", "WE;34", "WE;35", "AC;03", "AC;29", "AC;21", "AC;02", "AC;17", "AC;26", "WE;28", "WE;32 WE;33", "AC;06"},
@@ -615,6 +698,40 @@ public class Expansion {
 			new Scenario (54, "Infested Gun Shop", GameMode.Mercenary, exp, true, new String[] {
 					"WE;38 WE;39", "WE;35", "WE;41", "WE;32 WE;33", "WE;34", "AC;19", "AC;21", "AC;15", "WE;36 WE;37", "WE;22 WE;23", "AC;39", "WE;20 WE;21"},
 					"Walls and cabinets stand in front of you, filled to the brim with every Weapon imaginable, eagerly awaiting use against those who had wronged their owner...", null)
+		}; }
+		public CLScenario[] clscenarios() { return new CLScenario[] {
+			new CLScenario (39, "Nightmare", new String[] {"WE;36 WE;37", "AC;32", "AC;37", "AC;33", "WE;35", "AC;39", "WE;41", "AC;35", "AC;36", "AC;10", "AC;04", "WE;38 WE;39"},
+					"", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (40, "Biohazard", new String[] {"AC;17", "AC;36", "AC;22", "AC;35", "WE;35", "AC;37", "AC;41", "AC;34", "WE;20 WE;21", "WE;36 WE;37", "WE;38 WE;39", "AC;33"},
+					"", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (41, "Bigger is Better", new String[] {"AC;04", "WE;02", "AC;36", "AC;33", "AC;10", "AC;32", "AC;06", "WE;35", "AC;02", "AC;03", "WE;15 WE;16", "WE;13 WE;14"},
+					"Having a Bigger Inventory allows a player more options, and greater power...", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (42, "Surging Forward", new String[] {"AC;34", "AC;36", "AC;05", "AC;02", "AC;03", "AC;38", "WE;35", "WE;32 WE;33", "WE;38 WE;39", "WE;02", "WE;13 WE;14", "WE;36 WE;37"},
+					"Will you rush through the Mansion, or take your time gathering everything?", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (43, "Ambition", new String[] {"AC;40", "AC;35", "AC;38", "WE;08", "AC;10", "AC;37", "AC;02", "AC;41", "WE;38 WE;39", "WE;34", "WE;13 WE;14", "WE;36 WE;37"},
+					"You only have 1 goal: Complete. Global. Saturation. And you intend to meet it.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (44, "Loaded for Bear", new String[] {"AM;04", "WE;34", "AC;19", "AC;17", "AC;15", "WE;41", "AC;21", "WE;35", "WE;24", "WE;20 WE;21", "WE;36 WE;37", "WE;32 WE;33"},
+					"Itching for a fight? Make sure to go in with an ample supply of Weaponry", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (45, "Griefing", new String[] {"AC;18", "AC;19", "WE;40", "WE;34", "AC;37", "AC;38", "WE;35", "AC;36", "AC;39", "WE;36 WE;37", "WE;32 WE;33", "WE;20 WE;21"},
+					"Hold back the other players from winning, and you may find yourself in the lead...", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (46, "Hoarding", new String[] {"AC;33", "WE;42", "AC;36", "AC;40", "AC;17", "WE;34", "AC;32", "AC;34", "WE;38 WE;39", "WE;32 WE;33", "WE;20 WE;21", "WE;19"},
+					"No Trash is the centerpiece of this Scenario", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (47, "Disposable", new String[] {"WE;41", "AC;10", "AC;06", "WE;42", "AM;04", "WE;40", "AC;17", "AC;22", "AC;34", "AC;03", "WE;31", "WE;29 WE;30"},
+					"One and done is the easiest way to sum up this odd Scenario", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (48, "Millionaire", new String[] {"AM;04", "AC;09", "AC;03", "AC;06", "AC;21", "AC;33", "WE;34", "AC;36", "WE;24", "AC;17", "WE;29 WE;30", "WE;20 WE;21"},
+					"You'll feel like a million bucks when everything is within your grasp.", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (49, "Competitive", new String[] {"WE;31", "WE;34", "WE;35", "AC;03", "AC;29", "AC;21", "AC;02", "AC;17", "AC;26", "WE;28", "WE;32 WE;33", "AC;06"},
+					"There is no one way to win with this Scenario", "", GameMode.Story.ordinal(), exp, true, false),
+			new CLScenario (50, "Sacrifice", new String[] {"AC;03", "AC;41", "AC;10", "AC;37", "AC;40", "AC;36", "WE;01", "WE;34", "WE;08", "WE;38 WE;39", "WE;36 WE;37", "WE;32 WE;33"},
+					"Convert your Health into more beneficail gains, such as cards, ammo, and more. There are multiple ways to establish your team's dominance with this scenario", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (51, "Sluggish", new String[] {"AC;38", "AC;37", "AC;06", "AC;10", "AC;09", "AC;35", "WE;41", "WE;32 WE;33", "WE;38 WE;39", "WE;13 WE;14", "WE;08", "WE;36 WE;37"},
+					"Less Actions demands smarter buting and more tactical decisions on your team's part", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (52, "Zombie Hunters", new String[] {"AC;09", "AC;04", "AC;02", "AC;33", "AC;03", "AC;39", "AC;36", "WE;34", "WE;36 WE;37", "WE;13 WE;14", "WE;15 WE;16", "WE;38 WE;39"},
+					"The hunted becomes the hunter in this scenario", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (53, "Infested Police Station", new String[] {"AC;17", "AC;35", "AC;22", "AC;36", "AC;34", "WE;19", "WE;20 WE;21", "WE;32 WE;33", "AC;39", "WE;38 WE;39", "WE;22 WE;23", "WE;36 WE;37"},
+					"Your team has been dropped into a very familiar building: a police department, which has been completely overrun by the Infected!", "", GameMode.Mercenary.ordinal(), exp, true, false),
+			new CLScenario (54, "Infested Gun Shop", new String[] {"WE;38 WE;39", "WE;35", "WE;41", "WE;32 WE;33", "WE;34", "AC;19", "AC;21", "AC;15", "WE;36 WE;37", "WE;22 WE;23", "AC;39", "WE;20 WE;21"},
+					"Walls and cabinets stand in front of you, filled to the brim with every Weapon imaginable, eagerly awaiting use against those who had wronged their owner...", "", GameMode.Mercenary.ordinal(), exp, true, false)
 		}; }
 	}
 	
@@ -698,5 +815,6 @@ public class Expansion {
 	public AmmunitionCard[] ammunition() { return null; }
 	public SkillsCard[] skills() { return null; }
 	public Scenario[] scenarios() { return null; }
+	public CLScenario[] clScenarios() { return null; }
 	public Scenario[] mansionConfigs() { return null; }
 }

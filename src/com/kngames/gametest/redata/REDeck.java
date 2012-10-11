@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.util.Pair;
 
-import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.Deck;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
@@ -28,11 +27,6 @@ public class REDeck extends Deck {
 	
 	public REDeck (REDeck other) {
 		super(other);
-	}
-	
-	@Override
-	public Card parseTag(String tag) {
-		return RECard.parseTag(tag);
 	}
 	
 	//	creates an array list of pairs, the first element being the index in the deck the card is found,

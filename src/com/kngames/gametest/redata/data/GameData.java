@@ -9,6 +9,7 @@ import android.util.Pair;
 
 import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.CardData;
+import com.kngames.gametest.redata.CLScenario;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.ScenDBHelper;
 import com.kngames.gametest.redata.Scenario;
@@ -43,6 +44,7 @@ public class GameData {
 	private static CardData data;
 	public static Scenario[] Scenarios;
 	
+	public static CLScenario CLScenarios;
 	public static Scenario testScenario;
 	
 	
@@ -179,6 +181,17 @@ public class GameData {
 			//	load scenarios
 			Scenarios = buildScenarioList();
 			
+			//	load clscenarios
+			Log.d(TAG, "loading CLScenarios");
+			ArrayList<CLScenario> clscenarios = new ArrayList<CLScenario>();
+			for (int i = 0; i < expansions.length; i++) {
+				if (expansionsEnabled[i] == true && expansions[i].clScenarios() != null) {
+					for (int j = 0; j < expansions[i].clScenarios().length; j++) {
+						clscenarios.add(expansions[i].clScenarios()[j]);
+					}
+				}
+			}	Log.d(TAG, "finished loading CLScenarios");
+					
 			dbHelper = new ScenDBHelper(context);
 			CustomScenarios = GameData.loadCustomScenarios();
 			
@@ -267,29 +280,18 @@ public class GameData {
 	///		Tag Methods
 	///
 	
-	//	searches all arrays for a card with the specified 4-character tag
-	//	returns null if nothing was found
-	public static RECard findByCardTag(String tag) {
-		String type = tag.substring(0, 2);
-		int id = Integer.parseInt(tag.substring(3));
-		RECard out = (RECard)(data.getCard(type, id));
-		
-		if (out != null) return out;
-		return null;
-	}
-	
 	//	generates an array of RECard objects that contain the tags, delimited with spaces, of the input
 	public static RECard[] generateStackByTags(String tags) {
 		String[] tagList = tags.split("\\ ");
 		RECard[] cardList = new RECard[tagList.length];
 		for (int i = 0; i < tagList.length; i++) {
-			cardList[i] = findByCardTag(tagList[i]);
+			cardList[i] = (RECard) data.getCard(tagList[i]);
 		}
 		return cardList;
 	}
 	
 	//	generates a single String containing the contents of a tag array delimited with a '/' to separate cards
-	public static String generateSingleTagString(String[] tags) {
+	public static String generateStackTags(String[] tags) {
 		StringBuilder out = new StringBuilder();
 		for (int i = 0; i < tags.length; i++) {
 			if (i > 0) out.append("/");

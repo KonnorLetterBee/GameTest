@@ -310,7 +310,7 @@ public class CardEffects {
 	public static class RocketCaseEffect implements OnMansionRevealListener {
 		public void revealed(RECard card, Game game) {
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE10");
-			if (temp == null) game.attackingPlayers().get(0).discard().addTop(GameData.findByCardTag("WE10"));
+			if (temp == null) game.attackingPlayers().get(0).discard().addTop(CardData.getCardData().getCard("WE;10"));
 			else game.attackingPlayers().get(0).discard().addTop(temp);
 			game.mansionRemoved().addTop(card);
 		}
