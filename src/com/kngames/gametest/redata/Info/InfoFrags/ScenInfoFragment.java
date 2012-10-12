@@ -2,8 +2,9 @@ package com.kngames.gametest.redata.Info.InfoFrags;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.structures.BaseInfoFragment;
-import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.CLScenario;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
@@ -20,7 +21,7 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		//	gets the ID of the weapon to be displayed, then fetches the weapon info
 		Intent intent = getActivity().getIntent();
 		int scenID = intent.getIntExtra("scenID", 0);
-		Scenario scen = GameData.findScenario(scenID, true);
+		CLScenario scen = GameData.findCLScenario(scenID, true);
 		
 		//	set the Strings necessary for the BaseInfoActivity to display the information correctly
 		titleText = String.format("%s", scen.name());
@@ -31,16 +32,16 @@ public class ScenInfoFragment extends BaseInfoFragment {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
-	public static String generateScenarioInfo(Scenario scen) {
+	public static String generateScenarioInfo(CLScenario scen) {
 		//	generate the list of cards in the scenario
 		StringBuilder cards = new StringBuilder();
-		ArrayList<RECard[]> cardList = scen.cards();
+		ArrayList<Card[]> cardList = scen.cards();
 			
 		for (int i = 0; i < cardList.size(); i++) {
 			cards.append("   ");
 			for (int j = 0; j < cardList.get(i).length; j++) {
 				if (j > 0) cards.append(",  ");
-				cards.append(cardList.get(i)[j].getName());
+				cards.append(((RECard) cardList.get(i)[j]).getName());
 			}
 			cards.append("\n");
 		}

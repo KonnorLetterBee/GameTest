@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
+import com.kngames.gametest.redata.CLScenario;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
-import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
 
@@ -27,7 +27,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 	protected ExpandableListView listView;
 	private SimpleExpandableListAdapter listAdapter;
 	protected String[] catTitles;
-	protected Scenario[][] scenCollection;
+	protected CLScenario[][] scenCollection;
 	
 	private static final String PARENT_KEY = "parent";
 	private static final String CHILD_KEY = "child";
@@ -58,31 +58,31 @@ public class ScenExpandSelectorFragment extends Fragment {
 		return titlesArray;
 	}
 	
-	private Scenario[][] generateCollection() {
-		ArrayList<ArrayList<Scenario>> dualList = new ArrayList<ArrayList<Scenario>>();
-		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<Scenario>());
+	private CLScenario[][] generateCollection() {
+		ArrayList<ArrayList<CLScenario>> dualList = new ArrayList<ArrayList<CLScenario>>();
+		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<CLScenario>());
 		
 		//	add scenarios from game expansions
-		for(int i = 0; i < GameData.Scenarios.length; i++) {
-			Scenario temp = GameData.Scenarios[i];
+		for(int i = 0; i < GameData.CLScenarios.length; i++) {
+			CLScenario temp = GameData.CLScenarios[i];
 			int slot = temp.expans();
 			dualList.get(slot).add(temp);
 		}
 		
 		//	add custom scenarios
-		for(int i = 0; i < GameData.CustomScenarios.size(); i++) {
-			Scenario temp = GameData.CustomScenarios.get(i).second;
-			dualList.get(dualList.size() - 1).add(temp);
-		}
+		//for(int i = 0; i < GameData.CustomScenarios.size(); i++) {
+		//	Scenario temp = GameData.CustomScenarios.get(i).second;
+		//	dualList.get(dualList.size() - 1).add(temp);
+		//}
 		
 		//	remove scenario lists that have nothing in them
 		for (int i = dualList.size() - 1; i >= 0; i--) {
 			if (dualList.get(i).size() == 0) dualList.remove(i);
 		}
 		
-		Scenario[][] array = new Scenario[dualList.size()][];
+		CLScenario[][] array = new CLScenario[dualList.size()][];
 		for (int i = 0; i < dualList.size(); i++) {
-			array[i] = new Scenario[dualList.get(i).size()];
+			array[i] = new CLScenario[dualList.get(i).size()];
 			dualList.get(i).toArray(array[i]);
 		}
 		
@@ -138,7 +138,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 	}
 
 	public boolean onClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-		openInfoWindow(scenCollection[groupPosition][childPosition].id());
+		openInfoWindow(scenCollection[groupPosition][childPosition].ID());
 		return true;
 	}
 	

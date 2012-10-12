@@ -44,7 +44,7 @@ public class GameData {
 	private static CardData data;
 	public static Scenario[] Scenarios;
 	
-	public static CLScenario CLScenarios;
+	public static CLScenario[] CLScenarios;
 	public static Scenario testScenario;
 	
 	
@@ -179,7 +179,7 @@ public class GameData {
 			}	Log.d(TAG, "finished loading skills");
 			
 			//	load scenarios
-			Scenarios = buildScenarioList();
+			//Scenarios = buildScenarioList();
 			
 			//	load clscenarios
 			Log.d(TAG, "loading CLScenarios");
@@ -191,6 +191,7 @@ public class GameData {
 					}
 				}
 			}	Log.d(TAG, "finished loading CLScenarios");
+			CLScenarios = clscenarios.toArray(new CLScenario[1]);
 					
 			dbHelper = new ScenDBHelper(context);
 			CustomScenarios = GameData.loadCustomScenarios();
@@ -226,14 +227,10 @@ public class GameData {
 	
 	//	searches the Scenarios array for a Scenario with the specified id
 	//	returns null if nothing was found
-	public static Scenario findScenario(int id, boolean includeCustoms) {
-		for (int i = 0; i < Scenarios.length; i++) {
-			if (Scenarios[i].id() == id) return Scenarios[i];
+	public static CLScenario findCLScenario(int id, boolean includeCustoms) {
+		for (int i = 0; i < CLScenarios.length; i++) {
+			if (CLScenarios[i].ID() == id) return CLScenarios[i];
 		}
-		if (includeCustoms)
-			for (int i = 0; i < CustomScenarios.size(); i++) {
-				if (CustomScenarios.get(i).second.id() == id) return CustomScenarios.get(i).second;
-			}
 		return null;
 	}
 	

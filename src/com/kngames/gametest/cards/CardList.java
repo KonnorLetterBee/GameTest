@@ -96,7 +96,10 @@ public class CardList {
 	public String name() { return name; }
 	public boolean complete() { return loaded; }
 	public String[] tags() { return tags; }
-	public ArrayList<Card[]> cards() { return cards; }
+	public ArrayList<Card[]> cards() { 
+		if (cards == null) loadCards();
+		return cards;
+	}
 	public String description() { return desc; }
 	public String notes() { return notes; }
 	

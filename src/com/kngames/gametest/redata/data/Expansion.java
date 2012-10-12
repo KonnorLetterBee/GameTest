@@ -344,7 +344,7 @@ public class Expansion {
 					"AC;22", "WE;19", "AC;18", "WE;20 WE;21", "AC;17", "AC;15", "AC;14", "WE;24", "AC;13", "AM;04", "WE;22 WE;23", "AC;19"},
 					"Having more cards in your Hand will demand smarter choices be made, less your Partner be killed.", null),
 		}; }
-		public CLScenario[] clscenarios() { return new CLScenario[] {
+		public CLScenario[] clScenarios() { return new CLScenario[] {
 			new CLScenario (12, "Initial Horror", new String[] {"AC;17", "AC;21", "AC;22", "AC;19", "AC;14", "AC;18", "IT;04", "WE;19", "WE;20 WE;21", "WE;17 WE;18", "WE;22 WE;23"},
 					"", "", GameMode.Story.ordinal(), exp, true, false),
 			new CLScenario (13, "Bound Advance", new String[] {"AM;04", "WE;19", "AC;21", "WE;20 WE;21", "AC;22", "AC;19", "IT;04", "WE;24", "AC;14", "WE;25", "WE;17 WE;18", "WE;22 WE;23"},
@@ -520,7 +520,7 @@ public class Expansion {
 					"WE;19", "WE;20 WE;21", "AC;15", "AC;13", "AC;14", "AC;19", "IT;04", "WE;29 WE;30", "AC;22", "AC;17", "AM;04", "WE;22 WE;23"},
 					"Welcome to Raccoon City Mall, where anything great is located, everything is on sale, and everyone greets you with rotting teeth and a monstrous hunger! We've got what cures your hunger for Infected destruction!", null),
 		}; }
-		public CLScenario[] clscenarios() { return new CLScenario[] {
+		public CLScenario[] clScenarios() { return new CLScenario[] {
 			new CLScenario (23, "Outbreak", new String[] {"WE;15 WE;16", "WE;29 WE;30", "WE;28", "WE;13 WE;14", "AC;26", "AC;24", "AC;01", "AC;25", "AC;23", "AC;02", "AC;06", "AC;03", "AC;04"},
 					"", "", GameMode.Outbreak.ordinal(), exp, true, false),
 			new CLScenario (24, "Dawn of Nightmares", new String[] {"WE;19", "WE;20 WE;21", "AC;19", "AC;24", "AC;23", "AC;25", "AC;17", "AC;21", "AC;22", "WE;29 WE;30", "AC;26", "WE;22 WE;23"},
@@ -699,7 +699,7 @@ public class Expansion {
 					"WE;38 WE;39", "WE;35", "WE;41", "WE;32 WE;33", "WE;34", "AC;19", "AC;21", "AC;15", "WE;36 WE;37", "WE;22 WE;23", "AC;39", "WE;20 WE;21"},
 					"Walls and cabinets stand in front of you, filled to the brim with every Weapon imaginable, eagerly awaiting use against those who had wronged their owner...", null)
 		}; }
-		public CLScenario[] clscenarios() { return new CLScenario[] {
+		public CLScenario[] clScenarios() { return new CLScenario[] {
 			new CLScenario (39, "Nightmare", new String[] {"WE;36 WE;37", "AC;32", "AC;37", "AC;33", "WE;35", "AC;39", "WE;41", "AC;35", "AC;36", "AC;10", "AC;04", "WE;38 WE;39"},
 					"", "", GameMode.Story.ordinal(), exp, true, false),
 			new CLScenario (40, "Biohazard", new String[] {"AC;17", "AC;36", "AC;22", "AC;35", "WE;35", "AC;37", "AC;41", "AC;34", "WE;20 WE;21", "WE;36 WE;37", "WE;38 WE;39", "AC;33"},
