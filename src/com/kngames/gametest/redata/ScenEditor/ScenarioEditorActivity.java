@@ -3,12 +3,11 @@ package com.kngames.gametest.redata.ScenEditor;
 import java.util.ArrayList;
 
 import com.kngames.gametest.R;
-import com.kngames.gametest.cards.Card;
-import com.kngames.gametest.cards.CardData;
-import com.kngames.gametest.redata.data.GameData;
+import com.kngames.gametest.cards.*;
+import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.data.*;
 import com.kngames.gametest.redata.data.Expansion.Expans;
 import com.kngames.gametest.redata.data.GameData.GameMode;
-import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.RECard;
 import com.kngames.gametest.regame.dialog.ScenarioChooser;
 import com.kngames.gametest.regame.screens.MainMenu;
@@ -102,9 +101,9 @@ public class ScenarioEditorActivity extends Activity {
 		//	determine what to do based on customIndex
 		
 		if (customIndex == -1) {
-			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", null, "", "", GameMode.Story.ordinal(), Expans.Custom.ordinal(), true, true));
 		} else if (customIndex >= 0) {
-			GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
+			GameData.customTempScenario = GameData.CLCustomScenarios.get(customIndex);
 			loadScenarioData();
 		} else {
 			loadScenarioData();
@@ -128,7 +127,7 @@ public class ScenarioEditorActivity extends Activity {
 		case R.id.new_scen:
 			generateInitialList();
 			customIndex = -1;
-			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", null, "", "", GameMode.Story.ordinal(), Expans.Custom.ordinal(), true, true));
 			updateViews();
 			popupToast("New scenario created.");
 			return true;
@@ -195,7 +194,7 @@ public class ScenarioEditorActivity extends Activity {
 	
 	//	loads scenario data from the temp variable in ScenInfo
 	private void loadScenarioData() {
-		ArrayList<RECard[]> tempArray = GameData.customTempScenario.second.cards();
+		ArrayList<Card[]> tempArray = GameData.customTempScenario.second.cards();
 		//	iterate through piles of cards
 		for (int i = 0; i < tempArray.size(); i++) {
 			//	iterate through cards in pile
@@ -226,15 +225,15 @@ public class ScenarioEditorActivity extends Activity {
 		updateTempScenario();
 		if (customIndex == -1) {
 			//	adds the current temp scenario to the list of custom scenarios
-			customIndex = GameData.CustomScenarios.size();
+			customIndex = GameData.CLCustomScenarios.size();
 			GameData.dbHelper.addScenario(GameData.customTempScenario.second);
-			GameData.CustomScenarios = GameData.loadCustomScenarios();
-			GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
+			GameData.loadCustomScenarios();
+			GameData.customTempScenario = GameData.CLCustomScenarios.get(customIndex);
 		}
 		else {
 			//	replaces a scenario in the database
 			GameData.dbHelper.updateScenario(GameData.customTempScenario.first, GameData.customTempScenario.second);
-			GameData.CustomScenarios.set(customIndex, GameData.customTempScenario);
+			GameData.CLCustomScenarios.set(customIndex, GameData.customTempScenario);
 		}
 		popupToast("Scenario saved.");
 	}
@@ -245,10 +244,10 @@ public class ScenarioEditorActivity extends Activity {
 			popupToast("Scenario is not saved.");
 		} else {
 			GameData.dbHelper.deleteScenario(GameData.customTempScenario.first);
-			GameData.CustomScenarios = GameData.loadCustomScenarios();
+			GameData.loadCustomScenarios();
 			generateInitialList();
 			customIndex = -1;
-			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", GameMode.Story, Expans.Custom, true, "", "", ""));
+			GameData.customTempScenario = new Pair<Integer,Scenario>(-1, new Scenario(0, "", null, "", "", GameMode.Story.ordinal(), Expans.Custom.ordinal(), true, true));
 			updateViews();
 			popupToast("Scenario erased.");
 		}
@@ -265,7 +264,7 @@ public class ScenarioEditorActivity extends Activity {
 			}
 			tags[i] = tempTag.toString();
 		}
-		GameData.customTempScenario.second.setCards(tags);
+		GameData.customTempScenario.second.setTags(tags);
 	}
 	
 	//	updates the UI views to reflect current values
@@ -365,7 +364,7 @@ public class ScenarioEditorActivity extends Activity {
 			public void buttonPressed(int value) {
 				customIndex = value;
 				generateInitialList();
-				GameData.customTempScenario = GameData.CustomScenarios.get(customIndex);
+				GameData.customTempScenario = GameData.CLCustomScenarios.get(customIndex);
 				loadScenarioData();
 				updateViews();
 				scenChooser.dismiss();

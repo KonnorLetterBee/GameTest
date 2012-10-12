@@ -39,7 +39,7 @@ public class MainMenu extends Activity {
 		});
 		view.addButton("Scenario Editor", new View.OnClickListener() {
 			public void onClick(View v) {
-				if (GameData.CustomScenarios.size() == 0) startScenEditor(-1);
+				if (GameData.CLCustomScenarios.size() == 0) startScenEditor(-1);
 				else popupScenChooserDialog();
 			}
 		});

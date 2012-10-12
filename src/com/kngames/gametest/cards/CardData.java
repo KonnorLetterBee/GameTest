@@ -65,8 +65,12 @@ public class CardData {
 		}
 	}
 	
-	//	gets the card with the specified tags
-	//	returns the correct card object, null if no card could be found
+	/**
+	 * Retrieves the card from the specified category and the specified position from CardData.
+	 * @param cat the category to retrieve from
+	 * @param pos the position in the specified category to get
+	 * @return the card with the tag requested, or null if none could be found
+	 */
 	public Card getCard(String cat, int pos) {
 		SparseArray<Card> category = cards.get(cat);
 		if (category == null) {
@@ -81,8 +85,12 @@ public class CardData {
 		return c;
 	}
 	
-	//	gets the card with the specified tag
-	//	splits the tag along the semicolon and passes the result to the other getCard function
+	/**
+	 * Retrieves the card with the specified tag from CardData.  The tag is split along a semicolon which divides
+	 * the category from the position within that category.
+	 * @param concatTag that tag in form [cat];[pos] to search for
+	 * @return the card with the tag requested, or null if none could be found
+	 */
 	public Card getCard(String concatTag) {
 		String[] parts = concatTag.split(";");
 		return getCard(parts[0], Integer.parseInt(parts[1]));

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.cards.structures.BaseSingleFragmentActivity;
-import com.kngames.gametest.redata.CLScenario;
+import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.REInfoFragmentActivity;
 import com.kngames.gametest.redata.data.Expansion;
 import com.kngames.gametest.redata.data.GameData;
@@ -27,7 +27,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 	protected ExpandableListView listView;
 	private SimpleExpandableListAdapter listAdapter;
 	protected String[] catTitles;
-	protected CLScenario[][] scenCollection;
+	protected Scenario[][] scenCollection;
 	
 	private static final String PARENT_KEY = "parent";
 	private static final String CHILD_KEY = "child";
@@ -49,7 +49,7 @@ public class ScenExpandSelectorFragment extends Fragment {
 		
 		//	fill the String array with expansion titles that actually have scenarios in them, and add a "Custom" field
 		for (int i = 0; i < temp.length; i++) {
-			if (temp[i].scenarios() != null) titles.add(temp[i].expansName());
+			if (temp[i].clScenarios() != null) titles.add(temp[i].expansName());
 		}
 		titles.add("Custom Scenarios");
 		
@@ -58,13 +58,13 @@ public class ScenExpandSelectorFragment extends Fragment {
 		return titlesArray;
 	}
 	
-	private CLScenario[][] generateCollection() {
-		ArrayList<ArrayList<CLScenario>> dualList = new ArrayList<ArrayList<CLScenario>>();
-		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<CLScenario>());
+	private Scenario[][] generateCollection() {
+		ArrayList<ArrayList<Scenario>> dualList = new ArrayList<ArrayList<Scenario>>();
+		for (int i = 0; i < Expansion.expansions.length; i++) dualList.add(new ArrayList<Scenario>());
 		
 		//	add scenarios from game expansions
-		for(int i = 0; i < GameData.CLScenarios.length; i++) {
-			CLScenario temp = GameData.CLScenarios[i];
+		for(int i = 0; i < GameData.Scenarios.length; i++) {
+			Scenario temp = GameData.Scenarios[i];
 			int slot = temp.expans();
 			dualList.get(slot).add(temp);
 		}
@@ -80,9 +80,9 @@ public class ScenExpandSelectorFragment extends Fragment {
 			if (dualList.get(i).size() == 0) dualList.remove(i);
 		}
 		
-		CLScenario[][] array = new CLScenario[dualList.size()][];
+		Scenario[][] array = new Scenario[dualList.size()][];
 		for (int i = 0; i < dualList.size(); i++) {
-			array[i] = new CLScenario[dualList.get(i).size()];
+			array[i] = new Scenario[dualList.get(i).size()];
 			dualList.get(i).toArray(array[i]);
 		}
 		

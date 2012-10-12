@@ -92,7 +92,7 @@ public class GameSetupActivity extends Activity {
 		});
 	}
 	
-	private ArrayList<Pair<String,Scenario>> getScenarios() {
+	private ArrayList<Pair<String, Scenario>> getScenarios() {
 		ArrayList<Pair<String,Scenario>> data = new ArrayList<Pair<String,Scenario>>();
 		for (int i = 0; i < GameData.Scenarios.length; i++) {
 			Scenario temp = GameData.Scenarios[i];

@@ -2,7 +2,6 @@ package com.kngames.gametest.redata.ScenEditor;
 
 import com.kngames.gametest.R;
 import com.kngames.gametest.redata.data.GameData;
-import com.kngames.gametest.redata.data.GameData.GameMode;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -67,7 +66,7 @@ public class ScenarioInfoEditorActivity extends Activity {
 		GameData.customTempScenario.second.setName(nameField.getText().toString());
 		GameData.customTempScenario.second.setDesc(descField.getText().toString());
 		GameData.customTempScenario.second.setNotes(notesField.getText().toString());
-		GameData.customTempScenario.second.setMode(GameMode.values()[typeChooser.getSelectedItemPosition()]);
+		GameData.customTempScenario.second.setMode(typeChooser.getSelectedItemPosition());
 		GameData.customTempScenario.second.setBasics(basicsBox.isChecked());
 		this.finish();
 	}

@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.kngames.gametest.cards.CardList;
 import com.kngames.gametest.engine.data.DataOps;
-import com.kngames.gametest.redata.CLScenario;
+import com.kngames.gametest.redata.Scenario;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -96,7 +96,7 @@ public class DataTestActivity extends Activity {
 	
 	private void doRelativeFileWriteTest(String path, String data) {
 		try {
-			CLScenario list = new CLScenario(1, "Test Scenario", new String[] {"WE;01", "WE;02", "WE;03", "WE;04", "WE;05"}, "Here's a test scenario.", "", 1, 1, true, false);
+			Scenario list = new Scenario(1, "Test Scenario", new String[] {"WE;01", "WE;02", "WE;03", "WE;04", "WE;05"}, "Here's a test scenario.", "", 1, 1, true, false);
 			list.saveToFile(path);
 			Log.d(TAG, "Write complete");
 		} catch (Exception e) {
@@ -106,7 +106,7 @@ public class DataTestActivity extends Activity {
 	
 	private void doRelativeFileReadTest(String path) {
 		try {
-			CLScenario list = new CLScenario(true, path, true);
+			Scenario list = new Scenario(true, path, true);
 			Log.d(TAG, "Read complete");
 		} catch (Exception e) {
 			Log.e(TAG, String.format("Error: exception: %s", path));

@@ -123,11 +123,11 @@ public class ScenarioChooser extends Dialog {
     	//	set up custom scenario list
     	scenarioPairs = new ArrayList<Pair<Integer,String>>();
     	scenarioStrings = new ArrayList<String>();
-    	for (int i = 0; i < GameData.CustomScenarios.size(); i++) {
+    	for (int i = 0; i < GameData.CLCustomScenarios.size(); i++) {
     		scenarioPairs.add(new Pair<Integer, String>(
-    				GameData.CustomScenarios.get(i).first, 
-    				GameData.CustomScenarios.get(i).second.name()));
-    		scenarioStrings.add(GameData.CustomScenarios.get(i).second.name());
+    				GameData.CLCustomScenarios.get(i).first, 
+    				GameData.CLCustomScenarios.get(i).second.name()));
+    		scenarioStrings.add(GameData.CLCustomScenarios.get(i).second.name());
     	}
     	int resID = android.R.layout.simple_list_item_1;
     	ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(context, resID, scenarioStrings);

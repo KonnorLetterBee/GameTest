@@ -52,7 +52,7 @@ public class CardList {
 	 * @param loadImmediately  If true, load the cards during construction rather than manually afterwards
 	 */
 	public CardList (int id, String name, String[] tags, String desc, String notes, boolean loadImmediately) {
-		this.id = -1;
+		this.id = id;
 		this.name = name;
 		this.tags = tags;
 		this.cards = null;
@@ -106,6 +106,10 @@ public class CardList {
 	public void setName(String name) { this.name = name; }
 	public void setDesc(String desc) { this.desc = desc; }
 	public void setNotes(String notes) { this.notes = notes; }
+	public void setTags(String[] tags) {
+		this.tags = tags;
+		if (loaded) loadCards();
+	}
 	
 	
 	/**

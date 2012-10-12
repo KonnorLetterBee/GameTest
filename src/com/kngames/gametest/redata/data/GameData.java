@@ -9,10 +9,9 @@ import android.util.Pair;
 
 import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.CardData;
-import com.kngames.gametest.redata.CLScenario;
+import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.ScenDBHelper;
-import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.Mansion.*;
 import com.kngames.gametest.redata.data.Expansion.Expans;
@@ -42,9 +41,8 @@ public class GameData {
 	///
 	
 	private static CardData data;
-	public static Scenario[] Scenarios;
 	
-	public static CLScenario[] CLScenarios;
+	public static Scenario[] Scenarios;
 	public static Scenario testScenario;
 	
 	
@@ -54,11 +52,11 @@ public class GameData {
 	
 	public static Pair<Integer,Scenario> customTempScenario;
 	public static ScenDBHelper dbHelper;
-	public static ArrayList<Pair<Integer,Scenario>> CustomScenarios = new ArrayList<Pair<Integer,Scenario>>();
+	public static ArrayList<Pair<Integer,Scenario>> CLCustomScenarios = new ArrayList<Pair<Integer,Scenario>>();
 	
-	public static ArrayList<Pair<Integer,Scenario>> loadCustomScenarios() {
+	public static void loadCustomScenarios() {
 		Log.d(TAG, "loading custom scenarios");
-		ArrayList<Pair<Integer,Scenario>> out = new ArrayList<Pair<Integer,Scenario>>();
+		CLCustomScenarios = new ArrayList<Pair<Integer,Scenario>>();
 		Cursor scens = dbHelper.getAllScenarios();
 		//	extract data from Cursor object
 		if (scens.moveToFirst()) {
@@ -75,12 +73,11 @@ public class GameData {
 				if (temp == 0) usesBasics = false;
 				else usesBasics = true;
 				
-				out.add(new Pair<Integer,Scenario>(id, new Scenario(0, name, gameMode, Expans.Custom, usesBasics, contents, desc, notes)));
+				CLCustomScenarios.add(new Pair<Integer,Scenario>(id, new Scenario(id, name, contents.split("\\/"), desc, notes, gameMode.ordinal(), Expans.Custom.ordinal(), usesBasics, false)));
 			} while(scens.moveToNext());
 		}
 		scens.close();
 		Log.d(TAG, "finished loading custom scenarios");
-		return out;
 	}
 	
 	
@@ -178,46 +175,25 @@ public class GameData {
 				}
 			}	Log.d(TAG, "finished loading skills");
 			
-			//	load scenarios
-			//Scenarios = buildScenarioList();
-			
 			//	load clscenarios
-			Log.d(TAG, "loading CLScenarios");
-			ArrayList<CLScenario> clscenarios = new ArrayList<CLScenario>();
+			Log.d(TAG, "loading Scenarios");
+			ArrayList<Scenario> clscenarios = new ArrayList<Scenario>();
 			for (int i = 0; i < expansions.length; i++) {
 				if (expansionsEnabled[i] == true && expansions[i].clScenarios() != null) {
 					for (int j = 0; j < expansions[i].clScenarios().length; j++) {
 						clscenarios.add(expansions[i].clScenarios()[j]);
 					}
 				}
-			}	Log.d(TAG, "finished loading CLScenarios");
-			CLScenarios = clscenarios.toArray(new CLScenario[1]);
+			}	Log.d(TAG, "finished loading Scenarios");
+			Scenarios = clscenarios.toArray(new Scenario[1]);
 					
 			dbHelper = new ScenDBHelper(context);
-			CustomScenarios = GameData.loadCustomScenarios();
+			GameData.loadCustomScenarios();
 			
-			testScenario = new Scenario (0, "test scenario", GameMode.Story, 0, true, new String[] {
-					"WE;01", "WE;02", "WE;03", "WE;08", "WE;09", "WE;10", "WE;11 WE;12", "WE;13 WE;14", "WE;15 WE;16", "AC;01", "AC;02", "AC;03", "AC;04", "AC;05", "AC;06", "AC;07", "AC;08", "AC;09", "AC;10", "AC;11", "AC;12", "IT;03"}, null, null);
+			testScenario = new Scenario (0, "test scenario", new String[] {"WE;01", "WE;02", "WE;03", "WE;08", "WE;09", "WE;10", "WE;11 WE;12", "WE;13 WE;14", "WE;15 WE;16", 
+					"AC;01", "AC;02", "AC;03", "AC;04", "AC;05", "AC;06", "AC;07", "AC;08", "AC;09", "AC;10", "AC;11", "AC;12", "IT;03"}, null, null, GameMode.Story.ordinal(), 0, true, false);
 			initialized = true;
 		}
-	}
-	
-	public static Scenario[] buildScenarioList() {
-		Log.d(TAG, "loading scenarios");
-		ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
-		for (int i = 0; i < expansions.length; i++) {
-			if (expansionsEnabled[i] == true && expansions[i].scenarios() != null) {
-				for (int j = 0; j < expansions[i].scenarios().length; j++) {
-					Scenario temp = expansions[i].scenarios()[j];
-					if (temp.complete()) {
-						scenarios.add(temp);
-						Log.d(TAG, "loaded scenario \""+temp.name()+"\"");
-					}
-				}
-			}
-		}
-		Log.d(TAG, "finished loading scenarios");
-		return scenarios.toArray(new Scenario[1]);
 	}
 	
 	
@@ -227,9 +203,9 @@ public class GameData {
 	
 	//	searches the Scenarios array for a Scenario with the specified id
 	//	returns null if nothing was found
-	public static CLScenario findCLScenario(int id, boolean includeCustoms) {
-		for (int i = 0; i < CLScenarios.length; i++) {
-			if (CLScenarios[i].ID() == id) return CLScenarios[i];
+	public static Scenario findScenario(int id, boolean includeCustoms) {
+		for (int i = 0; i < Scenarios.length; i++) {
+			if (Scenarios[i].ID() == id) return Scenarios[i];
 		}
 		return null;
 	}

@@ -6,9 +6,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 
+import com.kngames.gametest.cards.Card;
 import com.kngames.gametest.cards.CardData;
-import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.Scenario;
+import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.CardType;
 
@@ -17,14 +18,12 @@ public class Shop {
 	
 	private Game game;
 	private CardData data;
-	//private Scenario scen;
 	private ArrayList<REDeck> resourcePiles;
 	private String[] available;
 	
 	public Shop(Game g, Scenario scen, int players) {
 		this.game = g;
 		this.data = CardData.getCardData();
-		//this.scen = scen;
 		if (scen != null) setupResourcePiles(scen, players);
 	}
 	
@@ -36,7 +35,7 @@ public class Shop {
 	
 	//	set the scenario and resource piles
 	private void setupResourcePiles(Scenario scen, int players) {
-		ArrayList<RECard[]> cards = scen.cards();
+		ArrayList<Card[]> cards = scen.cards();
 		resourcePiles = new ArrayList<REDeck>();
 		//	set up basics piles, if scenario allows basics
 		resourcePiles.add(createDeck((RECard) data.getCard("AM;01")));
@@ -67,11 +66,12 @@ public class Shop {
 	}
 	
 	//	creates a resource pile filled with a single type of card of the amount listed in that card
-	private REDeck createDeck(RECard[] cards, boolean shuffle) {
+	private REDeck createDeck(Card[] cards, boolean shuffle) {
 		REDeck out = new REDeck();
 		for (int j = 0; j < cards.length; j++) {
-			for (int k = 0; k < cards[j].getDeckQuantity(); k++) {
-				if (cards[j].getCardType() == CardType.Weapon) out.addTop(new WeaponCard((WeaponCard)cards[j]));
+			RECard temp = (RECard) cards[j];
+			for (int k = 0; k < temp.getDeckQuantity(); k++) {
+				if (temp.getCardType() == CardType.Weapon) out.addTop(new WeaponCard((WeaponCard)cards[j]));
 				else out.addTop(cards[j]);
 			}
 		}

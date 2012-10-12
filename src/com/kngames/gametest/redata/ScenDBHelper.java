@@ -57,7 +57,7 @@ public class ScenDBHelper extends SQLiteOpenHelper {
 	public int addScenario(Scenario scen) {
 		int basics = 0;
 		if (scen.useBasics() == true) basics = 1;
-		return addScenario(scen.name(), scen.generateSingleTagString(), scen.description(), scen.notes(), scen.mode().ordinal(), basics);
+		return addScenario(scen.name(), scen.generateSingleTagString(), scen.description(), scen.notes(), scen.mode(), basics);
 	}
 	
 	public int addScenario(String name, String contents, String description, String notes, int gamemode, int basics){
@@ -87,7 +87,7 @@ public class ScenDBHelper extends SQLiteOpenHelper {
 			ing.put(scentableContents, s.generateSingleTagString());
 			ing.put(scentableDescript, s.description());
 			ing.put(scentableNotes, s.notes());
-			ing.put(scentableGamemode, s.mode().ordinal());
+			ing.put(scentableGamemode, s.mode());
 			ing.put(scentableBasics, s.useBasics());
 			db.insert(scentable, null, ing);
 		}
@@ -131,7 +131,7 @@ public class ScenDBHelper extends SQLiteOpenHelper {
 		updateContents(id, scen.generateSingleTagString());
 		updateDescription(id, scen.description());
 		updateNotes(id, scen.notes());
-		updateGameMode(id, scen.mode().ordinal());
+		updateGameMode(id, scen.mode());
 		int basics = 0;
 		if (scen.useBasics() == true) basics = 1;
 		updateBasic(id, basics);
