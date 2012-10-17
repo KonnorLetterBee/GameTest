@@ -17,14 +17,23 @@ public abstract class RECard extends Card {
 	public static final String[] CardTypes = {"Ammunition", "Character", "Infected Character", "Weapon", "Action", "Item", "Infected", "Event", "Token", "Infection", "Skills"};
 	
 	public RECard(String name, CardType type, String idPrefix, String catTag, int ID, int intTag, int expans, int quantity, String text) {
-		super(ID, catTag+";"+intTag);
+		super(ID, catTag+";"+intTag, null, null);
 		this.name = name;
 		this.cardType = type;
 		this.idPrefix = idPrefix;
 		this.expansion = expans;
 		this.text = text;
 		this.deckQuantity = quantity;
-		//this.tag = generateTag();
+	}
+	
+	public RECard(String name, CardType type, String idPrefix, String catTag, int ID, int intTag, int expans, int quantity, String text, CardComp[] comps) {
+		super(ID, catTag+";"+intTag, null, comps);
+		this.name = name;
+		this.cardType = type;
+		this.idPrefix = idPrefix;
+		this.expansion = expans;
+		this.text = text;
+		this.deckQuantity = quantity;
 	}
 	
 	public String getName() { return name; }

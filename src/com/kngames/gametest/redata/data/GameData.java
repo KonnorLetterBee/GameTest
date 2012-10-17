@@ -203,9 +203,18 @@ public class GameData {
 	
 	//	searches the Scenarios array for a Scenario with the specified id
 	//	returns null if nothing was found
-	public static Scenario findScenario(int id, boolean includeCustoms) {
+	public static Scenario findScenario(int id) {
 		for (int i = 0; i < Scenarios.length; i++) {
 			if (Scenarios[i].ID() == id) return Scenarios[i];
+		}
+		return null;
+	}
+	
+	//	searches the CustomScenarios array for a Scenario with the specified id
+	//	returns null if nothing was found
+	public static Scenario findCustomScenario(int id) {
+		for (int i = 0; i < CLCustomScenarios.size(); i++) {
+			if (CLCustomScenarios.get(i).second.ID() == id) return CLCustomScenarios.get(i).second;
 		}
 		return null;
 	}

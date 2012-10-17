@@ -70,10 +70,10 @@ public class ScenExpandSelectorFragment extends Fragment {
 		}
 		
 		//	add custom scenarios
-		//for(int i = 0; i < GameData.CustomScenarios.size(); i++) {
-		//	Scenario temp = GameData.CustomScenarios.get(i).second;
-		//	dualList.get(dualList.size() - 1).add(temp);
-		//}
+		for(int i = 0; i < GameData.CLCustomScenarios.size(); i++) {
+			Scenario temp = GameData.CLCustomScenarios.get(i).second;
+			dualList.get(dualList.size() - 1).add(temp);
+		}
 		
 		//	remove scenario lists that have nothing in them
 		for (int i = dualList.size() - 1; i >= 0; i--) {
@@ -138,13 +138,16 @@ public class ScenExpandSelectorFragment extends Fragment {
 	}
 
 	public boolean onClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-		openInfoWindow(scenCollection[groupPosition][childPosition].ID());
+		boolean custom = false;
+		if (groupPosition == scenCollection.length - 1) custom = true;
+		openInfoWindow(scenCollection[groupPosition][childPosition].ID(), custom);
 		return true;
 	}
 	
-	protected void openInfoWindow(int ID) {
+	protected void openInfoWindow(int ID, boolean custom) {
 		Intent infoIntent = new Intent(getActivity(), REInfoFragmentActivity.class);
 		infoIntent.putExtra("scenID", ID);
+		infoIntent.putExtra("custom", custom);
 		infoIntent.putExtra("groupType", BaseSingleFragmentActivity.INFO_FRAG);
 		infoIntent.putExtra("fragType", BaseSingleFragmentActivity.SCEN_FRAG);
 		this.startActivity(infoIntent);

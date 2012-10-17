@@ -1,39 +1,91 @@
 package com.kngames.gametest.cards;
 
+import java.util.HashMap;
+
 import com.kngames.gametest.engine.graphics.DrawObject;
 
 public class Card {
-	protected int cardID;
+	/**
+	 * CardComp class, provides to the Card class a way to apply behaviors to the Card that can be searched for
+	 * and called using a single method
+	 * @author Konnor
+	 */
+	public abstract class CardComp {
+		private String name;
+		public String name() { return name; }
+		public CardComp(String name) {
+			this.name = name;
+		}
+		
+		public abstract void execute();
+	}
 	
+	/**
+	 * CardConditionComp, an extension of CardComp that allows a specific condition to be defined and checked
+	 * before executing the CardComp's behavior.
+	 * @author Konnor
+	 */
+	public abstract class CardConditionComp extends CardComp {
+		public CardConditionComp(String name) {
+			super(name);
+		}
+		
+		public abstract boolean evaluate();
+	}
+	
+	
+	protected int cardID;
 	protected String catTag;
 	protected int intTag;
 	
 	protected DrawObject cardPic;
+	protected HashMap<String, CardComp> components;
 	
-	//	constructs a card object with no picture
-	public Card(int ID) {
+	
+	/**
+	 * Constructs a new Card object.
+	 * @param ID  the card's ID number
+	 * @param catTag  the card's category tag
+	 * @param intTag  the card's integer tag
+	 * @param pic  the card's picture
+	 * @param comps  the card's initial list of CardComp objects to add
+	 */
+	public Card(int ID, String catTag, int intTag, DrawObject pic, CardComp[] comps) {
 		this.cardID = ID;
+		this.catTag = catTag;
+		this.intTag = intTag;
+		cardPic = pic;
+		
+		if (comps != null) {
+			for (CardComp c : comps) {
+				this.addComponent(c);
+			}
+		}
 	}
 	
-	//	constructs a card object with a specified tag and no picture
-	public Card(int ID, String tag) {
+	/**
+	 * Constructs a new Card object.
+	 * @param ID  the card's ID number
+	 * @param tag  the card's tag, separating the category and integer values with a semicolon (;)
+	 * @param pic  the card's picture
+	 * @param comps  the card's initial list of CardComp objects to add
+	 */
+	public Card(int ID, String tag, DrawObject pic, CardComp[] comps) {
 		this.cardID = ID;
 		this.setTags(tag);
+		cardPic = pic;
+		
+		if (comps != null) {
+			for (CardComp c : comps) {
+				this.addComponent(c);
+			}
+		}
 	}
 	
-	//	constructs a card object with a specified picture
-	public Card(int ID, DrawObject pic) {
-		this.cardID = ID;
-		this.cardPic = pic;
-	}
+	///
+	///		Accessor Methods
+	///
 	
-	//	constructs a card object with a specified tag and specified picture
-	public Card(int ID, String tag, DrawObject pic) {
-		this.cardID = ID;
-		this.setTags(tag);
-	}
-	
-	//	accessor methods
 	public int getID() { return cardID; }
 	public String getCatTag() { return catTag; }
 	public int getIntTag() { return intTag; }
@@ -46,11 +98,6 @@ public class Card {
 		catch (Exception e) { return false; }
 		
 		return 	(this.catTag.equals(otherCard.catTag) && this.intTag == otherCard.intTag);
-	}
-	
-	//	provides a way to get a card based on tag info provided by extended classes
-	public static Card parseTag(String tag) {
-		return null;
 	}
 	
 	//	splits the tag string by the semicolon and sets the appropriate tag fields
@@ -67,5 +114,31 @@ public class Card {
 	@Override
 	public String toString() {
 		return generateTag();
+	}
+	
+	/**
+	 * Adds a CardComp to this Card object.
+	 * @param comp the CardComp to add
+	 */
+	public void addComponent(CardComp comp) {
+		components.put(comp.name, comp);
+	}
+	
+	/**
+	 * Checks whether or not a CardComp with a specified name exists in this Card object.
+	 * @param name  the name of the CardComp to look for
+	 * @return  true if a CardComp with the specified name exists, false otherwise
+	 */
+	public boolean compExists(String name) {
+		return components.containsKey(name);
+	}
+	
+	/**
+	 * Searches the component list of this Card object and returns the CardComp with the specified name.
+	 * @param name  the name of the CardComp to look for
+	 * @return  the CardComp with the specified name, null if none exists
+	 */
+	public CardComp getComponent(String name) {
+		return components.get(name);
 	}
 }
