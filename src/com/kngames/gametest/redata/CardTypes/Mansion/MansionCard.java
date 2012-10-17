@@ -11,8 +11,8 @@ public class MansionCard extends RECard implements InMansion {
 	protected OnMansionNotDefeatedListener notDefeatListener = null;
 	protected OnMansionFinishListener finishListener = null;
 	
-	public MansionCard(String name, CardType type, int ID, int quantity, int expans, String text) {
-		super(name, type, "MA", "MA", ID, ID, expans, quantity, text);
+	public MansionCard(String name, CardType type, int ID, int quantity, int expans, String text, CardComp[] comps) {
+		super(name, type, "MA", "MA", ID, ID, expans, quantity, text, comps);
 	}
 	public MansionCard(String name, CardType type, int ID, int quantity, int expans, String text,
 			OnMansionRevealListener reveal, OnMansionDefeatedListener defeat, 

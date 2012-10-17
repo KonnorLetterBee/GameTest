@@ -13,10 +13,8 @@ public class Card {
 	public abstract class CardComp {
 		private String name;
 		public String name() { return name; }
-		public CardComp(String name) {
-			this.name = name;
-		}
-		
+		public CardComp() { name = ""; }
+		public CardComp(String name) { this.name = name; }
 		public abstract void execute();
 	}
 	
@@ -26,10 +24,7 @@ public class Card {
 	 * @author Konnor
 	 */
 	public abstract class CardConditionComp extends CardComp {
-		public CardConditionComp(String name) {
-			super(name);
-		}
-		
+		public CardConditionComp(String name) {	super(name); }
 		public abstract boolean evaluate();
 	}
 	

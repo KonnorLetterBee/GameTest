@@ -6,8 +6,8 @@ public class InfectedCard extends MansionCard {
 	private int decorations;
 	private boolean lasPlagas;
 	
-	public InfectedCard(String name, int ID, int quantity, int expans, int health, int damage, int decorations, boolean plagas, String text) {
-		super(name, CardType.Infected, ID, quantity, expans, text);
+	public InfectedCard(String name, int ID, int quantity, int expans, int health, int damage, int decorations, boolean plagas, String text, CardComp[] comps) {
+		super(name, CardType.Infected, ID, quantity, expans, text, comps);
 		this.health = health;
 		this.damage = damage;
 		this.decorations = decorations;
