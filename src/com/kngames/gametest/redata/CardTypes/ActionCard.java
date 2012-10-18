@@ -31,6 +31,10 @@ public class ActionCard extends RECard implements Playable {
 		this.extraAmmo = ammo;
 	}
 	
+	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text, CardComp[] comps) {
+		super(name, CardType.Action, "AC", "AC", ID, ID, expans, quantity, text, comps);
+	}
+	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
 			OnPlayListener onPlay) {
 		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text, onPlay, null, null);
