@@ -16,10 +16,6 @@ public class ActionCard extends RECard implements Playable {
 	private int extraBuys;
 	private int extraCards;
 	
-	private OnPlayListener playListener = null;
-	private OnFinishListener playFinishListener = null;
-	private OnTriggerListener trigger = null;
-	
 	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text, CardComp[] comps) {
 		super(name, CardType.Action, "AC", "AC", ID, ID, expans, quantity, text, comps);
 		this.price = price;
@@ -52,25 +48,30 @@ public class ActionCard extends RECard implements Playable {
 		for (int i = 0; i < extraCards; i++) actingPlayer.drawToHand();
 		actingPlayer.gold += extraGold;
 		
-		//	if an extra OnPlayListener is attached, use that effect
-		if (playListener != null) playListener.playCard(this, game, actingPlayer);
+		//	if an extra HAND_PLAY component is attached, use that effect
+		if (this.compExists(RECard.HAND_PLAY)) this.getComponent(RECard.HAND_PLAY).execute();
 		
-		//	if an extra OnPlayFinishListener is attached, use that effect
+		//	if an extra HAND_FINISH component is attached, use that effect
 		//	otherwise, simply move the card to the field
-		if (playFinishListener != null) playFinishListener.finish(this, game, actingPlayer);
+		if (this.compExists(RECard.HAND_FINISH)) this.getComponent(RECard.HAND_FINISH).execute();
 		else actingPlayer.inPlay().addBack(this);
 	}
 
 	public boolean isTriggered(Game game, Player actingPlayer) {
-		if (trigger == null) return false;
-		return trigger.isTriggered(this, game, actingPlayer);
+		CardComp trigger = this.getComponent(RECard.HAND_FINISH);
+		if (trigger != null && trigger instanceof CardConditionComp) return ((CardConditionComp)trigger).evaluate();
+		else return false;
 	}
 	
 	//	actions can be played if:
 	//	it's your main phase, and you have at least one action remaining
 	//	the action's trigger is valid, regardless of game state (trigger checks that anyway)
 	public boolean canPlay(Game game, Player actingPlayer, REDeck source) {
-		if (trigger != null && trigger.isTriggered(this, game, actingPlayer)) return true;
-		else return game.isActivePlayer(actingPlayer) && actingPlayer.actions > 0 && game.state().currentState() == State.MainPhase && source == actingPlayer.hand();
+		/*if (trigger != null && isTriggered(game, actingPlayer)) return true;
+		else */
+		return game.isActivePlayer(actingPlayer) && 
+				actingPlayer.actions > 0 && 
+				game.state().currentState() == State.MainPhase && 
+				source == actingPlayer.hand();
 	}
 }
