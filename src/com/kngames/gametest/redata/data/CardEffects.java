@@ -338,25 +338,31 @@ public class CardEffects {
 	
 	//region Weapon Effects
 	
-	public static class SurvivalKnifeEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			if (card instanceof WeaponCard)
-				game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new SurvivalKnifeBuff((WeaponCard)card)));
+	public static class SurvivalKnifeEffect extends CardComp {
+		public SurvivalKnifeEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
+			Game game = Game.getGame();
+			if (parent instanceof WeaponCard)
+				game.exploreEffects().add(new ExploreEffect(game, game.getActivePlayer(), new SurvivalKnifeBuff((WeaponCard)parent)));
 		}
 	}
 	
-	public static class BurstFireHandgunEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			if (card instanceof WeaponCard)
-				game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BurstFireHandgunBuff((WeaponCard)card)));
+	public static class BurstFireHandgunEffect extends CardComp {
+		public BurstFireHandgunEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
+			Game game = Game.getGame();
+			if (parent instanceof WeaponCard)
+				game.exploreEffects().add(new ExploreEffect(game, game.getActivePlayer(), new BurstFireHandgunBuff((WeaponCard)parent)));
 		}
 	}
 	
 	//	"Story Mode or Mercenary Mode:  Deal 5 additional damage to each adjacent Player to the Attacking Player.
 	//	Versus Mode:  Deal an additional 5 Damage to each adjacent Player to the Attacked Player."
-	public static class GrenadeEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
+	public static class GrenadeEffect extends CardComp {
+		public GrenadeEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
 			int middle = 0, left, right;
+			Game game = Game.getGame();
 			
 			//	determine middle player
 			switch (game.gameMode()) {
@@ -383,14 +389,16 @@ public class CardEffects {
 	//	Versus Mode:  Attacked Player must discard a Weapon from their hand."
 	//	not fully implemented
 	//	TODO: implement versus effect
-	public static class SubmissionEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
+	public static class SubmissionEffect extends CardComp {
+		public SubmissionEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
+			Game game = Game.getGame();
 			switch (game.gameMode()) {
 			case Story:
 			case Mercenary:
 			case Outbreak:
 			case PartnerStory:
-				if (actingPlayer.health() >= 80) ((WeaponCard)card).damageThisRound += 5;
+				if (game.getActivePlayer().health() >= 80) ((WeaponCard)parent).damageThisRound += 5;
 				break;
 			case Versus:
 				break;
@@ -400,8 +408,9 @@ public class CardEffects {
 	
 	//	"When Trashed, shuffle the the "Rocket Launcher Case" Token into the Mansion."
 	//	not fully implemented
-	public static class RocketLauncherEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
+	public static class RocketLauncherEffect extends CardComp {
+		public RocketLauncherEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
 			
 		}
 	}

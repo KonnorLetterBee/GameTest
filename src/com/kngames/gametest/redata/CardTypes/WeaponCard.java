@@ -16,11 +16,8 @@ public class WeaponCard extends RECard implements Playable {
 	public int damageThisRound;
 	private WeaponType type;
 	
-	private OnPlayListener playListener = null;
-	private OnExploreFinishListener exploreFinishListener = null;
-	
-	public WeaponCard(String name, int ID, int expans, WeaponType type, int price, int ammo, int damage, boolean trashFlag, int quantity, String text) {
-		super(name, CardType.Weapon, "WE", "WE", ID, ID, expans, quantity, text);
+	public WeaponCard(String name, int ID, int expans, WeaponType type, int price, int ammo, int damage, boolean trashFlag, int quantity, String text, CardComp[] comps) {
+		super(name, CardType.Weapon, "WE", "WE", ID, ID, expans, quantity, text, comps);
 		this.price = price;
 		this.ammoRec = ammo;
 		this.damage = damage;
@@ -28,17 +25,9 @@ public class WeaponCard extends RECard implements Playable {
 		this.type = type;
 	}
 	
-	public WeaponCard(String name, int ID, int expans, WeaponType type, int price, int ammo, int damage, boolean trashFlag, int quantity, String text,
-		OnPlayListener play, OnExploreFinishListener exploreFinish) {
-		this(name, ID, expans, type, price, ammo, damage, trashFlag, quantity, text);
-		
-		this.playListener = play;
-		this.exploreFinishListener = exploreFinish;
-	}
-	
 	public WeaponCard(WeaponCard other) {
 		this(other.name, other.cardID, other.expansion, other.type, other.price, other.ammoRec, other.damage, other.trashFlag, other.deckQuantity, 
-			other.text, other.playListener, other.exploreFinishListener);
+				other.text, other.components.values().toArray(new CardComp[1]));
 	}
 	
 	public int getAmmoRec() { return ammoRec; }
@@ -55,14 +44,14 @@ public class WeaponCard extends RECard implements Playable {
 		if (ammoRec != -1) actingPlayer.ammoRemaining -= this.ammoRec;
 		actingPlayer.weapons().addBack(this);
 		
-		//	if an extra OnPlayListener is attached, use that effect
-		if (playListener != null) playListener.playCard(this, game, actingPlayer);
+		//	if an extra HAND_PLAY component is attached, use that effect
+		if (this.compExists(RECard.HAND_PLAY)) this.getComponent(RECard.HAND_PLAY).execute();
 	}
 	
 	public void onExploreFinish(Game game, Player actingPlayer) {
-		//	if an extra OnExploreFinishListener is attached, use that effect
+		//	if an extra EXPLORE_FINISH component is attached, use that effect
 		//	otherwise, look at the trash flag to determine behavior
-		if (exploreFinishListener != null) exploreFinishListener.exploreFinish(this, game, actingPlayer);
+		if (this.compExists(RECard.EXPLORE_FINISH)) this.getComponent(RECard.EXPLORE_FINISH).execute();
 		else if (trashFlag == true) game.shop().returnCard(this);
 		else actingPlayer.inPlay().addBack(this);
 	}

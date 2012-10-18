@@ -29,6 +29,7 @@ public abstract class RECard extends Card {
 	public static final String HAND_FINISH = "handFinish";
 	public static final String MANSION_REVEAL = "mansionReveal";
 	public static final String MANSION_FINISH = "mansionFinish";
+	public static final String EXPLORE_FINISH = "exploreFinish";
 	
 	public RECard(String name, CardType type, String idPrefix, String catTag, int ID, int intTag, int expans, int quantity, String text) {
 		super(ID, catTag+";"+intTag, null, null);
