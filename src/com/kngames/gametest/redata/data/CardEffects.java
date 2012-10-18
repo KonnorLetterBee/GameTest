@@ -141,6 +141,13 @@ public class CardEffects {
 			game.shop().returnCard(card);
 		}
 	}
+	
+	public static class TrashOnFinishComp extends CardComp {
+		public TrashOnFinishComp() { super(RECard.HAND_FINISH); }
+		public void execute() {
+			Game.getGame().shop().returnCard((RECard) parent);
+		}
+	}
 
 	//	not implemented
 	public static class BackToBackEffect implements OnPlayListener {
@@ -243,7 +250,8 @@ public class CardEffects {
 	
 	//region Item and Token Effects
 	
-	public static class GreenHerbEffect implements OnPlayListener {
+	public static class GreenHerbPlayed extends CardComp {
+		public GreenHerbPlayed() { super(RECard.HAND_PLAY); }
 		public static class AnotherHerbState extends PlayerInputState {
 			//	duuuuude...  there's two Krausers...  hand me some more a' that Green Herb...
 			private int healAmount;
@@ -252,12 +260,12 @@ public class CardEffects {
 				healAmount = 20;	//	minimum heal amount is 20
 			}
 			public void onPlayerInputStart() {
-				//	if discard pile contains no weapons, immediately end state for lack of possible actions
-				if (actingPlayer.hand().indexOf("IT01") == -1) game.state().endPlayerInput();
+				//	if discard pile contains no other Green Herbs, immediately end state for lack of possible actions
+				if (actingPlayer.hand().indexOf("IT;1") == -1) game.state().endPlayerInput();
 				else {
 					actionButton.activate();
 					actionButton.buttonText = "NONE";
-					gameStateMessage = "You may trash another Green Herb card from your hand to heal an additional 40.";
+					gameStateMessage = "You may trash another Green Herb card from your hand to heal 60 instead of 20.";
 				}
 			}
 			public boolean isSelectable (REDeck source, int index) throws IndexOutOfBoundsException {
@@ -281,13 +289,14 @@ public class CardEffects {
 				if (actionButton != null) actionButton.deactivate();
 			}
 		}
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.state().startPlayerInput(new AnotherHerbState(game, actingPlayer));
+		public void execute() {
+			Game game = Game.getGame();
+			game.state().startPlayerInput(new AnotherHerbState(game, game.getActivePlayer()));
 		}
 	}
 	
 	public static class YellowHerbRevealed extends CardComp {
-		protected String name = "revealed";
+		public YellowHerbRevealed() { super(RECard.MANSION_REVEAL); }
 		public void execute() {
 			Player p = Game.getGame().attackingPlayers().get(0);
 			p.attachedCards().addBack(parent);
@@ -297,7 +306,7 @@ public class CardEffects {
 	}
 	
 	public static class GGunCaseRevealed extends CardComp {
-		protected String name = "revealed";
+		public GGunCaseRevealed() { super(RECard.MANSION_REVEAL); }
 		public void execute() {
 			Game game = Game.getGame();
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE09");
@@ -308,7 +317,7 @@ public class CardEffects {
 	}
 	
 	public static class RocketCaseRevealed extends CardComp {
-		protected String name = "revealed";
+		public RocketCaseRevealed() { super(RECard.MANSION_REVEAL); }
 		public void execute() {
 			Game game = Game.getGame();
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE10");
@@ -318,9 +327,10 @@ public class CardEffects {
 		}
 	}
 	
-	public static class FirstAidSprayEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			actingPlayer.changeHealth(9999, true);
+	public static class FirstAidSprayPlayed extends CardComp {
+		public FirstAidSprayPlayed() { super(RECard.HAND_PLAY); }
+		public void execute() {
+			Game.getGame().getActivePlayer().changeHealth(9999, true);
 		}
 	}
 	

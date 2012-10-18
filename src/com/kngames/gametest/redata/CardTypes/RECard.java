@@ -16,6 +16,20 @@ public abstract class RECard extends Card {
 	public static enum CardType {Ammunition, Character, InfecChar, Weapon, Action, Item, Infected, Event, Token, Infection, Mansion, Skills}
 	public static final String[] CardTypes = {"Ammunition", "Character", "Infected Character", "Weapon", "Action", "Item", "Infected", "Event", "Token", "Infection", "Skills"};
 	
+	/**
+	 * RECard common component names:
+	 * 
+	 * handPlay
+	 * handFinish
+	 * mansionReveal
+	 * mansionFinish
+	 */
+	
+	public static final String HAND_PLAY = "handPlay";
+	public static final String HAND_FINISH = "handFinish";
+	public static final String MANSION_REVEAL = "mansionReveal";
+	public static final String MANSION_FINISH = "mansionFinish";
+	
 	public RECard(String name, CardType type, String idPrefix, String catTag, int ID, int intTag, int expans, int quantity, String text) {
 		super(ID, catTag+";"+intTag, null, null);
 		this.name = name;

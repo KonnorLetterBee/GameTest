@@ -127,9 +127,9 @@ public class Expansion {
 			new ActionCard("Struggle for Survival",			12, exp, 5,  30, 1, 0,  0,  0, 0, 1, "You can Discard this card from your Hand to lower the Damage of 1 Weapon being used costing 40 Gold or less to 0.", new CardEffects.StruggleForSurvivalEffect(), null, new CardEffects.StruggleForSurvivalTrigger()),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
-			new ItemCard("Green Herb", 		1,  basicExp,	20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60.", new CardEffects.GreenHerbEffect(), new CardEffects.TrashOnFinish(), null),
+			new ItemCard("Green Herb", 		1,  basicExp,	20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60.", new CardComp[] {new CardEffects.GreenHerbPlayed(), new CardEffects.TrashOnFinishComp()}),
 			new ItemCard("Yellow Herb", 	2,  exp,		0,  3, 1, "When this Item is Gained, attach this Item to your Character instead.  While it is attached, that Character's Maximum Health is increased by 10.  Then, Heal that Character's Health by 10.", new CardComp[] {new CardEffects.YellowHerbRevealed()}),
-			new ItemCard("First Aid Spray", 3,  exp,		60, 5, 0, "Trash this Item to Heal a Character's Health to full.", new CardEffects.FirstAidSprayEffect(), new CardEffects.TrashOnFinish(), null)
+			new ItemCard("First Aid Spray", 3,  exp,		60, 5, 0, "Trash this Item to Heal a Character's Health to full.", new CardComp[] {new CardEffects.FirstAidSprayPlayed(), new CardEffects.TrashOnFinishComp()})
 		}; }
 		public MansionCard[] mansion() { return new MansionCard[] {
 			new InfectedCard("Majini", 				1,  3, exp, 15, 10, 1, false, "", null),
