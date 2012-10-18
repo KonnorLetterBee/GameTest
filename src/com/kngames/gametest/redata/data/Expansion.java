@@ -113,23 +113,23 @@ public class Expansion {
 			new WeaponCard("Semi-Automatic Rifle", 		16, exp, 		WeaponType.Rifle,	 	  90,  70, 30, false, 1, "This Weapon gets +10 Damage for every Action played this turn.", null),
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
-			new ActionCard("Mansion Foyer",					1,  exp, 10, 30, 0, 0,  0,  2, 0, 0, ""),
-			new ActionCard("Deadly Aim",					2,  exp, 5,  50, 0, 0,  20, 0, 0, 0, "All your Weapons get +10 Damage this turn.", new CardEffects.DeadlyAimEffect()),
-			new ActionCard("Shattered Memories",			3,  exp, 5,  20, 0, 0,  0,  0, 0, 0, "Trash up to 2 cards from your Discard Pile.  Then Trash this card.", new CardEffects.ShatteredMemoriesEffect(), new CardEffects.TrashOnFinish(), null),
-			new ActionCard("Escape from the Dead City",		4,  exp, 10, 70, 2, 0,  0,  1, 0, 0, ""),
-			new ActionCard("Reload",						5,  exp, 5,  50, 2, 0,  20, 0, 0, 0, "Move 1 Weapon from your Discard Pile to your Hand.", new CardEffects.ReloadEffect()),
-			new ActionCard("The Merchant",					6,  exp, 6,  50, 0, 20, 0,  1, 1, 0, ""),
-			new ActionCard("Umbrella Corporation",			7,  exp, 5,  50, 1, 0,  0,  2, 0, 0, "Move 1 card from your Hand to the top of your Inventory.", new CardEffects.UmbrellaCorporationEffect()),
-			new ActionCard("Back to Back",					8,  exp, 5,  30, 1, 10, 0,  0, 0, 0, "When your Character is Attacked, you can Discard this card from your Hand to give 1 Weapon -20 Damage this turn.", new CardEffects.BackToBackEffect(), null, new CardEffects.BackToBackTrigger()),
-			new ActionCard("Item Management",				9,  exp, 5,  30, 0, 0,  0,  0, 0, 0, "Trash 1 Ammunition from your Hand to Gain another Ammunition costing up to 30 Gold more than the Trashed card.", new CardEffects.ItemManagementEffect()),
-			new ActionCard("Ominous Battle",				10, exp, 5,  60, 0, 10, 0,  3, 0, 0, "Trash 1 Card from your Hand.", new CardEffects.OminousBattleEffect()),
-			new ActionCard("Master of Unlocking",			11, exp, 3,  30, 1, 0,  0,  0, 0, 0, "Each other Player reveals the top card of their Inventory.  You can Gain 1 of the Revealed Weapons.  All the other Revealed cards are Discarded afterwards.", new CardEffects.MasterOfUnlockingEffect()),
-			new ActionCard("Struggle for Survival",			12, exp, 5,  30, 1, 0,  0,  0, 0, 1, "You can Discard this card from your Hand to lower the Damage of 1 Weapon being used costing 40 Gold or less to 0.", new CardEffects.StruggleForSurvivalEffect(), null, new CardEffects.StruggleForSurvivalTrigger()),
+			new ActionCard("Mansion Foyer",					1,  exp, 10, 30, 0, 0,  0,  2, 0, 0, "", null),
+			new ActionCard("Deadly Aim",					2,  exp, 5,  50, 0, 0,  20, 0, 0, 0, "All your Weapons get +10 Damage this turn.", new CardComp[] {new DeadlyAimEffect()}),
+			new ActionCard("Shattered Memories",			3,  exp, 5,  20, 0, 0,  0,  0, 0, 0, "Trash up to 2 cards from your Discard Pile.  Then Trash this card.", new CardComp[] {new ShatteredMemoriesEffect(), new TrashOnFinish()}),
+			new ActionCard("Escape from the Dead City",		4,  exp, 10, 70, 2, 0,  0,  1, 0, 0, "", null),
+			new ActionCard("Reload",						5,  exp, 5,  50, 2, 0,  20, 0, 0, 0, "Move 1 Weapon from your Discard Pile to your Hand.", new CardComp[] {new ReloadEffect()}),
+			new ActionCard("The Merchant",					6,  exp, 6,  50, 0, 20, 0,  1, 1, 0, "", null),
+			new ActionCard("Umbrella Corporation",			7,  exp, 5,  50, 1, 0,  0,  2, 0, 0, "Move 1 card from your Hand to the top of your Inventory.", new CardComp[] {new UmbrellaCorporationEffect()}),
+			new ActionCard("Back to Back",					8,  exp, 5,  30, 1, 10, 0,  0, 0, 0, "When your Character is Attacked, you can Discard this card from your Hand to give 1 Weapon -20 Damage this turn.", new CardComp[] {new BackToBackTrigger()}),
+			new ActionCard("Item Management",				9,  exp, 5,  30, 0, 0,  0,  0, 0, 0, "Trash 1 Ammunition from your Hand to Gain another Ammunition costing up to 30 Gold more than the Trashed card.", new CardComp[] {new ItemManagementEffect()}),
+			new ActionCard("Ominous Battle",				10, exp, 5,  60, 0, 10, 0,  3, 0, 0, "Trash 1 Card from your Hand.", new CardComp[] {new OminousBattleEffect()}),
+			new ActionCard("Master of Unlocking",			11, exp, 3,  30, 1, 0,  0,  0, 0, 0, "Each other Player reveals the top card of their Inventory.  You can Gain 1 of the Revealed Weapons.  All the other Revealed cards are Discarded afterwards.", new CardComp[] {new MasterOfUnlockingEffect()}),
+			new ActionCard("Struggle for Survival",			12, exp, 5,  30, 1, 0,  0,  0, 0, 1, "You can Discard this card from your Hand to lower the Damage of 1 Weapon being used costing 40 Gold or less to 0.", new CardComp[] {new StruggleForSurvivalTrigger()}),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
-			new ItemCard("Green Herb", 		1,  basicExp,	20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60.", new CardComp[] {new CardEffects.GreenHerbPlayed(), new CardEffects.TrashOnFinishComp()}),
-			new ItemCard("Yellow Herb", 	2,  exp,		0,  3, 1, "When this Item is Gained, attach this Item to your Character instead.  While it is attached, that Character's Maximum Health is increased by 10.  Then, Heal that Character's Health by 10.", new CardComp[] {new CardEffects.YellowHerbRevealed()}),
-			new ItemCard("First Aid Spray", 3,  exp,		60, 5, 0, "Trash this Item to Heal a Character's Health to full.", new CardComp[] {new CardEffects.FirstAidSprayPlayed(), new CardEffects.TrashOnFinishComp()})
+			new ItemCard("Green Herb", 		1,  basicExp,	20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60.", new CardComp[] {new GreenHerbPlayed(), new TrashOnFinish()}),
+			new ItemCard("Yellow Herb", 	2,  exp,		0,  3, 1, "When this Item is Gained, attach this Item to your Character instead.  While it is attached, that Character's Maximum Health is increased by 10.  Then, Heal that Character's Health by 10.", new CardComp[] {new YellowHerbRevealed()}),
+			new ItemCard("First Aid Spray", 3,  exp,		60, 5, 0, "Trash this Item to Heal a Character's Health to full.", new CardComp[] {new FirstAidSprayPlayed(), new TrashOnFinish()})
 		}; }
 		public MansionCard[] mansion() { return new MansionCard[] {
 			new InfectedCard("Majini", 				1,  3, exp, 15, 10, 1, false, "", null),
@@ -143,8 +143,8 @@ public class Expansion {
 			new InfectedCard("Mimicry Marcus", 		9,  2, exp, 30, 20, 2, false, "", null),
 			new InfectedCard("Uroboros Aheri", 		10, 1, exp, 90, 70, 8, false, "If this Infected was not Defeated, Shuffle it into the Mansion.", null),
 			new InfectedCard("Dr. Salvador", 		11, 3, exp, 20, 15, 2, false, "", null),
-			new TokenCard(   "Rocket Launcher Case",12,    exp, "Gain 1 \"Rocket Launcher\" Weapon.  Remove this card from the game afterwards.", new CardComp[] { new CardEffects.RocketCaseRevealed() }),
-			new TokenCard(   "Gatling Gun Case", 	13,    exp, "Gain 1 \"Gatling Gun\" Weapon.  Remove this card from the game afterwards.", new CardComp[] { new CardEffects.GGunCaseRevealed() }),
+			new TokenCard(   "Rocket Launcher Case",12,    exp, "Gain 1 \"Rocket Launcher\" Weapon.  Remove this card from the game afterwards.", new CardComp[] { new RocketCaseRevealed() }),
+			new TokenCard(   "Gatling Gun Case", 	13,    exp, "Gain 1 \"Gatling Gun\" Weapon.  Remove this card from the game afterwards.", new CardComp[] { new GGunCaseRevealed() }),
 			new InfectedCard("Gatling Gun Majini", 	14, 3, exp, 40, 25, 4, false, "This Infected gets +5 Damage for every 10 Ammo the Attacking Player has.", null),
 			new InfectedCard("Cerberus", 			15, 3, exp, 25, 10, 2, false, "", null),
 			new InfectedCard("El Gigante", 			16, 1, exp, 40, 40, 4, false, "", null),
@@ -239,16 +239,16 @@ public class Expansion {
 			new WeaponCard("Blowback Pistol", 				25, exp, WeaponType.Pistol,	  40,  30, 20, false, 5, "You can Discard any number of \"Pistol\" Weapons from your Hand to give this Weapon +10 Damage during this turn for each \"Pistol\" Weapon Discarded due to this effect.", null),
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
-			new ActionCard("Partners",							13, exp, 5,  30, 2, 0,  20, 0, 0, 0, "Attach this card to your Partner if you have one.  If this card is attached to your Partner at the beginning of your turn, you get +1 Action during this turn."),
-			new ActionCard("Star-Crossed Duo",					14, exp, 8,  40, 0, 0,  0,  2, 1, 0, "Attach this card to your Partner if you have one.  When your Character Explores, if your Partner is leading with this card attached, 1 of your Partners Weapons gets +10 Damage during this turn."),
-			new ActionCard("Great Ambition",					15, exp, 5,  50, 1, 10, 0,  0, 0, 0, "If you have no Partner, you get +2 cards."),
-			new ActionCard("Archrival",							16, exp, 5,  30, 0, 0,  0,  2, 0, 0, "All Players Discard down to 1 or less cards attached to their Partners."),
-			new ActionCard("Fierce Battle",						17, exp, 5,  80, 0, 0,  0,  4, 0, 0, "Choose another Player.  That Player gets +1 card."),
-			new ActionCard("Uroboros Injection",				18, exp, 5,  60, 2, 0,  0,  0, 1, 0, "During another Player's turn, when an Infected is Revealed, you can Trash this card from your hand to give +20 Health to any Revealed Infected during this turn."),
-			new ActionCard("Quirk of Fate",						19, exp, 8,  30, 1, 0,  0,  0, 0, 0, "Trash 1 card from your Hand.  Then you get +1 card."),
-			new ActionCard("Cornered",							20, exp, 5,  30, 0, 0,  0,  0, 0, 0, "Attach this card to your Partner if you have one.  At the beginning of your turn, If you have another \"Cornered\" attached to your Partner, Trash both.  Then Gain 3 cards costing a total of 100 or less Gold and move them to the top of your Inventory in any order."),
-			new ActionCard("Gathering Forces",					21, exp, 5,  90, 1, 20, 0,  0, 1, 0, "Any cards you Gain this turn go to your Hand instead."),
-			new ActionCard("Desperate Escape",					22, exp, 5,  70, 1, 0,  20, 0, 0, 0, "Choose a Weapon Type (Magnum, Pistol, Rifle, etc).  All Weapons of that type get +10 Damage during this turn."),
+			new ActionCard("Partners",							13, exp, 5,  30, 2, 0,  20, 0, 0, 0, "Attach this card to your Partner if you have one.  If this card is attached to your Partner at the beginning of your turn, you get +1 Action during this turn.", null),
+			new ActionCard("Star-Crossed Duo",					14, exp, 8,  40, 0, 0,  0,  2, 1, 0, "Attach this card to your Partner if you have one.  When your Character Explores, if your Partner is leading with this card attached, 1 of your Partners Weapons gets +10 Damage during this turn.", null),
+			new ActionCard("Great Ambition",					15, exp, 5,  50, 1, 10, 0,  0, 0, 0, "If you have no Partner, you get +2 cards.", null),
+			new ActionCard("Archrival",							16, exp, 5,  30, 0, 0,  0,  2, 0, 0, "All Players Discard down to 1 or less cards attached to their Partners.", null),
+			new ActionCard("Fierce Battle",						17, exp, 5,  80, 0, 0,  0,  4, 0, 0, "Choose another Player.  That Player gets +1 card.", null),
+			new ActionCard("Uroboros Injection",				18, exp, 5,  60, 2, 0,  0,  0, 1, 0, "During another Player's turn, when an Infected is Revealed, you can Trash this card from your hand to give +20 Health to any Revealed Infected during this turn.", null),
+			new ActionCard("Quirk of Fate",						19, exp, 8,  30, 1, 0,  0,  0, 0, 0, "Trash 1 card from your Hand.  Then you get +1 card.", null),
+			new ActionCard("Cornered",							20, exp, 5,  30, 0, 0,  0,  0, 0, 0, "Attach this card to your Partner if you have one.  At the beginning of your turn, If you have another \"Cornered\" attached to your Partner, Trash both.  Then Gain 3 cards costing a total of 100 or less Gold and move them to the top of your Inventory in any order.", null),
+			new ActionCard("Gathering Forces",					21, exp, 5,  90, 1, 20, 0,  0, 1, 0, "Any cards you Gain this turn go to your Hand instead.", null),
+			new ActionCard("Desperate Escape",					22, exp, 5,  70, 1, 0,  20, 0, 0, 0, "Choose a Weapon Type (Magnum, Pistol, Rifle, etc).  All Weapons of that type get +10 Damage during this turn.", null),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
 			new ItemCard("Red Herb", 		4,  1, 20, 5, 0, "You can Trash this Item and a \"Green Herb\" from your Hand to heal a Character and their Partner's Health to full.", new CardComp[1]),
@@ -359,15 +359,15 @@ public class Expansion {
 			new WeaponCard("Night Scope Rocket Launcher", 	31, exp, WeaponType.Explosive,  80,  0,  60, true,  5, "While it is nighttime outside of the game, this Weapon gets +20 Damage.", null),
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
-			new ActionCard("Power of the T-Virus",				23, exp, 5,  20, 0, 0,  0,  0, 0, 0, "Your Character deals an additional 20 Damage this turn.  You can Trash this card to get +20 Gold during this turn.  At the end of the turn, if you Explored or Attacked, increase your Infection Level by 1."),
-			new ActionCard("I Have This...",					24, exp, 5,  40, 1, 0,  0,  1, 0, 0, "You can Reveal a Weapon from your Hand.  In that case, if the cost of the Revealed Weapon was 50 or more, you get +1 card."),
-			new ActionCard("Wesker\'s Secret",					25, exp, 5,  40, 0, 0,  0,  2, 0, 0, "Look at the top 4 cards of the Mansion.  If there is an \"Antivirus\" card, then you can reveal it, move it to the top of the Mansion, then move the rest to the bottom of the Mansion in a random order."),
-			new ActionCard("Injection",							26, exp, 5,  30, 1, 0,  0,  0, 0, 0, "Discard any number of cards from your Hand, then draw the same amount.  Then, you can Trash this card.  In that case, decrease your Character's Infection Level by 1."),
-			new ActionCard("By Any Means Necessary",			27, exp, 5,  40, 2, 0,  0,  0, 0, 0, "Decrease your Character's Infection Level by any amount.  Then, increase your character's Infection Level by the same amount, minus 1."),
-			new ActionCard("Higher Priorities",					28, exp, 5,  70, 0, 0,  0,  0, 0, 0, "Choose One: +3 Cards, or +2 Actions."),
-			new ActionCard("Parting Ways",						29, exp, 5,  30, 1, 0,  0,  0, 0, 0, "You can Trash a card from your Hand.  In that case, Gain a card from the Resource Area costing up to 20 more than the Trashed card."),
-			new ActionCard("Returned Favor",					30, exp, 5,  50, 0, 0,  0,  2, 0, 0, "Attach this card to your Character.  At the beginning of your turn, if this card is attached to your Character, you get +1 card, then Discard this card."),
-			new ActionCard("The Gathering Darkness",			31, exp, 5,  50, 0, 0,  0,  0, 0, 0, "Trash this card and choose another Player.  That Player Reveals their Hand and Trashes an Ammunition with the highest cost from their Hand.  That Player moves 1 \"Ammo x10\" Ammunition to their Hand for every 10 Ammo the Trashed card provided."),
+			new ActionCard("Power of the T-Virus",				23, exp, 5,  20, 0, 0,  0,  0, 0, 0, "Your Character deals an additional 20 Damage this turn.  You can Trash this card to get +20 Gold during this turn.  At the end of the turn, if you Explored or Attacked, increase your Infection Level by 1.", null),
+			new ActionCard("I Have This...",					24, exp, 5,  40, 1, 0,  0,  1, 0, 0, "You can Reveal a Weapon from your Hand.  In that case, if the cost of the Revealed Weapon was 50 or more, you get +1 card.", null),
+			new ActionCard("Wesker\'s Secret",					25, exp, 5,  40, 0, 0,  0,  2, 0, 0, "Look at the top 4 cards of the Mansion.  If there is an \"Antivirus\" card, then you can reveal it, move it to the top of the Mansion, then move the rest to the bottom of the Mansion in a random order.", null),
+			new ActionCard("Injection",							26, exp, 5,  30, 1, 0,  0,  0, 0, 0, "Discard any number of cards from your Hand, then draw the same amount.  Then, you can Trash this card.  In that case, decrease your Character's Infection Level by 1.", null),
+			new ActionCard("By Any Means Necessary",			27, exp, 5,  40, 2, 0,  0,  0, 0, 0, "Decrease your Character's Infection Level by any amount.  Then, increase your character's Infection Level by the same amount, minus 1.", null),
+			new ActionCard("Higher Priorities",					28, exp, 5,  70, 0, 0,  0,  0, 0, 0, "Choose One: +3 Cards, or +2 Actions.", null),
+			new ActionCard("Parting Ways",						29, exp, 5,  30, 1, 0,  0,  0, 0, 0, "You can Trash a card from your Hand.  In that case, Gain a card from the Resource Area costing up to 20 more than the Trashed card.", null),
+			new ActionCard("Returned Favor",					30, exp, 5,  50, 0, 0,  0,  2, 0, 0, "Attach this card to your Character.  At the beginning of your turn, if this card is attached to your Character, you get +1 card, then Discard this card.", null),
+			new ActionCard("The Gathering Darkness",			31, exp, 5,  50, 0, 0,  0,  0, 0, 0, "Trash this card and choose another Player.  That Player Reveals their Hand and Trashes an Ammunition with the highest cost from their Hand.  That Player moves 1 \"Ammo x10\" Ammunition to their Hand for every 10 Ammo the Trashed card provided.", null),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
 			new ItemCard("Kevlar Jacket", 	54, exp, 0,  1, 2, "When this Item is Revealed, attach this Item to the Exploring Character.  When the attached Character would receive any Damage, you can move this card to the bottom of the Mansion.  In that case, that Character cannot receive any Damage during this turn.", new CardComp[1]),
@@ -495,16 +495,16 @@ public class Expansion {
 			new WeaponCard("Incendiary Grenade", 			42, exp, WeaponType.Explosive,  30,  0,  10, true,  5, "This Weapon gets +5 Damage this turn for each Infected your Character is Battling against.", null)
 		}; }
 		public ActionCard[] actions() { return new ActionCard[] {
-			new ActionCard("Lonewolf",							32, exp, 5,  80, 0, 0,  20, 0, 0, 0, "When your Character Explores, select 1 Weapon they are using.  That Weapon gets +5 Damage this turn for each card in your Discard Pile."),
-			new ActionCard("High Value Targets",				33, exp, 5,  60, 1, 0,  0,  0, 0, 0, "You get +5 Gold and +5 Ammo during this turn for each card in your Inventory."),
-			new ActionCard("Raccoon City Police Department",	34, exp, 5,  50, 1, 0,  20, 0, 0, 0, "Discard cards from the top of your Inventory until you Discard a Weapon.  Move that Weapon to your Hand."),
-			new ActionCard("PDA",								35, exp, 10, 20, 0, 0,  0,  0, 0, 0, "Look at up to the top 3 cards of your Inventory.  Trash 1 of those cards, then return the others to the top or bottom of your Inventory in any order."),
-			new ActionCard("Toe to Toe",						36, exp, 10, 70, 1, 0,  0,  0, 0, 0, "Draw 1 card for every 5 cards in your Inventory."),
-			new ActionCard("A Gift?",							37, exp, 5,  30, 0, 0,  0,  2, 0, 0, "Discard your Inventory."),
-			new ActionCard("Mind Control",						38, exp, 5,  80, 0, 0,  0,  0, 0, 0, "Choose another Player and they Reveal their Hand.  Choose an Action Revealed this way with a cost of 70 or less and Discard it.  Apply its effect and Bonus Icons twice."),
-			new ActionCard("Long Awaited Dawn",					39, exp, 5,  50, 2, 0,  0,  0, 0, 0, "Move up to 2 cards from a Player's Discard Pile to the top of their Inventory in any order."),
-			new ActionCard("Vengeful Intention",				40, exp, 5,  40, 0, 0,  0,  2, 0, 0, "Your Character takes 10 Damage.  You may play as many Actions as you like during this turn.  When you play an Action during this turn, your Character takes 10 Damage (this does not include this Action)."),
-			new ActionCard("Symbol of Evil",					41, exp, 5,  40, 0, 0,  0,  0, 0, 0, "Attach this card to your Character.  At the beginning of your turn, if the attached Character has 10 or less Health, Trash this card.  Otherwise, the attached Character takes 10 Damage and you get +1 card.")
+			new ActionCard("Lonewolf",							32, exp, 5,  80, 0, 0,  20, 0, 0, 0, "When your Character Explores, select 1 Weapon they are using.  That Weapon gets +5 Damage this turn for each card in your Discard Pile.", null),
+			new ActionCard("High Value Targets",				33, exp, 5,  60, 1, 0,  0,  0, 0, 0, "You get +5 Gold and +5 Ammo during this turn for each card in your Inventory.", null),
+			new ActionCard("Raccoon City Police Department",	34, exp, 5,  50, 1, 0,  20, 0, 0, 0, "Discard cards from the top of your Inventory until you Discard a Weapon.  Move that Weapon to your Hand.", null),
+			new ActionCard("PDA",								35, exp, 10, 20, 0, 0,  0,  0, 0, 0, "Look at up to the top 3 cards of your Inventory.  Trash 1 of those cards, then return the others to the top or bottom of your Inventory in any order.", null),
+			new ActionCard("Toe to Toe",						36, exp, 10, 70, 1, 0,  0,  0, 0, 0, "Draw 1 card for every 5 cards in your Inventory.", null),
+			new ActionCard("A Gift?",							37, exp, 5,  30, 0, 0,  0,  2, 0, 0, "Discard your Inventory.", null),
+			new ActionCard("Mind Control",						38, exp, 5,  80, 0, 0,  0,  0, 0, 0, "Choose another Player and they Reveal their Hand.  Choose an Action Revealed this way with a cost of 70 or less and Discard it.  Apply its effect and Bonus Icons twice.", null),
+			new ActionCard("Long Awaited Dawn",					39, exp, 5,  50, 2, 0,  0,  0, 0, 0, "Move up to 2 cards from a Player's Discard Pile to the top of their Inventory in any order.", null),
+			new ActionCard("Vengeful Intention",				40, exp, 5,  40, 0, 0,  0,  2, 0, 0, "Your Character takes 10 Damage.  You may play as many Actions as you like during this turn.  When you play an Action during this turn, your Character takes 10 Damage (this does not include this Action).", null),
+			new ActionCard("Symbol of Evil",					41, exp, 5,  40, 0, 0,  0,  0, 0, 0, "Attach this card to your Character.  At the beginning of your turn, if the attached Character has 10 or less Health, Trash this card.  Otherwise, the attached Character takes 10 Damage and you get +1 card.", null)
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
 			new ItemCard("Treasure Map",	74, exp, 0,  2, 2, "When this Item is Revealed, the Exploring Character's Player can attach this card to their Character.  During your turn, you can Remove this card from the Game.  In that case, you get +3 cards and +20 Gold during that turn.", new CardComp[1]),

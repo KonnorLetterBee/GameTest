@@ -34,6 +34,10 @@ public class Card {
 	 * @author Konnor
 	 */
 	public static abstract class CardConditionComp extends CardComp {
+		public CardConditionComp() { super(); }
+		public CardConditionComp(String name) { super(name); }
+		public CardConditionComp(String name, Card parent) { super(name, parent); }
+
 		public abstract boolean evaluate();
 	}
 	

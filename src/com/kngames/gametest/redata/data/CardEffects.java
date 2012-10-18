@@ -1,6 +1,7 @@
 package com.kngames.gametest.redata.data;
 
 import com.kngames.gametest.cards.Card.CardComp;
+import com.kngames.gametest.cards.Card.CardConditionComp;
 import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.data.ExploreEffects.*;
@@ -17,13 +18,16 @@ public class CardEffects {
 
 	//region Action Effects
 	
-	public static class DeadlyAimEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.exploreEffects().add(new ExploreEffect(game, actingPlayer, new BuffAllWeaponsEffect(10)));
+	public static class DeadlyAimEffect extends CardComp {
+		public DeadlyAimEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
+			Game game = Game.getGame();
+			game.exploreEffects().add(new ExploreEffect(game, game.getActivePlayer(), new BuffAllWeaponsEffect(10)));
 		}
 	}
 
-	public static class ShatteredMemoriesEffect implements OnPlayListener {
+	public static class ShatteredMemoriesEffect extends CardComp {
+		public ShatteredMemoriesEffect() { super(RECard.HAND_FINISH); }
 		public static class ShatteredMemoriesState extends PlayerInputState {
 			private int remaining = 2;
 			private REDeckViewZone discardZone;
@@ -64,12 +68,14 @@ public class CardEffects {
 			}
 		}
 		
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.state().startPlayerInput(new ShatteredMemoriesState(game, actingPlayer));
+		public void execute() {
+			Game game = Game.getGame();
+			game.state().startPlayerInput(new ShatteredMemoriesState(game, game.getActivePlayer()));
 		}
 	}
 
-	public static class ReloadEffect implements OnPlayListener {
+	public static class ReloadEffect extends CardComp {
+		public ReloadEffect() { super(RECard.HAND_PLAY); }
 		public static class ReloadState extends PlayerInputState {
 			private REDeckViewZone discardZone;
 			public ReloadState (Game game, Player actingPlayer) {
@@ -106,12 +112,14 @@ public class CardEffects {
 			}
 		}
 		
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.state().startPlayerInput(new ReloadState(game, actingPlayer));
+		public void execute() {
+			Game game = Game.getGame();
+			game.state().startPlayerInput(new ReloadState(game, game.getActivePlayer()));
 		}
 	}
 
-	public static class UmbrellaCorporationEffect implements OnPlayListener {
+	public static class UmbrellaCorporationEffect extends CardComp {
+		public UmbrellaCorporationEffect() { super(RECard.HAND_PLAY); }
 		public static class GetCardFromHandState extends PlayerInputState {
 			public GetCardFromHandState (Game game, Player actingPlayer) { super(game, actingPlayer); }
 			public void onPlayerInputStart() {
@@ -130,43 +138,34 @@ public class CardEffects {
 			public void onPlayerInputFinish() { }
 		}
 		
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.state().startPlayerInput(new GetCardFromHandState(game, actingPlayer));
+		public void execute() {
+			Game game = Game.getGame();
+			game.state().startPlayerInput(new GetCardFromHandState(game, game.getActivePlayer()));
 		}
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
 	}
-
-	public static class TrashOnFinish implements OnFinishListener {
-		public void finish(RECard card, Game game, Player actingPlayer) {
-			game.shop().returnCard(card);
-		}
-	}
 	
-	public static class TrashOnFinishComp extends CardComp {
-		public TrashOnFinishComp() { super(RECard.HAND_FINISH); }
+	public static class TrashOnFinish extends CardComp {
+		public TrashOnFinish() { super(RECard.HAND_FINISH); }
 		public void execute() {
 			Game.getGame().shop().returnCard((RECard) parent);
 		}
 	}
 
 	//	not implemented
-	public static class BackToBackEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			
+	public static class BackToBackTrigger extends CardConditionComp {
+		public BackToBackTrigger() { super(RECard.TRIGGER); }
+		
+		public boolean evaluate() {
+			return false;
 		}
-	}
-	
-	//	not tested
-	public static class BackToBackTrigger implements OnTriggerListener {
-		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
-			//	your character is attacked
-			return game.defendingPlayer() != null && game.defendingPlayer() == actingPlayer;
-		}
+		public void execute() { }
 	}
 
 	//	not fully implemented
 	//	TODO: add dialog for gaining an ammunition card from the shop
-	public static class ItemManagementEffect implements OnPlayListener {
+	public static class ItemManagementEffect extends CardComp {
+		public ItemManagementEffect() { super(RECard.HAND_PLAY); }
 		public static class ItemManagementState extends PlayerInputState {
 			public ItemManagementState (Game game, Player actingPlayer) {
 				super(game, actingPlayer);
@@ -190,12 +189,14 @@ public class CardEffects {
 			public void onPlayerInputFinish() { }
 		}
 		
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.state().startPlayerInput(new ItemManagementState(game, actingPlayer));
+		public void execute() {
+			Game game = Game.getGame();
+			game.state().startPlayerInput(new ItemManagementState(game, game.getActivePlayer()));
 		}
 	}
 	
-	public static class OminousBattleEffect implements OnPlayListener {
+	public static class OminousBattleEffect extends CardComp {
+		public OminousBattleEffect() { super(RECard.HAND_PLAY); }
 		public static class OminousBattleState extends PlayerInputState {
 			public OminousBattleState (Game game, Player actingPlayer) {
 				super(game, actingPlayer);
@@ -219,31 +220,30 @@ public class CardEffects {
 			public void onPlayerInputFinish() { }
 		}
 		
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			game.state().startPlayerInput(new OminousBattleState(game, actingPlayer));
+		public void execute() {
+			Game game = Game.getGame();
+			game.state().startPlayerInput(new OminousBattleState(game, game.getActivePlayer()));
 		}
 		public void finish(RECard card, Game game, Player actingPlayer) { actingPlayer.inPlay().addBack(card); }
 	}
 	
 	//	not implemented
-	public static class MasterOfUnlockingEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
+	public static class MasterOfUnlockingEffect extends CardComp {
+		public MasterOfUnlockingEffect() { super(RECard.HAND_PLAY); }
+		public void execute() {
 			
 		}
 	}
 	
-	//	not implemented
-	public static class StruggleForSurvivalEffect implements OnPlayListener {
-		public void playCard(RECard card, Game game, Player actingPlayer) {
-			
+	//	not completely implemented
+	public static class StruggleForSurvivalTrigger extends CardConditionComp {
+		public StruggleForSurvivalTrigger() { super(RECard.TRIGGER); }
+		
+		public boolean evaluate() {
+			Game game = Game.getGame();
+			return game.state().currentState() == State.ExploreRespond && !game.isActivePlayer(game.getActivePlayer());
 		}
-	}
-	
-	public static class StruggleForSurvivalTrigger implements OnTriggerListener {
-		public boolean isTriggered(RECard card, Game game, Player actingPlayer) {
-			//	triggers during a combat phase that isn't yours
-			return game.state().currentState() == State.ExploreRespond && !game.isActivePlayer(actingPlayer);
-		}
+		public void execute() { }
 	}
 	
 	//endregion

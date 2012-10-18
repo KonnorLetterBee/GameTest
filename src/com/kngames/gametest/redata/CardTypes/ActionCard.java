@@ -20,8 +20,8 @@ public class ActionCard extends RECard implements Playable {
 	private OnFinishListener playFinishListener = null;
 	private OnTriggerListener trigger = null;
 	
-	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text) {
-		super(name, CardType.Action, "AC", "AC", ID, ID, expans, quantity, text);
+	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text, CardComp[] comps) {
+		super(name, CardType.Action, "AC", "AC", ID, ID, expans, quantity, text, comps);
 		this.price = price;
 		this.extraActions = actions;
 		this.extraBuys = buys;
@@ -29,23 +29,6 @@ public class ActionCard extends RECard implements Playable {
 		this.extraExplores = explores;
 		this.extraGold = gold;
 		this.extraAmmo = ammo;
-	}
-	
-	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text, CardComp[] comps) {
-		super(name, CardType.Action, "AC", "AC", ID, ID, expans, quantity, text, comps);
-	}
-	
-	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
-			OnPlayListener onPlay) {
-		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text, onPlay, null, null);
-	}
-	
-	public ActionCard(String name, int ID, int expans, int quantity, int price, int actions, int gold, int ammo, int cards, int buys, int explores, String text,
-			OnPlayListener onPlay, OnFinishListener onPlayFinish, OnTriggerListener onRespond) {
-		this(name, ID, expans, quantity, price, actions, gold, ammo, cards, buys, explores, text);
-		playListener = onPlay;
-		playFinishListener = onPlayFinish;
-		trigger = onRespond;
 	}
 	
 	public int getExtraAmmo() { return extraAmmo; }
