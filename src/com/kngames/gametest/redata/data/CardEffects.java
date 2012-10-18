@@ -287,7 +287,7 @@ public class CardEffects {
 	}
 	
 	public static class YellowHerbRevealed extends CardComp {
-		protected String name = "onReveal";
+		protected String name = "revealed";
 		public void execute() {
 			Player p = Game.getGame().attackingPlayers().get(0);
 			p.attachedCards().addBack(parent);
@@ -297,7 +297,7 @@ public class CardEffects {
 	}
 	
 	public static class GGunCaseRevealed extends CardComp {
-		protected String name = "onReveal";
+		protected String name = "revealed";
 		public void execute() {
 			Game game = Game.getGame();
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE09");
@@ -308,7 +308,7 @@ public class CardEffects {
 	}
 	
 	public static class RocketCaseRevealed extends CardComp {
-		protected String name = "onReveal";
+		protected String name = "revealed";
 		public void execute() {
 			Game game = Game.getGame();
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE10");

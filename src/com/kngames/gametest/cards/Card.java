@@ -60,6 +60,7 @@ public class Card {
 		this.intTag = intTag;
 		cardPic = pic;
 		
+		components = new HashMap<String, CardComp>();
 		if (comps != null) {
 			for (CardComp c : comps) {
 				this.addComponent(c);
@@ -79,6 +80,7 @@ public class Card {
 		this.setTags(tag);
 		cardPic = pic;
 		
+		components = new HashMap<String, CardComp>();
 		if (comps != null) {
 			for (CardComp c : comps) {
 				this.addComponent(c);
@@ -125,8 +127,10 @@ public class Card {
 	 * @param comp the CardComp to add
 	 */
 	public void addComponent(CardComp comp) {
-		comp.parent = this;
-		components.put(comp.name, comp);
+		if (comp != null) {
+			comp.parent = this;
+			components.put(comp.name, comp);
+		}
 	}
 	
 	/**

@@ -13,15 +13,6 @@ public class InfectedCard extends MansionCard {
 		this.decorations = decorations;
 		this.lasPlagas = plagas;
 	}
-	
-	public InfectedCard(String name, int ID, int quantity, int expans, int health, int damage, int decorations, boolean plagas, String text,
-			OnMansionRevealListener reveal, OnMansionDefeatedListener defeat, OnMansionNotDefeatedListener notDefeat) {
-		super(name, CardType.Infected, ID, quantity, expans, text, reveal, defeat, notDefeat, null);
-		this.health = health;
-		this.damage = damage;
-		this.decorations = decorations;
-		this.lasPlagas = plagas;
-	}
 
 	public int getHealth() { return health; }
 	public int getDamage() { return damage; }

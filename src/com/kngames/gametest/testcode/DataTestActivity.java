@@ -2,7 +2,6 @@ package com.kngames.gametest.testcode;
 
 import java.io.File;
 
-import com.kngames.gametest.cards.CardList;
 import com.kngames.gametest.engine.data.DataOps;
 import com.kngames.gametest.redata.Scenario;
 
@@ -106,6 +105,7 @@ public class DataTestActivity extends Activity {
 	
 	private void doRelativeFileReadTest(String path) {
 		try {
+			@SuppressWarnings("unused")
 			Scenario list = new Scenario(true, path, true);
 			Log.d(TAG, "Read complete");
 		} catch (Exception e) {
