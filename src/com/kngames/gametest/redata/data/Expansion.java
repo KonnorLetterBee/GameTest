@@ -2,6 +2,7 @@ package com.kngames.gametest.redata.data;
 
 import java.util.ArrayList;
 
+import com.kngames.gametest.cards.Card.*;
 import com.kngames.gametest.redata.Scenario;
 import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.WeaponCard.WeaponType;
@@ -127,7 +128,7 @@ public class Expansion {
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
 			new ItemCard("Green Herb", 		1,  basicExp,	20, 6, 0, "Trash this Item to Heal a Character's Health by 20, or, you can Trash this Item and another \"Green Herb\" from your Hand to heal your Character's Health by 60.", new CardEffects.GreenHerbEffect(), new CardEffects.TrashOnFinish(), null),
-			new ItemCard("Yellow Herb", 	2,  exp,		0,  3, 1, "When this Item is Gained, attach this Item to your Character instead.  While it is attached, that Character's Maximum Health is increased by 10.  Then, Heal that Character's Health by 10.", new CardEffects.YellowHerbEffect()),
+			new ItemCard("Yellow Herb", 	2,  exp,		0,  3, 1, "When this Item is Gained, attach this Item to your Character instead.  While it is attached, that Character's Maximum Health is increased by 10.  Then, Heal that Character's Health by 10.", new CardComp[] {new CardEffects.YellowHerbRevealed()}),
 			new ItemCard("First Aid Spray", 3,  exp,		60, 5, 0, "Trash this Item to Heal a Character's Health to full.", new CardEffects.FirstAidSprayEffect(), new CardEffects.TrashOnFinish(), null)
 		}; }
 		public MansionCard[] mansion() { return new MansionCard[] {
@@ -142,8 +143,8 @@ public class Expansion {
 			new InfectedCard("Mimicry Marcus", 		9,  2, exp, 30, 20, 2, false, "", null),
 			new InfectedCard("Uroboros Aheri", 		10, 1, exp, 90, 70, 8, false, "If this Infected was not Defeated, Shuffle it into the Mansion.", null),
 			new InfectedCard("Dr. Salvador", 		11, 3, exp, 20, 15, 2, false, "", null),
-			new TokenCard(   "Rocket Launcher Case",12,    exp, "Gain 1 \"Rocket Launcher\" Weapon.  Remove this card from the game afterwards.", new CardEffects.RocketCaseEffect(), null),
-			new TokenCard(   "Gatling Gun Case", 	13,    exp, "Gain 1 \"Gatling Gun\" Weapon.  Remove this card from the game afterwards.", new CardEffects.GGunCaseEffect(), null),
+			new TokenCard(   "Rocket Launcher Case",12,    exp, "Gain 1 \"Rocket Launcher\" Weapon.  Remove this card from the game afterwards.", new CardComp[] { new CardEffects.RocketCaseRevealed() }),
+			new TokenCard(   "Gatling Gun Case", 	13,    exp, "Gain 1 \"Gatling Gun\" Weapon.  Remove this card from the game afterwards.", new CardComp[] { new CardEffects.GGunCaseRevealed() }),
 			new InfectedCard("Gatling Gun Majini", 	14, 3, exp, 40, 25, 4, false, "This Infected gets +5 Damage for every 10 Ammo the Attacking Player has.", null),
 			new InfectedCard("Cerberus", 			15, 3, exp, 25, 10, 2, false, "", null),
 			new InfectedCard("El Gigante", 			16, 1, exp, 40, 40, 4, false, "", null),
@@ -250,7 +251,7 @@ public class Expansion {
 			new ActionCard("Desperate Escape",					22, exp, 5,  70, 1, 0,  20, 0, 0, 0, "Choose a Weapon Type (Magnum, Pistol, Rifle, etc).  All Weapons of that type get +10 Damage during this turn."),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
-			new ItemCard("Red Herb", 		4,  1, 20, 5, 0, "You can Trash this Item and a \"Green Herb\" from your Hand to heal a Character and their Partner's Health to full."),
+			new ItemCard("Red Herb", 		4,  1, 20, 5, 0, "You can Trash this Item and a \"Green Herb\" from your Hand to heal a Character and their Partner's Health to full.", new CardComp[1]),
 		}; }
 		public MansionCard[] mansion() { return new MansionCard[] {
 			new InfectedCard("Lurker", 				22, 3, exp, 10, 10, 1, false, "", null),
@@ -369,8 +370,8 @@ public class Expansion {
 			new ActionCard("The Gathering Darkness",			31, exp, 5,  50, 0, 0,  0,  0, 0, 0, "Trash this card and choose another Player.  That Player Reveals their Hand and Trashes an Ammunition with the highest cost from their Hand.  That Player moves 1 \"Ammo x10\" Ammunition to their Hand for every 10 Ammo the Trashed card provided."),
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
-			new ItemCard("Kevlar Jacket", 	54, exp, 0,  1, 2, "When this Item is Revealed, attach this Item to the Exploring Character.  When the attached Character would receive any Damage, you can move this card to the bottom of the Mansion.  In that case, that Character cannot receive any Damage during this turn."),
-			new ItemCard("Antivirus", 		55, exp, 0,  2, 2, "When this Item is Revealed, if the Exploring Character's Infection Level is 6 or higher, decrease it by 3, then move this card to the bottom of the Mansion, or Remove this card from the Game."),
+			new ItemCard("Kevlar Jacket", 	54, exp, 0,  1, 2, "When this Item is Revealed, attach this Item to the Exploring Character.  When the attached Character would receive any Damage, you can move this card to the bottom of the Mansion.  In that case, that Character cannot receive any Damage during this turn.", new CardComp[1]),
+			new ItemCard("Antivirus", 		55, exp, 0,  2, 2, "When this Item is Revealed, if the Exploring Character's Infection Level is 6 or higher, decrease it by 3, then move this card to the bottom of the Mansion, or Remove this card from the Game.", new CardComp[1]),
 		}; }
 		public InfectionCard[] infections() { return new InfectionCard[] {
 			new InfectionCard("Claw", 				1, 3, 5, 10, "The Player controlling the Character you Attacked can only play 1 Action on their next turn."),
@@ -506,8 +507,8 @@ public class Expansion {
 			new ActionCard("Symbol of Evil",					41, exp, 5,  40, 0, 0,  0,  0, 0, 0, "Attach this card to your Character.  At the beginning of your turn, if the attached Character has 10 or less Health, Trash this card.  Otherwise, the attached Character takes 10 Damage and you get +1 card.")
 		}; }
 		public ItemCard[] items() { return new ItemCard[] {
-			new ItemCard("Treasure Map",	74, exp, 0,  2, 2, "When this Item is Revealed, the Exploring Character's Player can attach this card to their Character.  During your turn, you can Remove this card from the Game.  In that case, you get +3 cards and +20 Gold during that turn."),
-			new ItemCard("Hidden Treasure",	75, exp, 0,  2, 2, "When this Item is Revealed, the Exploring Character's Player gets +30 Gold and +1 Buy during this turn.  Remove this card from the Game afterwards."),
+			new ItemCard("Treasure Map",	74, exp, 0,  2, 2, "When this Item is Revealed, the Exploring Character's Player can attach this card to their Character.  During your turn, you can Remove this card from the Game.  In that case, you get +3 cards and +20 Gold during that turn.", new CardComp[1]),
+			new ItemCard("Hidden Treasure",	75, exp, 0,  2, 2, "When this Item is Revealed, the Exploring Character's Player gets +30 Gold and +1 Buy during this turn.  Remove this card from the Game afterwards.", new CardComp[1]),
 		}; }
 		public MansionCard[] mansion() { return new MansionCard[] {
 			new InfectedCard("Osmund Saddler", 			58, 1, exp, 90, 60, 8, false, "When this Infected is not Defeated, the Exploring Character's Player Gains 1 \"Ammo x10\", then an \"Ammo x10\" for each Level their Character has.  Then shuffle this Infected into the Mansion.", null),

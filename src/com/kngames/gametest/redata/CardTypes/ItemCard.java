@@ -18,8 +18,8 @@ public class ItemCard extends RECard implements Playable, InMansion {
 	private OnMansionFinishListener mansionFinishListener = null;
 	
 	//	default ItemCard
-	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text) {
-		super(name, CardType.Item, getItemIDPrefix(origin), "IT", ID, ID, expans, quantity, text);
+	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text, CardComp[] comps) {
+		super(name, CardType.Item, getItemIDPrefix(origin), "IT", ID, ID, expans, quantity, text, comps);
 		this.price = price;
 		this.origin = origin;
 	}
@@ -33,7 +33,7 @@ public class ItemCard extends RECard implements Playable, InMansion {
 	//	ItemCard with OnPlayListener, OnFinishListener, and OnTriggerListener
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
 			OnPlayListener onPlay, OnFinishListener onFinish, OnTriggerListener onTrigger) {
-		this(name, ID, expans, price, quantity, origin, text);
+		this(name, ID, expans, price, quantity, origin, text, new CardComp[1]);
 		this.playListener = onPlay;
 		this.playFinishListener = onFinish;
 		this.trigger = onTrigger;
@@ -48,7 +48,7 @@ public class ItemCard extends RECard implements Playable, InMansion {
 	//	ItemCard with OnMansionRevealListener and OnMansionFinishListener
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
 			OnMansionRevealListener onReveal, OnMansionFinishListener onFinish) {
-		this(name, ID, expans, price, quantity, origin, text);
+		this(name, ID, expans, price, quantity, origin, text, new CardComp[1]);
 		this.mansionListener = onReveal;
 		this.mansionFinishListener = onFinish;
 	}
@@ -57,7 +57,7 @@ public class ItemCard extends RECard implements Playable, InMansion {
 	public ItemCard(String name, int ID, int expans, int price, int quantity, int origin, String text,
 			OnPlayListener onPlay, OnFinishListener onFinish, OnTriggerListener onTrigger,
 			OnMansionRevealListener onReveal, OnMansionFinishListener onMansionFinish) {
-		this(name, ID, expans, price, quantity, origin, text);
+		this(name, ID, expans, price, quantity, origin, text, new CardComp[1]);
 		this.playListener = onPlay;
 		this.playFinishListener = onFinish;
 		this.trigger = onTrigger;

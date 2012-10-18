@@ -1,7 +1,6 @@
 package com.kngames.gametest.redata.data;
 
-import android.util.Log;
-
+import com.kngames.gametest.cards.Card.CardComp;
 import com.kngames.gametest.cards.CardData;
 import com.kngames.gametest.redata.REDeck;
 import com.kngames.gametest.redata.data.ExploreEffects.*;
@@ -9,8 +8,7 @@ import com.kngames.gametest.redata.CardTypes.*;
 import com.kngames.gametest.redata.CardTypes.RECard.*;
 import com.kngames.gametest.regame.gamestruct.ExploreEffect;
 import com.kngames.gametest.regame.gamestruct.Game;
-import com.kngames.gametest.regame.gamestruct.GameState.PlayerInputState;
-import com.kngames.gametest.regame.gamestruct.GameState.State;
+import com.kngames.gametest.regame.gamestruct.GameState.*;
 import com.kngames.gametest.regame.gamestruct.Player;
 import com.kngames.gametest.regame.graphics.REDeckViewZone;
 import com.kngames.gametest.regame.graphics.REZoneManager;
@@ -288,31 +286,35 @@ public class CardEffects {
 		}
 	}
 	
-	public static class YellowHerbEffect implements OnMansionRevealListener {
-		public void revealed(RECard card, Game game) {
-			Player p = game.attackingPlayers().get(0);
-			p.attachedCards().addBack(card);
+	public static class YellowHerbRevealed extends CardComp {
+		protected String name = "onReveal";
+		public void execute() {
+			Player p = Game.getGame().attackingPlayers().get(0);
+			p.attachedCards().addBack(parent);
 			p.changeMaxHealth(10);
 			p.changeHealth(10, true);
-			Log.d("YellowHerbEffect", "Yellow Herb attached to player");
 		}
 	}
 	
-	public static class GGunCaseEffect implements OnMansionRevealListener {
-		public void revealed(RECard card, Game game) {
+	public static class GGunCaseRevealed extends CardComp {
+		protected String name = "onReveal";
+		public void execute() {
+			Game game = Game.getGame();
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE09");
 			if (temp == null) game.attackingPlayers().get(0).discard().addTop(CardData.getCardData().getCard("WE;09"));
 			else game.attackingPlayers().get(0).discard().addTop(temp);
-			game.mansionRemoved().addTop(card);
+			game.mansionRemoved().addTop(parent);
 		}
 	}
 	
-	public static class RocketCaseEffect implements OnMansionRevealListener {
-		public void revealed(RECard card, Game game) {
+	public static class RocketCaseRevealed extends CardComp {
+		protected String name = "onReveal";
+		public void execute() {
+			Game game = Game.getGame();
 			RECard temp = game.shop().gainCardSearch(game.attackingPlayers().get(0), "WE10");
 			if (temp == null) game.attackingPlayers().get(0).discard().addTop(CardData.getCardData().getCard("WE;10"));
 			else game.attackingPlayers().get(0).discard().addTop(temp);
-			game.mansionRemoved().addTop(card);
+			game.mansionRemoved().addTop(parent);
 		}
 	}
 	

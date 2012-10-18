@@ -10,11 +10,21 @@ public class Card {
 	 * and called using a single method
 	 * @author Konnor
 	 */
-	public abstract class CardComp {
-		private String name;
+	public static abstract class CardComp {
+		protected String name;
+		protected Card parent;
+		
+		public CardComp() { this("", null); }
+		public CardComp(String name) { this(name, null); }
+		public CardComp(String name, Card parent) { 
+			this.name = name;
+			this.parent = parent;
+		}
+		
 		public String name() { return name; }
-		public CardComp() { name = ""; }
-		public CardComp(String name) { this.name = name; }
+		public Card parent() { return parent; }
+		public void setParent(Card parent) { this.parent = parent; }
+		
 		public abstract void execute();
 	}
 	
@@ -23,8 +33,7 @@ public class Card {
 	 * before executing the CardComp's behavior.
 	 * @author Konnor
 	 */
-	public abstract class CardConditionComp extends CardComp {
-		public CardConditionComp(String name) {	super(name); }
+	public static abstract class CardConditionComp extends CardComp {
 		public abstract boolean evaluate();
 	}
 	
@@ -116,6 +125,7 @@ public class Card {
 	 * @param comp the CardComp to add
 	 */
 	public void addComponent(CardComp comp) {
+		comp.parent = this;
 		components.put(comp.name, comp);
 	}
 	
